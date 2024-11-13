@@ -102,7 +102,7 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 8192
   m_textAlignment: 65535
-  m_characterSpacing: 0
+  m_characterSpacing: -3
   m_wordSpacing: 0
   m_lineSpacing: 0
   m_lineSpacingMax: 0
@@ -219,9 +219,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3017642438180070657}
   - component: {fileID: 735173372506282669}
-  - component: {fileID: 7623666248116880552}
+  - component: {fileID: 4579518373218151355}
   m_Layer: 5
-  m_Name: MenuOption
+  m_Name: Menu Option
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -274,7 +274,7 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &7623666248116880552
+--- !u!114 &4579518373218151355
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -283,6 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 6169291001752697560}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b8df1a50d6ec2ea46b81879966e5b8ad, type: 3}
+  m_Script: {fileID: 11500000, guid: d638c6350e118054fa526a22f2a1a3cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  selectorImage: {fileID: 9025304944771869538}

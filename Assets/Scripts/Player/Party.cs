@@ -8,6 +8,8 @@ namespace PokemonGame
     {
         [SerializeField] private List<Pokemon> pokemons = new();
 
+        public IReadOnlyList<Pokemon> Pokemons => pokemons;
+
         private void Start()
         {
             foreach (Pokemon pokemon in pokemons)

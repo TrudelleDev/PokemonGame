@@ -9,6 +9,11 @@ namespace PokemonClone.Controller
         private int currentbuttonIndex;
         private int previousButtonIndex;
 
+        private void Start()
+        {
+            transform.GetChild(0).GetComponent<SelectableUIElement>().Select();
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(Configuration.DownKey) && currentbuttonIndex < transform.childCount - 1)
@@ -21,7 +26,7 @@ namespace PokemonClone.Controller
             }
             if (Input.GetKeyDown(Configuration.AcceptKey))
             {
-                transform.GetChild(currentbuttonIndex).GetComponent<MenuOption>().Click();
+                transform.GetChild(currentbuttonIndex).GetComponent<SelectableUIElement>().Click();
             }
 
             UpdateSelection();
@@ -31,10 +36,10 @@ namespace PokemonClone.Controller
         {
             if (currentbuttonIndex != previousButtonIndex)
             {
-                if (transform.GetChild(currentbuttonIndex).GetComponent<MenuOption>() != null)
+                if (transform.GetChild(currentbuttonIndex).GetComponent<SelectableUIElement>() != null)
                 {
-                    transform.GetChild(previousButtonIndex).GetComponent<MenuOption>().UnSelect();
-                    transform.GetChild(currentbuttonIndex).GetComponent<MenuOption>().Select();
+                    transform.GetChild(previousButtonIndex).GetComponent<SelectableUIElement>().UnSelect();
+                    transform.GetChild(currentbuttonIndex).GetComponent<SelectableUIElement>().Select();
 
                     previousButtonIndex = currentbuttonIndex;
                 }

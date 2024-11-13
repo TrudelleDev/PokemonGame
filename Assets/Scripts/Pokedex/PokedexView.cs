@@ -1,18 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
+using PokemonGame;
 using UnityEngine;
 
 public class PokedexView : View
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private PokedexContent pokedexContent;
 
-    // Update is called once per frame
-    void Update()
+    public override void Initialize()
     {
-        
+        pokedexContent.Initialize();
     }
 }
