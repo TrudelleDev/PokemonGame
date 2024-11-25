@@ -1,4 +1,4 @@
-namespace PokemonClone
+namespace PokemonGame.GameState
 {
     public enum GameState
     {

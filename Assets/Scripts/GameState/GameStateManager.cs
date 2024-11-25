@@ -1,6 +1,6 @@
 using System;
 
-namespace PokemonClone.Manager
+namespace PokemonGame.GameState
 {
     public class GameStateManager
     {

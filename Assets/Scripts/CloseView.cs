@@ -1,13 +1,15 @@
-using PokemonClone.Config;
 using UnityEngine;
 
-public class CloseView : MonoBehaviour
+namespace PokemonGame
 {
-    private void Update()
+    public class CloseView : MonoBehaviour
     {
-        if (Input.GetKeyDown(Configuration.CancelKey))
+        private void Update()
         {
-            ViewManager.Instance.ShowLast();
+            if (Input.GetKeyDown(Keybind.CancelKey))
+            {
+                ViewManager.Instance.ShowLast();
+            }
         }
     }
 }

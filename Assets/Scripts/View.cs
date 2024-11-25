@@ -1,17 +1,19 @@
 ﻿using UnityEngine;
 
-public abstract class View : MonoBehaviour
+namespace PokemonGame
 {
-    public abstract void Initialize();
-
-    public void Show()
+    public abstract class View : MonoBehaviour
     {
-        gameObject.SetActive(true);
-    }
+        public abstract void Initialize();
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
+        public void Show()
+        {
+            gameObject.SetActive(true);
+        }
+
+        public void Hide()
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
-

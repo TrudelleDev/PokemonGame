@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7b3c62737bd2940a7d695867a25ac0, type: 3}
+  m_Name: Bulbasaur
+  m_EditorClassIdentifier: 
+  pokedexNumber: 1
+  pokemonName: Bulbasaur
+  types:
+    firstType: {fileID: 11400000, guid: ff66bd2a7c12c8b4082f2d9aa5704c0c, type: 2}
+    secondType: {fileID: 11400000, guid: eb5379c04a55e164989d94e0b1377735, type: 2}
+    hasSecondType: 1
+  genderRatio:
+    maleRatio: 87.5
+    femaleRatio: 12.5
+  baseStats:
+    healthPoint: 45
+    attack: 49
+    defense: 49
+    specialAttack: 65
+    specialDefense: 65
+    speed: 45
+    total: 318
+  sprites:
+    frontSprite: {fileID: 21300000, guid: 3b471332e2464c942a6d82165b3e3c3a, type: 3}
+    backSprite: {fileID: 21300000, guid: cdbcb3585c848cd44ae4326439c96c63, type: 3}
+    menuSprite: {fileID: 918225614, guid: f46eb03f52dcc894980e3e7ff42bff71, type: 3}
+  learnsets: []

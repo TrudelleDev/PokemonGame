@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonClone.Menu
+namespace PokemonGame
 {
     public class SelectableUIElement : MonoBehaviour
     {

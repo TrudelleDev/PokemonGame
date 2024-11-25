@@ -1,8 +1,6 @@
-using PokemonClone.Config;
-using PokemonClone.Menu;
 using UnityEngine;
 
-namespace PokemonClone.Controller
+namespace PokemonGame
 {
     public class MenuController : MonoBehaviour
     {
@@ -16,15 +14,15 @@ namespace PokemonClone.Controller
 
         private void Update()
         {
-            if (Input.GetKeyDown(Configuration.DownKey) && currentbuttonIndex < transform.childCount - 1)
+            if (Input.GetKeyDown(Keybind.DownKey) && currentbuttonIndex < transform.childCount - 1)
             {
                 currentbuttonIndex++;
             }
-            if (Input.GetKeyDown(Configuration.UpKey) && currentbuttonIndex > 0)
+            if (Input.GetKeyDown(Keybind.UpKey) && currentbuttonIndex > 0)
             {
                 currentbuttonIndex--;
             }
-            if (Input.GetKeyDown(Configuration.AcceptKey))
+            if (Input.GetKeyDown(Keybind.AcceptKey))
             {
                 transform.GetChild(currentbuttonIndex).GetComponent<SelectableUIElement>().Click();
             }

@@ -1,11 +1,9 @@
-using PokemonClone.Config;
-using PokemonGame.UI;
+using PokemonGame.Encyclopedia.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.ScrollView
+namespace PokemonGame
 {
-    // TODO: Modify this code to work with any time of menu.
     public class ScrollViewController : MonoBehaviour
     {
         private int currentbuttonIndex;
@@ -29,12 +27,12 @@ namespace PokemonGame.ScrollView
 
         private void Update()
         {
-            if (Input.GetKeyDown(Configuration.DownKey) && currentbuttonIndex < transform.childCount - 1)
+            if (Input.GetKeyDown(Keybind.DownKey) && currentbuttonIndex < transform.childCount - 1)
             {
                 currentbuttonIndex++;
-                rectTransform.anchoredPosition += (height + spacing) * Vector2.up;         
+                rectTransform.anchoredPosition += (height + spacing) * Vector2.up;
             }
-            if (Input.GetKeyDown(Configuration.UpKey) && currentbuttonIndex > 0)
+            if (Input.GetKeyDown(Keybind.UpKey) && currentbuttonIndex > 0)
             {
                 currentbuttonIndex--;
                 rectTransform.anchoredPosition += (height + spacing) * Vector2.down;
