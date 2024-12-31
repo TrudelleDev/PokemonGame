@@ -4,21 +4,21 @@ using UnityEngine.UI;
 namespace PokemonGame.Pokemons.UI
 {
     [RequireComponent(typeof(Image))]
-    public class PokemonGenderSprite : MonoBehaviour, IPokemonBind, IComponentInitialize
+    public class PokemonGenderSprite : MonoBehaviour, IPokemonBind
     {
         [SerializeField] private Sprite maleSprite;
         [SerializeField] private Sprite femaleSprite;
 
         private Image genderImage;
 
-        public void Initialize()
+        private void Awake()
         {
             genderImage = GetComponent<Image>();
         }
 
         public void Bind(Pokemon pokemon)
-        {
-            if (pokemon.Gender == Gender.Male)
+        {         
+            if (pokemon.Gender == PokemonGender.Male)
             {
                 genderImage.sprite = maleSprite;
             }

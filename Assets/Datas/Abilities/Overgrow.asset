@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
   m_Name: Overgrow
   m_EditorClassIdentifier: 
-  abilityName: Overgrow
-  description: Ups GRASS moves in a pinch.
+  name: Overgrow
+  effect: Ups Grass moves in a pinch.

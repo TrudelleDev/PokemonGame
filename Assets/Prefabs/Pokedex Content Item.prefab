@@ -214,7 +214,6 @@ GameObject:
   - component: {fileID: 1291696506968211919}
   - component: {fileID: 4803839471989126709}
   - component: {fileID: 8510638212519113177}
-  - component: {fileID: 3738407555824687552}
   m_Layer: 5
   m_Name: Pokedex Content Item
   m_TagString: Untagged
@@ -288,19 +287,6 @@ MonoBehaviour:
   secondType: {fileID: 9182081169909254042}
   pokedexNumber: {fileID: 8987276620782243159}
   pokemonName: {fileID: 1340985882586678455}
---- !u!114 &3738407555824687552
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2692901365550116988}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d638c6350e118054fa526a22f2a1a3cc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  selectorImage: {fileID: 6762352609631291900}
 --- !u!1 &3069092139425884833
 GameObject:
   m_ObjectHideFlags: 0
@@ -432,8 +418,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 40433159d0716eb44a1b6472f6e7b41f, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 22ba64afcee352d4bbc99421f2840625, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d7df878a7361fe845842d5b31b350b9e, type: 2}
+  m_sharedMaterial: {fileID: -1416014958329754778, guid: d7df878a7361fe845842d5b31b350b9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -457,8 +443,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -791,8 +777,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 001
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 40433159d0716eb44a1b6472f6e7b41f, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 22ba64afcee352d4bbc99421f2840625, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: d7df878a7361fe845842d5b31b350b9e, type: 2}
+  m_sharedMaterial: {fileID: -1416014958329754778, guid: d7df878a7361fe845842d5b31b350b9e, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -816,8 +802,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 40
-  m_fontSizeBase: 40
+  m_fontSize: 16
+  m_fontSizeBase: 16
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 40
@@ -925,8 +911,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: charizard
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 40433159d0716eb44a1b6472f6e7b41f, type: 2}
-  m_sharedMaterial: {fileID: 2100000, guid: 22ba64afcee352d4bbc99421f2840625, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: bbb3c6bf4cdb2f64aa0ebfc99674d320, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: bbb3c6bf4cdb2f64aa0ebfc99674d320, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -950,8 +936,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 50
-  m_fontSizeBase: 50
+  m_fontSize: 36
+  m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

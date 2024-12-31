@@ -1,5 +1,5 @@
 using PokemonGame.Encyclopedia;
-using PokemonGame.Pokemons.Move;
+using PokemonGame.Pokemons.Moves;
 using System.Collections.Generic;
 using UnityEngine;
 

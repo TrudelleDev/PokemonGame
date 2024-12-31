@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: de7b3c62737bd2940a7d695867a25ac0, type: 3}
   m_Name: Charmander
   m_EditorClassIdentifier: 
-  pokedexNumber: 1
-  pokemonName: 
+  pokedexNumber: 4
+  pokemonName: Charmander
   types:
-    firstType: {fileID: 0}
+    firstType: {fileID: 11400000, guid: 525ce54b3f3d0fc439b079327ada465e, type: 2}
     secondType: {fileID: 0}
     hasSecondType: 0
   genderRatio:
@@ -30,7 +30,7 @@ MonoBehaviour:
     speed: 0
     total: 0
   sprites:
-    frontSprite: {fileID: 0}
-    backSprite: {fileID: 0}
-    menuSprite: {fileID: 0}
+    frontSprite: {fileID: 21300000, guid: b4010f8690d729a4a9ad516a1ac9d144, type: 3}
+    backSprite: {fileID: 21300000, guid: 9a87a5026363d054190731ae64f2265b, type: 3}
+    menuSprite: {fileID: 456928998, guid: 25f2d9502753aba4eb3a2238f67bf2cb, type: 3}
   learnsets: []

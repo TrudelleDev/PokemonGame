@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace PokemonGame.Pokemons.UI
 {
     [RequireComponent(typeof(Slider))]
-    public class HealthBar : MonoBehaviour, IPokemonBind, IComponentInitialize
+    public class HealthBar : MonoBehaviour, IPokemonBind
     {
         [SerializeField] private Sprite exelentHealthSprite;
         [SerializeField] private Sprite goodHealthSprite;
@@ -14,7 +14,7 @@ namespace PokemonGame.Pokemons.UI
 
         private Slider slider;
 
-        public void Initialize()
+        private void Awake()
         {
             slider = GetComponent<Slider>();
         }

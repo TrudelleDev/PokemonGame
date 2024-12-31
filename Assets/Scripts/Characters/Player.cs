@@ -1,4 +1,3 @@
-using PokemonGame.Characters.PokemonTeam;
 using PokemonGame.Encyclopedia;
 using PokemonGame.Pokemons;
 using UnityEngine;
@@ -7,8 +6,12 @@ namespace PokemonGame.Characters
 {
     public class Player : MonoBehaviour
     {
+        [SerializeField] private string trainerName;
+
         private Party party;
         private Pokedex pokedex;
+
+        public string TrainerName => trainerName;
 
 
         private void Awake()
@@ -21,8 +24,11 @@ namespace PokemonGame.Characters
         {
             foreach (Pokemon pokemon in party.Pokemons)
             {
-                pokedex.AddData(new PokedexEntry(true, pokemon.PokemonData));
+                pokemon.OwnerName = trainerName;
+                pokedex.AddData(new PokedexEntry(true, pokemon.Data));
             }
+
+            party.SelectPokemon(0); // For testing
         }
     }
 }
