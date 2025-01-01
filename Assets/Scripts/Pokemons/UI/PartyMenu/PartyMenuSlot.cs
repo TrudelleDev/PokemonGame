@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 namespace PokemonGame.Pokemons.UI.PartyMenu
 {
+    [RequireComponent(typeof(Button))]
     public class PartyMenuSlot : MonoBehaviour, IPokemonBind
     {
         [SerializeField] private TextMeshProUGUI pokemonName;
@@ -16,6 +17,8 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
         public void Bind(Pokemon pokemon)
         {
+            SetActive(true);
+
             pokemonName.text = pokemon.Data.PokemonName;
             remainingHealth.text = $"{pokemon.HealthRemaining}/";
             totalHealth.text = $"{pokemon.CoreStat.HealthPoint}";
@@ -24,25 +27,15 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
             genderSprite.Bind(pokemon);
             menuSprite.Bind(pokemon);
             healthBar.Bind(pokemon);
-
-            SetInteractable(true);
         }
 
-        public void SetInteractable(bool value)
+        public void SetActive(bool value)
         {
-            // Hide/Show every childs
-            for (int i = 0; i < transform.childCount; i++)
-            {
-                transform.GetChild(i).gameObject.SetActive(value);
-            }
+            // Show/Hide The content of the party menu slot
+            transform.GetChild(0).gameObject.SetActive(value);
 
-            // If value is false its will show the disable sprite
-            // If value is true its will show the normal sprite
-            // The controller will also skips the party menu slot if value is false
-            if (transform.GetComponent<Button>() != null)
-            {
-                transform.GetComponent<Button>().interactable = value;
-            }
+            // Show normal sprite or disabled sprite of the button
+            transform.GetComponent<Button>().interactable = value;
         }
     }
 }

@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace PokemonGame
+namespace PokemonGame.MenuControllers
 {
     public class ButtonMenuController : MonoBehaviour
     {
+        [SerializeField] private Button[] buttons;
+
         private readonly List<Button> interactables = new();
         private int currentButtonIndex;
         private int previousButtonIndex;
@@ -17,30 +19,22 @@ namespace PokemonGame
 
         private void Start()
         {
-
-            for (int i = 0; i < transform.childCount; i++)
+            foreach (Button button in buttons)
             {
-                if (transform.GetChild(i).GetComponentInChildren<Button>())
+                if (button.interactable) 
                 {
-                    if (transform.GetChild(i).GetComponentInChildren<Button>().interactable)
-                    {
-                        interactables.Add(transform.GetChild(i).GetComponentInChildren<Button>());
-                    }                    
+                    // Populate the list with only interactable buttons, ignore non-interactable buttons
+                    interactables.Add(button);
                 }
             }
 
             interactables[currentButtonIndex].Select();
         }
 
-        private void OnEnable()
-        {
-            //interactables[currentButtonIndex].Select();
-        }
-
-
 
         public void ResetController()
         {
+            // This will reset the state of the button to unselected
             EventSystem.current.SetSelectedGameObject(null);
             currentButtonIndex = 0;
         }
@@ -65,11 +59,12 @@ namespace PokemonGame
             }
 
             UpdateSelection();
-           
+
         }
 
         private void UpdateSelection()
         {
+            // Only update if the selection change
             if (currentButtonIndex != previousButtonIndex)
             {
                 interactables[currentButtonIndex].Select();
