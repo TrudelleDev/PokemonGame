@@ -1,7 +1,6 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.MenuControllers
 {
     public class HorizontalMenuController : MonoBehaviour
     {

@@ -1,3 +1,4 @@
+using PokemonGame.MenuControllers;
 using PokemonGame.Pokemons.UI.Summary;
 using UnityEngine;
 
@@ -5,13 +6,12 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
 {
     public class SummaryMovePanel : MonoBehaviour
     {
-        [SerializeField] private SummaryMoveManager moveManager;
         [SerializeField] private SummaryMoveDescription moveDescription;
         [SerializeField] private SummaryPokemonDescription pokemonDescription;
         [SerializeField] private SummaryPokemonDisplay pokemonDisplay;
         [Space]
-        [SerializeField] private VerticalMenuController verticalMenuController;
-        [SerializeField] private HorizontalMenuController horizontalMenuController;
+        [SerializeField] private VerticalMenuController summaryMoveController;
+        [SerializeField] private HorizontalMenuController summaryPageController;
         [Space]
         [SerializeField] private MenuButton cancelButton;
         [Space]
@@ -21,7 +21,7 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
 
         private void Awake()
         {
-            verticalMenuController.OnSelect += OnMenuControllerSelect;
+            summaryMoveController.OnSelect += OnMenuControllerSelect;
             cancelButton.OnClick += () => CloseMoveSelection();
         }
 
@@ -29,10 +29,11 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
         {
             Pokemon pokemon = party.SelectedPokemon;
 
-            verticalMenuController.enabled = false;
-            moveManager.Bind(pokemon);
-        }
+            summaryMoveController.enabled = false;
 
+            DisableSummaryMoves();
+            BindSumaryMoves(pokemon.Moves);        
+        }
 
         private void Update()
         {
@@ -48,10 +49,9 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
 
         private void OpenMoveSelection()
         {
-            verticalMenuController.enabled = true;
-            horizontalMenuController.enabled = false;
+            summaryMoveController.enabled = true;
+            summaryPageController.enabled = false;
             IsMoveDescriptionOpen = false;
-
             pokemonDisplay.gameObject.SetActive(false);
             pokemonDescription.gameObject.SetActive(true);
             moveDescription.gameObject.SetActive(true);
@@ -59,14 +59,37 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
 
         private void CloseMoveSelection()
         {
-            horizontalMenuController.enabled = true;
+            summaryPageController.enabled = true;
             IsMoveDescriptionOpen = true;
-
             pokemonDisplay.gameObject.SetActive(true);
             pokemonDescription.gameObject.SetActive(false);
-            moveDescription.gameObject.SetActive(false);
-            
-            verticalMenuController.ResetController();
+            moveDescription.gameObject.SetActive(false);       
+            summaryMoveController.ResetController();
+        }
+
+        private void DisableSummaryMoves()
+        {
+            for (int i = 0; i < summaryMoveController.transform.childCount - 1; i++)
+            {
+                if (summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>() != null)
+                {
+                    summaryMoveController.transform.GetChild(i).GetComponent<MenuButton>().Interactable = false;
+                }
+            }
+        }
+
+        private void BindSumaryMoves(Move[] moves)
+        {
+            for (int i = 0; i < moves.Length; i++)
+            {
+                if (summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>() != null)
+                {
+                    // Enable the move slot
+                    summaryMoveController.transform.GetChild(i).GetComponent<MenuButton>().Interactable = true;
+                    // Bind the move data to the slot
+                    summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>().Bind(moves[i]);
+                }
+            }
         }
 
         private void OnMenuControllerSelect(GameObject gameObject)

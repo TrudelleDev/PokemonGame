@@ -1,3 +1,4 @@
+using PokemonGame.MenuControllers;
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.Moves.UI.Summary;
 using PokemonGame.Pokemons.UI.Summary;
@@ -5,7 +6,7 @@ using UnityEngine;
 
 namespace PokemonGame.Views
 {
-    public class PokemonSummaryView : View
+    public class SummaryView : View
     {
         [SerializeField] private SummaryMovePanel movePanel;
 
@@ -19,6 +20,7 @@ namespace PokemonGame.Views
             closeView = GetComponent<CloseView>();
             horizontalMenuController = GetComponent<HorizontalMenuController>();
         }
+
 
         private void OnDisable()
         {

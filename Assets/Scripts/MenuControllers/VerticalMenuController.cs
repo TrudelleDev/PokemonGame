@@ -1,37 +1,30 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
-namespace PokemonGame
+namespace PokemonGame.MenuControllers
 {
     public class VerticalMenuController : MonoBehaviour
     {
-        [SerializeField] private MenuButton[] menuItems;
-
         private int currentButtonIndex;
         private int previousButtonIndex;
+
         private readonly List<MenuButton> interactables = new();
 
         public event Action<GameObject> OnSelect;
 
         private void Start()
         {
-            /*
-            for (int i = 0; i < menuItems.Length; i++)
-            {
-                if (menuItems[i].Interactable)
-                {
-                    interactables.Add(menuItems[i]);
-                }
-            }
-            */
-
             for (int i = 0; i < transform.childCount; i++)
             {
-                if (transform.GetChild(i).GetComponentInChildren<MenuButton>())
+                if (transform.GetChild(i).GetComponent<MenuButton>() != null)
                 {
-                    interactables.Add(transform.GetChild(i).GetComponentInChildren<MenuButton>());
+                    var menuButton = transform.GetChild(i).GetComponent<MenuButton>();
+
+                    if (menuButton.Interactable)
+                    {
+                        interactables.Add(menuButton);
+                    }
                 }
             }
 

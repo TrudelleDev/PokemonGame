@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 6051706205316444792}
   - component: {fileID: 4496854484554949168}
   - component: {fileID: 6426199206631971996}
-  - component: {fileID: 4334136390599062507}
+  - component: {fileID: 5459561102366023912}
   m_Layer: 5
   m_Name: Move
   m_TagString: Untagged
@@ -67,7 +67,7 @@ MonoBehaviour:
   moveName: {fileID: 5303021870168704242}
   powerPoint: {fileID: 1683176109749001444}
   moveSprite: {fileID: 2749403295874306359}
---- !u!114 &4334136390599062507
+--- !u!114 &5459561102366023912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -76,11 +76,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 1944173049701413208}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c1a00956b53fc984682d879c98eb5ad5, type: 3}
+  m_Script: {fileID: 11500000, guid: bc4e08fd8577d8e468d2385442dc96e6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   targetGraphic: {fileID: 2842382469421788661}
-  interactable: 0
+  interactable: 1
 --- !u!1 &2035309106277200749
 GameObject:
   m_ObjectHideFlags: 0
