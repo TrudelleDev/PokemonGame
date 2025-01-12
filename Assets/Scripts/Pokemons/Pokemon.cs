@@ -56,7 +56,8 @@ namespace PokemonGame.Pokemons
 
             HealthRemaining = CoreStat.HealthPoint;
 
-            ID = IDGenerator.GetID();
+            IDGenerator generator = new IDGenerator(1000, 9999);
+            ID = generator.GetID(); 
 
             OnHealthChange?.Invoke(HealthRemaining);
 

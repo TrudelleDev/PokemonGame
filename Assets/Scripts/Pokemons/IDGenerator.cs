@@ -3,22 +3,19 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons
 {
-    public static class IDGenerator
+    public class IDGenerator
     {
-        private static readonly List<int> avaliableIDs = new();
+        private readonly List<int> avaliableIDs = new();
 
-        private static readonly int minRangeID = 1000;
-        private static readonly int maxRangeID = 9999;
-
-        static IDGenerator()
+        public IDGenerator(int minRange, int maxRange)
         {
-            for (int i = minRangeID; i < maxRangeID; i++)
+            for (int i = minRange; i < maxRange; i++)
             {
                 avaliableIDs.Add(i);
             }
         }
 
-        public static string GetID()
+        public string GetID()
         {
             if (avaliableIDs.Count > 0)
             {
