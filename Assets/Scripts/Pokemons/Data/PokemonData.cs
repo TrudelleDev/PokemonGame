@@ -19,6 +19,8 @@ namespace PokemonGame.Pokemons.Data
         [SerializeField] private PokemonStats baseStats;
         [Space]
         [SerializeField] private PokemonSprites sprites;
+        [Space]
+        [SerializeField] private AnimatorOverrideController menuSpriteOverrider;
 
         public int PokedexNumber => pokedexNumber;
         public string PokemonName => pokemonName;
@@ -26,6 +28,7 @@ namespace PokemonGame.Pokemons.Data
         public PokemonGenderRatio GenderRatio => genderRatio;
         public PokemonStats BaseStats => baseStats;
         public PokemonSprites Sprites => sprites;
+        public AnimatorOverrideController MenuSpriteOverrider => menuSpriteOverrider;
 
         private void OnValidate()
         {

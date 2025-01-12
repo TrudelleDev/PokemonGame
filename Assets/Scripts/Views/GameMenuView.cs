@@ -16,7 +16,7 @@ namespace PokemonGame.Views
         {
             pokedex.OnClick += () => ViewManager.Instance.Show<PokedexView>();
             party.OnClick += () => ViewManager.Instance.Show<PartyMenuView>();
-            inventory.OnClick += () => ViewManager.Instance.Show<SummaryView>();
+           // inventory.OnClick += () => ViewManager.Instance.Show<SummaryView>();
             exit.OnClick += () => ViewManager.Instance.ShowLast();
         }
 

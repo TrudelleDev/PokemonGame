@@ -332,4 +332,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetGraphic: {fileID: 7701006380779963560}
+  menuItemType: 0
+  basic: 0
+  spriteSwap: 0
   interactable: 1
+  disableSprite: {fileID: 0}
+  selectedSprite: {fileID: 0}
+  nomralSprite: {fileID: 0}

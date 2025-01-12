@@ -27,8 +27,6 @@ namespace PokemonGame.Characters
                 pokemon.OwnerName = trainerName;
                 pokedex.AddData(new PokedexEntry(true, pokemon.Data));
             }
-
-            party.SelectPokemon(0); // For testing
         }
     }
 }

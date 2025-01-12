@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 6426199206631971996}
   - component: {fileID: 5459561102366023912}
   m_Layer: 5
-  m_Name: Move
+  m_Name: Summary Move
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveName: {fileID: 5303021870168704242}
-  powerPoint: {fileID: 1683176109749001444}
+  movePowerPoint: {fileID: 1683176109749001444}
   moveSprite: {fileID: 2749403295874306359}
 --- !u!114 &5459561102366023912
 MonoBehaviour:
@@ -377,7 +377,7 @@ GameObject:
   - component: {fileID: 5862140014788366541}
   - component: {fileID: 1683176109749001444}
   m_Layer: 5
-  m_Name: Power Point
+  m_Name: Move Power Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -511,7 +511,7 @@ GameObject:
   - component: {fileID: 5583168814732545685}
   - component: {fileID: 2749403295874306359}
   m_Layer: 5
-  m_Name: Type Sprite
+  m_Name: Move Type Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -586,7 +586,7 @@ GameObject:
   - component: {fileID: 8808977177871698070}
   - component: {fileID: 2276989049300005460}
   m_Layer: 5
-  m_Name: Power Point Label
+  m_Name: Move Power Point Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

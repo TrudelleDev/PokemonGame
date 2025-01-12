@@ -3,20 +3,15 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons.UI.Summary
 {
-    public class SummaryPokemonDisplay : MonoBehaviour
+    public class SummaryPokemonDisplay : MonoBehaviour, IPokemonBind
     {
         [SerializeField] private TextMeshProUGUI pokemonName;
         [SerializeField] private TextMeshProUGUI pokemonLevel;
         [SerializeField] private PokemonGenderSprite pokemonGenderSprite;
         [SerializeField] private PokemonSprite pokemonSprite;
-        [Space]
-        [SerializeField] private Party party;
 
-
-        private void Start()
+        public void Bind(Pokemon pokemon)
         {
-            Pokemon pokemon = party.SelectedPokemon;
-
             pokemonName.text = $"{pokemon.Data.PokemonName}";
             pokemonLevel.text = $"<size=30>Lv</size> {pokemon.Level}";
             pokemonGenderSprite.Bind(pokemon);

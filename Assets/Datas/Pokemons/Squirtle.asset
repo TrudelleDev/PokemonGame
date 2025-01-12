@@ -33,4 +33,4 @@ MonoBehaviour:
     frontSprite: {fileID: 0}
     backSprite: {fileID: 0}
     menuSprite: {fileID: 0}
-  learnsets: []
+  menuSpriteOverrider: {fileID: 22100000, guid: 35777c18f759fee40971651b8a686f08, type: 2}

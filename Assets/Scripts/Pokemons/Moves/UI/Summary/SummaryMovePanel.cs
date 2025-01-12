@@ -9,30 +9,20 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
         [SerializeField] private SummaryMoveDescription moveDescription;
         [SerializeField] private SummaryPokemonDescription pokemonDescription;
         [SerializeField] private SummaryPokemonDisplay pokemonDisplay;
+        [SerializeField] private SummaryMoveManager moveManager;
         [Space]
         [SerializeField] private VerticalMenuController summaryMoveController;
-        [SerializeField] private HorizontalMenuController summaryPageController;
+        [SerializeField] private HorizontalPanelController summaryPageController;
         [Space]
         [SerializeField] private MenuButton cancelButton;
-        [Space]
-        [SerializeField] private Party party;
 
-        public bool IsMoveDescriptionOpen { get; private set; }
+        public bool IsMoveDescriptionOpen { get; private set; } = true;
 
         private void Awake()
         {
-            summaryMoveController.OnSelect += OnMenuControllerSelect;
+            summaryMoveController.Select += OnMenuControllerSelect;
             cancelButton.OnClick += () => CloseMoveSelection();
-        }
-
-        private void Start()
-        {
-            Pokemon pokemon = party.SelectedPokemon;
-
             summaryMoveController.enabled = false;
-
-            DisableSummaryMoves();
-            BindSumaryMoves(pokemon.Moves);        
         }
 
         private void Update()
@@ -45,6 +35,13 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
             {
                 CloseMoveSelection();
             }
+        }
+
+        public void Bind(Pokemon pokemon)
+        {
+            moveManager.Bind(pokemon);
+            pokemonDescription.Bind(pokemon);
+            summaryMoveController.ResetMenuItemList();
         }
 
         private void OpenMoveSelection()
@@ -60,43 +57,20 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
         private void CloseMoveSelection()
         {
             summaryPageController.enabled = true;
+            summaryMoveController.enabled = false;
             IsMoveDescriptionOpen = true;
             pokemonDisplay.gameObject.SetActive(true);
             pokemonDescription.gameObject.SetActive(false);
             moveDescription.gameObject.SetActive(false);       
-            summaryMoveController.ResetController();
-        }
-
-        private void DisableSummaryMoves()
-        {
-            for (int i = 0; i < summaryMoveController.transform.childCount - 1; i++)
-            {
-                if (summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>() != null)
-                {
-                    summaryMoveController.transform.GetChild(i).GetComponent<MenuButton>().Interactable = false;
-                }
-            }
-        }
-
-        private void BindSumaryMoves(Move[] moves)
-        {
-            for (int i = 0; i < moves.Length; i++)
-            {
-                if (summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>() != null)
-                {
-                    // Enable the move slot
-                    summaryMoveController.transform.GetChild(i).GetComponent<MenuButton>().Interactable = true;
-                    // Bind the move data to the slot
-                    summaryMoveController.transform.GetChild(i).GetComponent<SummaryMove>().Bind(moves[i]);
-                }
-            }
+            summaryMoveController.ResetMenuController();
         }
 
         private void OnMenuControllerSelect(GameObject gameObject)
         {
+            // Display the infromation of the move when selecting a move 
             if (gameObject.GetComponent<SummaryMove>() != null)
             {
-                Move move = gameObject.GetComponent<SummaryMove>().Move;
+                Move move = gameObject.GetComponent<SummaryMove>().MoveReference;
 
                 if (move != null)
                 {

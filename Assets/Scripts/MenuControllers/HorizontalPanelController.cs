@@ -2,32 +2,14 @@ using UnityEngine;
 
 namespace PokemonGame.MenuControllers
 {
-    public class HorizontalMenuController : MonoBehaviour
+    public class HorizontalPanelController : MonoBehaviour
     {
-        [SerializeField] private GameObject[] panels;
-
         private int currentPanelIndex;
         private int previousPanelIndex;
 
-        private void Start()
-        {
-            for (int i = 0; i < panels.Length; i++)
-            {
-                panels[i].SetActive(false);
-            }
-
-            panels[0].SetActive(true);
-        }
-
-        public void ResetController()
-        {
-            currentPanelIndex = 0;
-        }
-
-
         private void Update()
         {
-            if (Input.GetKeyDown(Keybind.RightKey) && currentPanelIndex < panels.Length - 1)
+            if (Input.GetKeyDown(Keybind.RightKey) && currentPanelIndex < transform.childCount - 1)
             {
                 currentPanelIndex++;
             }
@@ -39,12 +21,18 @@ namespace PokemonGame.MenuControllers
             UpdateSelection();
         }
 
+        public void ResetController()
+        {
+            currentPanelIndex = 0;
+        }
+
         private void UpdateSelection()
         {
             if (currentPanelIndex != previousPanelIndex)
             {
-                panels[currentPanelIndex].SetActive(true);
-                panels[previousPanelIndex].SetActive(false);
+                transform.GetChild(previousPanelIndex).gameObject.SetActive(false);
+                transform.GetChild(currentPanelIndex).gameObject.SetActive(true);
+
                 previousPanelIndex = currentPanelIndex;
             }
         }

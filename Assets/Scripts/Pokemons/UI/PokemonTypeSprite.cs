@@ -8,15 +8,10 @@ namespace PokemonGame.Pokemons.UI
     {
         [SerializeField] private PokemonType pokemonType;
 
-        private Image image;
-
-        private void Awake()
-        {
-            image = GetComponent<Image>();
-        }
-
         public void Bind(Pokemon pokemon)
         {
+            Image  image = GetComponent<Image>();
+
             if(pokemonType == PokemonType.FirstType)
             {
                 image.sprite = pokemon.Data.Types.FirstType.Sprite;

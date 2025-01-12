@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,6 +14,8 @@ namespace PokemonGame.Pokemons
         public IReadOnlyList<Pokemon> Pokemons => pokemons;
 
         private readonly List<Pokemon> pokemons = new();
+
+        public event Action<Pokemon> OnSelectPokemon;
 
         private void Awake()
         {
@@ -32,9 +35,10 @@ namespace PokemonGame.Pokemons
             }
         }
 
-        public void SelectPokemon(int index)
+        public void SelectPokemon(Pokemon pokemon)
         {
-            SelectedPokemon = pokemons[index];
+            SelectedPokemon = pokemon;
+            OnSelectPokemon?.Invoke(pokemon);
         }
 
         public void AddPokemon(Pokemon pokemon)

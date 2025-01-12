@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons.UI.Summary
 {
-    public class SummaryPokemonInfo : MonoBehaviour
+    public class SummaryPokemonInfo : MonoBehaviour, IPokemonBind
     {
         [Header("General")]
         [SerializeField] private TextMeshProUGUI pokedexNumber;
@@ -16,13 +16,9 @@ namespace PokemonGame.Pokemons.UI.Summary
         [Header("Type")]
         [SerializeField] private PokemonTypeSprite firstType;
         [SerializeField] private PokemonTypeSprite secondType;
-        [Space]
-        [SerializeField] private Party party;
 
-        private void Start()
+        public void Bind(Pokemon pokemon)
         {
-            Pokemon pokemon = party.SelectedPokemon;
-
             pokedexNumber.text = $"{pokemon.Data.PokedexNumber:000}";
             pokemonName.text = $"{pokemon.Data.PokemonName}";
             trainerName.text = $"{pokemon.OwnerName}";
@@ -34,7 +30,6 @@ namespace PokemonGame.Pokemons.UI.Summary
 
             firstType.Bind(pokemon);
             secondType.Bind(pokemon);
-
         }
     }
 }

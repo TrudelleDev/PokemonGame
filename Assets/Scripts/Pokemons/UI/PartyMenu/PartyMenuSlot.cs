@@ -4,29 +4,34 @@ using UnityEngine.UI;
 
 namespace PokemonGame.Pokemons.UI.PartyMenu
 {
-    [RequireComponent(typeof(Button))]
     public class PartyMenuSlot : MonoBehaviour, IPokemonBind
     {
         [SerializeField] private TextMeshProUGUI pokemonName;
-        [SerializeField] private TextMeshProUGUI remainingHealth;
-        [SerializeField] private TextMeshProUGUI totalHealth;
-        [SerializeField] private TextMeshProUGUI level;
-        [SerializeField] private PokemonGenderSprite genderSprite;
-        [SerializeField] private PokemonSprite menuSprite;
-        [SerializeField] private HealthBar healthBar;
+        [SerializeField] private TextMeshProUGUI pokemonRemainingHealth;
+        [SerializeField] private TextMeshProUGUI pokemonTotalHealth;
+        [SerializeField] private TextMeshProUGUI pokemonLevel;
+        [SerializeField] private PokemonGenderSprite pokemonGenderSprite;
+        [SerializeField] private Animator pokemonMenuSpriteAnimator;
+        [SerializeField] private HealthBar pokemonHealthBar;
+
+        public Pokemon Pokemon { get; private set; }
 
         public void Bind(Pokemon pokemon)
         {
+            Pokemon = pokemon;
+
             SetActive(true);
 
             pokemonName.text = pokemon.Data.PokemonName;
-            remainingHealth.text = $"{pokemon.HealthRemaining}/";
-            totalHealth.text = $"{pokemon.CoreStat.HealthPoint}";
-            level.text = $"Lv{pokemon.Level}";
+            pokemonRemainingHealth.text = $"{pokemon.HealthRemaining}/";
+            pokemonTotalHealth.text = $"{pokemon.CoreStat.HealthPoint}";
+            pokemonLevel.text = $"Lv{pokemon.Level}";
 
-            genderSprite.Bind(pokemon);
-            menuSprite.Bind(pokemon);
-            healthBar.Bind(pokemon);
+            pokemonGenderSprite.Bind(pokemon);
+            pokemonHealthBar.Bind(pokemon);
+
+            pokemonMenuSpriteAnimator.runtimeAnimatorController = pokemon.Data.MenuSpriteOverrider;
+
         }
 
         public void SetActive(bool value)
@@ -35,7 +40,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
             transform.GetChild(0).gameObject.SetActive(value);
 
             // Show normal sprite or disabled sprite of the button
-            transform.GetComponent<Button>().interactable = value;
+            transform.GetComponent<MenuButton>().Interactable = value;
         }
     }
 }

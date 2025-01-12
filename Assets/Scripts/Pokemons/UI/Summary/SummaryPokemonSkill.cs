@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons.UI.Summary
 {
-    public class SummaryPokemonSkill : MonoBehaviour
+    public class SummaryPokemonSkill : MonoBehaviour, IPokemonBind
     {
         [Header("General")]
         [SerializeField] private TextMeshProUGUI remainingHealth;
@@ -17,14 +17,9 @@ namespace PokemonGame.Pokemons.UI.Summary
         [Header("Ability")]
         [SerializeField] private TextMeshProUGUI abilityName;
         [SerializeField] private TextMeshProUGUI abilityEffect;
-        [Space]
-        [SerializeField] private Party party;
 
-
-        private void Start()
+        public void Bind(Pokemon pokemon)
         {
-            Pokemon pokemon = party.SelectedPokemon;
-
             remainingHealth.text = $"{pokemon.HealthRemaining}/";
             totalHealth.text = $"{pokemon.CoreStat.HealthPoint}";
             attack.text = $"{pokemon.CoreStat.Attack}";
