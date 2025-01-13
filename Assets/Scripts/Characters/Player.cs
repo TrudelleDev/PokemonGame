@@ -33,7 +33,7 @@ namespace PokemonGame.Characters
             }
 
             IDGenerator generator = new IDGenerator(10000, 99999);
-            ID = generator.GetID();     
+            ID = generator.GetID();
         }
 
         private void Update()

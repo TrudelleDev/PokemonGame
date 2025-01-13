@@ -21,13 +21,16 @@ namespace PokemonGame.Views
         {
             playerID.text = $"IDNo. {player.ID}";
             playerName.text = player.TrainerName;
-            playerMoney.text = $"${player.Money}";          
+            playerMoney.text = $"${player.Money}";
         }
 
         private void Update()
         {
+            // Format time to Hours/minutes
             TimeSpan time = TimeSpan.FromSeconds(player.TimePlayed);
             var timeConverted = string.Format("{0,1:00}:{1,2:00}", time.Hours, time.Minutes);
+
+            // Display time as Hours/minutes
             timePlayed.text = timeConverted;
         }
     }

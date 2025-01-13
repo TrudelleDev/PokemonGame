@@ -3678,7 +3678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &733327053
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4692,7 +4692,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "Pok\xE9mon List"
+  m_text: "POK\xE9MON LIST"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: bbb3c6bf4cdb2f64aa0ebfc99674d320, type: 2}
   m_sharedMaterial: {fileID: 1583439172908871083, guid: bbb3c6bf4cdb2f64aa0ebfc99674d320, type: 2}
@@ -7721,7 +7721,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1254917271
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7739,10 +7739,10 @@ RectTransform:
   - {fileID: 994031554}
   m_Father: {fileID: 949524781}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: -0.000005517577, y: 0.0000076293563}
+  m_SizeDelta: {x: 540, y: 360}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1254917273
 CanvasRenderer:
