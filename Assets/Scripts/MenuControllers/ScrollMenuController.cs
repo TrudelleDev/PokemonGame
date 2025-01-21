@@ -37,6 +37,7 @@ namespace PokemonGame.MenuControllers
 
         protected override void Update()
         {
+            base.Update();
             CheckKeyPressLongEnough();
 
             // If the user is holding down the control key long enough,its will enable fast scrolling
@@ -64,6 +65,11 @@ namespace PokemonGame.MenuControllers
             }
 
             UpdateSelection();
+
+            if (Input.GetKeyDown(Keybind.AcceptKey))
+            {
+                OnClick();
+            }
         }
 
         private void CheckKeyPressLongEnough()

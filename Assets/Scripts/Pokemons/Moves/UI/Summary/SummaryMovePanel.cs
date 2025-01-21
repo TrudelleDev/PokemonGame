@@ -65,12 +65,12 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
             summaryMoveController.ResetMenuController();
         }
 
-        private void OnMenuControllerSelect(GameObject gameObject)
+        private void OnMenuControllerSelect(MenuButton menuButton)
         {
             // Display the infromation of the move when selecting a move 
-            if (gameObject.GetComponent<SummaryMove>() != null)
+            if (menuButton.GetComponent<SummaryMove>() != null)
             {
-                Move move = gameObject.GetComponent<SummaryMove>().MoveReference;
+                Move move = menuButton.GetComponent<SummaryMove>().MoveReference;
 
                 if (move != null)
                 {
