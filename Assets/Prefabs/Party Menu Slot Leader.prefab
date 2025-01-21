@@ -499,7 +499,7 @@ MonoBehaviour:
   pokemonTotalHealth: {fileID: 7325809509213123372}
   pokemonLevel: {fileID: 3237178199824483526}
   pokemonGenderSprite: {fileID: 9201569593437526811}
-  pokemonMenuSpriteAnimator: {fileID: 8504367937617350216}
+  pokemonMenuSprite: {fileID: 7837214103663867566}
   pokemonHealthBar: {fileID: 5984215436231405351}
 --- !u!114 &7412460696292355753
 MonoBehaviour:
@@ -1205,7 +1205,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9007578573626543565}
-  m_Enabled: 1
+  m_Enabled: 0
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 22100000, guid: 35777c18f759fee40971651b8a686f08, type: 2}
   m_CullingMode: 0

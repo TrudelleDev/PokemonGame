@@ -10,8 +10,10 @@ namespace PokemonGame.MenuControllers
         protected int currentButtonIndex;
         protected int previousButtonIndex;
 
-        public event Action<GameObject> Select;
-        public event Action<GameObject> Click;
+        private int previousChildCount;
+
+        public event Action<MenuButton> Select;
+        public event Action<MenuButton> Click;
 
         private void Start()
         {
@@ -25,10 +27,20 @@ namespace PokemonGame.MenuControllers
                 OnSelect();
         }
 
-        protected abstract void Update();
+        protected virtual void Update()
+        {
+            // Update the list everytime the child count change
+            if(transform.childCount != previousChildCount)
+            {
+                PopulateMenuItemList();
+            }
+
+        }
 
         protected void PopulateMenuItemList()
         {
+            interactables.Clear();
+
             // Only add interactable menu button to the list
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -40,6 +52,8 @@ namespace PokemonGame.MenuControllers
                     }
                 }
             }
+
+            previousChildCount =  transform.childCount;
         }
 
         public void ResetMenuController()
@@ -64,22 +78,23 @@ namespace PokemonGame.MenuControllers
         {
             interactables[previousButtonIndex].UnSelect();
             interactables[currentButtonIndex].Select();
-            Select?.Invoke(interactables[currentButtonIndex].gameObject);
+            Select?.Invoke(interactables[currentButtonIndex]);
             previousButtonIndex = currentButtonIndex;
         }
 
         protected void OnClick()
         {
             interactables[currentButtonIndex].Click();
-            Click?.Invoke(interactables[currentButtonIndex].gameObject);
+            Click?.Invoke(interactables[currentButtonIndex]);
         }
 
         protected void UpdateSelection()
         {
-            if (currentButtonIndex != previousButtonIndex)
-            {
-                OnSelect();
-            }
+            OnSelect();
+           // if (currentButtonIndex != previousButtonIndex)
+            //{
+               // OnSelect();
+           // }
         }
     }
 }

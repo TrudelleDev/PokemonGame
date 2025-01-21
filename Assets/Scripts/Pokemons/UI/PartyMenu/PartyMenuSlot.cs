@@ -11,7 +11,8 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
         [SerializeField] private TextMeshProUGUI pokemonTotalHealth;
         [SerializeField] private TextMeshProUGUI pokemonLevel;
         [SerializeField] private PokemonGenderSprite pokemonGenderSprite;
-        [SerializeField] private Animator pokemonMenuSpriteAnimator;
+        //[SerializeField] private Animator pokemonMenuSpriteAnimator;
+        [SerializeField] private Image pokemonMenuSprite;
         [SerializeField] private HealthBar pokemonHealthBar;
 
         public Pokemon Pokemon { get; private set; }
@@ -29,8 +30,9 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
             pokemonGenderSprite.Bind(pokemon);
             pokemonHealthBar.Bind(pokemon);
+            pokemonMenuSprite.sprite = pokemon.Data.Sprites.MenuSprite;
 
-            pokemonMenuSpriteAnimator.runtimeAnimatorController = pokemon.Data.MenuSpriteOverrider;
+            //pokemonMenuSpriteAnimator.runtimeAnimatorController = pokemon.Data.MenuSpriteOverrider;
 
         }
 

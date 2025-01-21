@@ -58,12 +58,12 @@ namespace PokemonGame.Views
 
         }
 
-        private void OnPartySlotControllerClick(GameObject gameObject)
+        private void OnPartySlotControllerClick(MenuButton menuButton)
         {
             // Open party menu option when a pokemon is selected in the party menu
-            if (gameObject.GetComponent<PartyMenuSlot>() != null)
+            if (menuButton.GetComponent<PartyMenuSlot>() != null)
             {
-                party.SelectPokemon(gameObject.GetComponent<PartyMenuSlot>().Pokemon);
+                party.SelectPokemon(menuButton.GetComponent<PartyMenuSlot>().Pokemon);
 
                 partySlotController.enabled = false;
                 closeView.enabled = false;
