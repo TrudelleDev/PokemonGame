@@ -5,17 +5,17 @@ using UnityEngine;
 namespace PokemonGame.Characters
 {
     public class Player : MonoBehaviour
-    {
-        [SerializeField] private string trainerName;
-
+    {     
         private Party party;
         private Pokedex pokedex;
+        private string trainerName = "Alex";
 
         public string TrainerName => trainerName;
 
         public int Money { get; set; } = 0;
         public string ID { get; set; }
         public float TimePlayed { get; set; }
+
 
 
         private void Awake()
@@ -39,6 +39,7 @@ namespace PokemonGame.Characters
         private void Update()
         {
             TimePlayed += Time.deltaTime;
+
         }
     }
 }
