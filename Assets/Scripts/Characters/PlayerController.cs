@@ -1,14 +1,18 @@
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 namespace PokemonGame.Characters
 {
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] private Tilemap collisonTileMap;
+
         private const int LeftFoot = 1;
         private const int RightFoot = 2;
 
+        private bool isMoving = false;
         private bool isDestinationReach = true;
-        private int currentFoot = LeftFoot;
+        private int currentFoot = RightFoot;
 
         private PlayerState state = PlayerState.Idle;
         private Animator animator;
@@ -36,14 +40,17 @@ namespace PokemonGame.Characters
             currentAnimationSpeed = walkingAnimationSpeed;
         }
 
+
         private void Update()
         {
             HandleInput();
             UpdateAnimatorParameters();
             HandleState();
 
-            if (inputDirection == Vector3.zero)
+            if (inputDirection == Vector3.zero && isDestinationReach)
             {
+                isMoving = false;
+                
                 state = PlayerState.Idle;
             }
         }
@@ -69,7 +76,20 @@ namespace PokemonGame.Characters
             }
 
             animator.SetBool("IsDestinationReach", isDestinationReach);
+            animator.SetBool("IsMoving", isMoving);
             animator.SetInteger("CurrentFoot", currentFoot);
+        }
+
+        private bool IsColliding()
+        {
+            Vector3Int tileCoordinate = collisonTileMap.WorldToCell(endPosition);
+
+            if (collisonTileMap.GetTile(tileCoordinate) == null)
+            {
+                return false;
+            }
+
+            return true;
         }
 
         private void ChangeFoot()
@@ -100,18 +120,19 @@ namespace PokemonGame.Characters
                 }
                 else
                 {
-                    state = PlayerState.Walking;
+                    state = PlayerState.Walking;                  
                 }
 
                 animator.SetBool("IsRefacing", false);
             }
             if (state == PlayerState.Walking)
-            {
+            {            
                 Move();
             }
         
             if (state == PlayerState.Refacing)
             {
+                
                 animator.SetBool("IsRefacing", true);
             }         
         }
@@ -125,6 +146,9 @@ namespace PokemonGame.Characters
             // The player is not facing the same direction as the new input direction.
             if (facingDirection != inputDirection && isDestinationReach)
             {
+                // Reset to default foot.
+                currentFoot = RightFoot;
+
                 facingDirection = inputDirection;
                 return true;
             }
@@ -147,7 +171,11 @@ namespace PokemonGame.Characters
                 // Set the destination position.
                 endPosition = transform.position + inputDirection;
 
-                isDestinationReach = false;
+                if (IsColliding() == false)
+                {
+                    isMoving = true;
+                    isDestinationReach = false;                    
+                }          
             }
 
             // Move the player until he reach is destination
@@ -162,7 +190,7 @@ namespace PokemonGame.Characters
                 {
                     interpolationPoint = 0f;
                     isDestinationReach = true;
-
+                    
                     // Switch animation
                     ChangeFoot();
                 }
