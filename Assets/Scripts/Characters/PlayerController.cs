@@ -1,3 +1,4 @@
+using PokemonGame.GameState;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -5,12 +6,11 @@ namespace PokemonGame.Characters
 {
     public class PlayerController : MonoBehaviour
     {
-        [SerializeField] private Tilemap collisonTileMap;
+        [SerializeField] private Tilemap[] collisonTileMaps;
 
         private const int LeftFoot = 1;
         private const int RightFoot = 2;
 
-        private bool isMoving = false;
         private bool isDestinationReach = true;
         private int currentFoot = RightFoot;
 
@@ -26,9 +26,20 @@ namespace PokemonGame.Characters
         private float currentAnimationSpeed;
         private float walkingAnimationSpeed;
 
+        public bool IsMoving { get; private set; } = false;
+
         private void Awake()
         {
             animator = GetComponent<Animator>();
+            GameStateManager.Instance.OnGameStateChange += OnGameStateManagerStateChange;
+        }
+
+        private void OnGameStateManagerStateChange(GameState.GameState state)
+        {
+            if(state ==  GameState.GameState.Pause )
+                enabled = false;
+            else
+                enabled = true;
         }
 
         private void Start()
@@ -36,7 +47,7 @@ namespace PokemonGame.Characters
             // Get the length of any walking animation.
             // They all have the same animation clips length.
             // The movement speed of the player is determined by the animation length.
-            walkingAnimationSpeed = Utility.GetAnimationLength(animator, "RedWalkingDownLeftFoot"); 
+            walkingAnimationSpeed = Utility.GetAnimationLength(animator, "RedWalkingDownLeftFoot");
             currentAnimationSpeed = walkingAnimationSpeed;
         }
 
@@ -49,8 +60,8 @@ namespace PokemonGame.Characters
 
             if (inputDirection == Vector3.zero && isDestinationReach)
             {
-                isMoving = false;
-                
+                IsMoving = false;
+
                 state = PlayerState.Idle;
             }
         }
@@ -76,20 +87,34 @@ namespace PokemonGame.Characters
             }
 
             animator.SetBool("IsDestinationReach", isDestinationReach);
-            animator.SetBool("IsMoving", isMoving);
+            animator.SetBool("IsMoving", IsMoving);
             animator.SetInteger("CurrentFoot", currentFoot);
         }
 
-        private bool IsColliding()
+        private bool IsColliding(Tilemap tilemap)
         {
-            Vector3Int tileCoordinate = collisonTileMap.WorldToCell(endPosition);
+            Vector3Int tileCoordinate = tilemap.WorldToCell(endPosition);
 
-            if (collisonTileMap.GetTile(tileCoordinate) == null)
+            if (tilemap.GetTile(tileCoordinate) == null)
             {
                 return false;
             }
 
             return true;
+        }
+
+        private bool IsLayerColliding()
+        {
+            foreach (Tilemap tilemap in collisonTileMaps)
+            {
+                if (IsColliding(tilemap))
+                {
+            
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void ChangeFoot()
@@ -120,23 +145,23 @@ namespace PokemonGame.Characters
                 }
                 else
                 {
-                    state = PlayerState.Walking;                  
+                    state = PlayerState.Walking;
                 }
 
                 animator.SetBool("IsRefacing", false);
             }
             if (state == PlayerState.Walking)
-            {            
+            {
                 Move();
             }
-        
+
             if (state == PlayerState.Refacing)
             {
-                
+
                 animator.SetBool("IsRefacing", true);
-            }         
+            }
         }
-        
+
         private bool Refacing()
         {
             // Only update the facing direction when the player is moving.
@@ -171,11 +196,11 @@ namespace PokemonGame.Characters
                 // Set the destination position.
                 endPosition = transform.position + inputDirection;
 
-                if (IsColliding() == false)
+                if (IsLayerColliding() == false)
                 {
-                    isMoving = true;
-                    isDestinationReach = false;                    
-                }          
+                    IsMoving = true;
+                    isDestinationReach = false;
+                }
             }
 
             // Move the player until he reach is destination
@@ -190,7 +215,7 @@ namespace PokemonGame.Characters
                 {
                     interpolationPoint = 0f;
                     isDestinationReach = true;
-                    
+
                     // Switch animation
                     ChangeFoot();
                 }

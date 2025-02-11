@@ -26,9 +26,9 @@ namespace PokemonGame.Characters
 
         private void Start()
         {
-            transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 0);
+           // transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 0);
 
-            transform.position -= new Vector3(0.5f, 0.4f, 0); // Substract tilemap tile archor to player position
+           // transform.position -= new Vector3(0.5f, 0.4f, 0); // Substract tilemap tile archor to player position
 
             foreach (Pokemon pokemon in party.Pokemons)
             {

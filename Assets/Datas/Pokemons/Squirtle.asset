@@ -13,24 +13,24 @@ MonoBehaviour:
   m_Name: Squirtle
   m_EditorClassIdentifier: 
   pokedexNumber: 1
-  pokemonName: 
+  pokemonName: Squirtle
   types:
-    firstType: {fileID: 0}
+    firstType: {fileID: 11400000, guid: 7bb87c2e4109b1e4b9e3d29e844d9cf1, type: 2}
     secondType: {fileID: 0}
     hasSecondType: 0
   genderRatio:
-    maleRatio: 0
-    femaleRatio: 100
+    maleRatio: 87.5
+    femaleRatio: 12.5
   baseStats:
-    healthPoint: 0
-    attack: 0
-    defense: 0
-    specialAttack: 0
-    specialDefense: 0
-    speed: 0
-    total: 0
+    healthPoint: 44
+    attack: 48
+    defense: 65
+    specialAttack: 50
+    specialDefense: 64
+    speed: 43
+    total: 314
   sprites:
-    frontSprite: {fileID: 0}
-    backSprite: {fileID: 0}
-    menuSprite: {fileID: 0}
+    frontSprite: {fileID: 21300000, guid: 9466bba73ee28684f8b0e89f5b0072b7, type: 3}
+    backSprite: {fileID: 21300000, guid: 59df37f2c97a63744927e99c5b99db79, type: 3}
+    menuSprite: {fileID: 1630798579, guid: 50f67ec3ef181844f871b1d7dd8a3d1c, type: 3}
   menuSpriteOverrider: {fileID: 22100000, guid: 35777c18f759fee40971651b8a686f08, type: 2}

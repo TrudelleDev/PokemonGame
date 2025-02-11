@@ -5,10 +5,8 @@ namespace PokemonGame.Pokemons.UI.Summary
 {
     public class SummaryPokemonSkill : MonoBehaviour, IPokemonBind
     {
-        [Header("General")]
-        [SerializeField] private TextMeshProUGUI remainingHealth;
-        [SerializeField] private TextMeshProUGUI totalHealth;
         [Header("Stats")]
+        [SerializeField] private TextMeshProUGUI health;       
         [SerializeField] private TextMeshProUGUI attack;
         [SerializeField] private TextMeshProUGUI defense;
         [SerializeField] private TextMeshProUGUI specialAttack;
@@ -20,8 +18,7 @@ namespace PokemonGame.Pokemons.UI.Summary
 
         public void Bind(Pokemon pokemon)
         {
-            remainingHealth.text = $"{pokemon.HealthRemaining}/";
-            totalHealth.text = $"{pokemon.CoreStat.HealthPoint}";
+            health.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
             attack.text = $"{pokemon.CoreStat.Attack}";
             defense.text = $"{pokemon.CoreStat.Defense}";
             specialAttack.text = $"{pokemon.CoreStat.SpecialAttack}";
