@@ -14,32 +14,37 @@ namespace PokemonGame.Views
         [SerializeField] private PartyMenuDialogBox dialogBox;
 
         private PartyMenuSlotManager slotManager;
-        private VerticalMenuController partySlotController;
+        [SerializeField] private VerticalMenuController partySlotController;
         private CloseView closeView;
 
-        public override void Initialize() { }
+        public override void Initialize() 
+        {
+
+        }
 
         private void Awake()
         {
             closeView = GetComponent<CloseView>();
-            partySlotController = GetComponent<VerticalMenuController>();
+            //partySlotController = GetComponent<VerticalMenuController>();
 
             partySlotController.Click += OnPartySlotControllerClick;
             partyMenuOption.OnCancel += PartyMenuOption_OnCancel;
             cancelButton.OnClick += () => HandleCancel();
 
             // Default dialog box size and text
-            dialogBox.SetSize(400, 50);
+            dialogBox.SetSize(180, 28);
             dialogBox.SetText("Choose a POKEMON.");
 
-            slotManager = new PartyMenuSlotManager(party);
-            slotManager.Initialize(transform);
+            
 
         }
 
         private void OnEnable()
         {
-            transform.GetComponent<VerticalMenuController>().ResetMenuController();
+            partySlotController.ResetMenuController();
+
+            slotManager = new PartyMenuSlotManager(party);
+            slotManager.Initialize(partySlotController.transform); /// TODO: clean this
         }
 
         private void PartyMenuOption_OnCancel()
@@ -54,7 +59,7 @@ namespace PokemonGame.Views
 
             // Change the text and size of the dialog box when close
             dialogBox.SetText("Choose a POKEMON.");
-            dialogBox.SetSize(400, 50);
+            dialogBox.SetSize(180, 28);
 
         }
 
@@ -74,7 +79,7 @@ namespace PokemonGame.Views
                 partyMenuOption.GetComponentInChildren<VerticalMenuController>().enabled = true;
 
                 // Change the text and size of the dialog box when open
-                dialogBox.SetSize(340, 50);
+                dialogBox.SetSize(135, 28);
                 dialogBox.SetText("What you gonna do?");
             }
         }

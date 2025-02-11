@@ -1,3 +1,4 @@
+using PokemonGame.GameState;
 using UnityEngine;
 
 namespace PokemonGame.Views
@@ -12,31 +13,19 @@ namespace PokemonGame.Views
         [SerializeField] private MenuButton option;
         [SerializeField] private MenuButton exit;
 
-        public void Awake()
+        public override void Initialize()
         {
             pokedex.OnClick += () => ViewManager.Instance.Show<PokedexView>();
             party.OnClick += () => ViewManager.Instance.Show<PartyMenuView>();
             inventory.OnClick += () => ViewManager.Instance.Show<BagView>();
             trainerCard.OnClick += () => ViewManager.Instance.Show<TrainerCardView>();
-            exit.OnClick += () => ViewManager.Instance.ShowLast();
+            exit.OnClick += () => OnExitClick();
         }
 
-        public override void Initialize()
+        private void OnExitClick()
         {
-            MenuToggler.OnOpenMenu += OnGameMenuTogglerOpenMenu;
-        }
-
-        private void OnGameMenuTogglerOpenMenu()
-        {
-            if (!gameObject.activeInHierarchy && ViewManager.Instance.IsHistoryEmpty())
-            {
-                ViewManager.Instance.Show<GameMenuView>();
-            }
-            else
-            {
-                ViewManager.Instance.ShowLast();
-            }
+            GameStateManager.Instance.SetState(GameState.GameState.Resume);
+            ViewManager.Instance.ShowLast();
         }
     }
-
 }

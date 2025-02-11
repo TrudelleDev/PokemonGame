@@ -13,7 +13,7 @@ namespace PokemonGame.Pokemons.UI.Summary
         public void Bind(Pokemon pokemon)
         {
             pokemonName.text = $"{pokemon.Data.PokemonName}";
-            pokemonLevel.text = $"<size=30>Lv</size> {pokemon.Level}";
+            pokemonLevel.text = $"<size=12>Lv</size>{pokemon.Level}";
             pokemonGenderSprite.Bind(pokemon);
             pokemonSprite.Bind(pokemon);
         }

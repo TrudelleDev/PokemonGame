@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Cancel
   icon: {fileID: 21300000, guid: c5a8c672fa779fa47b1f30950834751d, type: 3}
-  description: CLOSE BAG
+  description: Close Bag
