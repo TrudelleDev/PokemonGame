@@ -1,4 +1,3 @@
-using PokemonGame.GameState;
 using UnityEngine;
 
 namespace PokemonGame.Views
@@ -7,10 +6,10 @@ namespace PokemonGame.Views
     {
         private void Update()
         {
-            if (Input.GetKeyDown(Keybind.CancelKey))
+            if (Input.GetKeyDown(KeyBind.Cancel))
             {
+                // Close active view.
                 ViewManager.Instance.ShowLast();
-                GameStateManager.Instance.SetState(GameState.GameState.Resume);
             }
         }
     }

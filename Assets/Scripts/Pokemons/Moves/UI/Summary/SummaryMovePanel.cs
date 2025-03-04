@@ -27,11 +27,11 @@ namespace PokemonGame.Pokemons.Moves.UI.Summary
 
         private void Update()
         {
-            if (Input.GetKeyDown(Keybind.AcceptKey))
+            if (Input.GetKeyDown(KeyBind.Accept))
             {
                 OpenMoveSelection();
             }
-            if (Input.GetKeyDown(Keybind.CancelKey))
+            if (Input.GetKeyDown(KeyBind.Cancel))
             {
                 CloseMoveSelection();
             }

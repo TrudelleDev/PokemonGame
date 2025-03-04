@@ -43,22 +43,22 @@ namespace PokemonGame.MenuControllers
             // If the user is holding down the control key long enough,its will enable fast scrolling
             if (isKeyHoldDelay)
             {
-                if (Input.GetKey(Keybind.DownKey) && currentButtonIndex < transform.childCount - 1)
+                if (Input.GetKey(KeyBind.Down) && currentButtonIndex < transform.childCount - 1)
                 {
                     ScrollDownLogic();
                 }
-                if (Input.GetKey(Keybind.UpKey) && currentButtonIndex > 0)
+                if (Input.GetKey(KeyBind.Up) && currentButtonIndex > 0)
                 {
                     ScrollUpLogic();
                 }
             }
             else
             {
-                if (Input.GetKeyDown(Keybind.DownKey) && currentButtonIndex < transform.childCount - 1)
+                if (Input.GetKeyDown(KeyBind.Down) && currentButtonIndex < transform.childCount - 1)
                 {
                     ScrollDownLogic();
                 }
-                if (Input.GetKeyDown(Keybind.UpKey) && currentButtonIndex > 0)
+                if (Input.GetKeyDown(KeyBind.Up) && currentButtonIndex > 0)
                 {
                     ScrollUpLogic();
                 }
@@ -66,7 +66,7 @@ namespace PokemonGame.MenuControllers
 
             UpdateSelection();
 
-            if (Input.GetKeyDown(Keybind.AcceptKey))
+            if (Input.GetKeyDown(KeyBind.Accept))
             {
                 OnClick();
             }
@@ -75,7 +75,7 @@ namespace PokemonGame.MenuControllers
         private void CheckKeyPressLongEnough()
         {
             // User hold key down
-            if (Input.GetKey(Keybind.DownKey) || Input.GetKey(Keybind.UpKey))
+            if (Input.GetKey(KeyBind.Down) || Input.GetKey(KeyBind.Up))
             {
                 timer += Time.deltaTime;
 
@@ -87,7 +87,7 @@ namespace PokemonGame.MenuControllers
             }
 
             // User release key
-            else if (Input.GetKeyUp(Keybind.DownKey) || Input.GetKeyUp(Keybind.UpKey))
+            else if (Input.GetKeyUp(KeyBind.Down) || Input.GetKeyUp(KeyBind.Up))
             {
                 // Reset when key is released
                 timer = 0;
