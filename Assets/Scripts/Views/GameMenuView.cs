@@ -1,4 +1,3 @@
-using PokemonGame.GameState;
 using UnityEngine;
 
 namespace PokemonGame.Views
@@ -19,13 +18,7 @@ namespace PokemonGame.Views
             party.OnClick += () => ViewManager.Instance.Show<PartyMenuView>();
             inventory.OnClick += () => ViewManager.Instance.Show<BagView>();
             trainerCard.OnClick += () => ViewManager.Instance.Show<TrainerCardView>();
-            exit.OnClick += () => OnExitClick();
-        }
-
-        private void OnExitClick()
-        {
-            GameStateManager.Instance.SetState(GameState.GameState.Resume);
-            ViewManager.Instance.ShowLast();
+            exit.OnClick += () => ViewManager.Instance.ShowLast();
         }
     }
 }

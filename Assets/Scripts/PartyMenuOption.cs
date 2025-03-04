@@ -30,7 +30,7 @@ namespace PokemonGame
 
         private void Update()
         {
-            if (Input.GetKeyDown(Keybind.CancelKey))
+            if (Input.GetKeyDown(KeyBind.Cancel))
             {
                 HandleCancel();
             }

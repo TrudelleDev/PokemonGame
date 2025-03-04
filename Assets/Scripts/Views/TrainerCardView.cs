@@ -20,7 +20,7 @@ namespace PokemonGame.Views
         private void Awake()
         {
             playerID.text = $"IDNo. {player.ID}";
-            playerName.text = player.TrainerName;
+            playerName.text = player.CharacterName;
             playerMoney.text = $"${player.Money}";
         }
 

@@ -8,15 +8,15 @@ namespace PokemonGame.MenuControllers
     {    
         protected override void Update()
         {
-            if (Input.GetKeyDown(Keybind.DownKey) && currentButtonIndex < interactables.Count - 1)
+            if (Input.GetKeyDown(KeyBind.Down) && currentButtonIndex < interactables.Count - 1)
             {
                 currentButtonIndex++;
             }
-            if (Input.GetKeyDown(Keybind.UpKey) && currentButtonIndex > 0)
+            if (Input.GetKeyDown(KeyBind.Up) && currentButtonIndex > 0)
             {
                 currentButtonIndex--;
             }
-            if (Input.GetKeyDown(Keybind.AcceptKey))
+            if (Input.GetKeyDown(KeyBind.Accept))
             {
                 OnClick();
             }

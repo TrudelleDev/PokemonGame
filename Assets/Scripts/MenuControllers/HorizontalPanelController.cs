@@ -9,11 +9,11 @@ namespace PokemonGame.MenuControllers
 
         private void Update()
         {
-            if (Input.GetKeyDown(Keybind.RightKey) && currentPanelIndex < transform.childCount - 1)
+            if (Input.GetKeyDown(KeyBind.Right) && currentPanelIndex < transform.childCount - 1)
             {
                 currentPanelIndex++;
             }
-            if (Input.GetKeyDown(Keybind.LeftKey) && currentPanelIndex > 0)
+            if (Input.GetKeyDown(KeyBind.Left) && currentPanelIndex > 0)
             {
                 currentPanelIndex--;
             }
