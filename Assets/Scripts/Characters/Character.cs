@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PokemonGame.Characters
 {
-    public abstract class Character : MonoBehaviour, IInteract
+    public abstract class Character : MonoBehaviour
     {
         private const float CENTER_OFFSET = 0.5f;
         
@@ -27,7 +27,5 @@ namespace PokemonGame.Characters
             IDGenerator generator = new IDGenerator(10000, 99999);
             ID = generator.GetID();
         }
-
-        public abstract void Interact(Transform sender);
     }
 }
