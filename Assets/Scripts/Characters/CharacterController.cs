@@ -41,6 +41,9 @@ namespace PokemonGame.Characters
 
         private void Update()
         {
+            if (PauseControl.IsGamePaused)
+                return;
+
             input.HandleInputs();
             UpdateAnimatorParameters();
             UpdateState();

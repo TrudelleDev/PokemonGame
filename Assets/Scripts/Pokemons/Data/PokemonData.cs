@@ -1,6 +1,4 @@
 using PokemonGame.Encyclopedia;
-using PokemonGame.Pokemons.Moves;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Data

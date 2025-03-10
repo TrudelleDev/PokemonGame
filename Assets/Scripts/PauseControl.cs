@@ -1,4 +1,4 @@
-using System;
+using PokemonGame.Dialogues;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -6,30 +6,31 @@ namespace PokemonGame
 {
     public class PauseControl : MonoBehaviour
     {
-        public static event Action<bool> PauseGame;
-        private bool previousState;
-        private bool currentState = false;
+        public static bool IsGamePaused;
 
         private void Update()
         {
-            if (ViewManager.Instance.IsHistoryEmpty())
+            // Pause the game when any views is open.
+            if (ViewManager.Instance.IsHistoryEmpty() && !DialogueBoxController.Instance.IsDialogueBoxOpen())
             {
-                OnPauseGame(false);
+                Resume();
             }
             else
             {
-                OnPauseGame(true);
+                Pause();
             }
         }
 
-        private void OnPauseGame(bool value)
+        private void Resume()
         {
-            if(currentState != previousState)
-            {
-                PauseGame?.Invoke(value);
-                previousState = currentState;
-            }
-          
+            Time.timeScale = 1f;
+            IsGamePaused = false;
+        }
+
+        private void Pause()
+        {
+            Time.timeScale = 0f;
+            IsGamePaused = true;
         }
     }
 }

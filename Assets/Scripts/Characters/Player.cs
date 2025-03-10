@@ -12,7 +12,7 @@ namespace PokemonGame.Characters
         private Party party;
         private Pokedex pokedex;
         private CharacterController controller;
-        private RaycastHit2D hit;
+        private RaycastHit2D[] hit;
 
         private SpriteRenderer spriteRenderer;
 
@@ -24,7 +24,6 @@ namespace PokemonGame.Characters
             party = GetComponent<Party>();
             pokedex = GetComponent<Pokedex>();
             controller = GetComponent<CharacterController>();
-
         }
 
         protected override void Start()
@@ -37,52 +36,37 @@ namespace PokemonGame.Characters
                 pokemon.OwnerName = characterName;
                 pokedex.AddData(new PokedexEntry(true, pokemon.Data));
             }
-
-            PauseControl.PauseGame += OnPauseControlPauseGame;
-
-        }
-
-        private void OnPauseControlPauseGame(bool isPaused)
-        {
-            // Prevent the player from moving when the game is paused.
-            if (isPaused)
-            {
-                controller.enabled = false;
-            }
-            else
-            {
-                controller.enabled = true;
-            }
         }
 
         private void Update()
         {
             TimePlayed += Time.deltaTime;
 
-            HandleInteraction();
+            Interaction();
          
         }
 
-        public void HandleInteraction()
+        public void Interaction()
         {
             Vector3 rayCastOrigin = new Vector3(transform.position.x, transform.position.y + OFFSET_Y, transform.position.z);
 
-            hit = Physics2D.Raycast(rayCastOrigin, new Vector2(controller.FacingDirection.x, controller.FacingDirection.y), RAYCAST_DISTANCE);
+            hit = Physics2D.RaycastAll(rayCastOrigin, new Vector2(controller.FacingDirection.x, controller.FacingDirection.y), RAYCAST_DISTANCE);
 
-            if (hit)
+            for (int i = 0; i < hit.Length; i++)
             {
-                if (Input.GetKeyDown(KeyBind.Accept))
+                if (hit[i])
                 {
-                    hit.collider.GetComponent<IInteract>()?.Interact(transform);
+                    if (Input.GetKeyDown(KeyBind.Accept))
+                    {
+                        hit[i].collider.gameObject.GetComponent<IInteract>()?.OnInteract();
+                    }
+
+                    //hit.collider.GetComponent<IInteract>().Interact(transform);
+
+                    //hit.collider.GetComponent<ITrigger>()?.Trigger();
                 }
-
-                hit.collider.GetComponent<ITrigger>()?.Trigger();
             }
-        }
-
-        public override void Interact(Transform sender)
-        {
-           // throw new System.NotImplementedException();
+           
         }
     }
 }
