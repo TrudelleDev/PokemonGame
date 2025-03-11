@@ -1,5 +1,5 @@
-using UnityEngine;
 using System;
+using UnityEngine;
 
 namespace PokemonGame.Items.Storage
 {
@@ -17,7 +17,18 @@ namespace PokemonGame.Items.Storage
 
         public void Add(Item item)
         {
-            throw new NotImplementedException();
+            switch (item.Data.Type)
+            {
+                case ItemType.Item:
+                    itemPocket.Add(item);
+                    break;
+                case ItemType.KeyItem:
+                    keyItemPocket.Add(item);
+                    break;
+                case ItemType.Pokeball:
+                    pokeBallPocket.Add(item);
+                    break;
+            }
         }
 
         public void Remove(Item item)

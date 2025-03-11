@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ea4f5a4868e174aaf0eb25cab62888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1990210037}
+  player: {fileID: 0}
 --- !u!1 &529088975
 GameObject:
   m_ObjectHideFlags: 0
@@ -481,16 +481,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1990210030}
-  - component: {fileID: 1990210037}
   - component: {fileID: 1990210035}
   - component: {fileID: 1990210034}
   - component: {fileID: 1990210033}
-  - component: {fileID: 1990210032}
-  - component: {fileID: 1990210031}
   - component: {fileID: 1990210042}
   - component: {fileID: 1990210040}
   - component: {fileID: 1990210041}
   - component: {fileID: 1990210043}
+  - component: {fileID: 1990210032}
+  - component: {fileID: 1990210031}
+  - component: {fileID: 1990210044}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -600,10 +600,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemPocket:
     items:
+    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
+      count: 5
     - data: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
       count: 5
-    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
-      count: 1
   keyItemPocket:
     items: []
   pokeBallPocket:
@@ -641,19 +641,6 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: d4924b35f4154e54bb136ed5c717b60c, type: 2}
     moves:
     - data: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
---- !u!114 &1990210037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990210029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 49a0f1e3c4531974cb7a5ae2a38f497c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterName: 
 --- !u!114 &1990210040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,6 +727,19 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!114 &1990210044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990210029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Red
 --- !u!1 &2013771036
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +866,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95aa4bb5a4ec47e4197416de65ee75a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1990210037}
+  player: {fileID: 1990210044}
 --- !u!114 &2638044041524319
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -13,7 +13,7 @@ namespace PokemonGame.Views
         [SerializeField] private TextMeshProUGUI playerMoney;
         [SerializeField] private TextMeshProUGUI timePlayed;
         [Space]
-        [SerializeField] private Player player;
+        [SerializeField] private Character player;
 
         public override void Initialize() { }
 
@@ -27,11 +27,11 @@ namespace PokemonGame.Views
         private void Update()
         {
             // Format time to Hours/minutes
-            TimeSpan time = TimeSpan.FromSeconds(player.TimePlayed);
-            var timeConverted = string.Format("{0,1:00}:{1,2:00}", time.Hours, time.Minutes);
+           // TimeSpan time = TimeSpan.FromSeconds(player.TimePlayed);
+          //  var timeConverted = string.Format("{0,1:00}:{1,2:00}", time.Hours, time.Minutes);
 
             // Display time as Hours/minutes
-            timePlayed.text = timeConverted;
+            //timePlayed.text = timeConverted;
         }
     }
 }

@@ -5,7 +5,7 @@ namespace PokemonGame
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private Player player;
+        [SerializeField] private Character player;
 
         private void LateUpdate()
         {
