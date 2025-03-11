@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PokemonGame.Characters.Inputs
 {
-    public class NPCInput : CharacterInput
+    public class RandomInput : CharacterInput
     {
         [SerializeField] private float intervalBetweenAction = 2f;
 

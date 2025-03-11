@@ -5,7 +5,7 @@ namespace PokemonGame.Characters
 {
     public class CharacterController : MonoBehaviour
     {
-        [SerializeField] private CharacterInput input;
+        [SerializeField] private Inputs.CharacterInput input;
         [SerializeField] private LayerMask layerMask;
         [Space]
         [SerializeField] private AnimationClip walkingAnimationClip; // each walking animation clip need to have the same lenght.

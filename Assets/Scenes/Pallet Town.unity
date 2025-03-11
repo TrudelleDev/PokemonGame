@@ -9332,6 +9332,7 @@ GameObject:
   - component: {fileID: 776008424}
   - component: {fileID: 776008423}
   - component: {fileID: 776008432}
+  - component: {fileID: 776008433}
   m_Layer: 3
   m_Name: Little Girl
   m_TagString: Untagged
@@ -9541,6 +9542,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 818bd1b81d780f0469e27429b14cb9e1, type: 2}
+--- !u!114 &776008433
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776008422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Little Girl
 --- !u!1 &917501779
 GameObject:
   m_ObjectHideFlags: 0
@@ -9649,6 +9663,7 @@ GameObject:
   - component: {fileID: 1146497557}
   - component: {fileID: 1146497558}
   - component: {fileID: 1146497559}
+  - component: {fileID: 1146497560}
   m_Layer: 3
   m_Name: Tech Guy
   m_TagString: Untagged
@@ -9858,6 +9873,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 813e3118e348f0744b8ff3b9f14cd76b, type: 2}
+--- !u!114 &1146497560
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1146497545}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterName: Tech Guy
 --- !u!1 &1315713667
 GameObject:
   m_ObjectHideFlags: 0

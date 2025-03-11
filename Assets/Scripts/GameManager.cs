@@ -6,7 +6,7 @@ namespace PokemonGame
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] private Player player;
+        [SerializeField] private Character player;
 
         public static GameManager Instance { get; private set; }
 

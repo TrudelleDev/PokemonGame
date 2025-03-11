@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace PokemonGame.Characters.Inputs
 {
-    public class PlayerInput : CharacterInput
+    public class UserInput : CharacterInput
     {
         public override void HandleInputs()
         {

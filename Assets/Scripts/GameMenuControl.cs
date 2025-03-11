@@ -14,7 +14,7 @@ namespace PokemonGame
             if (playerController.IsMoving)
                 return;
 
-            if (!DialogueBoxController.Instance.IsDialogueBoxOpen())
+            if (DialogueBoxController.Instance.IsDialogueBoxOpen())
                 return;
 
             if (Input.GetKeyDown(KeyBind.Start))

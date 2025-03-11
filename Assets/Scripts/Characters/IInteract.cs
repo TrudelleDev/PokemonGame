@@ -4,6 +4,6 @@ namespace PokemonGame.Characters
 {
     public interface IInteract
     {
-        public void OnInteract();
+        public void OnInteract(Character character);
     }
 }

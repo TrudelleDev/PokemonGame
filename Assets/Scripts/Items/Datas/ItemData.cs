@@ -8,12 +8,16 @@ namespace PokemonGame.Items.Datas
     [CreateAssetMenu(fileName = "NewItemData", menuName = "ScriptableObjects/Items/Item Data", order = -1)]
     public class ItemData : ScriptableObject
     {
-        [SerializeField] protected new string name;
-        [SerializeField] protected Sprite icon;
-        [TextArea(5, 10)]
-        [SerializeField] protected string description;
+        [SerializeField] private new string name;
+        [SerializeField] private Sprite icon;
 
+        [TextArea(5, 10)]
+        [SerializeField] private string description;
+        [SerializeField] private ItemType type;
+
+        public string Name => name;
         public string Description => description;
         public Sprite Icon => icon;
+        public ItemType Type => type;
     }
 }
