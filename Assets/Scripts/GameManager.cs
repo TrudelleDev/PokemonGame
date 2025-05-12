@@ -21,7 +21,7 @@ namespace PokemonGame
                 Instance = this;
             }
 
-            Load("Pallet Town");
+            Load("ViridianForest");
 
             Screen.SetResolution(1920, 1080, true);
         }

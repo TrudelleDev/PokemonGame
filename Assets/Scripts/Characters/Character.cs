@@ -12,9 +12,6 @@ namespace PokemonGame.Characters
 
         [SerializeField] protected string characterName;
 
-        private CharacterController controller;
-
-
         public string CharacterName => characterName;
         public int Money { get; set; }
         public string ID { get; set; }
@@ -34,19 +31,19 @@ namespace PokemonGame.Characters
 
         private void Awake()
         {
-            controller = GetComponent<CharacterController>();
+           // controller = GetComponent<CharacterAnimator>();
         }
 
         private void Update()
         {
-            Interaction();
+            //Interaction();
         }
 
         public void Interaction()
         {
             Vector3 rayCastOrigin = new Vector3(transform.position.x, transform.position.y + OFFSET_Y, transform.position.z);
 
-            hit = Physics2D.RaycastAll(rayCastOrigin, new Vector2(controller.FacingDirection.x, controller.FacingDirection.y), RAYCAST_DISTANCE);
+            //hit = Physics2D.RaycastAll(rayCastOrigin, new Vector2(controller.FacingDirection.x, controller.FacingDirection.y), RAYCAST_DISTANCE);
 
             for (int i = 0; i < hit.Length; i++)
             {

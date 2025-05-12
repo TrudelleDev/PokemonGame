@@ -97,7 +97,7 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: RedWalking_0
+      name: Red_0
       rect:
         serializedVersion: 2
         x: 0
@@ -111,14 +111,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3b31d8b37fc10ff4bb6aba13dd937ab7
-      internalID: -1294672190
+      spriteID: 9af42352d62f93d48957ba98437a442a
+      internalID: -122174028
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_1
+      name: Red_1
       rect:
         serializedVersion: 2
         x: 16
@@ -132,14 +132,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b25b1404cbcc47c46b54120bd9b8d668
-      internalID: 2023143376
+      spriteID: a7cf00b88d429b540a71797507981cf9
+      internalID: -1080872150
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_2
+      name: Red_2
       rect:
         serializedVersion: 2
         x: 32
@@ -153,14 +153,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e631662ac1d0da14b94508d9d7229850
-      internalID: -1023518408
+      spriteID: 1041bcf2660d9734bad70cb507b09afb
+      internalID: 1120003204
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_3
+      name: Red_3
       rect:
         serializedVersion: 2
         x: 0
@@ -174,14 +174,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 129e0cc0c0e5e8845814d8e29b99c363
-      internalID: -1199338191
+      spriteID: 93984783beb059242b6246a08d7d4525
+      internalID: 2023882604
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_4
+      name: Red_4
       rect:
         serializedVersion: 2
         x: 16
@@ -195,14 +195,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3dbefd13a9ea4e24c8a5d0ca7344b39a
-      internalID: 763491254
+      spriteID: b2f671a84f6a1944bb89823a58f7ac1f
+      internalID: 962987473
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_5
+      name: Red_5
       rect:
         serializedVersion: 2
         x: 32
@@ -216,14 +216,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da47ef5f0931c594f8785421586edd43
-      internalID: -893814521
+      spriteID: 952791d6d1a95ad42893bf551374bd84
+      internalID: -142729917
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_6
+      name: Red_6
       rect:
         serializedVersion: 2
         x: 0
@@ -237,14 +237,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fc3437ea7ac0a3d4e93bd9b29cf9a0c0
-      internalID: -1876412021
+      spriteID: 0bc2734b4d3cc3943b8840871d543cf1
+      internalID: -2065093526
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_7
+      name: Red_7
       rect:
         serializedVersion: 2
         x: 16
@@ -258,14 +258,14 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e585eac5f987d6940a30c6884f57498b
-      internalID: 1989510677
+      spriteID: a80d3c6837cf2204eb2c680e7d4abdf4
+      internalID: 1440618224
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: RedWalking_8
+      name: Red_8
       rect:
         serializedVersion: 2
         x: 32
@@ -279,8 +279,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ab9b3d8763703464a91230feb700be66
-      internalID: -405034131
+      spriteID: e9545cf2793782345a0cbb69f248c4c1
+      internalID: 2017010487
       vertices: []
       indices: 
       edges: []
@@ -296,15 +296,15 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      RedWalking_0: -1294672190
-      RedWalking_1: 2023143376
-      RedWalking_2: -1023518408
-      RedWalking_3: -1199338191
-      RedWalking_4: 763491254
-      RedWalking_5: -893814521
-      RedWalking_6: -1876412021
-      RedWalking_7: 1989510677
-      RedWalking_8: -405034131
+      Red_0: -122174028
+      Red_1: -1080872150
+      Red_2: 1120003204
+      Red_3: 2023882604
+      Red_4: 962987473
+      Red_5: -142729917
+      Red_6: -2065093526
+      Red_7: 1440618224
+      Red_8: 2017010487
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

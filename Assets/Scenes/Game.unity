@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameMenuView: {fileID: 7212195093007373547}
-  playerController: {fileID: 1990210041}
+  playerMovement: {fileID: 1990210045}
 --- !u!4 &196832265
 Transform:
   m_ObjectHideFlags: 0
@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5ea4f5a4868e174aaf0eb25cab62888, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
+  player: {fileID: 1990210044}
 --- !u!1 &529088975
 GameObject:
   m_ObjectHideFlags: 0
@@ -350,7 +350,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1216985367}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c57328aa67be0704ea6aa0e0d72c23b0, type: 3}
   m_Name: 
@@ -485,12 +485,13 @@ GameObject:
   - component: {fileID: 1990210034}
   - component: {fileID: 1990210033}
   - component: {fileID: 1990210042}
-  - component: {fileID: 1990210040}
-  - component: {fileID: 1990210041}
   - component: {fileID: 1990210043}
   - component: {fileID: 1990210032}
   - component: {fileID: 1990210031}
   - component: {fileID: 1990210044}
+  - component: {fileID: 1990210045}
+  - component: {fileID: 1990210046}
+  - component: {fileID: 1990210047}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -507,7 +508,7 @@ Transform:
   m_GameObject: {fileID: 1990210029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10, y: -11, z: 0}
+  m_LocalPosition: {x: 9.5, y: 9, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -533,7 +534,7 @@ SpriteRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 4e67160713dd03b47a543e3a08dbeb53, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,7 +555,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 4
-  m_Sprite: {fileID: 2023143376, guid: a772950017d575c41af0151bdcf90571, type: 3}
+  m_Sprite: {fileID: -1080872150, guid: a772950017d575c41af0151bdcf90571, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -641,35 +642,6 @@ MonoBehaviour:
       data: {fileID: 11400000, guid: d4924b35f4154e54bb136ed5c717b60c, type: 2}
     moves:
     - data: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
---- !u!114 &1990210040
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990210029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee0414ebed0906489ae0c0cf9eb6704, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1990210041
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1990210029}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c9c793d6c37c77e46984dd4437416579, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  input: {fileID: 1990210042}
-  layerMask:
-    serializedVersion: 2
-    m_Bits: 8
-  walkingAnimationClip: {fileID: 7400000, guid: 220ff1e5b7a32414fb507ece251fd551, type: 2}
 --- !u!114 &1990210042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -740,6 +712,49 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   characterName: Red
+--- !u!114 &1990210045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990210029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 692cdb844d2e14846b4b42e7c1d5cfcb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  input: {fileID: 1990210042}
+  tileMover: {fileID: 1990210046}
+--- !u!114 &1990210046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990210029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3cfac521aabea0c4da4c33ec5fa5915f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1990210047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990210029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d183829ef861542438cba69e5581b329, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 8
+  rayLength: 1
+  raycastOriginOffset: {x: 0, y: 0.5, z: 0}
 --- !u!1 &2013771036
 GameObject:
   m_ObjectHideFlags: 0
@@ -751,8 +766,9 @@ GameObject:
   - component: {fileID: 2013771041}
   - component: {fileID: 2013771040}
   - component: {fileID: 2013771039}
-  - component: {fileID: 2013771037}
   - component: {fileID: 2013771042}
+  - component: {fileID: 2013771044}
+  - component: {fileID: 2013771043}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -760,26 +776,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &2013771037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2013771036}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6a160d838ff8b4b4693ac20007e008c7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_AssetsPPU: 16
-  m_RefResolutionX: 240
-  m_RefResolutionY: 160
-  m_UpscaleRT: 0
-  m_PixelSnapping: 1
-  m_CropFrameX: 1
-  m_CropFrameY: 1
-  m_StretchFill: 0
 --- !u!81 &2013771039
 AudioListener:
   m_ObjectHideFlags: 0
@@ -823,7 +819,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -867,6 +863,75 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1990210044}
+  offset: {x: 0, y: 1, z: -10}
+--- !u!114 &2013771043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013771036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c88f5cead0c0b2a4eb05b5900433f8d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_AssetsPPU: 16
+  m_RefResolutionX: 240
+  m_RefResolutionY: 160
+  m_CropFrame: 3
+  m_GridSnapping: 1
+  m_FilterMode: 0
+  m_UpscaleRT: 0
+  m_PixelSnapping: 0
+  m_CropFrameX: 0
+  m_CropFrameY: 0
+  m_StretchFill: 0
+--- !u!114 &2013771044
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2013771036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
 --- !u!114 &2638044041524319
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1174,7 +1239,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.2719498
+      value: 3.27195
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -1465,7 +1530,7 @@ GameObject:
   - component: {fileID: 1872832951617751541}
   - component: {fileID: 1797981319473787841}
   m_Layer: 5
-  m_Name: Item Pocket
+  m_Name: UI_ItemSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1611,7 +1676,7 @@ GameObject:
   - component: {fileID: 284098934405721744}
   - component: {fileID: 5021602009125848293}
   m_Layer: 5
-  m_Name: Dialog Box
+  m_Name: UI_Party_DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2312,7 +2377,7 @@ GameObject:
   - component: {fileID: 6251023580318653017}
   - component: {fileID: 3340680645324573904}
   m_Layer: 5
-  m_Name: Key Item Pocket
+  m_Name: UI_KeyItemSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2822,7 +2887,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.1207
+      value: 3.1207008
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3141,7 +3206,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.2719498
+      value: 3.27195
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3524,7 +3589,7 @@ GameObject:
   - component: {fileID: 9136586071751864079}
   - component: {fileID: 6987549205382974941}
   m_Layer: 5
-  m_Name: Poke Ball Pocket
+  m_Name: UI_PokeBallSection
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4089,7 +4154,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.1207
+      value: 3.1207008
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -4496,7 +4561,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4839781951055028190, guid: 648e1e344d0caeb448732dc79fefe0ef, type: 3}
       propertyPath: m_Name
-      value: Party Slot 1
+      value: UI_PartySlot_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 5109871412474954508, guid: 648e1e344d0caeb448732dc79fefe0ef, type: 3}
+      propertyPath: m_Name
+      value: Pokemon Name
       objectReference: {fileID: 0}
     - target: {fileID: 6631494111303314606, guid: 648e1e344d0caeb448732dc79fefe0ef, type: 3}
       propertyPath: m_AnchorMax.y
@@ -4913,7 +4982,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583117908331211677, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_Name
-      value: Party Slot 4
+      value: UI_PartySlot_04
       objectReference: {fileID: 0}
     - target: {fileID: 6089519966583128744, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -5525,7 +5594,7 @@ GameObject:
   - component: {fileID: 3086129240953065521}
   - component: {fileID: 8742342643413715548}
   m_Layer: 5
-  m_Name: GUI Canvas
+  m_Name: GUI_Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5788,7 +5857,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4163756711202529843, guid: ec899ec9de63a0a45917de02d00f3479, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 51.36
+      value: 51.360016
       objectReference: {fileID: 0}
     - target: {fileID: 4163756711202529843, guid: ec899ec9de63a0a45917de02d00f3479, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -6593,7 +6662,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583117908331211677, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_Name
-      value: Party Slot 6
+      value: UI_PartySlot_06
       objectReference: {fileID: 0}
     - target: {fileID: 6089519966583128744, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -7029,7 +7098,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583117908331211677, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_Name
-      value: Party Slot 2
+      value: UI_PartySlot_02
       objectReference: {fileID: 0}
     - target: {fileID: 6089519966583128744, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8967,7 +9036,7 @@ GameObject:
   - component: {fileID: 7509812228089524311}
   - component: {fileID: 9077022408558876770}
   m_Layer: 5
-  m_Name: Bag
+  m_Name: UI_Inventory
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9115,7 +9184,7 @@ GameObject:
   - component: {fileID: 6125916486926480872}
   - component: {fileID: 2276617848611663542}
   m_Layer: 5
-  m_Name: Cancel
+  m_Name: BTN_Cancel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10575,7 +10644,7 @@ MonoBehaviour:
   pokemonSkill: {fileID: 6009013941719708750}
   pokemonDisplay: {fileID: 2139710720553403076}
   movePanel: {fileID: 7430317010112036667}
-  party: {fileID: 0}
+  party: {fileID: 1990210035}
 --- !u!224 &5864757622059745764
 RectTransform:
   m_ObjectHideFlags: 0
@@ -11417,7 +11486,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583117908331211677, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_Name
-      value: Party Slot 5
+      value: UI_PartySlot_05
       objectReference: {fileID: 0}
     - target: {fileID: 6089519966583128744, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11616,7 +11685,7 @@ GameObject:
   - component: {fileID: 4878497578138196730}
   - component: {fileID: 5652830217321822872}
   m_Layer: 5
-  m_Name: Pokemon Info
+  m_Name: PokemonInfo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11754,7 +11823,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4583117908331211677, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_Name
-      value: Party Slot 3
+      value: UI_PartySlot_03
       objectReference: {fileID: 0}
     - target: {fileID: 6089519966583128744, guid: bcb1adb34b6d47e438444ec2e27e9ae3, type: 3}
       propertyPath: m_AnchorMax.y
@@ -11954,7 +12023,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.1207
+      value: 3.1207008
       objectReference: {fileID: 0}
     - target: {fileID: 2960404403671587131, guid: c2f57f24d81f2e746a0026d10353b4ac, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -13459,7 +13528,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.2719498
+      value: 3.27195
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -13548,6 +13617,10 @@ PrefabInstance:
     - target: {fileID: 4921902058087712559, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_text
       value: "Pok\xE9dex"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4921902058087712559, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5557179356235060234, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_Spacing
@@ -14116,7 +14189,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.2719498
+      value: 3.27195
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -14459,7 +14532,7 @@ GameObject:
   - component: {fileID: 8821548845230375254}
   - component: {fileID: 173083076315967197}
   m_Layer: 5
-  m_Name: Trainer Card
+  m_Name: UI_TrainerCard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14730,7 +14803,7 @@ GameObject:
   - component: {fileID: 8518247809609597616}
   - component: {fileID: 8518247809609597617}
   m_Layer: 5
-  m_Name: Dialog Box
+  m_Name: UI_Main_DialogueBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -14900,7 +14973,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.2719498
+      value: 3.27195
       objectReference: {fileID: 0}
     - target: {fileID: 2514118849617426212, guid: 76084cc8e4868254e8465041da59d4f8, type: 3}
       propertyPath: m_AnchoredPosition.y

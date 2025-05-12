@@ -9,12 +9,6 @@ EditorBuildSettings:
     path: Assets/Scenes/Game.unity
     guid: 689894ea053c49845a10ec667ef66de9
   - enabled: 1
-    path: Assets/Scenes/Pallet Town.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 1
-    path: Assets/Scenes/Player House First Floor.unity
-    guid: 847670e444e7ad34ea66bee664e3acf7
-  - enabled: 1
-    path: Assets/Scenes/Player House Second Floor.unity
-    guid: 032902e364d86764585c590dd1f9a131
+    path: Assets/Scenes/ViridianForest.unity
+    guid: 97d013d6bf7ab0640a31d47cc4e3d602
   m_configObjects: {}
