@@ -2,17 +2,36 @@ using UnityEngine;
 
 namespace PokemonGame.Characters.Inputs
 {
+    /// <summary>
+    /// Handles user input for character movement using the keyboard (WASD or Arrow Keys).
+    /// Updates the character's direction based on the user's input.
+    /// </summary>
     public class UserInput : CharacterInput
     {
-        public override void HandleInputs()
+        /// <summary>
+        /// Called every frame to process input and update the character's movement direction.
+        /// </summary>
+        protected override void Update()
         {
-            if (inputDirection.y == 0) // Disable diagolal movement
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
             {
-                inputDirection.x = Input.GetAxisRaw("Horizontal");
+                CurrentDirection = Direction.Up;
             }
-            if (inputDirection.x == 0)  // Disable diagolal movement
+            else if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
             {
-                inputDirection.y = Input.GetAxisRaw("Vertical");
+                CurrentDirection = Direction.Down;
+            }
+            else if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                CurrentDirection = Direction.Left;
+            }
+            else if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                CurrentDirection = Direction.Right;
+            }
+            else
+            {
+                CurrentDirection = Direction.None;
             }
         }
     }

@@ -1,3 +1,5 @@
+using PokemonGame.Characters;
+using PokemonGame.Characters.States;
 using PokemonGame.Dialogues;
 using PokemonGame.Views;
 using UnityEngine;
@@ -7,11 +9,11 @@ namespace PokemonGame
     public class GameMenuControl : MonoBehaviour
     {
         [SerializeField] private GameMenuView gameMenuView;
-        [SerializeField] private Characters.CharacterController playerController;
+        [SerializeField] private CharacterStateController playerMovement;
 
         private void Update()
         {
-            if (playerController.IsMoving)
+            if (playerMovement.TileMover.IsMoving)
                 return;
 
             if (DialogueBoxController.Instance.IsDialogueBoxOpen())

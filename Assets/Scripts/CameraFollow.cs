@@ -5,11 +5,13 @@ namespace PokemonGame
 {
     public class CameraFollow : MonoBehaviour
     {
-        [SerializeField] private Character player;
+        [SerializeField] private Character player; // Reference to the player
+        [SerializeField] private Vector3 offset = new Vector3(0, 1, -10); // Fixed offset from the player (camera positioning)
 
         private void LateUpdate()
         {
-             transform.position = player.transform.position + new Vector3(0, 1, -5);
+            // Just follow the player exactly, with a fixed offset
+            transform.position = player.transform.position + offset;
         }
     }
 }
