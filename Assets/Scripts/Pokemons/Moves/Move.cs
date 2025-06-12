@@ -1,19 +1,14 @@
-using System;
-using UnityEngine;
-
 namespace PokemonGame.Pokemons.Moves
 {
-    [Serializable]
     public class Move
     {
-        [SerializeField] private MoveData data;
-
         public int PowerPointRemaining { get; private set; }
-        public MoveData Data => data;
+
+        public MoveData Data { get; private set; }
 
         public Move(MoveData data)
         {
-            this.data = data;
+            Data = data;
             PowerPointRemaining = data.PowerPoint;
         }
     }

@@ -1,4 +1,8 @@
 using PokemonGame.Characters;
+using PokemonGame.Pokemons.Abilities;
+using PokemonGame.Pokemons.Data;
+using PokemonGame.Pokemons.Moves;
+using PokemonGame.Pokemons.Natures;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -20,6 +24,12 @@ namespace PokemonGame
             {
                 Instance = this;
             }
+
+
+            PokemonDataLoader.PreloadAll();
+            AbilityDataLoader.PreloadAll();
+            NatureDataLoader.PreloadAll();
+            MoveDataLoader.PreloadAll();
 
             Load("ViridianForest");
 

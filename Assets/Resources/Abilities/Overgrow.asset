@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
-  m_Name: BlazeAbilityData
+  m_Name: Overgrow
   m_EditorClassIdentifier: 
-  name: Blaze
-  effect: Ups Fire moves in a pinch.
+  abilityName: Overgrow
+  effect: Ups Grass moves in a pinch.

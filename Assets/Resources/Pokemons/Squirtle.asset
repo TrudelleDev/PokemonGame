@@ -33,4 +33,4 @@ MonoBehaviour:
     frontSprite: {fileID: 21300000, guid: 9466bba73ee28684f8b0e89f5b0072b7, type: 3}
     backSprite: {fileID: 21300000, guid: 59df37f2c97a63744927e99c5b99db79, type: 3}
     menuSprite: {fileID: 1630798579, guid: 50f67ec3ef181844f871b1d7dd8a3d1c, type: 3}
-  menuSpriteOverrider: {fileID: 22100000, guid: 35777c18f759fee40971651b8a686f08, type: 2}
+  menuSpriteOverrider: {fileID: 22100000, guid: bf93d10ba80a1be449107a9532c87d76, type: 2}
