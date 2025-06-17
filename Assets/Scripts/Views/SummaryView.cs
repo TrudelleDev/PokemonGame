@@ -6,12 +6,16 @@ using UnityEngine;
 
 namespace PokemonGame.Views
 {
+    /// <summary>
+    /// Displays detailed information about the currently selected Pokémon,
+    /// including stats, moves, and visual info. Updates UI components on enable
+    /// and resets navigation controls on disable.
+    /// </summary>
     public class SummaryView : View
     {
-        [Header("Summary Sections")]
-        [SerializeField] private SummaryPokemonInfo pokemonInfo;
-        [SerializeField] private SummaryPokemonSkill pokemonSkill;
-        [SerializeField] private SummaryPokemonDisplay pokemonDisplay;
+        [SerializeField] private SummaryHeader header;
+        [SerializeField] private SummaryInfoPanel infoPanel;
+        [SerializeField] private SummarySkillPanel skillPanel;
         [SerializeField] private SummaryMovePanel movePanel;
         [Space]
         [SerializeField] private Party party;
@@ -19,12 +23,7 @@ namespace PokemonGame.Views
         private CloseView closeView;
         private HorizontalPanelController summaryViewController;
 
-        public override void Initialize()
-        {
-            // Make sure the summary view is subscribe to the pokemon selection event before its open once.
-            party.OnSelectPokemon += OnPartySelectPokemon;
-           
-        }
+        public override void Initialize() { }
 
         private void Awake()
         {
@@ -32,25 +31,28 @@ namespace PokemonGame.Views
             summaryViewController = GetComponentInChildren<HorizontalPanelController>();
         }
 
+        private void OnEnable()
+        {
+            if (party.SelectedPokemon == null)
+                return;
+
+            Pokemon pokemon = party.SelectedPokemon;
+
+            infoPanel.Bind(pokemon);
+            skillPanel.Bind(pokemon);
+            header.Bind(pokemon);
+            movePanel.Bind(pokemon);
+        }
+
         private void OnDisable()
         {
-            // Go back to the first section of the summary view
             summaryViewController.ResetController();
         }
 
         private void Update()
         {
-            // Cant close the summary view if the move panel is open
+            // Prevent closing the summary view if move info panel is being shown
             closeView.enabled = movePanel.IsMoveDescriptionOpen;
-        }
-
-        private void OnPartySelectPokemon(Pokemon pokemon)
-        {
-            // Bind the selected pokemon data to each section of the summary view
-            pokemonInfo.Bind(pokemon);
-            pokemonSkill.Bind(pokemon);
-            pokemonDisplay.Bind(pokemon);
-            movePanel.Bind(pokemon);
         }
     }
 }

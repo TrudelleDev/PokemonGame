@@ -11,7 +11,7 @@ namespace PokemonGame.Items.Storage.UI
 
         private void Awake()
         {
-            cancelButton.OnClick += () => ViewManager.Instance.ShowLast();
+            cancelButton.OnClick += () => ViewManager.Instance.GoToPreviousView();
         }
 
         public void CreateItemList(BagPocket bagPocket)

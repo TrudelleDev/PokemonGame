@@ -24,7 +24,7 @@ namespace PokemonGame
 
         private void HandleCancel()
         {
-            optionMenuController.ResetMenuController();
+            optionMenuController.ResetToFirstElement();
             OnCancel?.Invoke();
         }
 

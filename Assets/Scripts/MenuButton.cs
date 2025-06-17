@@ -1,6 +1,7 @@
 using System;
 using PokemonGame.Attributes;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PokemonGame
@@ -62,6 +63,8 @@ namespace PokemonGame
             }
 
             targetGraphic.enabled = true;
+
+           
         }
 
         public void UnSelect()

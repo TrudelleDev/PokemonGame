@@ -5,50 +5,46 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons
 {
+    /// <summary>
+    /// Manages a party of Pokémon, including selection, initialization, and access.
+    /// </summary>
     public class Party : MonoBehaviour
     {
-        [SerializeField] private List<Pokemon> startingPokemons = new();
+        [SerializeField] private List<Pokemon> startingParty = new();
+
+        private readonly List<Pokemon> pokemons = new();
 
         public Pokemon SelectedPokemon { get; private set; }
 
         public IReadOnlyList<Pokemon> Pokemons => pokemons;
 
-        private readonly List<Pokemon> pokemons = new();
-
         public event Action<Pokemon> OnSelectPokemon;
 
         private void Awake()
         {
-            // Add every pokemon from the inspector to the pokemon list
-            foreach (Pokemon pokemon in startingPokemons)
+            foreach (Pokemon pokemon in startingParty)
             {
-                if (pokemon != null)
-                {
-                    AddPokemon(new Pokemon(
-                        pokemon.Level,
-                        pokemon.Data,
-                        pokemon.Nature,
-                        pokemon.Ability,
-                        pokemon.Moves
-                        ));
-                }
+                AddPokemon(pokemon.Clone());
             }
         }
 
+        /// <summary>
+        /// Selects the given Pokémon and notifies listeners.
+        /// </summary>
+        /// <param name="pokemon">The Pokémon to select.</param>
         public void SelectPokemon(Pokemon pokemon)
         {
             SelectedPokemon = pokemon;
             OnSelectPokemon?.Invoke(pokemon);
         }
 
+        /// <summary>
+        /// Adds a Pokémon to the party.
+        /// </summary>
+        /// <param name="pokemon">The Pokémon to add.</param>
         public void AddPokemon(Pokemon pokemon)
         {
             pokemons.Add(pokemon);
-        }
-
-        public void RemovePokemon(Pokemon pokemon)
-        {
-            pokemons.Remove(pokemon);
         }
     }
 }

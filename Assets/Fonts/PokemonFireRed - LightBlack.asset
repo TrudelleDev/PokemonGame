@@ -60,9 +60,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
   m_Name: PokemonFireRed - LightBlack
   m_EditorClassIdentifier: 
-  hashCode: -1505249945
+  hashCode: 1262631170
   material: {fileID: 1583439172908871083}
-  materialHashCode: -2128369817
+  materialHashCode: 823491682
   m_Version: 1.1.0
   m_SourceFontFileGUID: db55d564e3564b74ba6ee3afb157bf0a
   m_SourceFontFile_EditorRef: {fileID: 12800000, guid: db55d564e3564b74ba6ee3afb157bf0a, type: 3}

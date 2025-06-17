@@ -1,100 +1,132 @@
 using System;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.MenuControllers
 {
     public abstract class MenuController : MonoBehaviour
     {
-        protected List<MenuButton> interactables = new();
-        protected int currentButtonIndex;
-        protected int previousButtonIndex;
+        [SerializeField] private bool setButtonsManually;
 
-        private int previousChildCount;
+        [ShowIf("setButtonsManually")]
+        [ListDrawerSettings(DraggableItems = false, ShowFoldout = true)]
+        [SerializeField] protected List<MenuButton> buttons;
+
+        protected MenuButton currentButton;
+        protected MenuButton previousButton;
 
         public event Action<MenuButton> Select;
         public event Action<MenuButton> Click;
 
-        private void Start()
+        private void Awake()
         {
-            PopulateMenuItemList();
-            interactables[0].Select();
+            if (!setButtonsManually)
+            {
+                AssignButtonsAutomatically();
+            }
+
+            if (buttons.Count > 0)
+            {
+                currentButton = buttons[0];
+                previousButton = buttons[0];
+                currentButton.Select();
+            }
         }
 
         private void OnEnable()
         {
-            if (interactables.Count > 0)
-                OnSelect();
+            currentButton.Select();
         }
 
-        protected virtual void Update()
+        protected abstract void Update();
+
+        protected void AssignButtonsAutomatically()
         {
-            // Update the list everytime the child count change
-            if(transform.childCount != previousChildCount)
+            if (buttons == null)
             {
-                PopulateMenuItemList();
+                buttons = new List<MenuButton>();
             }
 
-        }
-
-        protected void PopulateMenuItemList()
-        {
-            interactables.Clear();
-
-            // Only add interactable menu button to the list
-            for (int i = 0; i < transform.childCount; i++)
+            // Only add interactable menu button to the list.
+            foreach (Transform child in transform)
             {
-                if (transform.GetChild(i).GetComponent<MenuButton>() != null)
+                MenuButton button = child.GetComponent<MenuButton>();
+
+                if (button != null && button.Interactable)
                 {
-                    if (transform.GetChild(i).transform.GetComponent<MenuButton>().Interactable)
-                    {
-                        interactables.Add(transform.GetChild(i).GetComponent<MenuButton>());
-                    }
+                    buttons.Add(button);
                 }
             }
-
-            previousChildCount =  transform.childCount;
         }
 
         public void ResetMenuController()
         {
-            if (interactables.Count > 0)
+            if (buttons.Count > 0)
             {
-                interactables[previousButtonIndex].UnSelect();
-                interactables[currentButtonIndex].UnSelect();
+                previousButton?.UnSelect();
+                currentButton?.UnSelect();
 
-                currentButtonIndex = 0;
-                previousButtonIndex = 0;
+                currentButton = buttons[0];
+                previousButton = buttons[0];
+
+                currentButton.Select();
             }
         }
 
         public void ResetMenuItemList()
         {
-            interactables.Clear();
-            PopulateMenuItemList();
+            buttons.Clear();
+            AssignButtonsAutomatically();
         }
 
         protected void OnSelect()
         {
-            interactables[previousButtonIndex].UnSelect();
-            interactables[currentButtonIndex].Select();
-            Select?.Invoke(interactables[currentButtonIndex]);
-            previousButtonIndex = currentButtonIndex;
+            if (buttons.Count == 0 || currentButton == null) return;
+
+            previousButton.UnSelect();
+            currentButton.Select();
+            Select?.Invoke(currentButton);
+            previousButton = currentButton;
+        }
+
+        protected int GetButtonIndex(MenuButton button)
+        {
+            return buttons.IndexOf(button);
+        }
+
+        protected void NextButton()
+        {
+            int index = buttons.IndexOf(currentButton);
+
+            if (index >= 0 && index < buttons.Count - 1)
+            {
+                currentButton = buttons[index + 1];
+            }
+        }
+
+        protected void PreviousButton()
+        {
+            int index = buttons.IndexOf(currentButton);
+
+            if (index > 0)
+            {
+                currentButton = buttons[index - 1];
+            }
         }
 
         protected void OnClick()
         {
-            interactables[currentButtonIndex].Click();
-            Click?.Invoke(interactables[currentButtonIndex]);
+            currentButton.Click();
+            Click?.Invoke(currentButton);
         }
 
         protected void UpdateSelection()
         {
-            OnSelect();
-           // if (currentButtonIndex != previousButtonIndex)
-            //{
-               // OnSelect();
-           // }
+            if (currentButton != previousButton)
+            {
+                OnSelect();
+            }
         }
     }
 }

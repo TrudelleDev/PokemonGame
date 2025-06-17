@@ -1,4 +1,3 @@
-using PokemonGame.Characters;
 using PokemonGame.Characters.States;
 using PokemonGame.Dialogues;
 using PokemonGame.Views;
@@ -6,18 +5,24 @@ using UnityEngine;
 
 namespace PokemonGame
 {
+    /// <summary>
+    /// Handles the toggling and display of the game menu.
+    /// </summary>
     public class GameMenuControl : MonoBehaviour
     {
+        [Header("Dependencies")]
+
+        [Tooltip("The view for the game menu.")]
         [SerializeField] private GameMenuView gameMenuView;
-        [SerializeField] private CharacterStateController playerMovement;
+
+        [Tooltip("The player state controller.")]
+        [SerializeField] private CharacterStateController playerStateController;
 
         private void Update()
         {
-            if (playerMovement.TileMover.IsMoving)
-                return;
+            if (playerStateController.TileMover.IsMoving) return;
 
-            if (DialogueBoxController.Instance.IsDialogueBoxOpen())
-                return;
+            if (DialogueBoxController.Instance.IsDialogueBoxOpen()) return;
 
             if (Input.GetKeyDown(KeyBind.Start))
             {
@@ -33,7 +38,7 @@ namespace PokemonGame
             }
             else
             {
-                ViewManager.Instance.ShowLast();
+                ViewManager.Instance.GoToPreviousView();
             }
         }
     }

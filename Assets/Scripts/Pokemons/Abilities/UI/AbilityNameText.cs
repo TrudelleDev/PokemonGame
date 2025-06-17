@@ -15,7 +15,7 @@ namespace PokemonGame.Pokemons.Abilities.UI
 
         public void Bind(Ability ability)
         {
-            textMesh.text = ability.Data.Name;
+            textMesh.text = ability.Data.AbilityName;
         }
     }
 }

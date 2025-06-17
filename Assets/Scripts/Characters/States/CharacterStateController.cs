@@ -49,6 +49,8 @@ namespace PokemonGame.Characters.States
 
         private void Update()
         {
+            if (PauseControl.IsGamePaused) return;
+
             CurrentState?.Update();
         }
 

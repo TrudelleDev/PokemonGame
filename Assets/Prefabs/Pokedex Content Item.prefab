@@ -437,8 +437,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: No
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -796,8 +796,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 302
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -930,8 +930,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Charizard
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: 84335bb49e0c74846afc23ab40557e33, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -961,7 +961,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_fontStyle: 16
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 4096
   m_textAlignment: 65535

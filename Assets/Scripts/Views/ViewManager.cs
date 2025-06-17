@@ -3,26 +3,24 @@ using UnityEngine;
 
 namespace PokemonGame.Views
 {
-    public class ViewManager : MonoBehaviour
+    /// <summary>
+    /// Manages the display and navigation of UI views in the game.
+    /// Supports view transitions, view history, and a starting view.
+    /// </summary>
+    public class ViewManager : Singleton<ViewManager>
     {
+        [Tooltip("The view that should be shown when the scene loads.")]
         [SerializeField] private View startingView;
-        [SerializeField] private View[] views;
 
-        public static ViewManager Instance { get; private set; }
+        [Tooltip("All views available in the scene that the manager can show.")]
+        [SerializeField] private View[] views;
 
         private View currentView;
         private readonly Stack<View> history = new();
 
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
+            base.Awake();
 
             foreach (View view in views)
             {
@@ -36,24 +34,21 @@ namespace PokemonGame.Views
             }
         }
 
+        /// <summary>
+        /// Shows a view of the specified type.
+        /// Optionally remembers the current view in history.
+        /// </summary>
+        /// <typeparam name="T">The type of view to show.</typeparam>
+        /// <param name="remember">If true, saves the current view to history.</param>
         public void Show<T>(bool remember = true) where T : View
         {
             foreach (View view in views)
             {
                 if (view is T)
-                {
-                    // If this is not the first view
-                    if (currentView != null)
-                    {
-                        if (remember)
-                        {
-                            history.Push(currentView);
-                        }
+                {          
+                    PushCurrentView(remember);
 
-                        currentView.Hide();
-                    }
-
-                    // If this is the first view
+                    // If there is no current view
                     if (currentView == null)
                     {
                         history.Push(view);
@@ -65,9 +60,8 @@ namespace PokemonGame.Views
             }
         }
 
-        private void Show(View view, bool remember = true)
+        private void PushCurrentView(bool remember)
         {
-            // If this is not the first view
             if (currentView != null)
             {
                 if (remember)
@@ -77,6 +71,11 @@ namespace PokemonGame.Views
 
                 currentView.Hide();
             }
+        }
+
+        private void Show(View view, bool remember = true)
+        {
+            PushCurrentView(remember);
 
             // If the view has been changed
             if (currentView != view)
@@ -86,7 +85,10 @@ namespace PokemonGame.Views
             }
         }
 
-        public void ShowLast()
+        /// <summary>
+        /// Shows the previous view from the history stack.
+        /// </summary>
+        public void GoToPreviousView()
         {
             if (history.Count != 0)
             {
@@ -94,16 +96,9 @@ namespace PokemonGame.Views
             }
         }
 
-        public bool IsHistoryEmpty()
-        {
-            if (history.Count == 0)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        /// <summary>
+        /// Returns true if there are no views in the history.
+        /// </summary>
+        public bool IsHistoryEmpty() => history.Count == 0;
     }
 }

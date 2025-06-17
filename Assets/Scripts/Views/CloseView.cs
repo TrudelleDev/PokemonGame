@@ -9,7 +9,7 @@ namespace PokemonGame.Views
             if (Input.GetKeyDown(KeyBind.Cancel))
             {
                 // Close active view.
-                ViewManager.Instance.ShowLast();
+                ViewManager.Instance.GoToPreviousView();
             }
         }
     }

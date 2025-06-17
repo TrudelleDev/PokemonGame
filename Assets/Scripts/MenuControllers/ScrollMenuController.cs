@@ -5,6 +5,10 @@ namespace PokemonGame.MenuControllers
 {
     public class ScrollMenuController : MenuController
     {
+        /*
+         
+         
+         
         private const float KeyPressDelay = 0.5f;
 
         [SerializeField] private int scrollRange = 5;
@@ -117,5 +121,11 @@ namespace PokemonGame.MenuControllers
                 rectTransform.anchoredPosition += (contentItemHeight + verticalLayoutSpacing) * Vector2.down;
             }
         }
+        */
+        protected override void Update()
+        {
+            throw new System.NotImplementedException();
+        }
     }
+
 }

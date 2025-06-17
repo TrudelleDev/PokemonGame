@@ -1,27 +1,179 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using Sirenix.OdinInspector;
+using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace PokemonGame.MenuControllers
 {
-    public class VerticalMenuController : MenuController
-    {    
-        protected override void Update()
+    public class VerticalMenuController : MonoBehaviour
+    {
+        [Title("Settings")]
+        [SerializeField] private bool useManualButtonSetup;
+
+        [ShowIf("useManualButtonSetup")]
+        [ListDrawerSettings(DraggableItems = false, ShowFoldout = true)]
+        [SerializeField] private List<MenuButton> buttons;
+
+        private MenuButton currentButton;
+        private MenuButton previousButton;
+
+        public event Action<MenuButton> OnSelect;
+        public event Action<MenuButton> OnClick;
+
+        private void Awake()
         {
-            if (Input.GetKeyDown(KeyBind.Down) && currentButtonIndex < interactables.Count - 1)
+            if (!useManualButtonSetup)
             {
-                currentButtonIndex++;
+                ClearAndRepopulate();
             }
-            if (Input.GetKeyDown(KeyBind.Up) && currentButtonIndex > 0)
+            if (buttons.Count > 0)
             {
-                currentButtonIndex--;
+                foreach(MenuButton button in buttons)
+                {
+                    if (button.Interactable)
+                    {
+                        currentButton = button;
+                        previousButton = button;
+                        currentButton?.Select();
+                        //StartCoroutine(SelectFirstSlotNextFrame());
+
+                        return;
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning($"{nameof(VerticalMenuController)}: No buttons found during Awake.");
+            }          
+        }
+
+        private IEnumerator SelectFirstSlotNextFrame()
+        {
+            yield return null;
+            currentButton?.Select();
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyBind.Down))
+            {
+                MoveNext();
+            }
+            if (Input.GetKeyDown(KeyBind.Up))
+            {
+                MoveBack();
             }
             if (Input.GetKeyDown(KeyBind.Accept))
             {
-                OnClick();
+                TriggerClick();
             }
+        }
+        public void Initialize()
+        {
+            foreach(MenuButton button in buttons)
+            {
+                if (button.Interactable)
+                {
+                    previousButton.UnSelect();
+                    currentButton.UnSelect();
 
-           UpdateSelection();
+                    currentButton = button;
+                    previousButton = button;
+
+                    currentButton.Select();
+                    return;
+                }
+            }
+        }
+
+        public void ResetToFirstElement()
+        {
+            if (buttons.Count > 0)
+            {
+                previousButton?.UnSelect();
+                currentButton?.UnSelect();
+
+                currentButton = buttons[0];
+                previousButton = buttons[0];
+
+                UpdateSelection();
+            }
+        }
+
+        public void ClearAndRepopulate()
+        {
+            buttons.Clear();
+            AssignButtonsAutomatically();
+        }
+
+        private void AssignButtonsAutomatically()
+        {
+            buttons ??= new List<MenuButton>();
+
+            // Only add interactable menu button to the list.
+            foreach (Transform child in transform)
+            {
+                MenuButton button = child.GetComponent<MenuButton>();
+
+                if (button != null && button.Interactable)
+                {
+                    buttons.Add(button);
+                }
+            }
+        }
+
+        private void UpdateSelection()
+        {
+            if (buttons == null || buttons.Count == 0 || currentButton == null) return;
+
+            previousButton.UnSelect();
+            currentButton.Select();
+            OnSelect?.Invoke(currentButton);
+            previousButton = currentButton;
+        }
+
+        private void TriggerClick()
+        {
+            currentButton.Click();
+            OnClick?.Invoke(currentButton);
+        }
+
+        private void MoveNext()
+        {
+            int index = buttons.IndexOf(currentButton);
+
+            if (index == -1) return; // Early exit
+
+            do
+            {
+                index++;
+            } while (index < buttons.Count && !buttons[index].Interactable);
+
+            if (index < buttons.Count)
+            {
+                currentButton = buttons[index];
+                UpdateSelection();
+            }
+        }
+
+        private void MoveBack()
+        {
+            int index = buttons.IndexOf(currentButton);
+
+            if (index == -1) return; // Early exit
+
+            do
+            {
+                index--;
+            } while (index >= 0 && !buttons[index].Interactable);
+
+            if (index >= 0)
+            {
+                currentButton = buttons[index];
+                UpdateSelection();
+            }
         }
     }
 }

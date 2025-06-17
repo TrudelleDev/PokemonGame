@@ -1,9 +1,12 @@
 ﻿namespace PokemonGame.Pokemons.UI
 {
+    /// <summary>
+    /// Specifies the type of sprite to display for a Pokémon in the UI.
+    /// </summary>
     public enum PokemonSpriteType
     {
-        MenuSprite,
-        FrontSprite,
-        BackSprite
+        Menu,
+        Front,
+        Back
     }
 }
