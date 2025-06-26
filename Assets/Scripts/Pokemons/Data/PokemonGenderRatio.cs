@@ -1,5 +1,5 @@
-﻿using PokemonGame.Attributes;
-using System;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Data
@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemons.Data
     public struct PokemonGenderRatio
     {
         [SerializeField] private float maleRatio;
-        [SerializeField, ReadOnly] private float femaleRatio; 
+        [SerializeField, ReadOnly] private float femaleRatio;
 
         public readonly float MaleRatio => maleRatio;
         public readonly float FemaleRatio => femaleRatio;

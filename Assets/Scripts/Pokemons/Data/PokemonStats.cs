@@ -1,5 +1,5 @@
-﻿using PokemonGame.Attributes;
-using System;
+﻿using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Data

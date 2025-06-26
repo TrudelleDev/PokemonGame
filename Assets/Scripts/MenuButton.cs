@@ -1,7 +1,6 @@
 using System;
-using PokemonGame.Attributes;
+using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace PokemonGame
@@ -14,11 +13,11 @@ namespace PokemonGame
         [Space]
         [SerializeField] private bool interactable = true;
         [Space]
-        [DrawIf("menuButtonType", MenuButtonType.SpriteSwap)]
+        [ShowIf("menuButtonType", MenuButtonType.SpriteSwap)]
         [SerializeField] private Sprite disableSprite;
-        [DrawIf("menuButtonType", MenuButtonType.SpriteSwap)]
+        [ShowIf("menuButtonType", MenuButtonType.SpriteSwap)]
         [SerializeField] private Sprite selectedSprite;
-        [DrawIf("menuButtonType", MenuButtonType.SpriteSwap)]
+        [ShowIf("menuButtonType", MenuButtonType.SpriteSwap)]
         [SerializeField] private Sprite nomralSprite;
 
         public event Action OnClick;
@@ -64,7 +63,7 @@ namespace PokemonGame
 
             targetGraphic.enabled = true;
 
-           
+
         }
 
         public void UnSelect()

@@ -1,6 +1,6 @@
-﻿using PokemonGame.Attributes;
+﻿using System;
 using PokemonGame.Pokemons;
-using System;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame
@@ -9,7 +9,7 @@ namespace PokemonGame
     public class PokemonType
     {
         [SerializeField] private TypeData firstType;
-        [DrawIf("hasSecondType", true)]
+        [ShowIf("hasSecondType", true)]
         [SerializeField] private TypeData secondType;
         [SerializeField] private bool hasSecondType;
 
