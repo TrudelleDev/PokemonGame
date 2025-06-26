@@ -1,6 +1,6 @@
 using System;
+using PokemonGame.Pokemons.UI.Groups;
 using PokemonGame.Shared;
-using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -14,21 +14,10 @@ namespace PokemonGame.Pokemons.UI.Summary
     /// </summary>
     public class SummaryInfoPanel : MonoBehaviour, IPokemonBind
     {
-        [Title("Pokemon")]
-        [SerializeField, Required] private TextMeshProUGUI pokedexNumberText;
-        [SerializeField, Required] private TextMeshProUGUI nameText;
-        [SerializeField, Required] private TextMeshProUGUI idText;
-        //[SerializeField, Required] private TextMeshProUGUI heldItemName;
+        [SerializeField] private PokemonInfoUIGroup pokemonInfo;
+        [SerializeField] private PokemonTypeUIGroup pokemonType;
+        [SerializeField] private TrainerInfoUIGroup trainerInfo;
 
-        [Title("Type")]
-        [SerializeField, Required] private PokemonTypeIcon primaryTypeSprite;
-        [SerializeField, Required] private PokemonTypeIcon secondaryTypeSprite;
-
-        [Title("Trainer")]
-        [SerializeField, Required] private TextMeshProUGUI trainerNameText;
-        [SerializeField, Required] private TextMeshProUGUI trainerMemoText;
-
-        /// <summary>
         /// Binds the given Pokémon data to the UI elements.
         /// Falls back to "MissingNo" if data is missing or invalid.
         /// </summary>
@@ -52,25 +41,25 @@ namespace PokemonGame.Pokemons.UI.Summary
 
         private void SetPokemonInfo(Pokemon pokemon)
         {
-            UIHelper.SetText(pokedexNumberText, pokemon.Data.PokedexNumber, "D3");
-            UIHelper.SetText(nameText, pokemon.Data.PokemonName);
-            UIHelper.SetText(idText, pokemon.ID);
+            UIHelper.SetText(pokemonInfo.PokedexNumberText, pokemon.Data.PokedexNumber, "D3");
+            UIHelper.SetText(pokemonInfo.NameText, pokemon.Data.PokemonName);
+            UIHelper.SetText(pokemonInfo.IdText, pokemon.ID);
 
-            UIHelper.SetText(trainerNameText, pokemon.OwnerName);
-            UIHelper.SetText(trainerMemoText, BuildTrainerMemo(pokemon));
+            UIHelper.SetText(trainerInfo.TrainerNameText, pokemon.OwnerName);
+            UIHelper.SetText(trainerInfo.TrainerMemoText, BuildTrainerMemo(pokemon));
 
-            primaryTypeSprite.Bind(pokemon);
+            pokemonType.PrimaryTypeSprite.Bind(pokemon);
 
             if (pokemon.Data.Types.HasSecondType)
-                secondaryTypeSprite.Bind(pokemon);
+                pokemonType.SecondaryTypeSprite.Bind(pokemon);
             else
-                secondaryTypeSprite.Unbind();
+                pokemonType.SecondaryTypeSprite.Unbind();
         }
 
         private string BuildTrainerMemo(Pokemon pokemon)
         {
-            return $"{pokemon.Nature.Data.NatureName.ToUpper()} nature.{Environment.NewLine}" +
-                   $"Met at {pokemon.LocationEncounter.ToUpper()} at level {pokemon.Level}.";
+            return $"{pokemon.Nature.Data.NatureName} nature.{Environment.NewLine}" +
+                   $"Met at {pokemon.LocationEncounter} at level {pokemon.Level}.";
         }
     }
 }

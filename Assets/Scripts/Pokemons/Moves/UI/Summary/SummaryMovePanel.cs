@@ -1,85 +1,68 @@
 using PokemonGame.MenuControllers;
 using PokemonGame.Pokemons.UI.Summary;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Moves.UI.Summary
 {
+    /// <summary>
+    /// Controls the move-related UI panel in the Pokémon summary screen.
+    /// Manages move selection, binding Pokémon data to UI elements, 
+    /// and toggling header visibility during panel activation.
+    /// </summary>
     public class SummaryMovePanel : MonoBehaviour
     {
-        [SerializeField] private SummaryMoveDescription moveDescription;
-        [SerializeField] private SummaryIdentityPanel pokemonDescription;
-        [SerializeField] private SummaryHeader pokemonDisplay;
-        [SerializeField] private SummaryMoveManager moveManager;
-        [Space]
-        [SerializeField] private VerticalMenuController summaryMoveController;
-        [SerializeField] private HorizontalPanelController summaryPageController;
-        [Space]
-        [SerializeField] private MenuButton cancelButton;
+        [Title("Pokemon")]
+        [SerializeField] private SummaryHeader header;
+        [SerializeField] private SummaryIdentityPanel indentityPanel;
 
-        public bool IsMoveDescriptionOpen { get; private set; } = true;
+        [Title("Move")]
+        [SerializeField] private SummaryMoveDescriptionUI moveDescription;
+        [SerializeField] private SummaryMoveListUI moveManager;
+        [SerializeField] private VerticalMenuController moveController;
 
         private void Awake()
         {
-            summaryMoveController.OnSelect += OnMenuControllerSelect;
-            cancelButton.OnClick += () => CloseMoveSelection();
-            summaryMoveController.enabled = false;
+            moveController.OnSelect += HandleMoveSelect;
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            if (Input.GetKeyDown(KeyBind.Accept))
-            {
-                OpenMoveSelection();
-            }
-            if (Input.GetKeyDown(KeyBind.Cancel))
-            {
-                CloseMoveSelection();
-            }
+            moveController.OnSelect -= HandleMoveSelect;
         }
 
+        private void OnEnable()
+        {
+            header.gameObject.SetActive(false);
+        }
+
+        private void OnDisable()
+        {
+            header.gameObject.SetActive(true);
+            moveController.ResetToFirstElement();
+        }
+
+        /// <summary>
+        /// Binds the given Pokémon's data to the move list and identity panels.
+        /// </summary>
+        /// <param name="pokemon">The Pokémon to bind.</param>
         public void Bind(Pokemon pokemon)
         {
             moveManager.Bind(pokemon);
-            pokemonDescription.Bind(pokemon);
-            summaryMoveController.ClearAndRepopulate();
+            indentityPanel.Bind(pokemon);
         }
 
-        private void OpenMoveSelection()
+        private void HandleMoveSelect(MenuButton button)
         {
-            summaryMoveController.enabled = true;
-            summaryPageController.enabled = false;
-            IsMoveDescriptionOpen = false;
-            pokemonDisplay.gameObject.SetActive(false);
-            pokemonDescription.gameObject.SetActive(true);
-            moveDescription.gameObject.SetActive(true);
-        }
+            SummaryMoveSlotUI summaryMove = button.GetComponent<SummaryMoveSlotUI>();
 
-        private void CloseMoveSelection()
-        {
-            summaryPageController.enabled = true;
-            summaryMoveController.enabled = false;
-            IsMoveDescriptionOpen = true;
-            pokemonDisplay.gameObject.SetActive(true);
-            pokemonDescription.gameObject.SetActive(false);
-            moveDescription.gameObject.SetActive(false);       
-            summaryMoveController.ResetToFirstElement();
-        }
-
-        private void OnMenuControllerSelect(MenuButton menuButton)
-        {
-            // Display the infromation of the move when selecting a move 
-            if (menuButton.GetComponent<SummaryMove>() != null)
+            if (summaryMove?.Move != null)
             {
-                Move move = menuButton.GetComponent<SummaryMove>().MoveReference;
-
-                if (move != null)
-                {
-                    moveDescription.Bind(move);
-                }
-                else
-                {
-                    moveDescription.Clear();
-                }
+                moveDescription.Bind(summaryMove.Move);
+            }
+            else
+            {
+                moveDescription.Unbind();
             }
         }
     }

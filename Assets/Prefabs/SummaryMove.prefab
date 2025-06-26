@@ -64,9 +64,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 785c4252daf1d5d4fb0f9fa1afc47475, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveName: {fileID: 5303021870168704242}
-  movePowerPoint: {fileID: 1683176109749001444}
-  moveSprite: {fileID: 2749403295874306359}
+  moveSlot:
+    nameText: {fileID: 5303021870168704242}
+    powerPointText: {fileID: 1683176109749001444}
+    typeImage: {fileID: 2749403295874306359}
 --- !u!114 &5459561102366023912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -97,7 +98,7 @@ GameObject:
   - component: {fileID: 5009408220600267706}
   - component: {fileID: 5303021870168704242}
   m_Layer: 5
-  m_Name: MoveName
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -183,7 +184,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 16
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -381,7 +382,7 @@ GameObject:
   - component: {fileID: 5862140014788366541}
   - component: {fileID: 1683176109749001444}
   m_Layer: 5
-  m_Name: Power Point
+  m_Name: PowerPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -515,7 +516,7 @@ GameObject:
   - component: {fileID: 5583168814732545685}
   - component: {fileID: 2749403295874306359}
   m_Layer: 5
-  m_Name: MoveTypeSprite
+  m_Name: TypeSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

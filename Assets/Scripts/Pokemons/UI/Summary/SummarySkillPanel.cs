@@ -1,9 +1,7 @@
 using PokemonGame.Pokemons.Abilities;
+using PokemonGame.Pokemons.Abilities.UI.Groups;
 using PokemonGame.Pokemons.Data;
-using PokemonGame.Shared;
-using PokemonGame.Shared.Interfaces;
-using Sirenix.OdinInspector;
-using TMPro;
+using PokemonGame.Pokemons.UI.Groups;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.UI.Summary
@@ -14,17 +12,9 @@ namespace PokemonGame.Pokemons.UI.Summary
     /// </summary>
     public class SummarySkillPanel : MonoBehaviour, IPokemonBind
     {
-        [Title("Stats")]
-        [SerializeField, Required] private TextMeshProUGUI healthText;
-        [SerializeField, Required] private TextMeshProUGUI attackText;
-        [SerializeField, Required] private TextMeshProUGUI defenseText;
-        [SerializeField, Required] private TextMeshProUGUI specialAttackText;
-        [SerializeField, Required] private TextMeshProUGUI specialDefenseText;
-        [SerializeField, Required] private TextMeshProUGUI speedText;
+        [SerializeField] private StatUIGroup stats;
+        [SerializeField] private AbilityUIGroup ability;
 
-        [Title("Ability")]
-        [SerializeField, Required] private TextMeshProUGUI abilityNameText;
-        [SerializeField, Required] private TextMeshProUGUI abilityEffectText;
 
         /// <summary>
         /// Binds the given Pokémon data to the UI elements.
@@ -52,22 +42,22 @@ namespace PokemonGame.Pokemons.UI.Summary
 
         private void SetAbility(Pokemon pokemon)
         {
-            AbilityData ability = pokemon.Ability.Data;
+            AbilityData abilityData = pokemon.Ability.Data;
 
-            UIHelper.SetText(abilityNameText, ability.AbilityName);
-            UIHelper.SetText(abilityEffectText, ability.Effect);
+            ability.NameText.text = abilityData.AbilityName;
+            ability.EffectText.text = abilityData.Effect;
         }
 
         private void SetStats(Pokemon pokemon)
         {
-            PokemonStats stats = pokemon.CoreStat;
+            PokemonStats coreStat = pokemon.CoreStat;
 
-            UIHelper.SetText(healthText, $"{pokemon.HealthRemaining}/{stats.HealthPoint}");
-            UIHelper.SetText(attackText, stats.Attack);
-            UIHelper.SetText(defenseText, stats.Defense);
-            UIHelper.SetText(specialAttackText, stats.SpecialAttack);
-            UIHelper.SetText(specialDefenseText, stats.SpecialDefense);
-            UIHelper.SetText(speedText, stats.Speed);
+            stats.HealthText.text = $"{pokemon.HealthRemaining}/{coreStat.HealthPoint}";
+            stats.AttackText.text = coreStat.Attack.ToString();
+            stats.DefenseText.text = coreStat.Defense.ToString();
+            stats.SpecialAttackText.text = coreStat.SpecialAttack.ToString();
+            stats.SpecialDefenseText.text = coreStat.SpecialDefense.ToString();
+            stats.SpeedText.text = coreStat.Speed.ToString();
         }
     }
 }

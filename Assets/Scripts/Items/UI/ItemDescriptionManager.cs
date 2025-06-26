@@ -7,12 +7,12 @@ namespace PokemonGame.Items.UI
     {
         [SerializeField] private ItemDescription itemDescription;
 
-        private ScrollMenuController controller;
+       // private ScrollMenuController controller;
 
         private void Awake()
         {
-            controller = GetComponent<ScrollMenuController>();
-            controller.Select += OnControllerSelect;
+           // controller = GetComponent<ScrollMenuController>();
+          //  controller.Select += OnControllerSelect;
         }
 
         private void OnControllerSelect(MenuButton menuButton)

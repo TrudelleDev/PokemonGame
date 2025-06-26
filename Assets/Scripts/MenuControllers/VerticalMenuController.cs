@@ -1,8 +1,6 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting.Antlr3.Runtime.Misc;
 using UnityEngine;
 
 namespace PokemonGame.MenuControllers
@@ -21,6 +19,7 @@ namespace PokemonGame.MenuControllers
 
         public event Action<MenuButton> OnSelect;
         public event Action<MenuButton> OnClick;
+        public event Action<MenuButton> OnCancel;
 
         private void Awake()
         {
@@ -30,14 +29,14 @@ namespace PokemonGame.MenuControllers
             }
             if (buttons.Count > 0)
             {
-                foreach(MenuButton button in buttons)
+                foreach (MenuButton button in buttons)
                 {
                     if (button.Interactable)
                     {
                         currentButton = button;
                         previousButton = button;
+
                         currentButton?.Select();
-                        //StartCoroutine(SelectFirstSlotNextFrame());
 
                         return;
                     }
@@ -46,13 +45,7 @@ namespace PokemonGame.MenuControllers
             else
             {
                 Debug.LogWarning($"{nameof(VerticalMenuController)}: No buttons found during Awake.");
-            }          
-        }
-
-        private IEnumerator SelectFirstSlotNextFrame()
-        {
-            yield return null;
-            currentButton?.Select();
+            }
         }
 
         private void Update()
@@ -69,10 +62,16 @@ namespace PokemonGame.MenuControllers
             {
                 TriggerClick();
             }
+            if (Input.GetKeyDown(KeyBind.Cancel))
+            {
+                TriggerCancel();
+            }
+
+
         }
         public void Initialize()
         {
-            foreach(MenuButton button in buttons)
+            foreach (MenuButton button in buttons)
             {
                 if (button.Interactable)
                 {
@@ -90,6 +89,7 @@ namespace PokemonGame.MenuControllers
 
         public void ResetToFirstElement()
         {
+
             if (buttons.Count > 0)
             {
                 previousButton?.UnSelect();
@@ -138,6 +138,11 @@ namespace PokemonGame.MenuControllers
         {
             currentButton.Click();
             OnClick?.Invoke(currentButton);
+        }
+
+        private void TriggerCancel()
+        {
+            OnCancel?.Invoke(currentButton);
         }
 
         private void MoveNext()

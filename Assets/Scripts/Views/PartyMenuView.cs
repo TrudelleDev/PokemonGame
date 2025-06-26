@@ -40,6 +40,11 @@ namespace PokemonGame.Views
             dialogBox.SetText("Choose a POKÈMON or CANCEL.");
         }
 
+        private void OnDisable()
+        {
+            TogglePartyOptionMenu(false);
+        }
+
         private void OnPartyMenuOptionCancel()
         {
             TogglePartyOptionMenu(false);

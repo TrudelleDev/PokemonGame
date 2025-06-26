@@ -52,7 +52,7 @@ namespace PokemonGame.Views
         private void Update()
         {
             // Prevent closing the summary view if move info panel is being shown
-            closeView.enabled = movePanel.IsMoveDescriptionOpen;
+           // closeView.enabled = movePanel.IsMoveDescriptionOpen;
         }
     }
 }
