@@ -88,7 +88,7 @@ GameObject:
   - component: {fileID: 3311624071617494543}
   - component: {fileID: 2226454170643532870}
   m_Layer: 5
-  m_Name: Cancel Menu Button
+  m_Name: CancelButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -238,8 +238,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Cancel
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

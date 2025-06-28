@@ -1,4 +1,3 @@
-using PokemonGame.Encyclopedia;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Data
@@ -7,7 +6,7 @@ namespace PokemonGame.Pokemons.Data
     [CreateAssetMenu(fileName = "NewPokemonData", menuName = "ScriptableObjects/Pokemon Data")]
     public class PokemonData : ScriptableObject
     {
-        [SerializeField, Range(0, Pokedex.TotalPokemon)] private int pokedexNumber;
+        [SerializeField, Range(0, 200)] private int pokedexNumber;
         [SerializeField] private string pokemonName;
         [Space]
         [SerializeField] private PokemonType types;

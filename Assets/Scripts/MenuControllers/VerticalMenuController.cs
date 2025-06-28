@@ -106,6 +106,7 @@ namespace PokemonGame.MenuControllers
         {
             buttons.Clear();
             AssignButtonsAutomatically();
+            ResetToFirstElement();
         }
 
         private void AssignButtonsAutomatically()

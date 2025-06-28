@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8095867414466558390}
   - component: {fileID: 4281586388370954832}
   m_Layer: 5
-  m_Name: Bag Menu Item
+  m_Name: InventoryItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,8 +78,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8dad24ccab30499b257295a0ffd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: {fileID: 8667006086655129711}
-  itemCount: {fileID: 6558335006691298947}
+  itemUI:
+    nameText: {fileID: 8667006086655129711}
+    countText: {fileID: 6558335006691298947}
+  fallbackUI:
+    nameText: '-'
+    countText: '-'
 --- !u!114 &4281586388370954832
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,8 +308,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -438,8 +442,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Potion
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: f26cf8745b29e974f827dd69b4d09eec, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

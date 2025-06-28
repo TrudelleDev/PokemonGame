@@ -1,5 +1,5 @@
 using PokemonGame.Characters;
-using PokemonGame.Items.Storage;
+using PokemonGame.Systems.Inventory;
 using UnityEngine;
 
 namespace PokemonGame.Items
@@ -14,7 +14,7 @@ namespace PokemonGame.Items
         {
             if (!hasBeenGiven)
             {
-                character.GetComponent<Bag>().Add(item);
+                character.GetComponent<InventoryManager>().Add(item);
                 hasBeenGiven = true;
             }
         }

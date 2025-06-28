@@ -37,7 +37,7 @@ namespace PokemonGame.Views
                 resetToFirst = false;
             }
               
-            dialogBox.SetText("Choose a POKéMON or CANCEL.");
+            dialogBox.SetText("Choose a Pokémon or cancel.");
         }
 
         private void OnDisable()
@@ -69,7 +69,7 @@ namespace PokemonGame.Views
             partySlotController.enabled = !show;
             closeView.enabled = !show;
 
-            dialogBox.SetText(show ? "What you gonna do?" : "Choose a POKéMON or CANCEL.");
+            dialogBox.SetText(show ? "What you gonna do?" : "Choose a Pokémon or cancel.");
         }
 
         private void OnCancel()

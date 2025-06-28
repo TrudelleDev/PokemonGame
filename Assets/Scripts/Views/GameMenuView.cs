@@ -11,7 +11,7 @@ namespace PokemonGame.Views
         public override void Initialize()
         {
             party.OnClick += () => ViewManager.Instance.Show<PartyMenuView>();
-            inventory.OnClick += () => ViewManager.Instance.Show<BagView>();
+            inventory.OnClick += () => ViewManager.Instance.Show<InventoryView>();
             exit.OnClick += () => ViewManager.Instance.GoToPreviousView();
         }
     }
