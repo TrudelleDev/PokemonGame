@@ -10,8 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6051706205316444792}
   - component: {fileID: 4496854484554949168}
-  - component: {fileID: 6426199206631971996}
   - component: {fileID: 5459561102366023912}
+  - component: {fileID: 2973635976122337752}
   m_Layer: 5
   m_Name: SummaryMove
   m_TagString: Untagged
@@ -31,8 +31,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8129500146741756980}
   - {fileID: 5264369358553462764}
+  - {fileID: 8129500146741756980}
   - {fileID: 5590391435693285665}
   - {fileID: 2830408054722667799}
   - {fileID: 11334016818983580}
@@ -52,22 +52,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1944173049701413208}
   m_CullTransparentMesh: 1
---- !u!114 &6426199206631971996
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1944173049701413208}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 785c4252daf1d5d4fb0f9fa1afc47475, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  moveSlot:
-    nameText: {fileID: 5303021870168704242}
-    powerPointText: {fileID: 1683176109749001444}
-    typeImage: {fileID: 2749403295874306359}
 --- !u!114 &5459561102366023912
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -86,6 +70,21 @@ MonoBehaviour:
   disableSprite: {fileID: 0}
   selectedSprite: {fileID: 0}
   nomralSprite: {fileID: 0}
+--- !u!114 &2973635976122337752
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1944173049701413208}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21ed8e87139106548aedcc6ca9d82e07, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nameText: {fileID: 5303021870168704242}
+  powerPointText: {fileID: 1683176109749001444}
+  typeImage: {fileID: 2749403295874306359}
 --- !u!1 &2035309106277200749
 GameObject:
   m_ObjectHideFlags: 0
@@ -98,7 +97,7 @@ GameObject:
   - component: {fileID: 5009408220600267706}
   - component: {fileID: 5303021870168704242}
   m_Layer: 5
-  m_Name: Name
+  m_Name: NameText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +110,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035309106277200749}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -120,7 +119,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 19.96, y: 5.4662}
+  m_AnchoredPosition: {x: 19.960014, y: 5.4662075}
   m_SizeDelta: {x: 73.343, y: 12.107}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5009408220600267706
@@ -232,7 +231,7 @@ GameObject:
   - component: {fileID: 3910800653472434695}
   - component: {fileID: 2842382469421788661}
   m_Layer: 5
-  m_Name: SelectionSprite
+  m_Name: SelectSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -254,7 +253,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.23118, y: -0.959}
+  m_AnchoredPosition: {x: 0.23118, y: -0.9588779}
   m_SizeDelta: {x: 120.2, y: 29.0495}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3910800653472434695
@@ -320,7 +319,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6027640449495333768}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -382,7 +381,7 @@ GameObject:
   - component: {fileID: 5862140014788366541}
   - component: {fileID: 1683176109749001444}
   m_Layer: 5
-  m_Name: PowerPoint
+  m_Name: PowerPointText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -395,7 +394,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7627650930022010299}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -516,7 +515,7 @@ GameObject:
   - component: {fileID: 5583168814732545685}
   - component: {fileID: 2749403295874306359}
   m_Layer: 5
-  m_Name: TypeSprite
+  m_Name: TypeIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -529,7 +528,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9021267791610513654}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -538,7 +537,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -40.2, y: 4.58}
+  m_AnchoredPosition: {x: -40.2, y: 4.5800076}
   m_SizeDelta: {x: 32, y: 11.8926}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5583168814732545685
@@ -591,7 +590,7 @@ GameObject:
   - component: {fileID: 8808977177871698070}
   - component: {fileID: 2276989049300005460}
   m_Layer: 5
-  m_Name: PowerPointLabel
+  m_Name: Power Point Label
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -604,7 +603,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9037635750043985238}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -613,7 +612,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 16.650002, y: -8.5395}
+  m_AnchoredPosition: {x: 16.650017, y: -8.5395155}
   m_SizeDelta: {x: 13.930401, y: 7.8573}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8808977177871698070

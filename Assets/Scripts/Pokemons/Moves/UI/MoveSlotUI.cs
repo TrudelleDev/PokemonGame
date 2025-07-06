@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PokemonGame.Shared.Interfaces;
+using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,38 +7,54 @@ using UnityEngine.UI;
 namespace PokemonGame.Pokemons.Moves.UI
 {
     /// <summary>
-    /// A serializable container that holds references to UI components
-    /// for displaying a single Pokémon move's information, such as name,
-    /// power points (PP), and type icon.
+    /// Displays a summary slot for a Pokémon move, including its name, PP, and type icon.
+    /// Used in move selection interfaces such as summary or battle menus.
     /// </summary>
-    [Serializable]
-    public class MoveSlotUI
+    public class MoveSlotUI : MonoBehaviour, IMoveBind, IUnbind
     {
-        [SerializeField]
-        [Tooltip("UI text element displaying the move's name.")]
+        [SerializeField, Required]
+        [Tooltip("Text displaying the move's name.")]
         private TextMeshProUGUI nameText;
 
-        [SerializeField]
-        [Tooltip("UI text element displaying the move's current and maximum PP.")]
+        [SerializeField, Required]
+        [Tooltip("Text displaying the move's current and maximum PP.")]
         private TextMeshProUGUI powerPointText;
 
-        [SerializeField]
-        [Tooltip("UI image element displaying the move's type icon.")]
+        [SerializeField, Required]
+        [Tooltip("Image displaying the move's type icon.")]
         private Image typeImage;
 
-        /// <summary>
-        /// Gets the text component used to display the move's name.
-        /// </summary>
-        public TextMeshProUGUI NameText => nameText;
+        public Move Move { get; private set; }
 
         /// <summary>
-        /// Gets the text component used to display the move's PP.
+        /// Binds the move data to UI elements.
         /// </summary>
-        public TextMeshProUGUI PowerPointText => powerPointText;
+        /// <param name="move">The move to display.</param>
+        public void Bind(Move move)
+        {
+            if (move?.Data == null)
+            {
+                Unbind();
+                return;
+            }
+
+            Move = move;
+            nameText.text = move.Data.MoveName;
+            powerPointText.text = $"{move.PowerPointRemaining}/{move.Data.PowerPoint}";
+            typeImage.sprite = move.Data.Type.Sprite;
+            typeImage.enabled = true;
+        }
 
         /// <summary>
-        /// Gets the image component used to display the move's type icon.
+        /// Clears all move UI elements.
         /// </summary>
-        public Image TypeImage => typeImage;
+        public void Unbind()
+        {
+            Move = null;
+            nameText.text = string.Empty;
+            powerPointText.text = string.Empty;
+            typeImage.sprite = null;
+            typeImage.enabled = false;
+        }
     }
 }
