@@ -1,7 +1,7 @@
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.Abilities.UI;
 using PokemonGame.Pokemons.UI;
-using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

@@ -1,4 +1,4 @@
-using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons.Moves.UI

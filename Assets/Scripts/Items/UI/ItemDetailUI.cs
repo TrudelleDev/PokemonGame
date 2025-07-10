@@ -1,5 +1,5 @@
 using PokemonGame.Items.Datas;
-using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

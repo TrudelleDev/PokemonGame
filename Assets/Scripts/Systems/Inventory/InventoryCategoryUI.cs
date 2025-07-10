@@ -1,5 +1,5 @@
 ﻿using PokemonGame.Items.UI;
-using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;

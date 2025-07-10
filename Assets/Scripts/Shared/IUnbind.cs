@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Shared.Interfaces
+﻿namespace PokemonGame.Shared
 {
     /// <summary>
     /// Defines a method to unbind or clear bound data.

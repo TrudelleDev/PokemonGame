@@ -1,6 +1,6 @@
 ﻿using System;
 using PokemonGame.Pokemons;
-using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
