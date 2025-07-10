@@ -5,7 +5,7 @@ using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Systems.UI.Summary
+namespace PokemonGame.Systems.Summary
 {
     /// <summary>
     /// Displays detailed Pokémon stats and ability information in the summary screen.

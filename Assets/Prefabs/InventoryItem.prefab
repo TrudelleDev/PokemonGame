@@ -78,12 +78,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afa8dad24ccab30499b257295a0ffd75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUI:
-    nameText: {fileID: 8667006086655129711}
-    countText: {fileID: 6558335006691298947}
-  fallbackUI:
-    nameText: '-'
-    countText: '-'
+  nameText: {fileID: 8667006086655129711}
+  countText: {fileID: 6558335006691298947}
 --- !u!114 &4281586388370954832
 MonoBehaviour:
   m_ObjectHideFlags: 0

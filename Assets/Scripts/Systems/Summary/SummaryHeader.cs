@@ -4,7 +4,7 @@ using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Systems.UI.Summary
+namespace PokemonGame.Systems.Summary
 {
     /// <summary>
     /// Manages the UI elements for the Pokémon summary header.

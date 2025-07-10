@@ -14,14 +14,24 @@ namespace PokemonGame.Items
         [SerializeField, Required] private ItemData data;
         [SerializeField, Required] private int count;
 
+        /// <summary>
+        /// The data reference for this item.
+        /// </summary>
         public ItemData Data => data;
 
-        public int Count { get; set; }
+        /// <summary>
+        /// The current quantity of this item instance.
+        /// </summary>
+        public int Count
+        {
+            get => count;
+            set => count = Mathf.Max(0, value); // prevent negative count
+        }
 
         public Item(ItemData data, int count)
         {
             this.data = data;
-            this.count = count;
+            Count = count;
         }
 
         /// <summary>

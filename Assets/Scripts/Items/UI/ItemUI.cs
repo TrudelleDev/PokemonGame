@@ -1,55 +1,54 @@
-using PokemonGame.Items.UI.Groups;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Items.UI
 {
     /// <summary>
-    /// Controls the visual representation of an item's name and count.
-    /// Falls back to default developer-defined content when item data is unavailable.
+    /// Displays the item's name and quantity.
+    /// Automatically clears the UI when no valid item is assigned.
     /// </summary>
-    public class ItemUI : MonoBehaviour, IItemBind
+    public class ItemUI : MonoBehaviour, IItemBind, IUnbind
     {
         [SerializeField, Required]
-        [Tooltip("UI elements used to display the item's name and count.")]
-        private ItemUIGroup itemUI;
+        [Tooltip("Text element displaying the item's name.")]
+        private TextMeshProUGUI nameText;
 
         [SerializeField, Required]
-        [Tooltip("Fallback UI text displayed when no item is bound or item data is invalid.")]
-        private ItemFallbackUIGroup fallbackUI;
+        [Tooltip("Text element displaying the item's quantity.")]
+        private TextMeshProUGUI countText;
 
         /// <summary>
-        /// The item currently bound to this UI, or null if unbound.
+        /// The item currently bound to this UI.
         /// </summary>
         public Item Item { get; private set; }
 
         /// <summary>
-        /// Binds an item to the UI, updating the name and count display.
-        /// If the item or its data is invalid, fallback content is shown instead.
+        /// Binds the specified item to the UI.
         /// </summary>
-        /// <param name="item">The item to bind to the UI.</param>
+        /// <param name="item">The item to display.</param>
         public void Bind(Item item)
         {
             if (item?.Data == null)
             {
-                ShowFallback();
+                Unbind();
                 return;
             }
 
             Item = item;
-            itemUI.NameText.text = item.Data.name;
-            itemUI.CountText.text = item.Count.ToString();
+            nameText.text = item.Data.Name;
+            countText.text = item.Count.ToString();
         }
 
         /// <summary>
-        /// Displays fallback text for name and count.
-        /// Used when the bound item is null or contains no valid data.
+        /// Clears the UI and resets the bound item.
         /// </summary>
-        private void ShowFallback()
+        public void Unbind()
         {
             Item = null;
-            itemUI.NameText.text = fallbackUI.NameText;
-            itemUI.CountText.text = fallbackUI.CountText;
+            nameText.text = string.Empty;
+            countText.text = string.Empty;
         }
     }
 }

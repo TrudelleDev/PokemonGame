@@ -1,30 +1,28 @@
 using System;
 using System.Collections.Generic;
 using PokemonGame.Items;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Systems.Inventory
 {
     /// <summary>
-    /// Represents a single inventory section (or pocket) that holds and stacks items of a specific category.
+    /// Represents a single inventory section that holds and stacks items of a specific type.
     /// </summary>
     [Serializable]
-    public class InventorySection
+    public class InventoryCategory
     {
-        [SerializeField, Required] private List<Item> startingItems = new();
-
+        [SerializeField] private List<Item> startingItems = new();
         private readonly List<Item> items = new();
 
         public IReadOnlyList<Item> Items => items;
 
         /// <summary>
-        /// Initialize the inventory section by cloning and adding starting items.
+        /// Initializes this category by cloning the starting items.
         /// </summary>
         public void Initialize()
         {
-            items.Clear();
-            foreach (Item item in startingItems)
+            Clear();
+            foreach (var item in startingItems)
             {
                 if (item != null)
                     Add(item.Clone());
@@ -32,33 +30,28 @@ namespace PokemonGame.Systems.Inventory
         }
 
         /// <summary>
-        /// Adds an item to this section, stacking if an item with the same name exists.
-        /// Ignores items with zero or negative count.
+        /// Adds an item to this category, stacking if already present.
         /// </summary>
-        /// <param name="item">Item to add.</param>
         public void Add(Item item)
         {
             if (item == null || item.Data == null || item.Count <= 0)
                 return;
 
-            for (int i = 0; i < items.Count; i++)
+            foreach (var existing in items)
             {
-                if (items[i].Data.Name == item.Data.Name)
+                if (existing.Data.ID == item.Data.ID)
                 {
-                    items[i].Count += item.Count;
+                    existing.Count += item.Count;
                     return;
                 }
             }
 
-            // Add new item if no stack found
             items.Add(item);
         }
 
         /// <summary>
-        /// Removes a specified quantity of an item from this section.
-        /// Removes the item entirely if count drops to zero or below.
+        /// Removes a quantity of an item from this category.
         /// </summary>
-        /// <param name="item">Item to remove (count indicates how many to remove).</param>
         public void Remove(Item item)
         {
             if (item == null || item.Data == null || item.Count <= 0)
@@ -66,16 +59,28 @@ namespace PokemonGame.Systems.Inventory
 
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Data.Name == item.Data.Name)
+                if (items[i].Data.ID == item.Data.ID)
                 {
                     items[i].Count -= item.Count;
                     if (items[i].Count <= 0)
-                    {
                         items.RemoveAt(i);
-                    }
                     return;
                 }
             }
         }
+
+        /// <summary>
+        /// Checks if the item with the given ID exists in the category.
+        /// </summary>
+        public bool Contains(string itemId)
+        {
+            return items.Exists(i => i.Data.ID == itemId);
+        }
+
+
+        /// <summary>
+        /// Clears all items from this inventory category.
+        /// </summary>
+        public void Clear() => items.Clear();
     }
 }

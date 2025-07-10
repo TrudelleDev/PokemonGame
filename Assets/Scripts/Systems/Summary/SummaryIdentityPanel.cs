@@ -4,7 +4,7 @@ using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Systems.UI
+namespace PokemonGame.Systems.Summary
 {
     /// <summary>
     /// Controls the Pokémon identity panel UI within the summary screen.

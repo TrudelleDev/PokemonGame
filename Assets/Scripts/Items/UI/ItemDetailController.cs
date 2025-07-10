@@ -5,17 +5,17 @@ using UnityEngine;
 namespace PokemonGame.Items.UI
 {
     /// <summary>
-    /// Manages the item info UI based on menu selection.
-    /// Listens for selection events and updates the item description and icon display.
+    /// Controls the item detail UI based on the current menu selection.
+    /// Updates the item description and icon when the selection changes.
     /// </summary>
-    public class ItemInfoController : MonoBehaviour
+    public class ItemDetailController : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("UI component that displays the selected item's description and icon.")]
-        private ItemInfoUI itemInfoUI;
+        [Tooltip("Displays the selected item's description and icon.")]
+        private ItemDetailUI itemInfoUI;
 
         [SerializeField, Required]
-        [Tooltip("Menu controller that dispatches selection events.")]
+        [Tooltip("Controls the vertical menu and dispatches selection events.")]
         private VerticalMenuController menuController;
 
         private void Awake()
@@ -34,8 +34,8 @@ namespace PokemonGame.Items.UI
         }
 
         /// <summary>
-        /// Called when a menu button is selected.
-        /// Binds the corresponding item or cancel action to the UI.
+        /// Handles selection changes from the menu.
+        /// Binds the selected item or cancel data to the detail UI.
         /// </summary>
         /// <param name="menuButton">The selected menu button.</param>
         private void OnMenuSelect(MenuButton menuButton)
@@ -46,7 +46,7 @@ namespace PokemonGame.Items.UI
             }
             else if (menuButton.TryGetComponent<CancelMenuButton>(out var cancelButton))
             {
-                itemInfoUI.Bind(cancelButton);
+                itemInfoUI.Bind(cancelButton.Data);
             }
         }
     }

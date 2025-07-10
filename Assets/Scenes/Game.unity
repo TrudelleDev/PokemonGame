@@ -2487,15 +2487,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eb47b39c4f2f2b4da542c3d7074fd79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sections:
-    item:
-      startingItems:
-      - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
-        count: 5
-    keyItem:
-      startingItems: []
-    ball:
-      startingItems: []
+  item:
+    startingItems:
+    - data: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
+      count: 5
+    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
+      count: 10
+  keyItem:
+    startingItems:
+    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
+      count: 1
+  ball:
+    startingItems: []
 --- !u!114 &2009369685 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7412460696292355753, guid: 8a186a156b19e454282a7fccf28a7d60, type: 3}
@@ -2563,10 +2566,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.23684211
-    y: 0.23684211
-    width: 0.5263158
-    height: 0.5263158
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -2758,7 +2761,7 @@ GameObject:
   - component: {fileID: 1786483827239158217}
   - component: {fileID: 6737463629968584923}
   m_Layer: 5
-  m_Name: ItemInfo
+  m_Name: ItemDetailContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3074,7 +3077,7 @@ GameObject:
   - component: {fileID: 1797981319473787841}
   - component: {fileID: 4938093952342787939}
   m_Layer: 5
-  m_Name: Items
+  m_Name: ItemCategoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3667,7 +3670,7 @@ GameObject:
   - component: {fileID: 3340680645324573904}
   - component: {fileID: 6251023580318653018}
   m_Layer: 5
-  m_Name: KeyItems
+  m_Name: KeyItemCategoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3881,7 +3884,7 @@ GameObject:
   - component: {fileID: 4076422810122378107}
   - component: {fileID: 8163800089380090384}
   m_Layer: 5
-  m_Name: ItemInfo
+  m_Name: ItemDetailContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4129,7 +4132,7 @@ GameObject:
   - component: {fileID: 1809823295392953041}
   - component: {fileID: 2313850767802944446}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4235,7 +4238,7 @@ GameObject:
   - component: {fileID: 586729361588138208}
   - component: {fileID: 4592424725657541164}
   m_Layer: 5
-  m_Name: Description
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4705,7 +4708,7 @@ GameObject:
   - component: {fileID: 6987549205382974941}
   - component: {fileID: 9136586071751864080}
   m_Layer: 5
-  m_Name: Balls
+  m_Name: BallCategoryPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4904,12 +4907,12 @@ GameObject:
   - component: {fileID: 5854639143737673654}
   - component: {fileID: 878214035724439887}
   m_Layer: 5
-  m_Name: SummaryMenu
+  m_Name: SummaryView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1659981337034891463
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5057,9 +5060,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aead49313abe204e88f8daf27fbc912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUI:
-    descriptionText: {fileID: 2000895223149960770}
-    iconImage: {fileID: 6282313198043265018}
+  descriptionText: {fileID: 2000895223149960770}
+  iconImage: {fileID: 6282313198043265018}
 --- !u!114 &1797981319473787841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5685,7 +5687,7 @@ GameObject:
   - component: {fileID: 6068363878264720221}
   - component: {fileID: 3434435080767079747}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: ItemListViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6136,7 +6138,7 @@ GameObject:
   - component: {fileID: 4985842005300862413}
   - component: {fileID: 7879370094963516620}
   m_Layer: 5
-  m_Name: Icon
+  m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6565,7 +6567,7 @@ GameObject:
   - component: {fileID: 5212008770580929106}
   - component: {fileID: 2368629609877700078}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6591,7 +6593,7 @@ GameObject:
   - component: {fileID: 8916806527512452167}
   - component: {fileID: 7673400563364035662}
   m_Layer: 5
-  m_Name: Bag
+  m_Name: BagSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6617,7 +6619,7 @@ GameObject:
   - component: {fileID: 4427083628536719713}
   - component: {fileID: 8574790350434569902}
   m_Layer: 5
-  m_Name: Bag
+  m_Name: BagSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6673,9 +6675,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aead49313abe204e88f8daf27fbc912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUI:
-    descriptionText: {fileID: 4592424725657541164}
-    iconImage: {fileID: 2313850767802944446}
+  descriptionText: {fileID: 4592424725657541164}
+  iconImage: {fileID: 2313850767802944446}
 --- !u!224 &2994063920409350019
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6733,7 +6734,7 @@ GameObject:
   - component: {fileID: 2104693023706911668}
   - component: {fileID: 2848461237786403580}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6798,7 +6799,7 @@ GameObject:
   - component: {fileID: 748275683154048133}
   - component: {fileID: 3790624369258648532}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: ItemListViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6870,7 +6871,7 @@ GameObject:
   - component: {fileID: 8666313933083492940}
   - component: {fileID: 9172437953173440505}
   m_Layer: 5
-  m_Name: Title
+  m_Name: TitleText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7291,7 +7292,7 @@ GameObject:
   - component: {fileID: 229254710921212422}
   - component: {fileID: 5208323074041934560}
   m_Layer: 5
-  m_Name: Left Arrow
+  m_Name: LeftArrowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7519,9 +7520,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8aead49313abe204e88f8daf27fbc912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemUI:
-    descriptionText: {fileID: 5495077633810959812}
-    iconImage: {fileID: 7879370094963516620}
+  descriptionText: {fileID: 5495077633810959812}
+  iconImage: {fileID: 7879370094963516620}
 --- !u!224 &4087467915512756059
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7749,7 +7749,7 @@ GameObject:
   - component: {fileID: 8774981877630715100}
   - component: {fileID: 7651054118528415922}
   m_Layer: 5
-  m_Name: Viewport
+  m_Name: ItemListViewport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8017,7 +8017,7 @@ GameObject:
   - component: {fileID: 1082722182613993852}
   - component: {fileID: 765961119917919340}
   m_Layer: 5
-  m_Name: Bag
+  m_Name: BagSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8380,16 +8380,16 @@ GameObject:
   m_Component:
   - component: {fileID: 2815685398601447363}
   - component: {fileID: 6536039160399005855}
-  - component: {fileID: 7509812228089524311}
   - component: {fileID: 9077022408558876770}
   - component: {fileID: 9077022408558876771}
+  - component: {fileID: 7509812228089524311}
   m_Layer: 5
-  m_Name: Inventory
+  m_Name: InventoryView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &4847509881969365252
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -8840,7 +8840,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1917129754513603844}
   m_Layer: 5
-  m_Name: BagSprite
+  m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8947,7 +8947,7 @@ GameObject:
   - component: {fileID: 2988231309826067417}
   - component: {fileID: 5330353395283890895}
   m_Layer: 5
-  m_Name: ItemInfo
+  m_Name: ItemDetailContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10259,7 +10259,7 @@ GameObject:
   - component: {fileID: 8408830968049314749}
   - component: {fileID: 4355744072155748634}
   m_Layer: 5
-  m_Name: Right Arrow
+  m_Name: RightArrowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10657,7 +10657,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796555732308344959}
   m_Layer: 5
-  m_Name: BagSprite
+  m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10945,7 +10945,7 @@ GameObject:
   - component: {fileID: 2301588035108002461}
   - component: {fileID: 595302710708253681}
   m_Layer: 5
-  m_Name: Right Arrow
+  m_Name: RightArrowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11238,7 +11238,7 @@ GameObject:
   - component: {fileID: 3465766901768404851}
   - component: {fileID: 6282313198043265018}
   m_Layer: 5
-  m_Name: ' Icon'
+  m_Name: ItemIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11262,7 +11262,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2131619790594864190}
   m_Layer: 5
-  m_Name: BagSprite
+  m_Name: Header
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11616,7 +11616,7 @@ GameObject:
   - component: {fileID: 1406803635235540835}
   - component: {fileID: 8778893730201516405}
   m_Layer: 5
-  m_Name: Party Menu
+  m_Name: PartyMenuView
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12672,7 +12672,7 @@ GameObject:
   - component: {fileID: 8375201018878146764}
   - component: {fileID: 2000895223149960770}
   m_Layer: 5
-  m_Name: Description
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12769,7 +12769,7 @@ GameObject:
   - component: {fileID: 8734732440561374644}
   - component: {fileID: 5495077633810959812}
   m_Layer: 5
-  m_Name: Description
+  m_Name: DescriptionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13229,7 +13229,7 @@ GameObject:
   - component: {fileID: 7117177724636167010}
   - component: {fileID: 8873565885064552081}
   m_Layer: 5
-  m_Name: Left Arrow
+  m_Name: LeftArrowSprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13691,12 +13691,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f658e3a997616b14fbe0b687096d4d0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryCategoryUI:
-    item: {fileID: 0}
-    keyItem: {fileID: 0}
-    balls: {fileID: 0}
-  inventory: {fileID: 1990210048}
-  controller: {fileID: 8817228198094922257}
+  itemCategory: {fileID: 4938093952342787939}
+  keyItemCategory: {fileID: 6251023580318653018}
+  ballCategory: {fileID: 9136586071751864080}
+  inventoryManager: {fileID: 1990210048}
 --- !u!114 &9079122094415819578
 MonoBehaviour:
   m_ObjectHideFlags: 0
