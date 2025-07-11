@@ -6,13 +6,20 @@ using UnityEngine;
 namespace PokemonGame.Pokemons.UI.PartyMenu
 {
     /// <summary>
-    ///  Manages and binds Pokémon party data to UI slots.
+    /// Manages and binds Pokémon party data to UI slots.
+    /// Automatically fills and updates the slot visuals from the current party.
     /// </summary>
     public class PartyMenuSlotManager : MonoBehaviour
     {
-        [SerializeField, Required] private Party party;
-        [SerializeField, Required] private VerticalMenuController verticalMenuController;
+        [SerializeField, Required]
+        [Tooltip("Reference to the current player party.")]
+        private Party party;
 
+        [SerializeField, Required]
+        [Tooltip("Controls vertical input and UI navigation for the party menu.")]
+        private VerticalMenuController verticalMenuController;
+
+        [Title("Slot Instances (Auto-collected)")]
         [ShowInInspector, ReadOnly]
         private List<PartyMenuSlot> slots;
 
@@ -29,24 +36,30 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
             BindSlots();
 
-            // Make sure the first PartyMenuSlot is selected
-            verticalMenuController.Initialize();
+            // Initialize vertical menu selection on first available slot
+            verticalMenuController?.Initialize();
         }
 
+        /// <summary>
+        /// Binds each slot to a corresponding Pokémon in the party.
+        /// Extra slots are unbound.
+        /// </summary>
         private void BindSlots()
         {
-            UnbindSlots(); // Unbind all first
+            UnbindSlots();
 
             for (int i = 0; i < slots.Count; i++)
             {
                 if (i < party.Pokemons.Count)
                     slots[i].Bind(party.Pokemons[i]);
-
                 else
-                    slots[i].Unbind(); // In case some slots don't get used
+                    slots[i].Unbind(); // Clear unused slots
             }
         }
 
+        /// <summary>
+        /// Clears all slot data and unbinds existing Pokémon references.
+        /// </summary>
         private void UnbindSlots()
         {
             foreach (PartyMenuSlot slot in slots)

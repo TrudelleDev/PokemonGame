@@ -1,5 +1,4 @@
 using PokemonGame.Shared;
-using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -7,85 +6,95 @@ using UnityEngine;
 namespace PokemonGame.Pokemons.UI.PartyMenu
 {
     /// <summary>
-    /// Controls a single Pokémon slot in the party menu UI.
-    /// Displays name, level, HP, gender, and sprite, with support for data binding, fallback display using "MissingNo", and slot interaction.
+    /// Displays a Pokémon's information in a party menu slot, including name, level, health, gender, and sprite.
+    /// Handles data binding and unbinding, and gracefully resets visuals if no valid Pokémon is assigned.
     /// </summary>
-
+    [RequireComponent(typeof(MenuButton))]
     public class PartyMenuSlot : MonoBehaviour, IPokemonBind, IUnbind
     {
         private static readonly int IdleHash = Animator.StringToHash("Idle");
 
-        [Title("Basic Info")]
-        [SerializeField, Required] private TextMeshProUGUI nameText;
-        [SerializeField, Required] private TextMeshProUGUI levelText;
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's name.")]
+        private TextMeshProUGUI nameText;
 
-        [Title("Health Display")]
-        [SerializeField, Required] private TextMeshProUGUI healthText;
-        [SerializeField, Required] private HealthBar healthBar;
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's level.")]
+        private TextMeshProUGUI levelText;
 
-        [Title("Gender & Sprite")]
-        [SerializeField, Required] private PokemonGenderSprite genderSprite;
-        [SerializeField, Required] private Animator menuSpriteAnimator;
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's current HP.")]
+        private TextMeshProUGUI healthText;
+
+        [SerializeField, Required]
+        [Tooltip("Displays a visual health bar representing HP.")]
+        private HealthBar healthBar;
+
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's gender icon.")]
+        private PokemonGenderSprite genderIcon;
+
+        [SerializeField, Required]
+        [Tooltip("Animator for the Pokémon's sprite shown in the party menu.")]
+        private Animator menuSpriteAnimator;
 
         [Title("Slot Container")]
-        [Tooltip("The root GameObject that contains all visual elements of the party slot.")]
-        [SerializeField, Required] private GameObject content;
+        [SerializeField, Required]
+        [Tooltip("Root GameObject container for the visual components.")]
+        private GameObject contentRoot;
+
+        public Pokemon BoundPokemon { get; private set; }
 
         private MenuButton menuButton;
 
-        public Pokemon Pokemon { get; private set; } // Used as a reference
+        private void Awake()
+        {
+            menuButton = GetComponent<MenuButton>();
+        }
 
         /// <summary>
-        /// Binds the given Pokémon data to the UI elements.
-        /// Falls back to "MissingNo" if data is missing or invalid.
+        /// Binds a Pokémon to the slot and displays its data. Clears the slot if null or invalid.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display.</param>
         public void Bind(Pokemon pokemon)
         {
-            SetSlotActive(true);
-
             if (pokemon?.Data == null)
             {
-                RebindToMissingNo();
+                Unbind();
                 return;
             }
-        
-            SetPokemonInfo(pokemon);         
-            Pokemon = pokemon;
-        }
 
-        public void RebindToMissingNo()
-        {
-            Pokemon missingNo = PokemonFactory.CreateMissingNo();
-            SetPokemonInfo(missingNo);
-            Pokemon = missingNo;
+            BoundPokemon = pokemon;
+           
+            SetSlotVisibility(true);
+            UpdateDisplay(pokemon);
         }
 
         /// <summary>
-        /// Clears the currently assigned Pokémon and hides the slot's content.
+        /// Unbinds the current Pokémon and clears all UI data.
         /// </summary>
         public void Unbind()
         {
-            Pokemon = null;
-            SetSlotActive(false);
+            BoundPokemon = null;
+
+            nameText.text = string.Empty;
+            levelText.text = string.Empty;
+            healthText.text = string.Empty;
+
+            genderIcon.Unbind();
+            healthBar.Unbind();
+
+            menuSpriteAnimator.runtimeAnimatorController = null;
+
+            SetSlotVisibility(false);
         }
 
-        private void SetSlotActive(bool isActive)
+        private void UpdateDisplay(Pokemon pokemon)
         {
-            if (menuButton == null)
-                menuButton = GetComponent<MenuButton>();
+            nameText.text = pokemon.Data.PokemonName;
+            levelText.text = $"Lv {pokemon.Level}";
+            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
 
-            content.SetActive(isActive);
-            menuButton.Interactable = isActive;
-        }
-
-        private void SetPokemonInfo(Pokemon pokemon)
-        {
-            UIHelper.SetText(nameText, pokemon.Data.PokemonName);
-            UIHelper.SetText(healthText, $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}");
-            UIHelper.SetText(levelText, $"Lv {pokemon.Level}");
-
-            genderSprite.Bind(pokemon);
+            genderIcon.Bind(pokemon);
             healthBar.Bind(pokemon);
 
             if (pokemon.Data.MenuSpriteOverrider != null)
@@ -93,6 +102,14 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
                 menuSpriteAnimator.runtimeAnimatorController = pokemon.Data.MenuSpriteOverrider;
                 menuSpriteAnimator.Play(IdleHash);
             }
+        }
+
+        private void SetSlotVisibility(bool visible)
+        {
+            contentRoot.SetActive(visible);
+
+            if (menuButton != null)
+                menuButton.Interactable = visible;
         }
     }
 }

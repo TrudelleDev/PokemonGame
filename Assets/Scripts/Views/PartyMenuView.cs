@@ -8,38 +8,56 @@ namespace PokemonGame.Views
 {
     /// <summary>
     /// Displays the party menu where the player can select a Pokémon and choose actions.
-    /// Handles input and transitions between the party slots and option menu.
+    /// Handles input and transitions between the party slots and the option menu.
     /// </summary>
+    [RequireComponent(typeof(CloseView))]
     public class PartyMenuView : View
     {
-        [SerializeField, Required] private Party party;
-        [SerializeField, Required] private MenuButton cancelButton;
-        [SerializeField, Required] private PartyMenuOption partyMenuOption;
-        [SerializeField, Required] private TextSetter dialogBox;
+        [SerializeField, Required]
+        [Tooltip("Reference to the current player party.\nUsed to track and select Pokémon.")]
+        private Party party;
+
+        [SerializeField, Required]
+        [Tooltip("Button used to cancel out of the party menu.\nTriggers view closing or returns to slot selection.")]
+        private MenuButton cancelButton;
+
+        [SerializeField, Required]
+        [Tooltip("Option menu UI shown after selecting a Pokémon.\nAllows actions like 'View', 'Use Item', etc.")]
+        private PartyMenuOption partyMenuOption;
+
+        [SerializeField, Required]
+        [Tooltip("Text box used to display contextual instructions.\nUpdated when switching between slot and option menus.")]
+        private TextSetter dialogBox;
 
         [Title("Menu Controllers")]
-        [SerializeField, Required] private VerticalMenuController partySlotController;
-        [SerializeField, Required] private VerticalMenuController partyOptionController;
+
+        [SerializeField, Required]
+        [Tooltip("Controls navigation between party slots.\nHandles selection and click input.")]
+        private VerticalMenuController partySlotController;
+
+        [SerializeField, Required]
+        [Tooltip("Controls navigation inside the party option menu.\nEnabled only after selecting a Pokémon.")]
+        private VerticalMenuController partyOptionController;
 
         private CloseView closeView;
         private bool resetToFirst;
 
         /// <summary>
-        /// Called once before the view is shown for the first time by the <see cref="ViewManager"/>.
-        /// Subscribes to relevant events and initializes controller state.
+        /// Called once before the view is shown for the first time.
+        /// Sets up button and controller listeners.
         /// </summary>
         public override void Initialize()
         {
             closeView = GetComponent<CloseView>();
 
-            partySlotController.OnClick += OnPartySlotControllerClick;
-            partyMenuOption.OnCancel += OnPartyMenuOptionCancel;
+            partySlotController.OnClick += OnPartySlotClick;
+            partyMenuOption.OnCancel += OnPartyOptionCancel;
             cancelButton.OnClick += OnCancel;
         }
 
         /// <summary>
         /// Called every time the view is enabled.
-        /// Resets controller selection and updates the dialog box text.
+        /// Resets the selected party slot and updates the dialog text.
         /// </summary>
         private void OnEnable()
         {
@@ -62,33 +80,48 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Called when a party slot is selected.
+        /// Called when a party slot is clicked.
         /// Selects the Pokémon and opens the party option menu.
         /// </summary>
-        private void OnPartySlotControllerClick(MenuButton menuButton)
+        /// <param name="menuButton">The button component clicked.</param>
+        private void OnPartySlotClick(MenuButton menuButton)
         {
             PartyMenuSlot slot = menuButton.GetComponent<PartyMenuSlot>();
 
-            if (slot?.Pokemon != null)
-            {
-                party.SelectPokemon(slot.Pokemon);
-                TogglePartyOptionMenu(true);
-            }
+            if (slot?.BoundPokemon == null)
+                return;
+
+            party.SelectPokemon(slot.BoundPokemon);
+            TogglePartyOptionMenu(true);
         }
 
         /// <summary>
-        /// Called when the cancel button is pressed in the party option menu.
-        /// Hides the option menu and returns control to the party list.
+        /// Called when canceling the option menu.
+        /// Hides the option menu and re-enables party slot control.
         /// </summary>
-        private void OnPartyMenuOptionCancel()
+        private void OnPartyOptionCancel()
         {
             TogglePartyOptionMenu(false);
         }
 
         /// <summary>
-        /// Toggles between the party slot menu and the party option menu.
-        /// Updates both controller states and dialog box text.
+        /// Called when the root cancel button is pressed.
+        /// Returns to the previous view if no submenu is open.
         /// </summary>
+        private void OnCancel()
+        {
+            if (!partyMenuOption.gameObject.activeInHierarchy)
+            {
+                resetToFirst = true;
+                ViewManager.Instance.GoToPreviousView();
+            }
+        }
+
+        /// <summary>
+        /// Toggles visibility and input control between the slot and option menus.
+        /// Updates UI state and dialog box.
+        /// </summary>
+        /// <param name="show">Whether to show the option menu.</param>
         private void TogglePartyOptionMenu(bool show)
         {
             partyOptionController.enabled = show;
@@ -98,19 +131,6 @@ namespace PokemonGame.Views
             closeView.enabled = !show;
 
             dialogBox.SetText(show ? "What you gonna do?" : "Choose a Pokémon or cancel.");
-        }
-
-        /// <summary>
-        /// Handles the cancel button press from the root menu.
-        /// Returns to the previous view if the option menu is not active.
-        /// </summary>
-        private void OnCancel()
-        {
-            if (!partyMenuOption.gameObject.activeInHierarchy)
-            {
-                resetToFirst = true;
-                ViewManager.Instance.GoToPreviousView();
-            }
         }
     }
 }

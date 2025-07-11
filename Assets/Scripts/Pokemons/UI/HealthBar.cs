@@ -15,30 +15,34 @@ namespace PokemonGame.Pokemons.UI
         private const float ExcellentThreshold = 0.5f;
         private const float GoodThreshold = 0.25f;
 
+        [Title("Health Sprites")]
         [SerializeField, Required]
-        [Tooltip("Sprite used when health is above 50%.")]
+        [Tooltip("Sprite for high health state.\nUsed when HP is above 50%.")]
         private Sprite excellentHealthSprite;
 
         [SerializeField, Required]
-        [Tooltip("Sprite used when health is between 25% and 50%.")]
+        [Tooltip("Sprite for moderate health state.\nUsed when HP is between 25% and 50%.")]
         private Sprite goodHealthSprite;
 
         [SerializeField, Required]
-        [Tooltip("Sprite used when health is below 25%.")]
+        [Tooltip("Sprite for low health state.\nUsed when HP falls below 25%.")]
         private Sprite criticalHealthSprite;
 
+        [Title("Slider Fill")]
+        [SerializeField, Required]
+        [Tooltip("Image that fills the health bar visually.\nShould be assigned from the Slider's Fill child.")]
         private Image fillImage;
+
         private Slider slider;
         private Pokemon boundPokemon;
 
         private void Awake()
         {
             slider = GetComponent<Slider>();
-            fillImage = GetComponent<Image>();
         }
 
         /// <summary>
-        /// Binds this health bar to the given Pokémon and listens for health changes.
+        /// Binds this health bar to the given Pokémon and subscribes to health changes.
         /// </summary>
         public void Bind(Pokemon pokemon)
         {
@@ -48,41 +52,45 @@ namespace PokemonGame.Pokemons.UI
                 return;
             }
 
-            slider.minValue = 0;
-            slider.maxValue = pokemon.CoreStat.HealthPoint;
-            slider.value = slider.maxValue;
+            Unbind();
 
             boundPokemon = pokemon;
+
+            slider.minValue = 0;
+            slider.maxValue = pokemon.CoreStat.HealthPoint;
+            slider.value = pokemon.HealthRemaining;
+
+            UpdateFillImage(pokemon.HealthRemaining);
+
             pokemon.OnHealthChange += OnPokemonHealthChange;
         }
 
-        /// <summary>
-        /// Updates the fill sprite based on the current health percentage.
-        /// </summary>
         private void OnPokemonHealthChange(float currentHealth)
         {
             slider.value = currentHealth;
+            UpdateFillImage(currentHealth);
+        }
 
-            // Just in case maxValue is ever 0 (e.g., before full init):
-            float percent = slider.maxValue > 0 ? currentHealth / slider.maxValue : 0f;
-            var state = GetHealthState(percent);
+        private void UpdateFillImage(float currentHealth)
+        {
+            if (fillImage == null || slider.maxValue <= 0)
+                return;
 
-            switch (state)
+            float percent = currentHealth / slider.maxValue;
+
+            var sprite = GetHealthState(percent) switch
             {
-                case HealthState.Excellent:
-                    fillImage.sprite = excellentHealthSprite;
-                    break;
-                case HealthState.Good:
-                    fillImage.sprite = goodHealthSprite;
-                    break;
-                case HealthState.Critical:
-                    fillImage.sprite = criticalHealthSprite;
-                    break;
-            }
+                HealthState.Excellent => excellentHealthSprite,
+                HealthState.Good => goodHealthSprite,
+                HealthState.Critical => criticalHealthSprite,
+                _ => null
+            };
+
+            fillImage.sprite = sprite;
         }
 
         /// <summary>
-        /// Unbinds from the current Pokémon and clears the UI.
+        /// Unbinds the Pokémon and resets the UI.
         /// </summary>
         public void Unbind()
         {
@@ -93,17 +101,19 @@ namespace PokemonGame.Pokemons.UI
             }
 
             slider.value = 0;
-            fillImage.sprite = null;
+
+            if (fillImage != null)
+                fillImage.sprite = null;
         }
 
         /// <summary>
-        /// Returns the appropriate health state based on the given percentage.
+        /// Gets the health state (Excellent, Good, or Critical) based on a percentage.
         /// </summary>
-        private HealthState GetHealthState(float healthPercent)
+        private HealthState GetHealthState(float percent)
         {
-            if (healthPercent > ExcellentThreshold)
+            if (percent > ExcellentThreshold)
                 return HealthState.Excellent;
-            if (healthPercent > GoodThreshold)
+            if (percent > GoodThreshold)
                 return HealthState.Good;
             return HealthState.Critical;
         }
