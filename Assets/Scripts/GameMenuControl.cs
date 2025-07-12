@@ -1,5 +1,5 @@
 using PokemonGame.Characters.States;
-using PokemonGame.Dialogues;
+using PokemonGame.Systems.Dialogue;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -22,7 +22,7 @@ namespace PokemonGame
         {
             if (playerStateController.TileMover.IsMoving) return;
 
-            if (DialogueBoxController.Instance.IsDialogueBoxOpen()) return;
+            if (DialogueBox.Instance.IsOpen()) return;
 
             if (Input.GetKeyDown(KeyBind.Start))
             {

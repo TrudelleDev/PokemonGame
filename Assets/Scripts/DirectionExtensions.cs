@@ -44,5 +44,27 @@ namespace PokemonGame
 
             return Direction.None;
         }
+
+        /// <summary>
+        /// Converts a <see cref="Direction"/> value to a corresponding <see cref="Vector2"/>.
+        /// </summary>
+        /// <param name="direction">The direction to convert.</param>
+        /// <returns>A Vector2 representing the direction vector.</returns>
+        public static Vector2 ToVector2(this Direction direction)
+        {
+            switch (direction)
+            {
+                case Direction.Up:
+                    return Vector2.up;
+                case Direction.Down:
+                    return Vector2.down;
+                case Direction.Left:
+                    return Vector2.left;
+                case Direction.Right:
+                    return Vector2.right;
+                default:
+                    return Vector2.zero;
+            }
+        }
     }
 }

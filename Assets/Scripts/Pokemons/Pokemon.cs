@@ -31,7 +31,7 @@ namespace PokemonGame.Pokemons
         public PokemonStats EffortValue { get; private set; }
         public PokemonGender Gender { get; private set; }
         public float HealthRemaining { get; private set; }
-        public string OwnerName { get; set; } = "RED";
+        public string OwnerName { get; set; } = "RED"; // Change this with real character name
         public string LocationEncounter { get; set; } = "Pallet Town";
         public string ID { get; private set; }
 

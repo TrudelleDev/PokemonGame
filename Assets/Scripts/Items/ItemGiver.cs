@@ -1,4 +1,5 @@
 using PokemonGame.Characters;
+using PokemonGame.Characters.Interfaces;
 using PokemonGame.Systems.Inventory;
 using UnityEngine;
 
@@ -10,7 +11,7 @@ namespace PokemonGame.Items
 
         private bool hasBeenGiven;
 
-        public void OnInteract(Character character)
+        public void Interact(Character character)
         {
             if (!hasBeenGiven)
             {

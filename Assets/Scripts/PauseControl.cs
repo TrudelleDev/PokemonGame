@@ -1,4 +1,4 @@
-using PokemonGame.Dialogues;
+using PokemonGame.Systems.Dialogue;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -14,7 +14,7 @@ namespace PokemonGame
 
         private void Update()
         {
-            bool shouldPause = !(ViewManager.Instance.IsHistoryEmpty() && !DialogueBoxController.Instance.IsDialogueBoxOpen());
+            bool shouldPause = !(ViewManager.Instance.IsHistoryEmpty() && !DialogueBox.Instance.IsOpen());
 
             if (shouldPause != IsGamePaused)
             {
