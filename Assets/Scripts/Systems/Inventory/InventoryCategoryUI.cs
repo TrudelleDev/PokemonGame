@@ -25,57 +25,102 @@ namespace PokemonGame.Systems.Inventory
         private Transform contentParent;
 
         private MenuButton activeCancelButton;
+        private InventoryCategory currentCategory;
 
         /// <summary>
-        /// Populates the UI with the given category's items and adds a cancel button.
+        /// Binds the UI to a specific inventory category and listens for updates.
         /// </summary>
+        /// <param name="category">The inventory category to display.</param>
         public void Bind(InventoryCategory category)
         {
             Unbind();
 
             if (category == null)
             {
-                Debug.LogWarning("InventoryCategoryUI: Tried to bind a null category.");
+                Log.Warning(this, $"Tried to bind a null category.");
                 return;
             }
 
-            foreach (var item in category.Items)
-            {
-                var itemUI = Instantiate(itemUIPrefab, contentParent);
-                itemUI.Bind(item);
-            }
+            currentCategory = category;
+            currentCategory.OnItemsChanged += OnCategoryItemsChanged;
 
-            activeCancelButton = Instantiate(cancelButton, contentParent);
-            activeCancelButton.transform.SetAsLastSibling();
-            activeCancelButton.OnClick += HandleCancelClick;
+            RefreshUI();
         }
 
         /// <summary>
-        /// Clears all UI elements and unsubscribes cancel button event.
+        /// Clears the UI and unsubscribes from events to clean up references.
         /// </summary>
         public void Unbind()
         {
             if (activeCancelButton != null)
             {
                 activeCancelButton.OnClick -= HandleCancelClick;
+                Destroy(activeCancelButton.gameObject);
                 activeCancelButton = null;
             }
 
-            for (int i = contentParent.childCount - 1; i >= 0; i--)
-                Destroy(contentParent.GetChild(i).gameObject);
+            if (currentCategory != null)
+            {
+                currentCategory.OnItemsChanged -= OnCategoryItemsChanged;
+                currentCategory = null;
+            }
+
+            ClearContent();
         }
 
+        /// <summary>
+        /// Handles the cancel button click and navigates to the previous view.
+        /// </summary>
         private void HandleCancelClick()
         {
             ViewManager.Instance.GoToPreviousView();
         }
 
-        private void OnDestroy()
+        /// <summary>
+        /// Called when the inventory category changes. Refreshes the item list UI.
+        /// </summary>
+        private void OnCategoryItemsChanged()
         {
-            if (activeCancelButton != null)
+            RefreshUI();
+        }
+
+        /// <summary>
+        /// Rebuilds the item list and cancel button UI from the bound inventory category.
+        /// </summary>
+        private void RefreshUI()
+        {
+            ClearContent();
+
+            if (currentCategory == null || itemUIPrefab == null || cancelButton == null)
+                return;
+
+            foreach (var item in currentCategory.Items)
             {
-                activeCancelButton.OnClick -= HandleCancelClick;
-                activeCancelButton = null;
+                ItemUI itemUI = Instantiate(itemUIPrefab, contentParent);
+                itemUI.Bind(item);
+            }
+
+            if (activeCancelButton == null)
+            {
+                activeCancelButton = Instantiate(cancelButton, contentParent);
+                activeCancelButton.OnClick += HandleCancelClick;
+            }
+
+            activeCancelButton.transform.SetAsLastSibling();
+        }
+
+        /// <summary>
+        /// Destroys all child UI elements under the content container except for persistent cancel button.
+        /// </summary>
+        private void ClearContent()
+        {
+            for (int i = contentParent.childCount - 1; i >= 0; i--)
+            {
+                GameObject child = contentParent.GetChild(i).gameObject;
+                if (activeCancelButton != null && child == activeCancelButton.gameObject)
+                    continue;
+
+                Destroy(child);
             }
         }
     }

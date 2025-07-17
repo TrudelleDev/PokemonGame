@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8edf7f2429c5b6c4aaca9f76858039b1, type: 3}
   m_Name: Antidote
   m_EditorClassIdentifier: 
-  Id: 
+  Id: 2
   name: Antidote
   icon: {fileID: 21300000, guid: b310dba8effed7e448613949433e7417, type: 3}
   description: "A spray-type medicine. It heals one Pok\xE9mon from a poisoning."

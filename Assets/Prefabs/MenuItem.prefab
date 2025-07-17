@@ -336,4 +336,7 @@ MonoBehaviour:
   interactable: 1
   disableSprite: {fileID: 0}
   selectedSprite: {fileID: 0}
-  nomralSprite: {fileID: 0}
+  normalSprite: {fileID: 0}
+  onClickUnity:
+    m_PersistentCalls:
+      m_Calls: []

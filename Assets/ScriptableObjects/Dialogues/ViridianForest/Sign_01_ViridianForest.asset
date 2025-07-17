@@ -13,5 +13,6 @@ MonoBehaviour:
   m_Name: Sign_01_ViridianForest
   m_EditorClassIdentifier: 
   dialogues:
-  - "Trainer Tips\nWeaken Pok\xE9mon before attempting capture!\nWhen healthy, they
-    may escape!"
+  - Trainer Tips
+  - "Weaken Pok\xE9mon before attempting capture!"
+  - When healthy, they may escape!

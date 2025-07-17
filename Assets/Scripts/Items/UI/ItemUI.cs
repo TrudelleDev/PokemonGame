@@ -1,3 +1,4 @@
+using PokemonGame.Items.UI.Interfaces;
 using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;

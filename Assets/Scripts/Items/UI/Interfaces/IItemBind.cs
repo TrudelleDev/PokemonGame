@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Items
+﻿namespace PokemonGame.Items.UI.Interfaces
 {
     /// <summary>
     /// Defines a contract for binding an item to a UI or logic component.

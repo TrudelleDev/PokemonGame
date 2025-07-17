@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using PokemonGame.Items;
+using PokemonGame.Items.Datas;
 using UnityEngine;
 
 namespace PokemonGame.Systems.Inventory
@@ -22,9 +23,7 @@ namespace PokemonGame.Systems.Inventory
         [Tooltip("Poké Balls and similar items.")]
         [SerializeField] private InventoryCategory ball;
 
-        /// <summary>
-        /// Internal dictionary mapping item types to their corresponding inventory sections.
-        /// </summary>
+
         private Dictionary<ItemType, InventoryCategory> categories;
 
         /// <summary>
@@ -33,9 +32,9 @@ namespace PokemonGame.Systems.Inventory
         /// </summary>
         public void Initialize()
         {
-            item.Initialize();
-            keyItem.Initialize();
-            ball.Initialize();
+            item?.Initialize();
+            keyItem?.Initialize();
+            ball?.Initialize();
 
             categories = new Dictionary<ItemType, InventoryCategory>
             {
@@ -46,21 +45,25 @@ namespace PokemonGame.Systems.Inventory
         }
 
         /// <summary>
-        /// Adds an item to the appropriate inventory section based on its item type.
-        /// Stacks the item if an equivalent one already exists.
+        /// Adds a quantity of an item to the appropriate inventory section based on its item type.
+        /// If an equivalent item already exists, the quantity is stacked.
         /// </summary>
-        /// <param name="item">The item to add to the inventory.</param>
-        public void Add(Item item)
+        /// <param name="itemData">The item data to add to the inventory.</param>
+        /// <param name="quantity">The quantity of the item to add.</param>
+        public void Add(ItemData itemData, int quantity)
         {
             EnsureInitialized();
 
-            if (categories.TryGetValue(item.Data.Type, out var section))
+            if (itemData == null || quantity <= 0)
+                return;
+
+            if (categories.TryGetValue(itemData.Type, out var section))
             {
-                section.Add(item);
+                section.Add(itemData, quantity);
             }
             else
             {
-                Debug.LogWarning($"Unhandled item type: {item.Data.Type}");
+                Log.Warning(this, $"Unhandled item type {itemData.Type}");
             }
         }
 
@@ -73,13 +76,16 @@ namespace PokemonGame.Systems.Inventory
         {
             EnsureInitialized();
 
+            if (item == null || item.Data == null)
+                return;
+
             if (categories.TryGetValue(item.Data.Type, out var section))
             {
                 section.Remove(item);
             }
             else
             {
-                Debug.LogWarning($"Unhandled item type: {item.Data.Type}");
+                Log.Warning(this, $" Unhandled item type '{item.Data.Type}");
             }
         }
 
@@ -92,6 +98,19 @@ namespace PokemonGame.Systems.Inventory
         {
             EnsureInitialized();
             return categories.TryGetValue(type, out var section) ? section : null;
+        }
+
+        /// <summary>
+        /// Checks if the inventory contains at least one instance of an item by ID.
+        /// </summary>
+        /// <param name="itemId">The item ID to look for.</param>
+        /// <param name="type">The item type section to check within.</param>
+        /// <returns>True if found, otherwise false.</returns>
+        public bool HasItem(string itemId, ItemType type)
+        {
+            EnsureInitialized();
+            var section = GetSection(type);
+            return section != null && section.Contains(itemId);
         }
 
         private void EnsureInitialized()

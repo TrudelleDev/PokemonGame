@@ -1,4 +1,5 @@
 using PokemonGame.Items.Datas;
+using PokemonGame.Items.UI.Interfaces;
 using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -8,21 +9,22 @@ using UnityEngine.UI;
 namespace PokemonGame.Items.UI
 {
     /// <summary>
-    /// Displays an item's description and icon.
-    /// Automatically falls back to a default state when no data is available.
+    /// Displays the description and icon of a selected item.
+    /// If no item is selected or data is missing, resets the UI to an empty/default state.
     /// </summary>
     public class ItemDetailUI : MonoBehaviour, IItemBind, IUnbind
     {
         [SerializeField, Required]
-        [Tooltip("Displays the selected item's description.")]
+        [Tooltip("Text field used to display the item's description.")]
         private TextMeshProUGUI descriptionText;
 
         [SerializeField, Required]
-        [Tooltip("Displays the selected item's icon.")]
+        [Tooltip("Image used to display the item's icon.")]
         private Image iconImage;
 
         /// <summary>
         /// Binds the given item to the UI.
+        /// Displays its data if valid, or resets the UI if null.
         /// </summary>
         /// <param name="item">The item to display.</param>
         public void Bind(Item item)
@@ -37,7 +39,7 @@ namespace PokemonGame.Items.UI
         }
 
         /// <summary>
-        /// Binds item data directly to the UI.
+        /// Binds the raw item data directly to the UI.
         /// </summary>
         /// <param name="data">The item data to display.</param>
         public void Bind(ItemData data)
@@ -54,7 +56,7 @@ namespace PokemonGame.Items.UI
         }
 
         /// <summary>
-        /// Clears the UI and hides the icon.
+        /// Clears the UI elements and optionally sets a default icon.
         /// </summary>
         public void Unbind()
         {

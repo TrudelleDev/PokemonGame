@@ -2509,13 +2509,9 @@ MonoBehaviour:
   item:
     startingItems:
     - data: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
-      count: 5
-    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
-      count: 10
+      quantity: 2
   keyItem:
-    startingItems:
-    - data: {fileID: 11400000, guid: 50d7de66655e9fc4e9068c2faf94f6ce, type: 2}
-      count: 1
+    startingItems: []
   ball:
     startingItems: []
 --- !u!114 &1990210049
@@ -2597,10 +2593,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.054896142
-    y: 0.054505
-    width: 0.8902077
-    height: 0.8898776
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
