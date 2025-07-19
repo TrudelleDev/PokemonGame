@@ -1,16 +1,15 @@
 using System;
 using PokemonGame.MenuControllers;
 using PokemonGame.Views;
-using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemons.UI.PartyMenu
+namespace PokemonGame
 {
     public class PartyMenuOption : MonoBehaviour
     {
-        [SerializeField, Required] private Button summaryButton;
-        [SerializeField, Required] private Button cancelButton;
+        [SerializeField] private Button summaryButton;
+        [SerializeField] private Button cancelButton;
 
         private VerticalMenuController optionMenuController;
 

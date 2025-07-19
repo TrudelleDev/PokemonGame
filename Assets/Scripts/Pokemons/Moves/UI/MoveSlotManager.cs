@@ -1,5 +1,6 @@
 using PokemonGame.Shared;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Pokemons.Moves.UI
 {
@@ -18,8 +19,10 @@ namespace PokemonGame.Pokemons.Moves.UI
             Unbind();
 
             if (pokemon?.Moves == null)
+            {
                 return;
-
+            }
+               
             BindMoves(pokemon.Moves);
         }
 
@@ -32,12 +35,12 @@ namespace PokemonGame.Pokemons.Moves.UI
             {
                 Transform child = transform.GetChild(i);
                 MoveSlotUI move = child.GetComponent<MoveSlotUI>();
-                MenuButton button = child.GetComponent<MenuButton>();
+                Button button = child.GetComponent<Button>();
 
                 if (move != null && button != null)
                 {
                     move.Unbind();
-                    button.Interactable = false;
+                    button.interactable = false;
                 }
             }
         }
@@ -53,12 +56,12 @@ namespace PokemonGame.Pokemons.Moves.UI
             {
                 Transform child = transform.GetChild(i);
                 MoveSlotUI move = child.GetComponent<MoveSlotUI>();
-                MenuButton button = child.GetComponent<MenuButton>();
+                Button button = child.GetComponent<Button>();
 
                 if (move != null && button != null)
                 {
                     move.Bind(moves[i]);
-                    button.Interactable = true;
+                    button.interactable = true;
                 }
             }
         }

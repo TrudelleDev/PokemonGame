@@ -2,183 +2,154 @@ using System;
 using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 namespace PokemonGame.MenuControllers
 {
+    /// <summary>
+    /// Controls vertical navigation between UI buttons using keyboard input.
+    /// Automatically collects buttons from specified source transforms and manages
+    /// selection, interaction, and cancellation behavior.
+    /// </summary>
     public class VerticalMenuController : MonoBehaviour
     {
-        [Title("Settings")]
-        [SerializeField] private bool useManualButtonSetup;
+        [Title("Auto Button Assignment")]
+        [Tooltip("Sources (parents) from which to collect buttons automatically.")]
+        [ValidateInput(nameof(HasSources), "You must assign at least one button source.")]
+        [ChildGameObjectsOnly]
+        [SerializeField] private List<Transform> buttonSources;
 
-        [ShowIf("useManualButtonSetup")]
-        [ListDrawerSettings(DraggableItems = false, ShowFoldout = true)]
-        [SerializeField] private List<MenuButton> buttons;
+        private List<Button> buttons = new();
+        private Button currentButton;
 
-        private MenuButton currentButton;
-        private MenuButton previousButton;
-
-        public event Action<MenuButton> OnSelect;
-        public event Action<MenuButton> OnClick;
-        public event Action<MenuButton> OnCancel;
+        public event Action<Button> OnSelect;
+        public event Action<Button> OnClick;
+        public event Action<Button> OnCancel;
 
         private void Awake()
         {
-            if (!useManualButtonSetup)
-            {
-                ClearAndRepopulate();
-            }
-            if (buttons.Count > 0)
-            {
-                foreach (MenuButton button in buttons)
-                {
-                    if (button.Interactable)
-                    {
-                        currentButton = button;
-                        previousButton = button;
+            RefreshButtons();
+            ResetToFirstElement();
+        }
 
-                        currentButton?.Select();
-
-                        return;
-                    }
-                }
-            }
-            else
+        private void OnEnable()
+        {
+            if (currentButton != null)
             {
-                Debug.LogWarning($"{nameof(VerticalMenuController)}: No buttons found during Awake.");
+                EventSystem.current?.SetSelectedGameObject(currentButton.gameObject);
             }
         }
 
         private void Update()
         {
+            if (buttons.Count == 0 || currentButton == null) return;
+
             if (Input.GetKeyDown(KeyBind.Down))
             {
                 MoveNext();
             }
-            if (Input.GetKeyDown(KeyBind.Up))
+            else if (Input.GetKeyDown(KeyBind.Up))
             {
                 MoveBack();
             }
-            if (Input.GetKeyDown(KeyBind.Accept))
+            else if (Input.GetKeyDown(KeyBind.Accept))
             {
                 TriggerClick();
             }
-            if (Input.GetKeyDown(KeyBind.Cancel))
+            else if (Input.GetKeyDown(KeyBind.Cancel))
             {
-                TriggerCancel();
+                OnCancel?.Invoke(currentButton);
             }
-
-
         }
-        public void Initialize()
+
+        /// <summary>
+        /// Selects the first interactable button from the list.
+        /// </summary>
+        public void ResetToFirstElement()
         {
-            foreach (MenuButton button in buttons)
+            for (int i = 0; i < buttons.Count; i++)
             {
-                if (button.Interactable)
+                Button button = buttons[i];
+                if (button.interactable)
                 {
-                    previousButton.UnSelect();
-                    currentButton.UnSelect();
-
-                    currentButton = button;
-                    previousButton = button;
-
-                    currentButton.Select();
+                    SelectButton(button);
                     return;
                 }
             }
         }
 
-        public void ResetToFirstElement()
-        {
-
-            if (buttons.Count > 0)
-            {
-                previousButton?.UnSelect();
-                currentButton?.UnSelect();
-
-                currentButton = buttons[0];
-                previousButton = buttons[0];
-
-                UpdateSelection();
-            }
-        }
-
-        public void ClearAndRepopulate()
+        /// <summary>
+        /// Clears and repopulates the internal button list by scanning the assigned sources.
+        /// </summary>
+        public void RefreshButtons()
         {
             buttons.Clear();
-            AssignButtonsAutomatically();
-            ResetToFirstElement();
-        }
 
-        private void AssignButtonsAutomatically()
-        {
-            buttons ??= new List<MenuButton>();
-
-            // Only add interactable menu button to the list.
-            foreach (Transform child in transform)
+            for (int i = 0; i < buttonSources.Count; i++)
             {
-                MenuButton button = child.GetComponent<MenuButton>();
+                Transform source = buttonSources[i];
+                if (source == null) continue;
 
-                if (button != null && button.Interactable)
+                Button[] sourceButtons = source.GetComponentsInChildren<Button>(true);
+
+                for (int j = 0; j < sourceButtons.Length; j++)
                 {
-                    buttons.Add(button);
+                    buttons.Add(sourceButtons[j]);
                 }
             }
         }
 
-        private void UpdateSelection()
+        /// <summary>
+        /// Validates that at least one source is assigned in the inspector.
+        /// </summary>
+        private bool HasSources()
         {
-            if (buttons == null || buttons.Count == 0 || currentButton == null) return;
+            return buttonSources != null && buttonSources.Count > 0;
+        }
 
-            previousButton.UnSelect();
-            currentButton.Select();
-            OnSelect?.Invoke(currentButton);
-            previousButton = currentButton;
+        private void SelectButton(Button button)
+        {
+            currentButton = button;
+            EventSystem.current?.SetSelectedGameObject(button.gameObject);
+            OnSelect?.Invoke(button);
         }
 
         private void TriggerClick()
         {
-            currentButton.Click();
+            currentButton?.onClick.Invoke();
             OnClick?.Invoke(currentButton);
-        }
-
-        private void TriggerCancel()
-        {
-            OnCancel?.Invoke(currentButton);
         }
 
         private void MoveNext()
         {
             int index = buttons.IndexOf(currentButton);
+            if (index == -1) return;
 
-            if (index == -1) return; // Early exit
-
-            do
+            for (int i = index + 1; i < buttons.Count; i++)
             {
-                index++;
-            } while (index < buttons.Count && !buttons[index].Interactable);
-
-            if (index < buttons.Count)
-            {
-                currentButton = buttons[index];
-                UpdateSelection();
+                Button nextButton = buttons[i];
+                if (nextButton.interactable)
+                {
+                    SelectButton(nextButton);
+                    return;
+                }
             }
         }
 
         private void MoveBack()
         {
             int index = buttons.IndexOf(currentButton);
+            if (index == -1) return;
 
-            if (index == -1) return; // Early exit
-
-            do
+            for (int i = index - 1; i >= 0; i--)
             {
-                index--;
-            } while (index >= 0 && !buttons[index].Interactable);
-
-            if (index >= 0)
-            {
-                currentButton = buttons[index];
-                UpdateSelection();
+                Button previousButton = buttons[i];
+                if (previousButton.interactable)
+                {
+                    SelectButton(previousButton);
+                    return;
+                }
             }
         }
     }

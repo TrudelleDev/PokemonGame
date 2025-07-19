@@ -8,7 +8,6 @@ namespace PokemonGame.Pokemons.Moves.UI
 {
     /// <summary>
     /// Displays a summary slot for a Pokémon move, including its name, PP, and type icon.
-    /// Used in move selection interfaces such as summary or battle menus.
     /// </summary>
     public class MoveSlotUI : MonoBehaviour, IMoveBind, IUnbind
     {
@@ -41,6 +40,7 @@ namespace PokemonGame.Pokemons.Moves.UI
             Move = move;
             nameText.text = move.Data.MoveName;
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Data.PowerPoint}";
+            powerPointText.alignment = TextAlignmentOptions.Right;
             typeImage.sprite = move.Data.Type.Sprite;
             typeImage.enabled = true;
         }
@@ -51,8 +51,9 @@ namespace PokemonGame.Pokemons.Moves.UI
         public void Unbind()
         {
             Move = null;
-            nameText.text = string.Empty;
-            powerPointText.text = string.Empty;
+            nameText.text = "-";
+            powerPointText.text = "--";
+            powerPointText.alignment = TextAlignmentOptions.Left;
             typeImage.sprite = null;
             typeImage.enabled = false;
         }

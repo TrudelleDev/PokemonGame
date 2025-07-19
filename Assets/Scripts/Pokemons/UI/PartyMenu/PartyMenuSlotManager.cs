@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using PokemonGame.MenuControllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -15,34 +16,23 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
         [Tooltip("Reference to the current player party.")]
         private Party party;
 
-        [SerializeField, Required]
-        [Tooltip("Controls vertical input and UI navigation for the party menu.")]
-        private VerticalMenuController verticalMenuController;
-
-        [Title("Slot Instances (Auto-collected)")]
-        [ShowInInspector, ReadOnly]
         private List<PartyMenuSlot> slots;
 
         private void Awake()
         {
-            // Automatically find all PartyMenuSlot components in children
+            // Cache all PartyMenuSlot components in children
             slots = new List<PartyMenuSlot>(GetComponentsInChildren<PartyMenuSlot>());
+
         }
 
         private void Start()
         {
-            if (party == null || slots == null || slots.Count == 0)
-                return;
-
             BindSlots();
-
-            // Initialize vertical menu selection on first available slot
-            verticalMenuController?.Initialize();
         }
 
         /// <summary>
         /// Binds each slot to a corresponding Pokémon in the party.
-        /// Extra slots are unbound.
+        /// Extra slots are cleared.
         /// </summary>
         private void BindSlots()
         {
@@ -51,19 +41,25 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
             for (int i = 0; i < slots.Count; i++)
             {
                 if (i < party.Pokemons.Count)
+                {
                     slots[i].Bind(party.Pokemons[i]);
+                }
                 else
-                    slots[i].Unbind(); // Clear unused slots
+                {
+                    slots[i].Unbind();
+                }
             }
         }
 
         /// <summary>
-        /// Clears all slot data and unbinds existing Pokémon references.
+        /// Clears all slot bindings.
         /// </summary>
         private void UnbindSlots()
         {
             foreach (PartyMenuSlot slot in slots)
+            {
                 slot.Unbind();
+            }
         }
     }
 }

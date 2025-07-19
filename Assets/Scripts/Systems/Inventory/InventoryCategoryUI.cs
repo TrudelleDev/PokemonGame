@@ -3,6 +3,7 @@ using PokemonGame.Shared;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Systems.Inventory
 {
@@ -18,13 +19,13 @@ namespace PokemonGame.Systems.Inventory
 
         [SerializeField, Required]
         [Tooltip("Button used to cancel and return to the previous view.")]
-        private MenuButton cancelButton;
+        private Button cancelButton;
 
         [SerializeField, Required]
         [Tooltip("Parent transform that holds all item UI elements.")]
         private Transform contentParent;
 
-        private MenuButton activeCancelButton;
+        private Button activeCancelButton;
         private InventoryCategory currentCategory;
 
         /// <summary>
@@ -54,7 +55,7 @@ namespace PokemonGame.Systems.Inventory
         {
             if (activeCancelButton != null)
             {
-                activeCancelButton.OnClick -= HandleCancelClick;
+                activeCancelButton.onClick.RemoveListener(HandleCancelClick);
                 Destroy(activeCancelButton.gameObject);
                 activeCancelButton = null;
             }
@@ -103,7 +104,7 @@ namespace PokemonGame.Systems.Inventory
             if (activeCancelButton == null)
             {
                 activeCancelButton = Instantiate(cancelButton, contentParent);
-                activeCancelButton.OnClick += HandleCancelClick;
+                activeCancelButton.onClick.AddListener(HandleCancelClick);
             }
 
             activeCancelButton.transform.SetAsLastSibling();

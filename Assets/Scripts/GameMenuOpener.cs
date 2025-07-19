@@ -6,12 +6,10 @@ using UnityEngine;
 namespace PokemonGame
 {
     /// <summary>
-    /// Handles the toggling and display of the game menu.
+    /// Handles the opening of the game menu when no other views are active.
     /// </summary>
-    public class GameMenuControl : MonoBehaviour
+    public class GameMenuOpener : MonoBehaviour
     {
-        [Header("Dependencies")]
-
         [Tooltip("The view for the game menu.")]
         [SerializeField] private GameMenuView gameMenuView;
 
@@ -26,19 +24,18 @@ namespace PokemonGame
 
             if (Input.GetKeyDown(KeyBind.Start))
             {
-                ToggleMenu();
+                TryOpenMenu();
             }
         }
 
-        private void ToggleMenu()
+        /// <summary>
+        /// Opens the game menu if no other views are currently open.
+        /// </summary>
+        private void TryOpenMenu()
         {
             if (ViewManager.Instance.IsHistoryEmpty())
             {
                 ViewManager.Instance.Show<GameMenuView>();
-            }
-            else
-            {
-                ViewManager.Instance.GoToPreviousView();
             }
         }
     }

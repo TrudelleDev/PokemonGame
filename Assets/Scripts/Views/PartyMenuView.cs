@@ -3,6 +3,7 @@ using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI.PartyMenu;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Views
 {
@@ -19,7 +20,7 @@ namespace PokemonGame.Views
 
         [SerializeField, Required]
         [Tooltip("Button used to cancel out of the party menu.\nTriggers view closing or returns to slot selection.")]
-        private MenuButton cancelButton;
+        private Button cancelButton;
 
         [SerializeField, Required]
         [Tooltip("Option menu UI shown after selecting a Pokémon.\nAllows actions like 'View', 'Use Item', etc.")]
@@ -52,7 +53,7 @@ namespace PokemonGame.Views
 
             partySlotController.OnClick += OnPartySlotClick;
             partyMenuOption.OnCancel += OnPartyOptionCancel;
-            cancelButton.OnClick += OnCancel;
+            cancelButton.onClick.AddListener(OnCancel);
         }
 
         /// <summary>
@@ -84,7 +85,7 @@ namespace PokemonGame.Views
         /// Selects the Pokémon and opens the party option menu.
         /// </summary>
         /// <param name="menuButton">The button component clicked.</param>
-        private void OnPartySlotClick(MenuButton menuButton)
+        private void OnPartySlotClick(Button menuButton)
         {
             PartyMenuSlot slot = menuButton.GetComponent<PartyMenuSlot>();
 

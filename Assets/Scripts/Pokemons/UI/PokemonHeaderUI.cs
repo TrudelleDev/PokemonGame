@@ -41,7 +41,7 @@ namespace PokemonGame.Pokemons.UI
             }
 
             nameText.text = pokemon.Data.PokemonName;
-            levelText.text = $"<size=12>Lv</size>{pokemon.Level}";
+            levelText.text = $"Lv {pokemon.Level}";
             genderIcon.Bind(pokemon);
             frontSprite.Bind(pokemon);
         }

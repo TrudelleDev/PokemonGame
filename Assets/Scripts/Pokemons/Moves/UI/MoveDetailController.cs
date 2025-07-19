@@ -1,6 +1,7 @@
 ﻿using PokemonGame.MenuControllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Pokemons.Moves.UI
 {
@@ -14,11 +15,11 @@ namespace PokemonGame.Pokemons.Moves.UI
         [Tooltip("Displays the selected move's power, accuracy, and effect.")]
         private MoveDetailUI moveDetail;
 
+        [SerializeField, Required] 
         private VerticalMenuController controller;
 
         private void Awake()
         {
-            controller = GetComponent<VerticalMenuController>();
             controller.OnSelect += OnControllerSelect;
         }
 
@@ -37,7 +38,7 @@ namespace PokemonGame.Pokemons.Moves.UI
         /// Binds the selected move to the detail display or clears it.
         /// </summary>
         /// <param name="button">The selected menu button.</param>
-        private void OnControllerSelect(MenuButton button)
+        private void OnControllerSelect(Button button)
         {
             MoveSlotUI summaryMove = button.GetComponent<MoveSlotUI>();
 

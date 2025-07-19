@@ -34,8 +34,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 8.730896, y: -0.0077056885}
-  m_SizeDelta: {x: -17.3924, y: 23.818}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4267418159082241179
 CanvasRenderer:
@@ -85,9 +85,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1417184845700509546}
   - component: {fileID: 7916463503367159731}
-  - component: {fileID: 3208646923644364801}
+  - component: {fileID: 5071697629086307297}
   m_Layer: 5
-  m_Name: Frame
+  m_Name: Foreground
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -107,10 +107,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4163756711202529843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: -22}
-  m_SizeDelta: {x: 0, y: 32}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 48, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7916463503367159731
 CanvasRenderer:
@@ -120,7 +120,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4485730188540917165}
   m_CullTransparentMesh: 1
---- !u!114 &3208646923644364801
+--- !u!114 &5071697629086307297
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -161,6 +161,7 @@ GameObject:
   - component: {fileID: 4163756711202529843}
   - component: {fileID: 829089759568091939}
   - component: {fileID: 3911912217105371382}
+  - component: {fileID: 248420727829133817}
   m_Layer: 5
   m_Name: HealthBar
   m_TagString: Untagged
@@ -185,11 +186,11 @@ RectTransform:
   - {fileID: 1417184845700509546}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: -113.23706, y: -22.13379}
-  m_SizeDelta: {x: -226.4741, y: 44.2677}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 48, y: 4}
+  m_Pivot: {x: 1, y: 1}
 --- !u!114 &829089759568091939
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,9 +203,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b940131640ea170409afe990f40c5f3d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  exelentHealthSprite: {fileID: 21300000, guid: 0fc9ca010873e2c47ab4bd8a8c9e74cf, type: 3}
+  excellentHealthSprite: {fileID: 21300000, guid: 0fc9ca010873e2c47ab4bd8a8c9e74cf, type: 3}
   goodHealthSprite: {fileID: 21300000, guid: bcb9d0d3775a8024eb6bcc633e057f9d, type: 3}
-  badHealthSprite: {fileID: 21300000, guid: bf9fef614cbc079499f281c2b0e8bc6e, type: 3}
+  criticalHealthSprite: {fileID: 21300000, guid: bf9fef614cbc079499f281c2b0e8bc6e, type: 3}
   fillImage: {fileID: 3453709962135398610}
 --- !u!114 &3911912217105371382
 MonoBehaviour:
@@ -257,6 +258,14 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
+--- !u!222 &248420727829133817
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7272127516935148447}
+  m_CullTransparentMesh: 1
 --- !u!1 &7377730160052384168
 GameObject:
   m_ObjectHideFlags: 0
@@ -289,10 +298,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 4163756711202529843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 20.442001, y: 0.00018310547}
-  m_SizeDelta: {x: -50.898, y: 18.655}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 45, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3591164365551931797
 CanvasRenderer:
@@ -363,8 +372,8 @@ RectTransform:
   - {fileID: 2117275560590741867}
   m_Father: {fileID: 4163756711202529843}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.5}
-  m_AnchorMax: {x: 1, y: 0.5}
-  m_AnchoredPosition: {x: 19.903694, y: -0.079711914}
-  m_SizeDelta: {x: -51.974, y: 4.848301}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 5, y: 0}
+  m_SizeDelta: {x: 36, y: 4}
   m_Pivot: {x: 0.5, y: 0.5}

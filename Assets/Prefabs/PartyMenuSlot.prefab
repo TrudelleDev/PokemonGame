@@ -218,7 +218,7 @@ GameObject:
   - component: {fileID: 630099188447655097}
   - component: {fileID: 9148937720892412347}
   - component: {fileID: -1609912633275374035}
-  - component: {fileID: 7412460696292355753}
+  - component: {fileID: 4545305261817878195}
   m_Layer: 5
   m_Name: PartyMenuSlot
   m_TagString: Untagged
@@ -303,7 +303,7 @@ MonoBehaviour:
   genderIcon: {fileID: 9201569593437526811}
   menuSpriteAnimator: {fileID: 8504367937617350216}
   contentRoot: {fileID: 1613308641570717655}
---- !u!114 &7412460696292355753
+--- !u!114 &4545305261817878195
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -312,15 +312,41 @@ MonoBehaviour:
   m_GameObject: {fileID: 4839781951055028190}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bc4e08fd8577d8e468d2385442dc96e6, type: 3}
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetGraphic: {fileID: 9148937720892412347}
-  menuButtonType: 1
-  interactable: 1
-  disableSprite: {fileID: 21300000, guid: c4b7c01b8e4de8649990164b8b0c09c8, type: 3}
-  selectedSprite: {fileID: 21300000, guid: 9b04546ea3d11564da7798104c0aa48a, type: 3}
-  nomralSprite: {fileID: 21300000, guid: e263a0556949abb41a25b5b46058ab46, type: 3}
+  m_Navigation:
+    m_Mode: 3
+    m_WrapAround: 0
+    m_SelectOnUp: {fileID: 0}
+    m_SelectOnDown: {fileID: 0}
+    m_SelectOnLeft: {fileID: 0}
+    m_SelectOnRight: {fileID: 0}
+  m_Transition: 2
+  m_Colors:
+    m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
+    m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
+    m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_ColorMultiplier: 1
+    m_FadeDuration: 0.1
+  m_SpriteState:
+    m_HighlightedSprite: {fileID: 21300000, guid: 9b04546ea3d11564da7798104c0aa48a, type: 3}
+    m_PressedSprite: {fileID: 21300000, guid: 9b04546ea3d11564da7798104c0aa48a, type: 3}
+    m_SelectedSprite: {fileID: 21300000, guid: 9b04546ea3d11564da7798104c0aa48a, type: 3}
+    m_DisabledSprite: {fileID: 21300000, guid: c4b7c01b8e4de8649990164b8b0c09c8, type: 3}
+  m_AnimationTriggers:
+    m_NormalTrigger: Normal
+    m_HighlightedTrigger: Highlighted
+    m_PressedTrigger: Pressed
+    m_SelectedTrigger: Selected
+    m_DisabledTrigger: Disabled
+  m_Interactable: 1
+  m_TargetGraphic: {fileID: 9148937720892412347}
+  m_OnClick:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4908402669285698735
 GameObject:
   m_ObjectHideFlags: 0

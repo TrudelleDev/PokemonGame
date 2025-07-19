@@ -1,6 +1,7 @@
 using PokemonGame.MenuControllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Items.UI
 {
@@ -23,11 +24,6 @@ namespace PokemonGame.Items.UI
             menuController.OnSelect += OnMenuSelect;
         }
 
-        private void OnEnable()
-        {
-            menuController.ResetToFirstElement();
-        }
-
         private void OnDestroy()
         {
             menuController.OnSelect -= OnMenuSelect;
@@ -38,7 +34,7 @@ namespace PokemonGame.Items.UI
         /// Binds the selected item or cancel data to the detail UI.
         /// </summary>
         /// <param name="menuButton">The selected menu button.</param>
-        private void OnMenuSelect(MenuButton menuButton)
+        private void OnMenuSelect(Button menuButton)
         {
             if (menuButton.TryGetComponent<ItemUI>(out var itemUI))
             {
