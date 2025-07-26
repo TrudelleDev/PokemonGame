@@ -7,7 +7,8 @@ using UnityEngine;
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Shows detailed info about the selected Pokémon, including stats, skills, and moves.
+    /// Displays detailed information about the selected Pokémon,
+    /// including stats, skills, and moves.
     /// </summary>
     public class SummaryView : View
     {
@@ -16,37 +17,30 @@ namespace PokemonGame.Views
         private SummaryTabGroup summaryTabs;
 
         [SerializeField, Required]
-        [Tooltip("Controller for horizontal summary navigation.")]
-        private HorizontalPanelController controller;
+        [Tooltip("Controller for horizontal navigation between summary pages.")]
+        private HorizontalPanelController panelController;
 
         [SerializeField, Required]
-        [Tooltip("The player's party for selecting the current Pokémon.")]
+        [Tooltip("Reference to the player's party for selecting the current Pokémon.")]
         private Party party;
 
         /// <summary>
-        /// Called once before the view is shown.
-        /// </summary>
-        public override void Initialize()
-        {
-            // Optional one-time setup.
-        }
-
-        /// <summary>
-        /// Updates the UI when the view becomes active.
+        /// Called when the view is enabled.
+        /// Resets the panel controller and binds the summary tabs to the selected Pokémon.
         /// </summary>
         private void OnEnable()
         {
-            controller.ResetController();
+            panelController.ResetController();
 
-            Pokemon selected = party.SelectedPokemon;
+            Pokemon selectedPokemon = party.SelectedPokemon;
 
-            if (selected == null)
+            if (selectedPokemon == null)
             {
                 summaryTabs.Unbind();
                 return;
             }
 
-            summaryTabs.Bind(selected);
+            summaryTabs.Bind(selectedPokemon);
         }
     }
 }

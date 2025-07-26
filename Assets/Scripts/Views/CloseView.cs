@@ -3,19 +3,21 @@ using UnityEngine;
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Closes the current view when any assigned key is pressed.
-    /// Can also be triggered manually.
+    /// Closes the current view when any of the assigned keys are pressed.
     /// </summary>
     public class CloseView : MonoBehaviour
     {
-        [Tooltip("List of keys that will trigger the view to close.")]
-        [SerializeField] private KeyCode[] closeKeys;
+        [Tooltip("Keys that trigger this view to close.")]
+        [SerializeField] private KeyCode[] closeKeys = { KeyBind.Cancel };
 
         private void Update()
         {
-            for (int i = 0; i < closeKeys.Length; i++)
+            if (closeKeys == null || closeKeys.Length == 0)
+                return;
+
+            foreach (KeyCode key in closeKeys)
             {
-                if (Input.GetKeyDown(closeKeys[i]))
+                if (Input.GetKeyDown(key))
                 {
                     Close();
                     break;
@@ -24,7 +26,7 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Closes the current view using the ViewManager.
+        /// Closes the current view by returning to the previous view via the ViewManager.
         /// </summary>
         public void Close()
         {

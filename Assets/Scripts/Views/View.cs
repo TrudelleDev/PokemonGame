@@ -1,33 +1,52 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using PokemonGame.Transitions;
+using Sirenix.OdinInspector;
+using UnityEngine;
 
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Base class for all UI views.
-    /// Handles visibility and optional one-time initialization.
+    /// Base class for all UI views. Provides standard show/hide logic
+    /// and handles transitions to other views using a TransitionHandler.
     /// </summary>
+    [RequireComponent(typeof(TransitionHandler))]
+    [RequireComponent(typeof(CloseView))]
     public abstract class View : MonoBehaviour
     {
-        /// <summary>
-        /// Called once before the view is shown for the first time.
-        /// Override to perform setup like event binding or data prep.
-        /// </summary>
-        public abstract void Initialize();
+        [Title("Transition")]
+        [SerializeField, Required]
+        [Tooltip("Handles transition logic between views.")]
+        private TransitionHandler transitionHandler;
 
         /// <summary>
-        /// Shows the view.
+        /// Called once before the view is first shown.
+        /// Override this to bind button events or initialize UI state.
         /// </summary>
-        public void Show()
-        {
-            gameObject.SetActive(true);
-        }
+        public virtual void Initialize() { }
 
         /// <summary>
-        /// Hides the view.
+        /// Enables the view GameObject.
         /// </summary>
-        public void Hide()
+        public void Show() => gameObject.SetActive(true);
+
+        /// <summary>
+        /// Disables the view GameObject.
+        /// </summary>
+        public void Hide() => gameObject.SetActive(false);
+
+        /// <summary>
+        /// Handles transition to another view. If no target is provided, just hides this view.
+        /// </summary>
+        /// <param name="targetView">The view to transition to.</param>
+        public virtual IEnumerator HandleTransition(View targetView)
         {
-            gameObject.SetActive(false);
+            if (targetView == null)
+            {
+                Hide();
+                yield break;
+            }
+
+            yield return transitionHandler.PlayTransition(this, targetView);
         }
     }
 }

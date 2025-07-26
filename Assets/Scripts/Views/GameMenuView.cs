@@ -5,10 +5,12 @@ using UnityEngine.UI;
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Main menu where the player can open the party or inventory screens.
+    /// Main menu view that provides access to core in-game systems.
     /// </summary>
     public class GameMenuView : View
     {
+        [Title("Menu Buttons")]
+
         [SerializeField, Required]
         [Tooltip("Button to open the party menu.")]
         private Button partyButton;
@@ -22,8 +24,7 @@ namespace PokemonGame.Views
         private Button exitButton;
 
         /// <summary>
-        /// Initializes event listeners for menu buttons.
-        /// Called once before the view is first shown.
+        /// Sets up button listeners. Called once before the view is shown.
         /// </summary>
         public override void Initialize()
         {
@@ -32,6 +33,9 @@ namespace PokemonGame.Views
             exitButton.onClick.AddListener(OnExitClick);
         }
 
+        /// <summary>
+        /// Cleans up listeners to prevent leaks or dangling references.
+        /// </summary>
         private void OnDestroy()
         {
             partyButton.onClick.RemoveListener(OnPartyClick);

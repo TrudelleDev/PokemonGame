@@ -16,6 +16,7 @@ namespace PokemonGame
         [Tooltip("The player state controller.")]
         [SerializeField] private CharacterStateController playerStateController;
 
+
         private void Update()
         {
             if (playerStateController.TileMover.IsMoving) return;

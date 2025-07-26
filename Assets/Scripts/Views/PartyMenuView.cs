@@ -11,33 +11,32 @@ namespace PokemonGame.Views
     /// Displays the party menu where the player can select a Pokémon and choose actions.
     /// Handles input and transitions between the party slots and the option menu.
     /// </summary>
-    [RequireComponent(typeof(CloseView))]
     public class PartyMenuView : View
     {
         [SerializeField, Required]
-        [Tooltip("Reference to the current player party.\nUsed to track and select Pokémon.")]
+        [Tooltip("Reference to the current player party. Used to track and select Pokémon.")]
         private Party party;
 
         [SerializeField, Required]
-        [Tooltip("Button used to cancel out of the party menu.\nTriggers view closing or returns to slot selection.")]
+        [Tooltip("Button used to cancel out of the party menu. Triggers view closing or returns to slot selection.")]
         private Button cancelButton;
 
         [SerializeField, Required]
-        [Tooltip("Option menu UI shown after selecting a Pokémon.\nAllows actions like 'View', 'Use Item', etc.")]
+        [Tooltip("Option menu UI shown after selecting a Pokémon. Allows actions like 'View', 'Use Item', etc.")]
         private PartyMenuOption partyMenuOption;
 
         [SerializeField, Required]
-        [Tooltip("Text box used to display contextual instructions.\nUpdated when switching between slot and option menus.")]
+        [Tooltip("Text box used to display contextual instructions. Updated when switching between slot and option menus.")]
         private TextSetter dialogBox;
 
         [Title("Menu Controllers")]
 
         [SerializeField, Required]
-        [Tooltip("Controls navigation between party slots.\nHandles selection and click input.")]
+        [Tooltip("Controls navigation between party slots. Handles selection and click input.")]
         private VerticalMenuController partySlotController;
 
         [SerializeField, Required]
-        [Tooltip("Controls navigation inside the party option menu.\nEnabled only after selecting a Pokémon.")]
+        [Tooltip("Controls navigation inside the party option menu. Enabled only after selecting a Pokémon.")]
         private VerticalMenuController partyOptionController;
 
         private CloseView closeView;
@@ -84,10 +83,9 @@ namespace PokemonGame.Views
         /// Called when a party slot is clicked.
         /// Selects the Pokémon and opens the party option menu.
         /// </summary>
-        /// <param name="menuButton">The button component clicked.</param>
         private void OnPartySlotClick(Button menuButton)
         {
-            PartyMenuSlot slot = menuButton.GetComponent<PartyMenuSlot>();
+            var slot = menuButton.GetComponent<PartyMenuSlot>();
 
             if (slot?.BoundPokemon == null)
                 return;
@@ -106,8 +104,8 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Called when the root cancel button is pressed.
-        /// Returns to the previous view if no submenu is open.
+        /// Called when the cancel button is pressed.
+        /// Returns to the previous view if the option menu is not active.
         /// </summary>
         private void OnCancel()
         {
@@ -122,7 +120,6 @@ namespace PokemonGame.Views
         /// Toggles visibility and input control between the slot and option menus.
         /// Updates UI state and dialog box.
         /// </summary>
-        /// <param name="show">Whether to show the option menu.</param>
         private void TogglePartyOptionMenu(bool show)
         {
             partyOptionController.enabled = show;

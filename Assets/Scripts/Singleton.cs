@@ -16,7 +16,7 @@ namespace PokemonGame
             }
 
             Instance = (T)this;
-            DontDestroyOnLoad(gameObject); // Optional
+            //DontDestroyOnLoad(gameObject); // Optional
         }
     }
 }
