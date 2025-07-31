@@ -26,14 +26,20 @@ namespace PokemonGame
             }
 
 
-            PokemonDataLoader.PreloadAll();
-            AbilityDataLoader.PreloadAll();
-            NatureDataLoader.PreloadAll();
-            MoveDataLoader.PreloadAll();
+           // PokemonDataLoader.PreloadAll();
+           // AbilityDataLoader.PreloadAll();
+           // NatureDataLoader.PreloadAll();
+            //MoveDataLoader.PreloadAll();
 
             Load("ViridianForest");
 
             Screen.SetResolution(1920, 1080, true);
+        }
+
+        private async void Start()
+        {
+            await PokemonDataLoader.LoadAllAsync();
+
         }
 
         public void SetPlayerPosition(Vector3 position)

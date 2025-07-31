@@ -63,7 +63,7 @@ namespace PokemonGame.Systems.Inventory
             }
             else
             {
-                Log.Warning(this, $"Unhandled item type {itemData.Type}");
+                Log.Warning(nameof(InventoryManager), $"Unhandled item type {itemData.Type}");
             }
         }
 
@@ -85,7 +85,7 @@ namespace PokemonGame.Systems.Inventory
             }
             else
             {
-                Log.Warning(this, $" Unhandled item type '{item.Data.Type}");
+                Log.Warning(nameof(InventoryManager), $" Unhandled item type '{item.Data.Type}");
             }
         }
 

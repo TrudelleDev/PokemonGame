@@ -28,7 +28,7 @@ namespace PokemonGame.Transitions
         {
             if (transition == null)
             {
-                Log.Warning(this, " is missing a Transition. Skipping visual transition.");
+                Log.Warning(nameof(TransitionHandler), " is missing a Transition. Skipping visual transition.");
                 currentView.Hide();
                 nextView?.Show();
                 yield break;

@@ -38,7 +38,7 @@ namespace PokemonGame.Systems.Inventory
 
             if (category == null)
             {
-                Log.Warning(this, $"Tried to bind a null category.");
+                Log.Warning(nameof(InventoryCategoryUI), "Tried to bind a null category.");
                 return;
             }
 

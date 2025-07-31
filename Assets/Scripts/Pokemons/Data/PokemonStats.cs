@@ -4,17 +4,34 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons.Data
 {
+    /// <summary>
+    /// Represents the base stats of a Pokémon, including HP, Attack, Defense,
+    /// Special Attack, Special Defense, Speed, and a calculated total.
+    /// </summary>
     [Serializable]
     public struct PokemonStats
     {
-        [SerializeField] private int healthPoint;
-        [SerializeField] private int attack;
-        [SerializeField] private int defense;
-        [SerializeField] private int specialAttack;
-        [SerializeField] private int specialDefense;
-        [SerializeField] private int speed;
-        [Space]
-        [SerializeField, ReadOnly] private int total;
+        [SerializeField, Tooltip("Base HP (Hit Points) stat.")]
+        private int healthPoint;
+
+        [SerializeField, Tooltip("Base Attack stat.")]
+        private int attack;
+
+        [SerializeField, Tooltip("Base Defense stat.")]
+        private int defense;
+
+        [SerializeField, Tooltip("Base Special Attack stat.")]
+        private int specialAttack;
+
+        [SerializeField, Tooltip("Base Special Defense stat.")]
+        private int specialDefense;
+
+        [SerializeField, Tooltip("Base Speed stat.")]
+        private int speed;
+
+        [ShowInInspector, ReadOnly]
+        [Tooltip("The sum of all base stats.")]
+        public readonly int Total => healthPoint + attack + defense + specialAttack + specialDefense + speed;
 
         public readonly int HealthPoint => healthPoint;
         public readonly int Attack => attack;
@@ -22,8 +39,16 @@ namespace PokemonGame.Pokemons.Data
         public readonly int SpecialAttack => specialAttack;
         public readonly int SpecialDefense => specialDefense;
         public readonly int Speed => speed;
-        public readonly int Total => total;
 
+        /// <summary>
+        /// Initializes a new instance of <see cref="PokemonStats"/> with specific stat values.
+        /// </summary>
+        /// <param name="healthPoint">The base HP value.</param>
+        /// <param name="attack">The base Attack value.</param>
+        /// <param name="defense">The base Defense value.</param>
+        /// <param name="specialAttack">The base Special Attack value.</param>
+        /// <param name="specialDefense">The base Special Defense value.</param>
+        /// <param name="speed">The base Speed value.</param>
         public PokemonStats(int healthPoint, int attack, int defense, int specialAttack, int specialDefense, int speed)
         {
             this.healthPoint = healthPoint;
@@ -32,7 +57,6 @@ namespace PokemonGame.Pokemons.Data
             this.specialAttack = specialAttack;
             this.specialDefense = specialDefense;
             this.speed = speed;
-            this.total = healthPoint + attack + defense + specialAttack + specialDefense + speed;
         }
     }
 }

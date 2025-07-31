@@ -1,58 +1,68 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+using System.Threading.Tasks;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace PokemonGame.Pokemons.Data
 {
     /// <summary>
-    /// Static loader class responsible for preloading and caching all PokemonData assets
-    /// from the Resources/Pokemons folder. Provides fast lookup access to pokemon data by name.
+    /// Loads and caches all Pokémon data from Addressables using a shared label.
     /// </summary>
-    public class PokemonDataLoader
+    public static class PokemonDataLoader
     {
-        private const string DataPath = "Pokemons/";
-        private readonly static Dictionary<string, PokemonData> cachedData = new();
+        private static Dictionary<string, PokemonData> cache;
+
+        public static IReadOnlyDictionary<string, PokemonData> Cache => cache;
 
         /// <summary>
-        /// Loads all PokemonData assets from the Resources/Moves folder into memory.
+        /// Asynchronously loads all Pokémon data assets labeled "pokemon-data" from Addressables.
         /// </summary>
-        public static void PreloadAll()
+        public static async Task LoadAllAsync()
         {
-            cachedData.Clear();
+            if (cache != null) return;
 
-            PokemonData[] pokemons = Resources.LoadAll<PokemonData>(DataPath);
+            cache = new Dictionary<string, PokemonData>();
+
+            AsyncOperationHandle<IList<PokemonData>> loadHandle = Addressables.LoadAssetsAsync<PokemonData>("pokemon-data", null);
+            IList<PokemonData> pokemons = await loadHandle.Task;
 
             foreach (PokemonData pokemon in pokemons)
             {
-                string key = pokemon.PokemonName?.ToLowerInvariant();
-
-                if (string.IsNullOrEmpty(key))
+                if (string.IsNullOrEmpty(pokemon.DisplayName))
                 {
-                    Debug.LogError($"[PokemonDataLoader] PokemonData({pokemon.name}) has missing or empty PokemonName.");
+                    Log.Error(nameof(PokemonDataLoader), $"Pokémon has no DisplayName: {pokemon.name}");
                     continue;
                 }
 
-                if (!cachedData.ContainsKey(key))
-                    cachedData[key] = pokemon;
+                string key = pokemon.DisplayName.ToLowerInvariant();
+
+                if (!cache.ContainsKey(key))
+                {
+                    cache[key] = pokemon;
+                }
                 else
-                    Debug.LogWarning($"Duplicate pokemon name detected: {pokemon.PokemonName}");
+                {
+                    Log.Warning(nameof(PokemonDataLoader), $"Duplicate Pokémon: {pokemon.DisplayName}");
+                }
+
             }
 
-            Debug.Log($"[PokemonDataLoader] Preloaded {cachedData.Count} pokemons.");
+            Log.Info(nameof(PokemonDataLoader), $"Loaded {cache.Count} Pokémon from Addressables.");
         }
 
-
         /// <summary>
-        /// Attempts to retrieve a PokemonData by name (case-insensitive).
+        /// Retrieves Pokémon data by name (case-insensitive).
         /// </summary>
-        /// <param name="name">The pokemon name.</param>
-        /// <returns>The PokemonData if found, otherwise null.</returns>
-        public static PokemonData Load(string name)
+        public static PokemonData Get(string name)
         {
-            if (string.IsNullOrEmpty(name))
+            if (cache == null)
+            {
+                Log.Error(nameof(PokemonDataLoader), "not initialized. You must call LoadAllAsync() before using Get().");
                 return null;
+            }
 
-            cachedData.TryGetValue(name.ToLowerInvariant(), out var data);
-            return data;
+            string key = name.ToLowerInvariant();
+            return cache.TryGetValue(key, out PokemonData data) ? data : null;
         }
     }
 }

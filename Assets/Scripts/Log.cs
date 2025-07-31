@@ -1,27 +1,33 @@
-﻿using UnityEngine;
+﻿using System.Diagnostics;
 
 namespace PokemonGame
 {
     public static class Log
     {
-        public static void Info(object context, string message)
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void Info(string tag, string message)
         {
-            Debug.Log(Format(context, message));
+            UnityEngine.Debug.Log(Format(tag, message));
         }
 
-        public static void Warning(object context, string message)
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void Warning(string tag, string message)
         {
-            Debug.LogWarning(Format(context, message));
+            UnityEngine.Debug.LogWarning(Format(tag, message));
         }
 
-        public static void Error(object context, string message)
+        [Conditional("UNITY_EDITOR")]
+        [Conditional("DEVELOPMENT_BUILD")]
+        public static void Error(string tag, string message)
         {
-            Debug.LogError(Format(context, message));
+            UnityEngine.Debug.LogError(Format(tag, message));
         }
 
-        private static string Format(object context, string message)
+        private static string Format(string tag, string message)
         {
-            string label = context != null ? $"[{context.GetType().Name}]" : "[Unknown]";
+            string label = string.IsNullOrWhiteSpace(tag) ? "[Unknown]" : $"[{tag}]";
             return $"{label} {message}";
         }
     }

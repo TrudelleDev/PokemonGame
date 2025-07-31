@@ -91,7 +91,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
         private void UpdateDisplay(Pokemon pokemon)
         {
-            nameText.text = pokemon.Data.PokemonName;
+            nameText.text = pokemon.Data.DisplayName;
             levelText.text = $"Lv {pokemon.Level}";
             healthText.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
 

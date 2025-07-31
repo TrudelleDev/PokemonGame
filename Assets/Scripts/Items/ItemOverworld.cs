@@ -12,7 +12,7 @@ namespace PokemonGame.Items
     /// Represents an item placed in the world that the player can pick up by interacting with it.
     /// Adds the item to the inventory and shows a pickup message upon interaction.
     /// </summary>
-    public class WorldItem : MonoBehaviour, IInteract
+    public class ItemOverworld : MonoBehaviour, IInteract
     {
         [SerializeField, Required]
         [Tooltip("Reference to the item data that defines this world item.")]
@@ -31,7 +31,7 @@ namespace PokemonGame.Items
         {
             if (itemData == null)
             {
-                Log.Warning(this, "Missing item data!");
+                Log.Warning(nameof(ItemOverworld), "Missing item data!");
                 return;
             }
 

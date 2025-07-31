@@ -45,7 +45,7 @@ namespace PokemonGame.Pokemons.UI
         public void Bind(Pokemon pokemon)
         {
             pokedexNumberText.text = pokemon.Data.PokedexNumber.ToString("D3");
-            nameText.text = pokemon.Data.PokemonName;
+            nameText.text = pokemon.Data.DisplayName;
             idText.text = pokemon.ID;
             originalTrainerText.text = pokemon.OwnerName;
 
