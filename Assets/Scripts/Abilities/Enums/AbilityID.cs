@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.Abilities
+﻿namespace PokemonGame.Abilities.Enums
 {
     /// <summary>
     /// Identifiers for all abilities in the game.

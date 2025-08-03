@@ -27,7 +27,7 @@ MonoBehaviour:
     m_Address: Assets/ScriptableObjects/Pokemons/PikachuData.asset
     m_ReadOnly: 0
     m_SerializedLabels:
-    - pokemon-data
+    - pokemon-definition
     FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 38ef306e0e954b04e8f809c8a801f987, type: 2}

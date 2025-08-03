@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using PokemonGame.Abilities.Enums;
 using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace PokemonGame.Pokemons.Abilities
+namespace PokemonGame.Abilities.Definition
 {
     /// <summary>
     /// Loads and caches all ability definitions from Addressables using a shared label.

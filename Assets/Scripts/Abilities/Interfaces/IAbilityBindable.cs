@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.Abilities
+﻿namespace PokemonGame.Abilities.Interfaces
 {
     /// <summary>
     /// Binds and displays ability information.

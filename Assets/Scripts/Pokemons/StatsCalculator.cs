@@ -1,5 +1,5 @@
-﻿using PokemonGame.Pokemons.Data;
-using PokemonGame.Pokemons.Natures;
+﻿using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemons.Models;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons
@@ -9,7 +9,7 @@ namespace PokemonGame.Pokemons
         /// <summary>
         /// Calculate Core Stats based on Pokemon data, IVs, EVs, level, and nature.
         /// </summary>
-        public static PokemonStats CalculateCoreStats(PokemonData data, PokemonStats individualValues, PokemonStats effortValues, int level)
+        public static PokemonStats CalculateCoreStats(PokemonDefinition data, PokemonStats individualValues, PokemonStats effortValues, int level)
         {
             int healthPoint = Mathf.FloorToInt(0.01f * (2 * data.BaseStats.HealthPoint + individualValues.HealthPoint + Mathf.FloorToInt(0.25f * effortValues.HealthPoint)) * level) + level + 10;
             int attack = CalculateStat(data.BaseStats.Attack, individualValues.Attack, effortValues.Attack, level);

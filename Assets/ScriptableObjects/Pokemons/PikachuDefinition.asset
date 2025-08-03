@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: de7b3c62737bd2940a7d695867a25ac0, type: 3}
-  m_Name: PikachuData
+  m_Name: PikachuDefinition
   m_EditorClassIdentifier: 
   displayName: Pikachu
   pokemonID: 25

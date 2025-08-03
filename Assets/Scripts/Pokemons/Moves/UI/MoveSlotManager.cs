@@ -1,3 +1,4 @@
+using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Shared;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ namespace PokemonGame.Pokemons.Moves.UI
     /// Manages and binds a Pokémon's moves to the summary screen UI slots.
     /// Handles populating move data and enabling/disabling interaction.
     /// </summary>
-    public class MoveSlotManager : MonoBehaviour, IPokemonBind, IUnbind
+    public class MoveSlotManager : MonoBehaviour, IPokemonBindable, IUnbind
     {
         /// <summary>
         /// Binds all of a Pokémon's moves to the corresponding summary UI slots.

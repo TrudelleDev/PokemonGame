@@ -1,4 +1,5 @@
-﻿using PokemonGame.Shared;
+﻿using PokemonGame.Pokemons.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays the Pokémon's primary and secondary type icons.
     /// </summary>
-    public class PokemonTypeUI : MonoBehaviour, IPokemonBind, IUnbind
+    public class PokemonTypeUI : MonoBehaviour, IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's primary type icon.")]

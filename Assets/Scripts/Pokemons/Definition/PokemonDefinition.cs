@@ -1,13 +1,15 @@
+using PokemonGame.Pokemons.Enums;
+using PokemonGame.Pokemons.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.Data
+namespace PokemonGame.Pokemons.Definition
 {
     /// <summary>
-    /// Immutable data for a Pokémon.
+    /// Defines a Pokémon's core data, types, stats, and visuals.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewPokemonData", menuName = "ScriptableObjects/Pokemon Data")]
-    public class PokemonData : ScriptableObject
+    [CreateAssetMenu(fileName = "NewPokemonDefinition", menuName = "ScriptableObjects/Pokemon Definition")]
+    public class PokemonDefinition : ScriptableObject
     {
         // ------------- Identity -------------
 
@@ -31,7 +33,7 @@ namespace PokemonGame.Pokemons.Data
         [SerializeField] private PokemonGenderRatio genderRatio;
 
         [BoxGroup("Attributes")]
-        [Tooltip("Base stats used for gameplay calculations.")]
+        [Tooltip("Base stats used to calculate the Pokémon's final stats.")]
         [SerializeField] private PokemonStats baseStats;
 
         // ------------- Visuals -------------
@@ -48,15 +50,46 @@ namespace PokemonGame.Pokemons.Data
 
         // ------------- Public Accessors ------------
 
+        /// <summary>
+        /// Three-digit string version of the Pokémon ID.
+        /// </summary>
         [BoxGroup("Identity")]
         [ShowInInspector, ReadOnly]
         public string PokedexNumber => ((int)pokemonID).ToString("D3");
+
+        /// <summary>
+        /// Display name shown in UI.
+        /// </summary>
         public string DisplayName => displayName;
+
+        /// <summary>
+        /// Unique identifier for this Pokémon.
+        /// </summary>
         public PokemonID PokemonID => pokemonID;
+
+        /// <summary>
+        /// Primary and optional secondary types.
+        /// </summary>
         public PokemonType Types => types;
+
+        /// <summary>
+        /// Male/female gender ratio information.
+        /// </summary>
         public PokemonGenderRatio GenderRatio => genderRatio;
+
+        /// <summary>
+        /// Base stats used to calculate the Pokémon's final stats.
+        /// </summary>
         public PokemonStats BaseStats => baseStats;
+
+        /// <summary>
+        /// Sprites for front, back, battle, and menu views.
+        /// </summary>
         public PokemonSprites Sprites => sprites;
+
+        /// <summary>
+        /// Animator override for Pokémon menu sprite animations.
+        /// </summary>
         public AnimatorOverrideController MenuSpriteOverrider => menuSpriteOverrider;
     }
 }

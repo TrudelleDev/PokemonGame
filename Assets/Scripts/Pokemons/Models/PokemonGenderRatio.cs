@@ -2,11 +2,10 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.Data
+namespace PokemonGame.Pokemons.Models
 {
     /// <summary>
-    /// Represents the gender distribution for a Pokémon species,
-    /// defined by a male ratio (0–100). The female ratio is automatically derived.
+    /// Contains a Pokémon's gender distribution as male and female ratios.
     /// </summary>
     [Serializable]
     public struct PokemonGenderRatio
@@ -15,10 +14,16 @@ namespace PokemonGame.Pokemons.Data
         [Tooltip("Percentage chance of the Pokémon being male.")]
         private float maleRatio;
 
+        /// <summary>
+        /// Percentage chance of the Pokémon being female (100 - MaleRatio).
+        /// </summary>
         [ShowInInspector, ReadOnly]
         [Tooltip("Percentage chance of the Pokémon being female.")]
         public readonly float FemaleRatio => 100f - maleRatio;
 
+        /// <summary>
+        /// Percentage chance of the Pokémon being male.
+        /// </summary>
         public readonly float MaleRatio => maleRatio;   
     }
 }

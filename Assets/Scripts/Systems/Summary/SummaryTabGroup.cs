@@ -1,5 +1,6 @@
 ﻿using System;
 using PokemonGame.Pokemons;
+using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -13,7 +14,7 @@ namespace PokemonGame.Systems.Summary
     /// based on the currently selected Pokémon.
     /// </summary>
     [Serializable]
-    public class SummaryTabGroup : IPokemonBind, IUnbind
+    public class SummaryTabGroup : IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's name, level, gender, and visual representation.")]

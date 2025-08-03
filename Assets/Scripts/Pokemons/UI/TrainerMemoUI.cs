@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -9,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays a Pokémon's trainer-related memo, including nature and encounter location.
     /// </summary>
-    public class TrainerMemoUI : MonoBehaviour, IPokemonBind, IUnbind
+    public class TrainerMemoUI : MonoBehaviour, IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the trainer's memo, such as encounter details.")]

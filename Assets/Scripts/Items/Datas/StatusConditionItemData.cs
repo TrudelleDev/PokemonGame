@@ -1,4 +1,5 @@
 using PokemonGame.Pokemons;
+using PokemonGame.Pokemons.Enums;
 using UnityEngine;
 
 namespace PokemonGame.Items.Datas

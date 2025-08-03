@@ -1,4 +1,5 @@
-﻿using PokemonGame.Shared;
+﻿using PokemonGame.Pokemons.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Manages UI elements displaying a Pokémon's identity, including name, gender, sprite, and types.
     /// </summary>
-    public class PokemonIdentityUI : MonoBehaviour, IPokemonBind, IUnbind
+    public class PokemonIdentityUI : MonoBehaviour, IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's name.")]

@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemons.Moves
         [SerializeField] private int powerPoint;
         [Space]
         [SerializeField, TextArea(5, 10)] private string effect;
-        [SerializeField] private TypeData type;
+        [SerializeField] private TypeDefinition type;
         [SerializeField] private MoveCategory category;
 
         public string MoveName => moveName;
@@ -19,7 +19,7 @@ namespace PokemonGame.Pokemons.Moves
         public int Accuracy => accuracy;
         public int PowerPoint => powerPoint;
         public string Effect => effect;
-        public TypeData Type => type;
+        public TypeDefinition Type => type;
         public MoveCategory Category => category;
     }
 }

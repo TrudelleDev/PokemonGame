@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.Data
+﻿namespace PokemonGame.Pokemons.Enums
 {
     /// <summary>
     /// Pokémon species identifiers mapped to their National Pokédex numbers.

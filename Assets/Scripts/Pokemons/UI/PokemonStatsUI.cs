@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -9,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays a Pokémon's base stats including HP, Attack, Defense, Special stats, and Speed.
     /// </summary>
-    public class PokemonStatsUI : MonoBehaviour, IPokemonBind, IUnbind
+    public class PokemonStatsUI : MonoBehaviour, IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's current and max HP.")]

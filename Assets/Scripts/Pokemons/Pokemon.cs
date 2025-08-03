@@ -1,6 +1,9 @@
 using System;
-using PokemonGame.Pokemons.Abilities;
-using PokemonGame.Pokemons.Data;
+using PokemonGame.Abilities;
+using PokemonGame.Abilities.Definition;
+using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemons.Enums;
+using PokemonGame.Pokemons.Models;
 using PokemonGame.Pokemons.Moves;
 using PokemonGame.Pokemons.Natures;
 using Sirenix.OdinInspector;
@@ -12,7 +15,7 @@ namespace PokemonGame.Pokemons
     public class Pokemon
     {
         [SerializeField, Required] private int level;
-        [SerializeField, Required] private PokemonData data;
+        [SerializeField, Required] private PokemonDefinition data;
         [SerializeField, Required] private NatureData natureData;
         [SerializeField, Required] private AbilityDefinition abilityData;
         [SerializeField, Required] private MoveData[] movesData;
@@ -20,7 +23,7 @@ namespace PokemonGame.Pokemons
         private static readonly IDGenerator idGenerator = new IDGenerator(1000, 9999);
         public int Level => level;
 
-        public PokemonData Data => data;
+        public PokemonDefinition Data => data;
 
         public Nature Nature { get; private set; }
         public Ability Ability { get; private set; }
@@ -37,7 +40,7 @@ namespace PokemonGame.Pokemons
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonData pokemonData, NatureData natureData, AbilityDefinition abilityData, MoveData[] movesData)
+        public Pokemon(int level, PokemonDefinition pokemonData, NatureData natureData, AbilityDefinition abilityData, MoveData[] movesData)
         {
             this.level = level;
             this.data = pokemonData;
@@ -54,7 +57,7 @@ namespace PokemonGame.Pokemons
                 Moves[i] = new Move(movesData[i]);
             }
 
-            if(data != null)
+            if (data != null)
                 Initialize();
         }
 
@@ -78,7 +81,7 @@ namespace PokemonGame.Pokemons
         }
 
         private void GetGender()
-        {         
+        {
             float roll = UnityEngine.Random.Range(0f, 100f);
             Gender = roll < data.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
         }

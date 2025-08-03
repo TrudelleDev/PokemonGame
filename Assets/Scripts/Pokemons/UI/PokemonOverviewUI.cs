@@ -1,4 +1,5 @@
-﻿using PokemonGame.Shared;
+﻿using PokemonGame.Pokemons.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -8,7 +9,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays general Pokémon information including Pokédex number, name, types, trainer, and held item.
     /// </summary>
-    public class PokemonOverviewUI : MonoBehaviour, IPokemonBind, IUnbind
+    public class PokemonOverviewUI : MonoBehaviour, IPokemonBindable, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's Pokédex number.")]

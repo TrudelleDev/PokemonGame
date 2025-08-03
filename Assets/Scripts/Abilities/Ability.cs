@@ -1,7 +1,9 @@
-namespace PokemonGame.Pokemons.Abilities
+using PokemonGame.Abilities.Definition;
+
+namespace PokemonGame.Abilities
 {
     /// <summary>
-    /// Represents a runtime instance of a Pokémon ability.
+    /// A runtime instance of a Pokémon ability, constructed from a predefined ability definition.
     /// </summary>
     public class Ability
     {
@@ -11,7 +13,7 @@ namespace PokemonGame.Pokemons.Abilities
         public AbilityDefinition Definition { get; }
 
         /// <summary>
-        /// Creates a new ability instance from the given definition.
+        /// Initializes a new ability instance from the given definition.
         /// </summary>
         /// <param name="definition">The ability definition to use.</param>
         public Ability(AbilityDefinition definition)

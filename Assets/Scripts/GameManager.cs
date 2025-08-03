@@ -1,8 +1,6 @@
+using PokemonGame.Abilities.Definition;
 using PokemonGame.Characters;
-using PokemonGame.Pokemons.Abilities;
-using PokemonGame.Pokemons.Data;
-using PokemonGame.Pokemons.Moves;
-using PokemonGame.Pokemons.Natures;
+using PokemonGame.Pokemons.Definition;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -26,11 +24,6 @@ namespace PokemonGame
             }
 
 
-           // PokemonDataLoader.PreloadAll();
-           // AbilityDataLoader.PreloadAll();
-           // NatureDataLoader.PreloadAll();
-            //MoveDataLoader.PreloadAll();
-
             Load("ViridianForest");
 
             Screen.SetResolution(1920, 1080, true);
@@ -38,7 +31,7 @@ namespace PokemonGame
 
         private async void Start()
         {
-            await PokemonDataLoader.LoadAllAsync();
+            await PokemonDefinitionLoader.LoadAllAsync();
             await AbilityDefinitiondLoader.LoadAllAsync();
 
         }

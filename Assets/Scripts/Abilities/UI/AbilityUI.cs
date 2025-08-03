@@ -1,9 +1,10 @@
-﻿using PokemonGame.Shared;
+﻿using PokemonGame.Abilities.Interfaces;
+using PokemonGame.Shared;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.Abilities.UI
+namespace PokemonGame.Abilities.UI
 {
     /// <summary>
     /// Displays information about a Pokémon's ability.

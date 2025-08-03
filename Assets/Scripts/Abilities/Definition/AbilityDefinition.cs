@@ -1,7 +1,8 @@
+using PokemonGame.Abilities.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.Abilities
+namespace PokemonGame.Abilities.Definition
 {
     /// <summary>
     /// Defines a Pokémon ability.
