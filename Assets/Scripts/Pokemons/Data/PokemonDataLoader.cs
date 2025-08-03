@@ -6,63 +6,86 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 namespace PokemonGame.Pokemons.Data
 {
     /// <summary>
-    /// Loads and caches all Pokémon data from Addressables using a shared label.
+    /// Loads and caches all PokemonData assets from Addressables using a shared label.
+    /// Enables fast lookup of Pokémon by PokemonID at runtime.
     /// </summary>
     public static class PokemonDataLoader
     {
-        private static Dictionary<string, PokemonData> cache;
+        private static Dictionary<PokemonID, PokemonData> pokemonDataCache;
+        private static AsyncOperationHandle<IList<PokemonData>> pokemonDataHandle;
 
-        public static IReadOnlyDictionary<string, PokemonData> Cache => cache;
+        public static IReadOnlyDictionary<PokemonID, PokemonData> PokemonDataCache => pokemonDataCache;
 
         /// <summary>
-        /// Asynchronously loads all Pokémon data assets labeled "pokemon-data" from Addressables.
+        /// Asynchronously loads all PokemonData assets labeled "pokemon-data" from Addressables.
         /// </summary>
         public static async Task LoadAllAsync()
         {
-            if (cache != null) return;
-
-            cache = new Dictionary<string, PokemonData>();
-
-            AsyncOperationHandle<IList<PokemonData>> loadHandle = Addressables.LoadAssetsAsync<PokemonData>("pokemon-data", null);
-            IList<PokemonData> pokemons = await loadHandle.Task;
-
-            foreach (PokemonData pokemon in pokemons)
+            if (pokemonDataCache != null)
             {
-                if (string.IsNullOrEmpty(pokemon.DisplayName))
-                {
-                    Log.Error(nameof(PokemonDataLoader), $"Pokémon has no DisplayName: {pokemon.name}");
-                    continue;
-                }
+                return;
+            }
 
-                string key = pokemon.DisplayName.ToLowerInvariant();
+            pokemonDataCache = new Dictionary<PokemonID, PokemonData>();
+            pokemonDataHandle = Addressables.LoadAssetsAsync<PokemonData>("pokemon-data", null);
 
-                if (!cache.ContainsKey(key))
+            IList<PokemonData> pokemonDataList = await pokemonDataHandle.Task;
+
+            foreach (PokemonData pokemonData in pokemonDataList)
+            {
+                PokemonID key = pokemonData.PokemonID;
+
+                if (!pokemonDataCache.ContainsKey(key))
                 {
-                    cache[key] = pokemon;
+                    pokemonDataCache[key] = pokemonData;
                 }
                 else
                 {
-                    Log.Warning(nameof(PokemonDataLoader), $"Duplicate Pokémon: {pokemon.DisplayName}");
+                    Log.Warning(nameof(PokemonDataLoader), $"Duplicate PokemonID detected: {key} (existing: {pokemonDataCache[key].name}, duplicate: {pokemonData.name})");
                 }
-
             }
 
-            Log.Info(nameof(PokemonDataLoader), $"Loaded {cache.Count} Pokémon from Addressables.");
+            Log.Info(nameof(PokemonDataLoader), $"Loaded {pokemonDataCache.Count}/{pokemonDataList.Count} Pokémon from Addressables.");
         }
 
         /// <summary>
-        /// Retrieves Pokémon data by name (case-insensitive).
+        /// Retrieves a PokemonData by PokemonID. Returns null if missing.
         /// </summary>
-        public static PokemonData Get(string name)
+        public static PokemonData Get(PokemonID id)
         {
-            if (cache == null)
+            if (pokemonDataCache == null)
             {
-                Log.Error(nameof(PokemonDataLoader), "not initialized. You must call LoadAllAsync() before using Get().");
+                Log.Error(nameof(PokemonDataLoader), "Not initialized. You must call LoadAllAsync() before using Get().");
                 return null;
             }
 
-            string key = name.ToLowerInvariant();
-            return cache.TryGetValue(key, out PokemonData data) ? data : null;
+            if (!pokemonDataCache.TryGetValue(id, out PokemonData pokemonData))
+            {
+                return null;
+            }
+
+            return pokemonData;
+        }
+
+        /// <summary>
+        /// Releases Addressables handle and clears the cache.
+        /// </summary>
+        public static void Unload()
+        {
+            if (pokemonDataCache == null)
+            {
+                return;
+            }
+
+            if (pokemonDataHandle.IsValid())
+            {
+                Addressables.Release(pokemonDataHandle);
+            }
+
+            pokemonDataCache.Clear();
+            pokemonDataCache = null;
+
+            Log.Info(nameof(PokemonDataLoader), "Pokémon data cache unloaded.");
         }
     }
 }

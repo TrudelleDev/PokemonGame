@@ -39,6 +39,7 @@ namespace PokemonGame
         private async void Start()
         {
             await PokemonDataLoader.LoadAllAsync();
+            await AbilityDefinitiondLoader.LoadAllAsync();
 
         }
 

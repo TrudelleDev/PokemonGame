@@ -6,36 +6,42 @@ using UnityEngine;
 namespace PokemonGame.Pokemons.Abilities.UI
 {
     /// <summary>
-    /// Displays a Pokémon's ability name and effect in the UI.
-    /// Typically used in summary or status screens.
+    /// Displays information about a Pokémon's ability.
     /// </summary>
-    public class AbilityUI : MonoBehaviour, IAbilityBind, IUnbind
+    [DisallowMultipleComponent]
+    public class AbilityUI : MonoBehaviour, IAbilityBindable, IUnbind
     {
         [SerializeField, Required]
-        [Tooltip("Text component displaying the ability's name.")]
+        [Tooltip("Text component for the ability's name.")]
         private TextMeshProUGUI nameText;
 
         [SerializeField, Required]
-        [Tooltip("Text component displaying the ability's effect description.")]
-        private TextMeshProUGUI effectText;
+        [Tooltip("Text component for the ability's description.")]
+        private TextMeshProUGUI descriptionText;
 
         /// <summary>
-        /// Binds the given ability data to the UI elements.
+        /// Binds the Pokémon's ability information to the UI.
         /// </summary>
-        /// <param name="ability">The ability to display.</param>
+        /// <param name="ability">The ability to bind.</param>
         public void Bind(Ability ability)
         {
-            nameText.text = ability.Data.AbilityName;
-            effectText.text = ability.Data.Effect;
+            if (ability == null || ability.Definition == null)
+            {
+                Unbind();
+                return;
+            }
+
+            nameText.text = ability.Definition.DisplayName;
+            descriptionText.text = ability.Definition.Description;
         }
 
         /// <summary>
-        /// Clears the ability UI elements.
+        /// Clears the Pokémon's ability information from the UI.
         /// </summary>
         public void Unbind()
         {
             nameText.text = string.Empty;
-            effectText.text = string.Empty;
+            descriptionText.text = string.Empty;
         }
     }
 }

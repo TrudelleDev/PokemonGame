@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b00cadabc593f5249bcc3f72027e137a
   m_currentHash:
     serializedVersion: 2
-    Hash: 225123237cbd136a93720f2150ebc699
+    Hash: 4491600096fd602480b03fce4c779586
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -44,9 +44,9 @@ MonoBehaviour:
   m_BuildAddressablesWithPlayerBuild: 0
   m_overridePlayerVersion: '[UnityEditor.PlayerSettings.bundleVersion]'
   m_GroupAssets:
-  - {fileID: 11400000, guid: 457ba937f07643f4bafc63cd666d8188, type: 2}
   - {fileID: 11400000, guid: c2c8edf05bf2b3f49af021b185cd7108, type: 2}
   - {fileID: 11400000, guid: f6c3120bd063a934ab76daa66cb77679, type: 2}
+  - {fileID: 11400000, guid: 457ba937f07643f4bafc63cd666d8188, type: 2}
   m_BuildSettings:
     m_CompileScriptsInVirtualMode: 0
     m_CleanupStreamingAssetsAfterBuilds: 1
@@ -89,6 +89,7 @@ MonoBehaviour:
     m_LabelNames:
     - default
     - pokemon-data
+    - ability-definition
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: dec2d1c933418f940a5bb04df8c95496, type: 2}

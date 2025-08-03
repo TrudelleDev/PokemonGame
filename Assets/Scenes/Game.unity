@@ -1102,7 +1102,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 1737226986332336820}
-  effectText: {fileID: 8680083258657410078}
+  descriptionText: {fileID: 8680083258657410078}
 --- !u!224 &678874212 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6051706205316444792, guid: b8ec068a323c1a842a66e7089f65ff31, type: 3}
@@ -4262,7 +4262,7 @@ MonoBehaviour:
   - level: 50
     data: {fileID: 11400000, guid: cb68ac9dfb0069640973c6cd50f9da9a, type: 2}
     natureData: {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
-    abilityData: {fileID: 11400000, guid: d4924b35f4154e54bb136ed5c717b60c, type: 2}
+    abilityData: {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
     movesData:
     - {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
 --- !u!114 &1990210042

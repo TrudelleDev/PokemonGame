@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b00cadabc593f5249bcc3f72027e137a
   m_SerializeEntries:
+  - m_GUID: 3bce7b1ad9dc3294ea0066ed703e5f37
+    m_Address: Assets/ScriptableObjects/Abilities/StaticData.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - ability-definition
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb68ac9dfb0069640973c6cd50f9da9a
     m_Address: Assets/ScriptableObjects/Pokemons/PikachuData.asset
     m_ReadOnly: 0

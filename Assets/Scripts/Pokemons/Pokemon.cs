@@ -14,7 +14,7 @@ namespace PokemonGame.Pokemons
         [SerializeField, Required] private int level;
         [SerializeField, Required] private PokemonData data;
         [SerializeField, Required] private NatureData natureData;
-        [SerializeField, Required] private AbilityData abilityData;
+        [SerializeField, Required] private AbilityDefinition abilityData;
         [SerializeField, Required] private MoveData[] movesData;
 
         private static readonly IDGenerator idGenerator = new IDGenerator(1000, 9999);
@@ -37,7 +37,7 @@ namespace PokemonGame.Pokemons
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonData pokemonData, NatureData natureData, AbilityData abilityData, MoveData[] movesData)
+        public Pokemon(int level, PokemonData pokemonData, NatureData natureData, AbilityDefinition abilityData, MoveData[] movesData)
         {
             this.level = level;
             this.data = pokemonData;
@@ -78,7 +78,7 @@ namespace PokemonGame.Pokemons
         }
 
         private void GetGender()
-        {
+        {         
             float roll = UnityEngine.Random.Range(0f, 100f);
             Gender = roll < data.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
         }

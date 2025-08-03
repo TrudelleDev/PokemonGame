@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PikachuData
   m_EditorClassIdentifier: 
   displayName: Pikachu
-  pokedexNumber: 25
+  pokemonID: 25
   types:
     firstType: {fileID: 11400000, guid: ef179e92ffacf434f800fcb5bdda53e2, type: 2}
     hasSecondType: 0

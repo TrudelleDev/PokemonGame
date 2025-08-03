@@ -4,9 +4,7 @@ using UnityEngine;
 namespace PokemonGame.Pokemons.Data
 {
     /// <summary>
-    /// Represents a Pokémon species configuration as a ScriptableObject.
-    /// Includes core identity, types, gender ratio, base stats, visual references,
-    /// and Pokédex information for use in gameplay and UI.
+    /// Immutable data for a Pokémon.
     /// </summary>
     [CreateAssetMenu(fileName = "NewPokemonData", menuName = "ScriptableObjects/Pokemon Data")]
     public class PokemonData : ScriptableObject
@@ -14,13 +12,12 @@ namespace PokemonGame.Pokemons.Data
         // ------------- Identity -------------
 
         [BoxGroup("Identity")]
-        [Tooltip("Display name of the Pokémon (e.g., 'Pikachu').")]
+        [Tooltip("Name shown in UI.")]
         [SerializeField, Required] private string displayName;
 
         [BoxGroup("Identity")]
-        [Tooltip("Unique identifier used in the Pokédex.")]
-        [Range(1, Pokedex.TotalPokemonCount)]
-        [SerializeField] private int pokedexNumber;
+        [Tooltip("Stable unique identifier for this Pokémon.")]
+        [SerializeField, Required] private PokemonID pokemonID;
 
         // ------------- Attributes -------------
 
@@ -51,8 +48,11 @@ namespace PokemonGame.Pokemons.Data
 
         // ------------- Public Accessors ------------
 
+        [BoxGroup("Identity")]
+        [ShowInInspector, ReadOnly]
+        public string PokedexNumber => ((int)pokemonID).ToString("D3");
         public string DisplayName => displayName;
-        public int PokedexNumber => pokedexNumber;
+        public PokemonID PokemonID => pokemonID;
         public PokemonType Types => types;
         public PokemonGenderRatio GenderRatio => genderRatio;
         public PokemonStats BaseStats => baseStats;

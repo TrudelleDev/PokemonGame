@@ -44,7 +44,7 @@ namespace PokemonGame.Pokemons.UI
         /// <param name="pokemon">The Pokémon instance to display.</param>
         public void Bind(Pokemon pokemon)
         {
-            pokedexNumberText.text = pokemon.Data.PokedexNumber.ToString("D3");
+            pokedexNumberText.text = pokemon.Data.PokedexNumber;
             nameText.text = pokemon.Data.DisplayName;
             idText.text = pokemon.ID;
             originalTrainerText.text = pokemon.OwnerName;
