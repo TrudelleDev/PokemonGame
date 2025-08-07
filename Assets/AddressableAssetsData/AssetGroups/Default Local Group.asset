@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - pokemon-definition
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: d95b7794d67330e4ea9feaa7a52d160f
+    m_Address: Assets/ScriptableObjects/Natures/Adamant.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - nature-definition
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 38ef306e0e954b04e8f809c8a801f987, type: 2}
   m_SchemaSet:

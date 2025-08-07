@@ -1,6 +1,7 @@
 using PokemonGame.Abilities.Definition;
 using PokemonGame.Characters;
 using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemons.Natures;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -33,6 +34,7 @@ namespace PokemonGame
         {
             await PokemonDefinitionLoader.LoadAllAsync();
             await AbilityDefinitiondLoader.LoadAllAsync();
+            await NatureDefinitionLoader.LoadAllAsync();
 
         }
 

@@ -3,19 +3,19 @@ using PokemonGame.Abilities.Definition;
 namespace PokemonGame.Abilities
 {
     /// <summary>
-    /// A runtime instance of a Pokémon ability, constructed from a predefined ability definition.
+    /// Represents a Pokémon ability using a definition.
     /// </summary>
     public class Ability
     {
         /// <summary>
-        /// The ability definition associated with this instance.
+        /// The associated ability definition.
         /// </summary>
         public AbilityDefinition Definition { get; }
 
         /// <summary>
-        /// Initializes a new ability instance from the given definition.
+        /// Creates a new ability instance.
         /// </summary>
-        /// <param name="definition">The ability definition to use.</param>
+        /// <param name="definition">The ability definition.</param>
         public Ability(AbilityDefinition definition)
         {
             Definition = definition;

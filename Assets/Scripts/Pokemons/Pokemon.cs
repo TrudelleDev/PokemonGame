@@ -16,7 +16,7 @@ namespace PokemonGame.Pokemons
     {
         [SerializeField, Required] private int level;
         [SerializeField, Required] private PokemonDefinition data;
-        [SerializeField, Required] private NatureData natureData;
+        [SerializeField, Required] private NatureDefinition natureData;
         [SerializeField, Required] private AbilityDefinition abilityData;
         [SerializeField, Required] private MoveData[] movesData;
 
@@ -40,7 +40,7 @@ namespace PokemonGame.Pokemons
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonDefinition pokemonData, NatureData natureData, AbilityDefinition abilityData, MoveData[] movesData)
+        public Pokemon(int level, PokemonDefinition pokemonData, NatureDefinition natureData, AbilityDefinition abilityData, MoveData[] movesData)
         {
             this.level = level;
             this.data = pokemonData;

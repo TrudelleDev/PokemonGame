@@ -1,5 +1,6 @@
-﻿using PokemonGame.Abilities.Interfaces;
+﻿using PokemonGame.Pokemons;
 using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -10,7 +11,7 @@ namespace PokemonGame.Abilities.UI
     /// Displays information about a Pokémon's ability.
     /// </summary>
     [DisallowMultipleComponent]
-    public class AbilityUI : MonoBehaviour, IAbilityBindable, IUnbind
+    public class AbilityUI : MonoBehaviour, IBindable<Ability>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Text component for the ability's name.")]

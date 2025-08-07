@@ -22,13 +22,13 @@ namespace PokemonGame.Pokemons.UI
         /// <param name="pokemon">The Pokémon instance providing trainer info.</param>
         public void Bind(Pokemon pokemon)
         {
-            if (pokemon?.Nature?.Data == null)
+            if (pokemon?.Nature?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            string natureName = pokemon.Nature.Data.NatureName ?? "Unknown";
+            string natureName = pokemon.Nature.Definition.DisplayName ?? "Unknown";
             string location = string.IsNullOrWhiteSpace(pokemon.LocationEncounter) ? "an unknown location" : pokemon.LocationEncounter;
 
             memoText.text = $"{natureName} nature.{Environment.NewLine}Met at {location} at level {pokemon.Level}.";

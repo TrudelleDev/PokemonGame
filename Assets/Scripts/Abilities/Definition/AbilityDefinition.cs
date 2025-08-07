@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PokemonGame.Abilities.Definition
 {
     /// <summary>
-    /// Defines a Pokémon ability.
+    /// Defines a Pokémon ability, including its display name, description, and unique identifier.
     /// </summary>
     [CreateAssetMenu(fileName = "NewAbilityDefinition", menuName = "ScriptableObjects/Ability Definition")]
     public class AbilityDefinition : ScriptableObject
@@ -26,17 +26,17 @@ namespace PokemonGame.Abilities.Definition
         private string description;
 
         /// <summary>
-        /// Unique ID used to reference this ability.
+        /// Unique identifier used to reference this ability in code.
         /// </summary>
         public AbilityID ID => id;
 
         /// <summary>
-        /// Name displayed in the UI.
+        /// Name of the ability shown in UI.
         /// </summary>
         public string DisplayName => displayName;
 
         /// <summary>
-        /// Description shown in the UI.
+        /// Text description of the ability's effect, shown in UI.
         /// </summary>
         public string Description => description;
     }
