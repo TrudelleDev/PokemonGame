@@ -1,5 +1,4 @@
-using PokemonGame.Pokemons.Interfaces;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// Hides the icon if the type is not available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public class PokemonTypeIcon : MonoBehaviour, IPokemonBindable, IUnbind
+    public class PokemonTypeIcon : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Select whether to show the Pokémon's primary or secondary type icon.")]

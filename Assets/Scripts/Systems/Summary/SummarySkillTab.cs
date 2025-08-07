@@ -1,8 +1,7 @@
 using PokemonGame.Abilities.UI;
 using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Pokemons.UI;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace PokemonGame.Systems.Summary
     /// Displays detailed Pokémon stats and ability information in the summary screen.
     /// Supports dynamic data binding and clears the UI when the Pokémon or its ability data is missing or invalid.
     /// </summary>
-    public class SummarySkillTab : MonoBehaviour, IPokemonBindable, IUnbind
+    public class SummarySkillTab : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Group containing base stat UI elements (HP, Attack, Defense, etc.).")]

@@ -1,5 +1,4 @@
-using PokemonGame.Pokemons.Interfaces;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -12,7 +11,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
     /// Handles data binding and unbinding, and gracefully resets visuals if no valid Pokémon is assigned.
     /// </summary>
     [RequireComponent(typeof(Button))]
-    public class PartyMenuSlot : MonoBehaviour, IPokemonBindable, IUnbind
+    public class PartyMenuSlot : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         private static readonly int IdleHash = Animator.StringToHash("Idle");
 
@@ -66,7 +65,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
             }
 
             BoundPokemon = pokemon;
-           
+
             SetSlotVisibility(true);
             UpdateDisplay(pokemon);
         }

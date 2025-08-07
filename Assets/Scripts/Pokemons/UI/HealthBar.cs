@@ -1,5 +1,4 @@
-using PokemonGame.Pokemons.Interfaces;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// Automatically updates when the Pokémon's health changes.
     /// </summary>
     [RequireComponent(typeof(Slider))]
-    public class HealthBar : MonoBehaviour, IPokemonBindable, IUnbind
+    public class HealthBar : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         private const float ExcellentThreshold = 0.5f;
         private const float GoodThreshold = 0.25f;

@@ -1,4 +1,4 @@
-﻿using PokemonGame.Shared;
+﻿using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

@@ -1,7 +1,6 @@
 using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Pokemons.UI;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace PokemonGame.Systems.Summary
     /// Displays the Pokémon's name, gender, menu sprite, and type icons.
     /// Supports dynamic data binding and clears the UI when data is missing or invalid.
     /// </summary>
-    public class SummaryIdentityPanel : MonoBehaviour, IPokemonBindable, IUnbind
+    public class SummaryIdentityPanel : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("UI group displaying the Pokémon's identity info: name, gender icon, sprite, and types.")]

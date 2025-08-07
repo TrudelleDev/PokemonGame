@@ -1,5 +1,4 @@
-using PokemonGame.Pokemons.Interfaces;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -10,7 +9,7 @@ namespace PokemonGame.Pokemons.UI
     /// Displays the Pokémon's name, level, gender icon, and front-facing sprite
     /// in header-style UI elements. Supports safe data binding and clearing.
     /// </summary>
-    public class PokemonHeaderUI : MonoBehaviour, IPokemonBindable, IUnbind
+    public class PokemonHeaderUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's name.")]

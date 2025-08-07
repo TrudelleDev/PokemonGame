@@ -1,6 +1,5 @@
 using PokemonGame.Pokemons.Enums;
-using PokemonGame.Pokemons.Interfaces;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// Displays the gender icon of a Pokémon using predefined male or female sprites.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public class PokemonGenderSprite : MonoBehaviour, IPokemonBindable, IUnbind
+    public class PokemonGenderSprite : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Icon to display for male Pokémon.")]

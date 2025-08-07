@@ -1,7 +1,6 @@
 using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Pokemons.UI;
-using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +11,7 @@ namespace PokemonGame.Systems.Summary
     /// Displays the Pokémon's name, level, gender, and sprite.
     /// Safely handles null or incomplete Pokémon data by clearing the UI.
     /// </summary>
-    public class SummaryHeader : MonoBehaviour, IPokemonBindable, IUnbind
+    public class SummaryHeader : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Handles display of the Pokémon's name, level, gender, and sprite.")]

@@ -1,5 +1,5 @@
-using PokemonGame.Pokemons.Interfaces;
 using PokemonGame.Shared;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemons.UI
     /// Hides the image if no valid sprite is available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public partial class PokemonSprite : MonoBehaviour, IPokemonBindable, IUnbind
+    public partial class PokemonSprite : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Determines which sprite variant to display (Menu, Front, or Back).")]
