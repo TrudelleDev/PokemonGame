@@ -1,16 +1,15 @@
-﻿using PokemonGame.Shared;
-using PokemonGame.Shared.Interfaces;
+﻿using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemons.Moves.UI
+namespace PokemonGame.Moves.UI
 {
     /// <summary>
     /// Displays a summary slot for a Pokémon move, including its name, PP, and type icon.
     /// </summary>
-    public class MoveSlotUI : MonoBehaviour, IMoveBind, IUnbind
+    public class MoveSlotUI : MonoBehaviour, IBindable<Move>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Text displaying the move's name.")]
@@ -32,17 +31,17 @@ namespace PokemonGame.Pokemons.Moves.UI
         /// <param name="move">The move to display.</param>
         public void Bind(Move move)
         {
-            if (move?.Data == null)
+            if (move?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
             Move = move;
-            nameText.text = move.Data.MoveName;
-            powerPointText.text = $"{move.PowerPointRemaining}/{move.Data.PowerPoint}";
+            nameText.text = move.Definition.MoveName;
+            powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.PowerPoint}";
             powerPointText.alignment = TextAlignmentOptions.Right;
-            typeImage.sprite = move.Data.Type.Sprite;
+            typeImage.sprite = move.Definition.Type.Sprite;
             typeImage.enabled = true;
         }
 

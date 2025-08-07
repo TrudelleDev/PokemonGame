@@ -1,7 +1,7 @@
 namespace PokemonGame.Pokemons.Natures
 {
     /// <summary>
-    /// Represents a Pokémon nature using a definition.
+    /// Represents a Pokémon nature instance that uses a definition as its static data.
     /// </summary>
     public class Nature
     {

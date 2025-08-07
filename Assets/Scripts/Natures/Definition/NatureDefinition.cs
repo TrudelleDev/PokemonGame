@@ -10,6 +10,8 @@ namespace PokemonGame.Pokemons.Natures
     [CreateAssetMenu(fileName = "NewNatureDefinition", menuName = "ScriptableObjects/Nature Definition")]
     public class NatureDefinition : ScriptableObject
     {
+        // ---- Identity ----
+
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this nature.")]
         [SerializeField, Required]
@@ -20,13 +22,15 @@ namespace PokemonGame.Pokemons.Natures
         [SerializeField, Required]
         private string displayName;
 
+        // ---- Properties ----
+
         /// <summary>
         /// Unique identifier used to reference this nature in code.
         /// </summary>
         public NatureID ID => natureID;
 
         /// <summary>
-        /// Name of the nature shown in UI.
+        /// Display name of the nature shown in UI.
         /// </summary>
         public string DisplayName => displayName;
     }

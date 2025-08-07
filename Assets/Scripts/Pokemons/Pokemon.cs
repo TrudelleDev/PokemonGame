@@ -1,16 +1,20 @@
 using System;
 using PokemonGame.Abilities;
 using PokemonGame.Abilities.Definition;
+using PokemonGame.Moves;
+using PokemonGame.Moves.Definition;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Models;
-using PokemonGame.Pokemons.Moves;
 using PokemonGame.Pokemons.Natures;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Pokemons
 {
+    /// <summary>
+    /// Represents a Pokémon instance that uses a definition as its static data.
+    /// </summary>
     [Serializable]
     public class Pokemon
     {
@@ -18,7 +22,7 @@ namespace PokemonGame.Pokemons
         [SerializeField, Required] private PokemonDefinition data;
         [SerializeField, Required] private NatureDefinition natureData;
         [SerializeField, Required] private AbilityDefinition abilityData;
-        [SerializeField, Required] private MoveData[] movesData;
+        [SerializeField, Required] private MoveDefinition[] movesData;
 
         private static readonly IDGenerator idGenerator = new IDGenerator(1000, 9999);
         public int Level => level;
@@ -40,7 +44,7 @@ namespace PokemonGame.Pokemons
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonDefinition pokemonData, NatureDefinition natureData, AbilityDefinition abilityData, MoveData[] movesData)
+        public Pokemon(int level, PokemonDefinition pokemonData, NatureDefinition natureData, AbilityDefinition abilityData, MoveDefinition[] movesData)
         {
             this.level = level;
             this.data = pokemonData;

@@ -5,38 +5,44 @@ using UnityEngine;
 namespace PokemonGame.Abilities.Definition
 {
     /// <summary>
-    /// Defines a Pokémon ability, including its display name, description, and unique identifier.
+    /// Defines a Pokémon ability used to describe its name, description, and unique identifier.
     /// </summary>
     [CreateAssetMenu(fileName = "NewAbilityDefinition", menuName = "ScriptableObjects/Ability Definition")]
     public class AbilityDefinition : ScriptableObject
     {
+        // ---- Identity ----
+
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this ability.")]
         [SerializeField, Required]
         private AbilityID id;
 
         [BoxGroup("Identity")]
-        [Tooltip("Name shown in UI.")]
+        [Tooltip("Name of the ability as shown in the UI.")]
         [SerializeField, Required]
         private string displayName;
 
+        // ---- Description ----
+
         [BoxGroup("Description")]
-        [Tooltip("Description of what the ability does.")]
-        [SerializeField, TextArea(3, 8), Required]
+        [Tooltip("Text description of the ability's effect, shown in the UI.")]
+        [SerializeField, Required, TextArea(3, 8)]
         private string description;
 
+        // ---- Properties ----
+
         /// <summary>
-        /// Unique identifier used to reference this ability in code.
+        /// Defines the unique identifier for this ability.
         /// </summary>
         public AbilityID ID => id;
 
         /// <summary>
-        /// Name of the ability shown in UI.
+        /// Defines the display name shown in UI.
         /// </summary>
         public string DisplayName => displayName;
 
         /// <summary>
-        /// Text description of the ability's effect, shown in UI.
+        /// Defines the description shown to the player.
         /// </summary>
         public string Description => description;
     }

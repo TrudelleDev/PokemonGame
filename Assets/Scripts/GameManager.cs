@@ -1,5 +1,7 @@
 using PokemonGame.Abilities.Definition;
 using PokemonGame.Characters;
+using PokemonGame.Moves;
+using PokemonGame.Moves.Definition;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Natures;
 using UnityEngine;
@@ -35,7 +37,7 @@ namespace PokemonGame
             await PokemonDefinitionLoader.LoadAllAsync();
             await AbilityDefinitiondLoader.LoadAllAsync();
             await NatureDefinitionLoader.LoadAllAsync();
-
+            await MoveDefinitionLoader.LoadAllAsync();
         }
 
         public void SetPlayerPosition(Vector3 position)

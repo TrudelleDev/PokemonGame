@@ -3,7 +3,7 @@ using PokemonGame.Abilities.Definition;
 namespace PokemonGame.Abilities
 {
     /// <summary>
-    /// Represents a Pokémon ability using a definition.
+    /// Represents a Pokémon ability instance that uses a definition as its static data.
     /// </summary>
     public class Ability
     {

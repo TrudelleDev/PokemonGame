@@ -15,38 +15,45 @@ namespace PokemonGame.Pokemons.Definition
 
         [BoxGroup("Identity")]
         [Tooltip("Name shown in UI.")]
-        [SerializeField, Required] private string displayName;
+        [SerializeField, Required] 
+        private string displayName;
 
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this Pokémon.")]
-        [SerializeField, Required] private PokemonID pokemonID;
+        [SerializeField, Required] 
+        private PokemonID pokemonID;
 
         // ------------- Attributes -------------
 
         [Space]
         [BoxGroup("Attributes")]
         [Tooltip("Primary and optional secondary type of the Pokémon.")]
-        [SerializeField] private PokemonType types;
+        [SerializeField, Required] 
+        private PokemonType types;
 
         [BoxGroup("Attributes")]
         [Tooltip("Male/female ratio information.")]
-        [SerializeField] private PokemonGenderRatio genderRatio;
+        [SerializeField, Required] 
+        private PokemonGenderRatio genderRatio;
 
         [BoxGroup("Attributes")]
         [Tooltip("Base stats used to calculate the Pokémon's final stats.")]
-        [SerializeField] private PokemonStats baseStats;
+        [SerializeField, Required] 
+        private PokemonStats baseStats;
 
         // ------------- Visuals -------------
 
         [Space]
         [BoxGroup("Visuals")]
         [Tooltip("Front/back/battle/menu sprites for this Pokémon.")]
-        [SerializeField] private PokemonSprites sprites;
+        [SerializeField] 
+        private PokemonSprites sprites;
 
         [Space]
         [BoxGroup("Visuals")]
         [Tooltip("Animator override for animating the Pokémon in menus.")]
-        [SerializeField] private AnimatorOverrideController menuSpriteOverrider;
+        [SerializeField, Required]
+        private AnimatorOverrideController menuSpriteOverrider;
 
         // ------------- Public Accessors ------------
 

@@ -1,5 +1,5 @@
+using PokemonGame.Moves.UI;
 using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Moves.UI;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -23,7 +23,7 @@ namespace PokemonGame.Systems.Summary
 
         [SerializeField, Required]
         [Tooltip("Displays the list of moves and handles binding each move slot.")]
-        private MoveSlotManager moveManager;
+        private MoveSlotUIManager moveManager;
 
         private void OnEnable()
         {
