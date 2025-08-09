@@ -7,8 +7,8 @@ using UnityEngine.UI;
 namespace PokemonGame.Menu.UI
 {
     /// <summary>
-    /// Controls the item detail UI based on the current menu selection.
-    /// Updates the item description and icon when the selection changes.
+    /// Syncs the detail panel with the currently selected menu option.
+    /// Subscribes to selection changes and updates the description/icon accordingly.
     /// </summary>
     public class MenuOptionDetailUIController : MonoBehaviour
     {
@@ -23,11 +23,16 @@ namespace PokemonGame.Menu.UI
         private void Awake()
         {
             menuController.OnSelect += OnMenuSelect;
-        }
 
-        private void OnEnable()
-        {
-          // menuController.RefreshButtons();
+            // Sync immediately so initial selection is displayed without execution order hacks
+            if (menuController.CurrentButton != null)
+            {
+                OnMenuSelect(menuController.CurrentButton);
+            }
+            else
+            {
+                menuOptionDetailUI.Unbind();
+            }
         }
 
         private void OnDestroy()
@@ -37,16 +42,14 @@ namespace PokemonGame.Menu.UI
 
         private void OnMenuSelect(Button menuButton)
         {
-            if (menuButton.TryGetComponent<IMenuOptionDisplaySource>(out var source))
+            if (menuButton.TryGetComponent<IMenuOptionDisplaySource>(out var source) && source.Displayable != null)
             {
-                if (source.Displayable != null)
-                {
-                    menuOptionDetailUI.Bind(source.Displayable);
-                    return;
-                }
+                menuOptionDetailUI.Bind(source.Displayable);
             }
-
-            menuOptionDetailUI.Unbind();
+            else
+            {
+                menuOptionDetailUI.Unbind();
+            }
         }
     }
 }

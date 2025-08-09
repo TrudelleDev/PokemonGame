@@ -27,6 +27,8 @@ namespace PokemonGame.Menu.Controllers
         public event Action<Button> OnClick;
         public event Action<Button> OnCancel;
 
+        public Button CurrentButton => currentButton;
+
         private EventSystem ES => EventSystem.current;
 
         private void Awake()
