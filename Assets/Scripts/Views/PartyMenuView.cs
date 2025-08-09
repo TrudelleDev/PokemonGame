@@ -1,4 +1,4 @@
-using PokemonGame.MenuControllers;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI.PartyMenu;
 using Sirenix.OdinInspector;
@@ -40,7 +40,6 @@ namespace PokemonGame.Views
         private VerticalMenuController partyOptionController;
 
         private CloseView closeView;
-        private bool resetToFirst;
 
         /// <summary>
         /// Called once before the view is shown for the first time.
@@ -61,11 +60,6 @@ namespace PokemonGame.Views
         /// </summary>
         private void OnEnable()
         {
-            if (resetToFirst)
-            {
-                partySlotController.ResetToFirstElement();
-                resetToFirst = false;
-            }
 
             dialogBox.SetText("Choose a Pokémon or cancel.");
         }
@@ -111,7 +105,6 @@ namespace PokemonGame.Views
         {
             if (!partyMenuOption.gameObject.activeInHierarchy)
             {
-                resetToFirst = true;
                 ViewManager.Instance.GoToPreviousView();
             }
         }

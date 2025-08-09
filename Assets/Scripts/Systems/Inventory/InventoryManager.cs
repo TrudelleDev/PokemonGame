@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using PokemonGame.Items;
-using PokemonGame.Items.Datas;
+using PokemonGame.Items.Definition;
+using PokemonGame.Items.Enums;
+using PokemonGame.Items.Models;
 using UnityEngine;
 
 namespace PokemonGame.Systems.Inventory
@@ -24,7 +26,7 @@ namespace PokemonGame.Systems.Inventory
         [SerializeField] private InventoryCategory ball;
 
 
-        private Dictionary<ItemType, InventoryCategory> categories;
+        private Dictionary<ItemCategory, InventoryCategory> categories;
 
         /// <summary>
         /// Initializes the inventory by binding each category and creating the internal lookup dictionary.
@@ -36,56 +38,72 @@ namespace PokemonGame.Systems.Inventory
             keyItem?.Initialize();
             ball?.Initialize();
 
-            categories = new Dictionary<ItemType, InventoryCategory>
+            categories = new Dictionary<ItemCategory, InventoryCategory>
             {
-                { ItemType.Item, item },
-                { ItemType.KeyItem, keyItem },
-                { ItemType.Pokeball, ball }
+                { ItemCategory.General, item },
+                { ItemCategory.KeyItem, keyItem },
+                { ItemCategory.Pokeball, ball }
             };
         }
 
         /// <summary>
-        /// Adds a quantity of an item to the appropriate inventory section based on its item type.
-        /// If an equivalent item already exists, the quantity is stacked.
+        /// Add a stack to the appropriate section.
         /// </summary>
-        /// <param name="itemData">The item data to add to the inventory.</param>
-        /// <param name="quantity">The quantity of the item to add.</param>
-        public void Add(ItemData itemData, int quantity)
+        public void Add(ItemStack stack)
         {
             EnsureInitialized();
 
-            if (itemData == null || quantity <= 0)
-                return;
+            if (!stack.IsValid) return;
 
-            if (categories.TryGetValue(itemData.Type, out var section))
+            ItemDefinition def = ItemDefinitionLoader.Get(stack.ItemID);
+            if (def == null)
             {
-                section.Add(itemData, quantity);
+                Debug.LogWarning($"[InventoryManager] Missing ItemDefinition for '{stack.ItemID}'. Did you load definitions?");
+                return;
+            }
+
+            if (categories.TryGetValue(def.Category, out var section) && section != null)
+            {
+                section.Add(stack);
             }
             else
             {
-                Log.Warning(nameof(InventoryManager), $"Unhandled item type {itemData.Type}");
+                Debug.LogWarning($"[InventoryManager] Unhandled item category '{def.Category}'.");
             }
         }
 
         /// <summary>
-        /// Removes the specified quantity of an item from the appropriate inventory section.
-        /// If the item's count reaches zero, it is removed from the section.
+        /// Removes the specified item stack from its inventory category (by ItemId).
+        /// If the stack's count reaches zero, the section should remove it internally.
         /// </summary>
-        /// <param name="item">The item to remove from the inventory.</param>
+        /// <param name="item">The runtime item instance to remove.</param>
         public void Remove(Item item)
         {
             EnsureInitialized();
 
-            if (item == null || item.Data == null)
-                return;
+            if (item == null) return;
 
-            if (categories.TryGetValue(item.Data.Type, out var section))
+            var id = item.ID;
+            if (id == ItemId.None)
+            {
+                Log.Warning(nameof(InventoryManager), "Attempted to remove item with Unknown ID.");
+                return;
+            }
+
+            var def = ItemDefinitionLoader.Get(id);
+            if (def == null)
+            {
+                Log.Warning(nameof(InventoryManager), $"Missing ItemDefinition for ID '{id}'. Did you load item definitions?");
+                return;
+            }
+
+            if (categories.TryGetValue(def.Category, out var section))
             {
                 section.Remove(item);
             }
             else
             {
-                Log.Warning(nameof(InventoryManager), $" Unhandled item type '{item.Data.Type}");
+                Log.Warning(nameof(InventoryManager), $"Unhandled item type '{def.Category}'.");
             }
         }
 
@@ -94,7 +112,7 @@ namespace PokemonGame.Systems.Inventory
         /// </summary>
         /// <param name="type">The type of item (e.g., Item, KeyItem, Pokeball).</param>
         /// <returns>The matching InventoryCategory, or null if not found.</returns>
-        public InventoryCategory GetSection(ItemType type)
+        public InventoryCategory GetSection(ItemCategory type)
         {
             EnsureInitialized();
             return categories.TryGetValue(type, out var section) ? section : null;
@@ -106,7 +124,7 @@ namespace PokemonGame.Systems.Inventory
         /// <param name="itemId">The item ID to look for.</param>
         /// <param name="type">The item type section to check within.</param>
         /// <returns>True if found, otherwise false.</returns>
-        public bool HasItem(string itemId, ItemType type)
+        public bool HasItem(ItemId itemId, ItemCategory type)
         {
             EnsureInitialized();
             var section = GetSection(type);

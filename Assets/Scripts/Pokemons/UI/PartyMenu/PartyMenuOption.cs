@@ -1,5 +1,5 @@
 using System;
-using PokemonGame.MenuControllers;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Views;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,7 +30,6 @@ namespace PokemonGame
 
         private void OnCancelClick()
         {
-            optionMenuController.ResetToFirstElement();
             OnCancel?.Invoke();
         }
 

@@ -1,50 +1,53 @@
+using System.Threading.Tasks;
 using PokemonGame.Abilities.Definition;
 using PokemonGame.Characters;
-using PokemonGame.Moves;
+using PokemonGame.Items.Definition;
 using PokemonGame.Moves.Definition;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Natures;
+using PokemonGame.Views;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace PokemonGame
 {
-    public class GameManager : MonoBehaviour
+    /// <summary>
+    /// Bootstraps core data, manages scene loading, and exposes player utilities.
+    /// </summary>
+    public class GameManager : Singleton<GameManager>
     {
-        [SerializeField] private Character player;
-
-        public static GameManager Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(this);
-            }
-            else
-            {
-                Instance = this;
-            }
-
-
-            Load("ViridianForest");
-
-            Screen.SetResolution(1920, 1080, true);
-        }
+        [SerializeField]
+        private Character player;
 
         private async void Start()
         {
-            await PokemonDefinitionLoader.LoadAllAsync();
-            await AbilityDefinitiondLoader.LoadAllAsync();
-            await NatureDefinitionLoader.LoadAllAsync();
-            await MoveDefinitionLoader.LoadAllAsync();
+            Screen.SetResolution(1920, 1080, true);
+
+            // Preload all definitions in parallel before loading gameplay.
+            Task pokemon = PokemonDefinitionLoader.LoadAllAsync();
+            Task abilities = AbilityDefinitionLoader.LoadAllAsync();
+            Task natures = NatureDefinitionLoader.LoadAllAsync();
+            Task moves = MoveDefinitionLoader.LoadAllAsync();
+            Task items = ItemDefinitionLoader.LoadAllAsync();
+
+            await Task.WhenAll(pokemon, abilities, natures, moves, items);
+
+            await LoadAsync("ViridianForest");
+
+            ViewManager.Instance.Initialize();
         }
 
+        /// <summary>
+        /// Sets the player's world position.
+        /// </summary>
         public void SetPlayerPosition(Vector3 position)
         {
             player.transform.position = position;
         }
 
+        /// <summary>
+        /// Loads a scene additively if it is not already loaded.
+        /// </summary>
         public void Load(string sceneName)
         {
             if (!SceneManager.GetSceneByName(sceneName).isLoaded)
@@ -53,11 +56,28 @@ namespace PokemonGame
             }
         }
 
+        /// <summary>
+        /// Unloads a scene if it is currently loaded.
+        /// </summary>
         public void Unload(string sceneName)
         {
             if (SceneManager.GetSceneByName(sceneName).isLoaded)
             {
                 SceneManager.UnloadSceneAsync(sceneName);
+            }
+        }
+
+        public async Task LoadAsync(string sceneName)
+        {
+            if (SceneManager.GetSceneByName(sceneName).isLoaded)
+            {
+                return;
+            }
+
+            AsyncOperation op = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            while (!op.isDone)
+            {
+                await Task.Yield();
             }
         }
     }

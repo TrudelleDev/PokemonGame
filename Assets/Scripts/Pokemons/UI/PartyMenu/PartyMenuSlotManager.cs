@@ -1,6 +1,4 @@
 using System.Collections.Generic;
-using System.Xml.Serialization;
-using PokemonGame.MenuControllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

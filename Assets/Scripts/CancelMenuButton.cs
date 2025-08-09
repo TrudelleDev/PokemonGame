@@ -1,12 +1,13 @@
-using PokemonGame.Items.Datas;
+using PokemonGame.Menu.Definition;
+using PokemonGame.Shared.Interfaces;
 using UnityEngine;
 
 namespace PokemonGame
 {
-    public class CancelMenuButton : MonoBehaviour
+    public class CancelMenuButton : MonoBehaviour, IMenuOptionDisplaySource
     {
-        [SerializeField] private ItemData data;
+        [SerializeField] private CancelMenuOptionDefinition data;
 
-        public ItemData Data => data;
+        public IDisplayable Displayable => data;
     }
 }

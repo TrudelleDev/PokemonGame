@@ -1,6 +1,7 @@
 ﻿using PokemonGame.Characters;
 using PokemonGame.Characters.Interfaces;
-using PokemonGame.Items.Datas;
+using PokemonGame.Items.Definition;
+using PokemonGame.Items.Models;
 using PokemonGame.Systems.Dialogue;
 using PokemonGame.Systems.Inventory;
 using Sirenix.OdinInspector;
@@ -9,48 +10,55 @@ using UnityEngine;
 namespace PokemonGame.Items
 {
     /// <summary>
-    /// Represents an item placed in the world that the player can pick up by interacting with it.
-    /// Adds the item to the inventory and shows a pickup message upon interaction.
+    /// World pickup: grants an item stack to the interacting character,
+    /// shows a message, and then destroys itself.
     /// </summary>
     public class ItemOverworld : MonoBehaviour, IInteract
     {
         [SerializeField, Required]
-        [Tooltip("Reference to the item data that defines this world item.")]
-        private ItemData itemData;
+        [Tooltip("The item stack this pickup grants.")]
+        private ItemStack stack;
 
-        [SerializeField]
-        [Tooltip("Quantity of the item to give to the player.")]
-        private int quantity = 1;
+        private bool consumed;
 
-        /// <summary>
-        /// Called when the player interacts with the world item.
-        /// Adds the item to the inventory, shows a pickup message, and destroys the world object.
-        /// </summary>
-        /// <param name="character">The player character interacting with the item.</param>
         public void Interact(Character character)
         {
-            if (itemData == null)
+            if (consumed)
             {
-                Log.Warning(nameof(ItemOverworld), "Missing item data!");
                 return;
             }
 
-            string[] message = new string[2];
-            message[0] = $"{character.CharacterName} found a {itemData.Name}!";
-            message[1] = $"{character.CharacterName} put the {itemData.Name} in the {itemData.Type} pocket.";
+            consumed = true; // Prevents multiple pickups in quick succession
 
-            InventoryManager inventory = character.GetComponent<InventoryManager>();
-
-            if (inventory != null)
+            if (!ItemDefinitionLoader.TryGet(stack.ItemID, out var itemDefinition))
             {
-                inventory.Add(itemData, quantity);
+                Log.Warning(nameof(ItemOverworld), $"Missing ItemDefinition for ID: {stack.ItemID}");
+                return;
             }
 
-            if (DialogueBox.Instance != null)
+            if (!character.TryGetComponent<InventoryManager>(out var inventory))
             {
-                DialogueBox.Instance.ShowDialogue(message);
+                Log.Warning(nameof(ItemOverworld), "No InventoryManager on interacting character.");
+                return;
             }
 
+            string foundLine;
+
+            if (stack.Quantity > 1)
+            {
+                foundLine = character.CharacterName + " found " + stack.Quantity + " × " + itemDefinition.DisplayName + "!";
+            }
+            else
+            {
+                foundLine = character.CharacterName + " found a " + itemDefinition.DisplayName + "!";
+            }
+
+            // string putLine = character.CharacterName + " put the " + itemDefinition.DisplayName + " in the " + itemDefinition.Category + " pocket.";
+
+            //DialogueBox.Instance.ShowDialogue(new[] { foundLine, putLine });
+            DialogueBox.Instance.ShowDialogue(new[] { foundLine });
+
+            inventory.Add(stack);
             Destroy(gameObject);
         }
     }

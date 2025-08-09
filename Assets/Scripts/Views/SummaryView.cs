@@ -1,4 +1,4 @@
-using PokemonGame.MenuControllers;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
 using PokemonGame.Systems.Summary;
 using Sirenix.OdinInspector;

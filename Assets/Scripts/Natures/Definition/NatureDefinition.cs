@@ -7,7 +7,7 @@ namespace PokemonGame.Pokemons.Natures
     /// <summary>
     /// Defines a Pokémon nature, including its display name and unique identifier.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewNatureDefinition", menuName = "ScriptableObjects/Nature Definition")]
+    [CreateAssetMenu(fileName = "NewNatureDefinition", menuName = "Pokemon/Natures/Nature Definition")]
     public class NatureDefinition : ScriptableObject
     {
         // ---- Identity ----

@@ -1,4 +1,4 @@
-﻿using PokemonGame.MenuControllers;
+﻿using PokemonGame.Menu.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,14 +24,11 @@ namespace PokemonGame.Moves.UI
             controller.OnSelect += OnControllerSelect;
         }
 
+       
+
         private void OnDestroy()
         {
             controller.OnSelect -= OnControllerSelect;
-        }
-
-        private void OnDisable()
-        {
-            controller.ResetToFirstElement();
         }
 
         private void OnControllerSelect(Button button)

@@ -1,42 +1,59 @@
 using System;
-using PokemonGame.Items.Datas;
+using PokemonGame.Items.Definition;
+using PokemonGame.Items.Enums;
+using PokemonGame.Items.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Items
 {
     /// <summary>
-    /// Represents a stackable item instance with its associated data and quantity.
+    /// Runtime stackable item that wraps an ItemStack and resolves its definition.
     /// </summary>
     [Serializable]
     public class Item
     {
-        [SerializeField, Required] private ItemData data;
-        [SerializeField, Required] private int count;
+        [SerializeField, Required]
+        [Tooltip("The underlying stack data for this item.")]
+        private ItemStack stack;
 
         /// <summary>
-        /// The data reference for this item.
+        /// The underlying stack data (ID + quantity).
         /// </summary>
-        public ItemData Data => data;
+        public ItemStack Stack => stack;
 
         /// <summary>
-        /// The current quantity of this item instance.
+        /// The unique ID for this item.
         /// </summary>
-        public int Count
+        public ItemId ID => stack.ItemID;
+
+        /// <summary>
+        /// The current quantity of this item (clamped to >= 0).
+        /// </summary>
+        public int Quantity
         {
-            get => count;
-            set => count = Mathf.Max(0, value); // prevent negative count
+            get => stack.Quantity;
+            set => stack = new ItemStack(ID, Mathf.Max(0, value));
         }
 
-        public Item(ItemData data, int count)
+        /// <summary>
+        /// The resolved item definition for this item, or null if not found.
+        /// </summary>
+        public ItemDefinition Definition
         {
-            this.data = data;
-            Count = count;
+            get
+            {
+                ItemDefinitionLoader.TryGet(ID, out var definition);
+                return definition;
+            }
         }
 
         /// <summary>
-        /// Creates a copy of this item.
+        /// Creates a new Item from the given stack.
         /// </summary>
-        public Item Clone() => new Item(data, count);
+        public Item(ItemStack stack)
+        {
+            this.stack = stack;
+        }
     }
 }

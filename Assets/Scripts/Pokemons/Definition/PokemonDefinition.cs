@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemons.Definition
     /// <summary>
     /// Defines a Pokémon's core data, types, stats, and visuals.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewPokemonDefinition", menuName = "ScriptableObjects/Pokemon Definition")]
+    [CreateAssetMenu(fileName = "NewPokemonDefinition", menuName = "Pokemon/Pokemon Definition")]
     public class PokemonDefinition : ScriptableObject
     {
         // ------------- Identity -------------

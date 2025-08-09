@@ -38,7 +38,7 @@ namespace PokemonGame.Moves.UI
             }
 
             Move = move;
-            nameText.text = move.Definition.MoveName;
+            nameText.text = move.Definition.DisplayName;
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.PowerPoint}";
             powerPointText.alignment = TextAlignmentOptions.Right;
             typeImage.sprite = move.Definition.Type.Sprite;

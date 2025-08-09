@@ -1,5 +1,6 @@
-﻿using PokemonGame.Items.UI;
-using PokemonGame.Shared;
+﻿using PokemonGame.Items;
+using PokemonGame.Items.UI;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Shared.Interfaces;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -26,13 +27,15 @@ namespace PokemonGame.Systems.Inventory
         [Tooltip("Parent transform that holds all item UI elements.")]
         private Transform contentParent;
 
+        [SerializeField, Required]
+        private VerticalMenuController menuController;
+
         private Button activeCancelButton;
         private InventoryCategory currentCategory;
 
         /// <summary>
         /// Binds the UI to a specific inventory category and listens for updates.
         /// </summary>
-        /// <param name="category">The inventory category to display.</param>
         public void Bind(InventoryCategory category)
         {
             Unbind();
@@ -68,6 +71,7 @@ namespace PokemonGame.Systems.Inventory
             }
 
             ClearContent();
+            menuController.RefreshButtons();
         }
 
         /// <summary>
@@ -84,6 +88,7 @@ namespace PokemonGame.Systems.Inventory
         private void OnCategoryItemsChanged()
         {
             RefreshUI();
+            menuController.RefreshButtons();
         }
 
         /// <summary>
@@ -91,13 +96,16 @@ namespace PokemonGame.Systems.Inventory
         /// </summary>
         private void RefreshUI()
         {
+            if (currentCategory == null)
+            {
+                return;
+            }
+
             ClearContent();
 
-            if (currentCategory == null || itemUIPrefab == null || cancelButton == null)
-                return;
-
-            foreach (var item in currentCategory.Items)
+            for (int i = 0; i < currentCategory.Items.Count; i++)
             {
+                Item item = currentCategory.Items[i];
                 ItemUI itemUI = Instantiate(itemUIPrefab, contentParent);
                 itemUI.Bind(item);
             }
@@ -112,7 +120,7 @@ namespace PokemonGame.Systems.Inventory
         }
 
         /// <summary>
-        /// Destroys all child UI elements under the content container except for persistent cancel button.
+        /// Destroys all child UI elements under the content container except the persistent cancel button.
         /// </summary>
         private void ClearContent()
         {
@@ -120,7 +128,9 @@ namespace PokemonGame.Systems.Inventory
             {
                 GameObject child = contentParent.GetChild(i).gameObject;
                 if (activeCancelButton != null && child == activeCancelButton.gameObject)
+                {
                     continue;
+                }
 
                 Destroy(child);
             }

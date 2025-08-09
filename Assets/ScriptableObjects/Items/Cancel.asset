@@ -9,11 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1c1f305de215e4e9004b006fd6d433, type: 3}
+  m_Script: {fileID: 11500000, guid: 86948e95e6bb68647b702b9392a25181, type: 3}
   m_Name: Cancel
   m_EditorClassIdentifier: 
-  Id: 
-  name: Cancel
   icon: {fileID: 21300000, guid: c5a8c672fa779fa47b1f30950834751d, type: 3}
-  description: Close Bag
-  type: 0
+  description: Close Bag.

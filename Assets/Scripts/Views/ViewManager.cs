@@ -28,13 +28,8 @@ namespace PokemonGame.Views
         /// </summary>
         private bool isTransitioning = false;
 
-        /// <summary>
-        /// Initializes and hides all views on startup.
-        /// </summary>
-        protected override void Awake()
+        public void Initialize()
         {
-            base.Awake();
-
             foreach (View view in views)
             {
                 view.Initialize();

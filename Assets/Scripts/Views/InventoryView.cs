@@ -1,4 +1,5 @@
-using PokemonGame.MenuControllers;
+using PokemonGame.Items.Enums;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Systems.Inventory;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -39,9 +40,9 @@ namespace PokemonGame.Views
         {
             inventoryManager.Initialize();
 
-            itemCategory.Bind(inventoryManager.GetSection(Items.ItemType.Item));
-            keyItemCategory.Bind(inventoryManager.GetSection(Items.ItemType.KeyItem));
-            ballCategory.Bind(inventoryManager.GetSection(Items.ItemType.Pokeball));
+            itemCategory.Bind(inventoryManager.GetSection(ItemCategory.General));
+            keyItemCategory.Bind(inventoryManager.GetSection(ItemCategory.KeyItem));
+            ballCategory.Bind(inventoryManager.GetSection(ItemCategory.Pokeball));
 
             categoryController = GetComponent<HorizontalPanelController>();
         }

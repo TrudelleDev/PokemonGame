@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using PokemonGame.Items;
-using PokemonGame.Items.Datas;
+using PokemonGame.Items.Enums;
+using PokemonGame.Items.Models;
 using UnityEngine;
 
 namespace PokemonGame.Systems.Inventory
@@ -18,8 +19,14 @@ namespace PokemonGame.Systems.Inventory
 
         private readonly List<Item> items = new();
 
+        /// <summary>
+        /// The list of items currently in this category.
+        /// </summary>
         public IReadOnlyList<Item> Items => items;
 
+        /// <summary>
+        /// Event triggered whenever the items in this category change.
+        /// </summary>
         public event Action OnItemsChanged;
 
         /// <summary>
@@ -32,50 +39,55 @@ namespace PokemonGame.Systems.Inventory
             foreach (ItemStack itemStack in startingItems)
             {
                 if (itemStack.IsValid)
-                    Add(itemStack.Data, itemStack.Quantity);
+                {
+                    Add(itemStack);
+                }
             }
         }
 
         /// <summary>
         /// Adds a quantity of an item to this category, stacking it if already present.
         /// </summary>
-        /// <param name="itemData">The item data to add.</param>
+        /// <param name="itemId">The item ID to add.</param>
         /// <param name="quantity">The quantity to add.</param>
-        public void Add(ItemData itemData, int quantity)
+        public void Add(ItemStack itemStack)
         {
-            if (itemData == null || quantity <= 0)
-                return;
-
-            foreach (Item existing in items)
+            if (itemStack.ItemID == ItemId.None || itemStack.Quantity <= 0)
             {
-                if (existing.Data.ID == itemData.ID)
+                return;
+            }
+
+            for (int i = 0; i < items.Count; i++)
+            {
+                Item existing = items[i];
+                if (existing.ID.Equals(itemStack.ItemID))
                 {
-                    existing.Count += quantity;
+                    existing.Quantity += itemStack.Quantity;
                     OnItemsChanged?.Invoke();
                     return;
                 }
             }
 
-            items.Add(new Item(itemData, quantity));
+            items.Add(new Item(itemStack));
             OnItemsChanged?.Invoke();
         }
 
         /// <summary>
-        /// Removes a quantity of an item by reference. If the remaining count is zero or less, removes the item entirely.
+        /// Removes a quantity of an item by reference.
         /// </summary>
         /// <param name="item">The item and quantity to remove.</param>
         public void Remove(Item item)
         {
-            if (item == null || item.Data == null || item.Count <= 0)
+            if (item == null || item.Definition == null || item.Quantity <= 0)
                 return;
 
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Data.ID == item.Data.ID)
+                if (items[i].Definition.ItemId == item.Definition.ItemId)
                 {
-                    items[i].Count -= item.Count;
+                    items[i].Quantity -= item.Quantity;
 
-                    if (items[i].Count <= 0)
+                    if (items[i].Quantity <= 0)
                         items.RemoveAt(i);
 
                     OnItemsChanged?.Invoke();
@@ -85,22 +97,22 @@ namespace PokemonGame.Systems.Inventory
         }
 
         /// <summary>
-        /// Removes a quantity of an item by ID. If the remaining count is zero or less, removes the item entirely.
+        /// Removes a quantity of an item by enum ID.
         /// </summary>
-        /// <param name="itemId">The item ID to remove.</param>
+        /// <param name="itemId">The enum ID of the item to remove.</param>
         /// <param name="quantity">The quantity to remove.</param>
-        public void Remove(string itemId, int quantity)
+        public void Remove(ItemId itemId, int quantity)
         {
-            if (string.IsNullOrEmpty(itemId) || quantity <= 0)
+            if (itemId == ItemId.None || quantity <= 0)
                 return;
 
             for (int i = 0; i < items.Count; i++)
             {
-                if (items[i].Data.ID == itemId)
+                if (items[i].Definition.ItemId == itemId)
                 {
-                    items[i].Count -= quantity;
+                    items[i].Quantity -= quantity;
 
-                    if (items[i].Count <= 0)
+                    if (items[i].Quantity <= 0)
                         items.RemoveAt(i);
 
                     OnItemsChanged?.Invoke();
@@ -112,14 +124,12 @@ namespace PokemonGame.Systems.Inventory
         /// <summary>
         /// Returns the quantity of the specified item ID currently in this category.
         /// </summary>
-        /// <param name="itemId">The ID of the item to count.</param>
-        /// <returns>The total quantity of the item.</returns>
-        public int GetQuantity(string itemId)
+        public int GetQuantity(ItemId itemId)
         {
             foreach (var item in items)
             {
-                if (item.Data.ID == itemId)
-                    return item.Count;
+                if (item.Definition.ItemId == itemId)
+                    return item.Quantity;
             }
 
             return 0;
@@ -128,11 +138,9 @@ namespace PokemonGame.Systems.Inventory
         /// <summary>
         /// Checks whether this category contains at least one item with the specified ID.
         /// </summary>
-        /// <param name="itemId">The ID of the item to search for.</param>
-        /// <returns>True if the item is found; otherwise, false.</returns>
-        public bool Contains(string itemId)
+        public bool Contains(ItemId itemId)
         {
-            return items.Exists(i => i.Data.ID == itemId);
+            return items.Exists(i => i.Definition.ItemId == itemId);
         }
 
         /// <summary>

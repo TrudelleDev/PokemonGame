@@ -52297,9 +52297,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ad70b99b9502c8448c9533a6d84c2f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
-  quantity: 1
-  customPickupMessage: 
+  stack:
+    itemId: 1
+    quantity: 1
 --- !u!1 &1909971886
 GameObject:
   m_ObjectHideFlags: 0

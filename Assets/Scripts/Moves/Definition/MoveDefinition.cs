@@ -8,7 +8,7 @@ namespace PokemonGame.Moves.Definition
     /// <summary>
     /// Defines a move definition used to describe a Pokémon move's stats, type, and behavior.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewMoveDefinition", menuName = "ScriptableObjects/Move Definition")]
+    [CreateAssetMenu(fileName = "NewMoveDefinition", menuName = "Pokemon/Moves/Move Definition")]
     public class MoveDefinition : ScriptableObject
     {
         // ---- Identity ----
@@ -23,7 +23,7 @@ namespace PokemonGame.Moves.Definition
         [BoxGroup("Basic Info")]
         [Tooltip("Display name of the move.")]
         [SerializeField, Required]
-        private string moveName;
+        private string displayName;
 
         [BoxGroup("Basic Info")]
         [Tooltip("Base power of the move (0 if status move).")]
@@ -69,7 +69,7 @@ namespace PokemonGame.Moves.Definition
         /// <summary>
         /// The display name of the move.
         /// </summary>
-        public string MoveName => moveName;
+        public string DisplayName => displayName;
 
         /// <summary>
         /// The base power of the move. Set to 0 for status moves.

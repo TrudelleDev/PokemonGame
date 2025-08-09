@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b00cadabc593f5249bcc3f72027e137a
   m_SerializeEntries:
+  - m_GUID: 1fa1d44aad106b3459faa41ffae5a9d0
+    m_Address: Assets/ScriptableObjects/Moves/Tackle.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - move-definition
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 3bce7b1ad9dc3294ea0066ed703e5f37
     m_Address: Assets/ScriptableObjects/Abilities/StaticData.asset
     m_ReadOnly: 0
@@ -28,6 +34,12 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - pokemon-definition
+    FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: cd2bf49e6628ee842a5209200c3d3452
+    m_Address: Assets/ScriptableObjects/Items/Potion.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item-definition
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: d95b7794d67330e4ea9feaa7a52d160f
     m_Address: Assets/ScriptableObjects/Natures/Adamant.asset

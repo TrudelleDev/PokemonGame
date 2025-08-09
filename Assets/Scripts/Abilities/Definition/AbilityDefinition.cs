@@ -7,7 +7,7 @@ namespace PokemonGame.Abilities.Definition
     /// <summary>
     /// Defines a Pokémon ability used to describe its name, description, and unique identifier.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewAbilityDefinition", menuName = "ScriptableObjects/Ability Definition")]
+    [CreateAssetMenu(fileName = "NewAbilityDefinition", menuName = "Pokemon/Abilities/Ability Definition")]
     public class AbilityDefinition : ScriptableObject
     {
         // ---- Identity ----

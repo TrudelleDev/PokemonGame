@@ -6,7 +6,7 @@ namespace PokemonGame.Systems.Dialogue
     /// Stores a sequence of dialogue lines to be shown during interaction.
     /// Used by DialogueHolder to display conversations or messages.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewDialogueData", menuName = "ScriptableObjects/Dialogue Data")]
+    [CreateAssetMenu(fileName = "NewDialogueData", menuName = "Dialogue/Dialogue Data")]
     public class DialogueData : ScriptableObject
     {
         [SerializeField, TextArea(1, 5)]
