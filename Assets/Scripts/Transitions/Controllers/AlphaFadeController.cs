@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Threading.Tasks;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,24 +8,28 @@ using UnityEngine.UI;
 namespace PokemonGame.Transitions.Controllers
 {
     /// <summary>
-    /// Handles screen transitions using a simple alpha fade effect.
-    /// Designed to work with UI Images using a material that respects the _Color.a value.
+    /// Controls full-screen fade effects for both scene and UI view transitions.
+    /// Supports async/await and callback usage, fading in (to black) or out (to reveal).
+    /// Works with UI Images whose materials use a _Color property for alpha.
     /// </summary>
     [RequireComponent(typeof(Image))]
     public class AlphaFadeController : Transition
     {
+        private const float FullyOpaque = 1f;
+        private const float FullyTransparent = 0f;
         private static readonly int ColorProperty = Shader.PropertyToID("_Color");
 
         [Title("Settings")]
         [SerializeField, Tooltip("Duration of the fade effect in seconds.")]
         private float duration = 1f;
 
+        [SerializeField, Tooltip("Use unscaled time (ignores Time.timeScale).")]
+        private bool useUnscaledTime = true;
+
         private Material runtimeMaterial;
         private Coroutine fadeRoutine;
+        private TaskCompletionSource<bool> fadeCompletionSource;
 
-        /// <summary>
-        /// Initializes the transition by duplicating the image material and setting the initial transparent state.
-        /// </summary>
         private void Awake()
         {
             var image = GetComponent<Image>();
@@ -33,59 +38,100 @@ namespace PokemonGame.Transitions.Controllers
             runtimeMaterial = new Material(image.material);
             image.material = runtimeMaterial;
 
-            SetAlpha(0f); // Start fully transparent
+            SetAlpha(FullyTransparent);
             gameObject.SetActive(false);
         }
 
+        private void OnDestroy()
+        {
+            if (runtimeMaterial != null)
+            {
+                Destroy(runtimeMaterial);
+                runtimeMaterial = null;
+            }
+        }
+
         /// <summary>
-        /// Starts a transition that fades the screen in (alpha from 0 to 1).
+        /// Starts an asynchronous fade-in (transparent to black/opaque).
+        /// Use when transitioning into a new scene or UI state.
         /// </summary>
-        /// <param name="onComplete">Optional callback invoked when the fade-in completes.</param>
+        public Task FadeInAsync()
+        {
+            var tcs = PrepareFadeCompletionSource();
+            FadeIn(() => tcs.TrySetResult(true));
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// Starts an asynchronous fade-out (black/opaque to transparent).
+        /// Use when revealing gameplay or a new UI view.
+        /// </summary>
+        public Task FadeOutAsync()
+        {
+            var tcs = PrepareFadeCompletionSource();
+            FadeOut(() => tcs.TrySetResult(true));
+            return tcs.Task;
+        }
+
+        /// <summary>
+        /// Immediately begins a fade-in (transparent to black/opaque) using a callback on completion.
+        /// </summary>
+        /// <param name="onComplete">Invoked after the fade finishes.</param>
         public override void FadeIn(Action onComplete = null)
         {
-            StartFade(1f, onComplete);
+            StartFade(FullyOpaque, onComplete);
         }
 
         /// <summary>
-        /// Starts a transition that fades the screen out (alpha from 1 to 0).
+        /// Immediately begins a fade-out (black/opaque to transparent) using a callback on completion.
         /// </summary>
-        /// <param name="onComplete">Optional callback invoked when the fade-out completes.</param>
+        /// <param name="onComplete">Invoked after the fade finishes.</param>
         public override void FadeOut(Action onComplete = null)
         {
-            StartFade(0f, onComplete);
+            StartFade(FullyTransparent, onComplete);
         }
 
-        /// <summary>
-        /// Begins the fade process toward a target alpha value.
-        /// Stops any ongoing fade transition before starting a new one.
-        /// </summary>
-        /// <param name="targetAlpha">The alpha value to fade to (0 = transparent, 1 = opaque).</param>
-        /// <param name="onComplete">Optional callback invoked when the fade completes.</param>
         private void StartFade(float targetAlpha, Action onComplete)
         {
-            if (fadeRoutine != null)
-                StopCoroutine(fadeRoutine);
+            // Stops any ongoing fade transition before starting a new one.
 
+            if (fadeRoutine != null)
+            {
+                StopCoroutine(fadeRoutine);
+            }
+               
             gameObject.SetActive(true);
             fadeRoutine = StartCoroutine(FadeRoutine(targetAlpha, onComplete));
         }
 
-        /// <summary>
-        /// Coroutine that interpolates the material alpha over time.
-        /// </summary>
-        /// <param name="targetAlpha">The final alpha value to fade to.</param>
-        /// <param name="onComplete">Optional callback invoked when the fade completes.</param>
-        /// <returns>An IEnumerator for Unity’s coroutine system.</returns>
         private IEnumerator FadeRoutine(float targetAlpha, Action onComplete)
         {
             float startAlpha = runtimeMaterial.GetColor(ColorProperty).a;
-            float time = 0f;
 
-            while (time < duration)
+            // Instant if duration <= 0
+            if (duration <= 0f)
             {
-                time += Time.unscaledDeltaTime;
-                float t = Mathf.Clamp01(time / duration);
-                SetAlpha(Mathf.Lerp(startAlpha, targetAlpha, t));
+                SetAlpha(targetAlpha);
+
+                if (Mathf.Approximately(targetAlpha, 0f))
+                {
+                    gameObject.SetActive(false);
+                }
+                  
+                fadeRoutine = null;
+                onComplete?.Invoke();
+                fadeCompletionSource?.TrySetResult(true);
+                yield break;
+            }
+
+            float elapsedTime = 0f;
+
+            while (elapsedTime < duration)
+            {
+                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
+
+                float progressTime = Mathf.Clamp01(elapsedTime / duration);
+                SetAlpha(Mathf.Lerp(startAlpha, targetAlpha, progressTime));
                 yield return null;
             }
 
@@ -93,16 +139,23 @@ namespace PokemonGame.Transitions.Controllers
 
             // Disable the object if fully transparent
             if (Mathf.Approximately(targetAlpha, 0f))
+            {
                 gameObject.SetActive(false);
-
+            }
+                
             fadeRoutine = null;
             onComplete?.Invoke();
+            fadeCompletionSource?.TrySetResult(true);
         }
 
-        /// <summary>
-        /// Applies the given alpha value to the material's _Color property.
-        /// </summary>
-        /// <param name="alpha">The alpha value to apply (0 = transparent, 1 = opaque).</param>
+        private TaskCompletionSource<bool> PrepareFadeCompletionSource()
+        {
+            // Complete any previous waiter to avoid dangling tasks
+            fadeCompletionSource?.TrySetResult(true);
+            fadeCompletionSource = new TaskCompletionSource<bool>();
+            return fadeCompletionSource;
+        }
+
         private void SetAlpha(float alpha)
         {
             Color color = runtimeMaterial.GetColor(ColorProperty);
