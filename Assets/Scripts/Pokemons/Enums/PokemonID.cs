@@ -4,9 +4,9 @@
     /// Pokémon species identifiers mapped to their National Pokédex numbers.
     /// Values must remain immutable once in use to avoid breaking asset references.
     /// </summary>
-    public enum PokemonID
+    public enum PokemonId
     {
-        Unknown = 0,
+        None = 0,
         Pikachu = 25,
     }
 }

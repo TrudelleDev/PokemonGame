@@ -36,13 +36,13 @@ namespace PokemonGame.Pokemons.UI
         /// <param name="pokemon">The Pokémon to display.</param>
         public void Bind(Pokemon pokemon)
         {
-            if (pokemon?.Data == null)
+            if (pokemon?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            nameText.text = pokemon.Data.name;
+            nameText.text = pokemon.Definition.name;
             genderIcon.Bind(pokemon);
             pokemonSprite.Bind(pokemon);
             primaryType.Bind(pokemon);

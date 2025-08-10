@@ -3,7 +3,7 @@
     /// <summary>
     /// Identifiers for all defined Pokémon natures.
     /// </summary>
-    public enum NatureID
+    public enum NatureId
     {
         None = 0,
         Adamant

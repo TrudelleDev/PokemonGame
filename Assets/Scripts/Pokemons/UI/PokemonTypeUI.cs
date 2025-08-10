@@ -25,7 +25,7 @@ namespace PokemonGame.Pokemons.UI
         {
             primaryTypeSprite.Bind(pokemon);
 
-            if (pokemon.Data.Types.HasSecondType)
+            if (pokemon.Definition.Types.HasSecondType)
                 secondaryTypeSprite.Bind(pokemon);
             else
                 secondaryTypeSprite.Unbind();

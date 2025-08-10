@@ -21,7 +21,7 @@ namespace PokemonGame.Pokemons.Definition
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this Pokémon.")]
         [SerializeField, Required] 
-        private PokemonID pokemonID;
+        private PokemonId pokemonID;
 
         // ------------- Attributes -------------
 
@@ -72,7 +72,7 @@ namespace PokemonGame.Pokemons.Definition
         /// <summary>
         /// Unique identifier for this Pokémon.
         /// </summary>
-        public PokemonID PokemonID => pokemonID;
+        public PokemonId PokemonID => pokemonID;
 
         /// <summary>
         /// Primary and optional secondary types.

@@ -15,7 +15,7 @@ namespace PokemonGame.Abilities.Definition
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this ability.")]
         [SerializeField, Required]
-        private AbilityID id;
+        private AbilityId id;
 
         [BoxGroup("Identity")]
         [Tooltip("Name of the ability as shown in the UI.")]
@@ -34,7 +34,7 @@ namespace PokemonGame.Abilities.Definition
         /// <summary>
         /// Defines the unique identifier for this ability.
         /// </summary>
-        public AbilityID ID => id;
+        public AbilityId ID => id;
 
         /// <summary>
         /// Defines the display name shown in UI.

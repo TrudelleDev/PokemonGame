@@ -58,7 +58,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
         /// </summary>
         public void Bind(Pokemon pokemon)
         {
-            if (pokemon?.Data == null)
+            if (pokemon?.Definition == null)
             {
                 Unbind();
                 return;
@@ -91,16 +91,16 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
         private void UpdateDisplay(Pokemon pokemon)
         {
-            nameText.text = pokemon.Data.DisplayName;
+            nameText.text = pokemon.Definition.DisplayName;
             levelText.text = $"Lv {pokemon.Level}";
             healthText.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
 
             genderIcon.Bind(pokemon);
             healthBar.Bind(pokemon);
 
-            if (pokemon.Data.MenuSpriteOverrider != null)
+            if (pokemon.Definition.MenuSpriteOverrider != null)
             {
-                menuSpriteAnimator.runtimeAnimatorController = pokemon.Data.MenuSpriteOverrider;
+                menuSpriteAnimator.runtimeAnimatorController = pokemon.Definition.MenuSpriteOverrider;
                 menuSpriteAnimator.Play(IdleHash);
             }
         }

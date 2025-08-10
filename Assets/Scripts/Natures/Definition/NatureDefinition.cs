@@ -15,7 +15,7 @@ namespace PokemonGame.Pokemons.Natures
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this nature.")]
         [SerializeField, Required]
-        private NatureID natureID;
+        private NatureId natureID;
 
         [BoxGroup("Identity")]
         [Tooltip("Name shown in the UI.")]
@@ -27,7 +27,7 @@ namespace PokemonGame.Pokemons.Natures
         /// <summary>
         /// Unique identifier used to reference this nature in code.
         /// </summary>
-        public NatureID ID => natureID;
+        public NatureId ID => natureID;
 
         /// <summary>
         /// Display name of the nature shown in UI.

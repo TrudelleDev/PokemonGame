@@ -1,8 +1,11 @@
 using System;
 using PokemonGame.Abilities;
 using PokemonGame.Abilities.Definition;
+using PokemonGame.Abilities.Enums;
 using PokemonGame.Moves;
 using PokemonGame.Moves.Definition;
+using PokemonGame.Moves.Enums;
+using PokemonGame.Natures.Enums;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Models;
@@ -12,83 +15,122 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons
 {
-    /// <summary>
-    /// Represents a Pokémon instance that uses a definition as its static data.
-    /// </summary>
     [Serializable]
     public class Pokemon
     {
         [SerializeField, Required] private int level;
-        [SerializeField, Required] private PokemonDefinition data;
-        [SerializeField, Required] private NatureDefinition natureData;
-        [SerializeField, Required] private AbilityDefinition abilityData;
-        [SerializeField, Required] private MoveDefinition[] movesData;
+        [SerializeField, Required] private PokemonId pokemonId;
+        [SerializeField, Required] private NatureId natureId;
+        [SerializeField, Required] private AbilityId abilityId;
+        [SerializeField, Required] private MoveId[] moveIds;
 
         private static readonly IDGenerator idGenerator = new IDGenerator(1000, 9999);
-        public int Level => level;
 
-        public PokemonDefinition Data => data;
-
+        public PokemonDefinition Definition { get; private set; }
         public Nature Nature { get; private set; }
         public Ability Ability { get; private set; }
         public Move[] Moves { get; private set; }
 
+        public int Level => level;
         public PokemonStats CoreStat { get; private set; }
         public PokemonStats IndividualValue { get; private set; }
         public PokemonStats EffortValue { get; private set; }
         public PokemonGender Gender { get; private set; }
         public float HealthRemaining { get; private set; }
-        public string OwnerName { get; set; } = "RED"; // Change this with real character name
+        public string OwnerName { get; set; } = "RED";
         public string LocationEncounter { get; set; } = "Pallet Town";
         public string ID { get; private set; }
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonDefinition pokemonData, NatureDefinition natureData, AbilityDefinition abilityData, MoveDefinition[] movesData)
+        public Pokemon(int level, PokemonId pokemonId, NatureId natureId, AbilityId abilityId, MoveId[] moveIds)
         {
             this.level = level;
-            this.data = pokemonData;
-            this.natureData = natureData;
-            this.abilityData = abilityData;
-            this.movesData = movesData;
+            this.pokemonId = pokemonId;
+            this.natureId = natureId;
+            this.abilityId = abilityId;
+            this.moveIds = moveIds;
 
-            Nature = new Nature(natureData);
-            Ability = new Ability(abilityData);
-            Moves = new Move[movesData.Length];
+            GenerateAbility();
+            GenerateNature();
+            GetPokemonDefinition();
+            GenerateMoves();
 
-            for (int i = 0; i < movesData.Length; i++)
-            {
-                Moves[i] = new Move(movesData[i]);
-            }
-
-            if (data != null)
-                Initialize();
+            Initialize();
         }
 
         public Pokemon Clone()
         {
-            return new Pokemon(level, data, natureData, abilityData, movesData);
+            var moves = (MoveId[])moveIds.Clone();
+            return new Pokemon(level, pokemonId, natureId, abilityId, moves);
         }
 
+        private void GenerateNature()
+        {
+            if (!NatureDefinitionLoader.TryGet(natureId, out var natureDefinition))
+            {
+                Debug.LogError($"Missing Nature definition for {natureId}");
+                return;
+            }
+
+            Nature = new Nature(natureDefinition);
+        }
+
+        private void GenerateAbility()
+        {
+            if (!AbilityDefinitionLoader.TryGet(abilityId, out var abilityDefinition))
+            {
+                Debug.LogError($"Missing Ability definition for {abilityId}");
+                return;
+            }
+
+            Ability = new Ability(abilityDefinition);
+        }
+
+        private void GetPokemonDefinition()
+        {
+            if (!PokemonDefinitionLoader.TryGet(pokemonId, out var pokemonDefinition))
+            {
+                Debug.LogError($"Missing Pokemon definition for {pokemonId}");
+                return;
+            }
+
+            Definition = pokemonDefinition;
+        }
+
+        private void GenerateMoves()
+        {
+            Moves = new Move[moveIds.Length];
+
+            for (int i = 0; i < moveIds.Length; i++)
+            {
+                if (MoveDefinitionLoader.TryGet(moveIds[i], out var moveDef))
+                {
+                    Moves[i] = new Move(moveDef);
+                }
+                else
+                {
+                    Debug.LogWarning($"Missing Move definition for {moveIds[i]}");
+                    Moves[i] = null; // or a default "Empty Move" instance
+                }
+            }
+        }
         private void Initialize()
         {
             IndividualValue = StatsCalculator.GenerateIndividualValues();
             EffortValue = new PokemonStats(0, 0, 0, 0, 0, 0);
-            CoreStat = StatsCalculator.CalculateCoreStats(data, IndividualValue, EffortValue, level);
+            CoreStat = StatsCalculator.CalculateCoreStats(Definition, IndividualValue, EffortValue, level);
             GetGender();
 
             ID = idGenerator.GetID();
-
             HealthRemaining = CoreStat.HealthPoint;
-
             OnHealthChange?.Invoke(HealthRemaining);
         }
 
         private void GetGender()
         {
             float roll = UnityEngine.Random.Range(0f, 100f);
-            Gender = roll < data.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
+            Gender = roll < Definition.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
         }
     }
 }
-

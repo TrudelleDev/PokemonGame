@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using PokemonGame.Pokemons;
 using PokemonGame.Shared.Interfaces;
 using UnityEngine;
@@ -46,9 +47,9 @@ namespace PokemonGame.Moves.UI
             }
         }
 
-        private void BindMoves(Move[] moves)
+        private void BindMoves(IReadOnlyList<Move> moves)
         {
-            for (int i = 0; i < moves.Length && i < transform.childCount; i++)
+            for (int i = 0; i < moves.Count && i < transform.childCount; i++)
             {
                 Transform child = transform.GetChild(i);
                 MoveSlotUI moveSlot = child.GetComponent<MoveSlotUI>();

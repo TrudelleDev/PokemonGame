@@ -3,9 +3,9 @@
     /// <summary>
     /// Defines all unique identifiers for Pokémon moves.
     /// </summary>
-    public enum MoveID
+    public enum MoveId
     {
-        Unknown = 0,
+        None = 0,
         Tackle = 1,
         Thunderbolt = 2
     }

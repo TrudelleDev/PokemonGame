@@ -14,13 +14,13 @@ namespace PokemonGame.Pokemons.Natures
     {
         private const string AddressablesLabel = "nature-definition";
 
-        private static Dictionary<NatureID, NatureDefinition> natureDefinitionCache;
+        private static Dictionary<NatureId, NatureDefinition> natureDefinitionCache;
         private static AsyncOperationHandle<IList<NatureDefinition>> natureDefinitionHandle;
 
         /// <summary>
         /// The loaded nature definitions indexed by NatureID.
         /// </summary>
-        public static IReadOnlyDictionary<NatureID, NatureDefinition> NatureDefinitionCache => natureDefinitionCache;
+        public static IReadOnlyDictionary<NatureId, NatureDefinition> NatureDefinitionCache => natureDefinitionCache;
 
         /// <summary>
         /// Asynchronously loads all nature definitions labeled "nature-definition" from Addressables.
@@ -32,7 +32,7 @@ namespace PokemonGame.Pokemons.Natures
                 return;
             }
 
-            natureDefinitionCache = new Dictionary<NatureID, NatureDefinition>();
+            natureDefinitionCache = new Dictionary<NatureId, NatureDefinition>();
             natureDefinitionHandle = Addressables.LoadAssetsAsync<NatureDefinition>(AddressablesLabel, null);
 
             IList<NatureDefinition> definitions = await natureDefinitionHandle.Task;
@@ -66,7 +66,7 @@ namespace PokemonGame.Pokemons.Natures
         /// Gets a nature definition by NatureID. Returns null if not found or not initialized.
         /// </summary>
         /// <param name="id">The unique identifier of the nature.</param>
-        public static NatureDefinition Get(NatureID id)
+        public static NatureDefinition Get(NatureId id)
         {
             if (natureDefinitionCache == null)
             {
@@ -76,6 +76,30 @@ namespace PokemonGame.Pokemons.Natures
 
             natureDefinitionCache.TryGetValue(id, out var definition);
             return definition;
+        }
+
+        /// <summary>
+        /// Tries to get a nature definition by NatureID.
+        /// Returns true if found; false otherwise (or if not initialized).
+        /// </summary>
+        public static bool TryGet(NatureId id, out NatureDefinition definition)
+        {
+            definition = null;
+
+            if (natureDefinitionCache == null)
+            {
+                Log.Error(nameof(NatureDefinitionLoader), "Not initialized. Call LoadAllAsync() first.");
+                return false;
+            }
+
+            if (natureDefinitionCache.TryGetValue(id, out var def))
+            {
+                definition = def;
+                return true;
+            }
+
+            // Not found
+            return false;
         }
 
         /// <summary>

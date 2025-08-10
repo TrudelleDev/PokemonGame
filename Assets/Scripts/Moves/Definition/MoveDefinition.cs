@@ -16,7 +16,7 @@ namespace PokemonGame.Moves.Definition
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this move.")]
         [SerializeField, Required]
-        private MoveID moveID;
+        private MoveId moveID;
 
         // ---- Basic Info ----
 
@@ -64,7 +64,7 @@ namespace PokemonGame.Moves.Definition
         /// <summary>
         /// Stable unique identifier for this move.
         /// </summary>
-        public MoveID ID => moveID;
+        public MoveId ID => moveID;
 
         /// <summary>
         /// The display name of the move.

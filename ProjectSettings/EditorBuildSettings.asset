@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Game.unity
+    path: Assets/Scenes/GameCore.unity
     guid: 689894ea053c49845a10ec667ef66de9
   - enabled: 1
     path: Assets/Scenes/ViridianForest.unity

@@ -19,23 +19,15 @@ namespace PokemonGame
         [SerializeField]
         private Character player;
 
-        private async void Start()
+        
+        private  void Start()
         {
-            Screen.SetResolution(1920, 1080, true);
 
-            // Preload all definitions in parallel before loading gameplay.
-            Task pokemon = PokemonDefinitionLoader.LoadAllAsync();
-            Task abilities = AbilityDefinitionLoader.LoadAllAsync();
-            Task natures = NatureDefinitionLoader.LoadAllAsync();
-            Task moves = MoveDefinitionLoader.LoadAllAsync();
-            Task items = ItemDefinitionLoader.LoadAllAsync();
-
-            await Task.WhenAll(pokemon, abilities, natures, moves, items);
-
-            await LoadAsync("ViridianForest");
+           
 
             ViewManager.Instance.Initialize();
         }
+        
 
         /// <summary>
         /// Sets the player's world position.

@@ -14,13 +14,13 @@ namespace PokemonGame.Moves.Definition
     {
         private const string AddressablesLabel = "move-definition";
 
-        private static Dictionary<MoveID, MoveDefinition> moveDefinitionCache;
+        private static Dictionary<MoveId, MoveDefinition> moveDefinitionCache;
         private static AsyncOperationHandle<IList<MoveDefinition>> moveDefinitionHandle;
 
         /// <summary>
         /// The loaded move definitions indexed by MoveID.
         /// </summary>
-        public static IReadOnlyDictionary<MoveID, MoveDefinition> MoveDefinitionCache => moveDefinitionCache;
+        public static IReadOnlyDictionary<MoveId, MoveDefinition> MoveDefinitionCache => moveDefinitionCache;
 
         /// <summary>
         /// Asynchronously loads all move definitions labeled "move-definition" from Addressables.
@@ -32,7 +32,7 @@ namespace PokemonGame.Moves.Definition
                 return;
             }
 
-            moveDefinitionCache = new Dictionary<MoveID, MoveDefinition>();
+            moveDefinitionCache = new Dictionary<MoveId, MoveDefinition>();
             moveDefinitionHandle = Addressables.LoadAssetsAsync<MoveDefinition>(AddressablesLabel, null);
 
             IList<MoveDefinition> definitions = await moveDefinitionHandle.Task;
@@ -66,7 +66,7 @@ namespace PokemonGame.Moves.Definition
         /// Gets a move definition by MoveID. Returns null if not found or not initialized.
         /// </summary>
         /// <param name="id">The unique identifier of the move.</param>
-        public static MoveDefinition Get(MoveID id)
+        public static MoveDefinition Get(MoveId id)
         {
             if (moveDefinitionCache == null)
             {
@@ -76,6 +76,29 @@ namespace PokemonGame.Moves.Definition
 
             moveDefinitionCache.TryGetValue(id, out var definition);
             return definition;
+        }
+
+        /// <summary>
+        /// Tries to get a move definition by MoveID.
+        /// Returns true if found; false otherwise (or if not initialized).
+        /// </summary>
+        public static bool TryGet(MoveId id, out MoveDefinition definition)
+        {
+            definition = null;
+
+            if (moveDefinitionCache == null)
+            {
+                Log.Error(nameof(MoveDefinitionLoader), "Not initialized. Call LoadAllAsync() first.");
+                return false;
+            }
+
+            if (moveDefinitionCache.TryGetValue(id, out var def))
+            {
+                definition = def;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

@@ -28,7 +28,7 @@ namespace PokemonGame.Pokemons.UI
         {
             EnsureImage();
 
-            if (pokemon?.Data?.Sprites == null)
+            if (pokemon?.Definition?.Sprites == null)
             {
                 Unbind();
                 return;
@@ -50,7 +50,7 @@ namespace PokemonGame.Pokemons.UI
 
         private Sprite GetSprite(Pokemon pokemon)
         {
-            var sprites = pokemon.Data.Sprites;
+            var sprites = pokemon.Definition.Sprites;
 
             return spriteType switch
             {

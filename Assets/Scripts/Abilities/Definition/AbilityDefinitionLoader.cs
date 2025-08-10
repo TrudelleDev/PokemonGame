@@ -13,13 +13,13 @@ namespace PokemonGame.Abilities.Definition
     {
         private const string AddressablesLabel = "ability-definition";
 
-        private static Dictionary<AbilityID, AbilityDefinition> abilityDefinitionCache;
+        private static Dictionary<AbilityId, AbilityDefinition> abilityDefinitionCache;
         private static AsyncOperationHandle<IList<AbilityDefinition>> abilityDefinitionHandle;
 
         /// <summary>
         /// The loaded ability definitions, indexed by ID.
         /// </summary>
-        public static IReadOnlyDictionary<AbilityID, AbilityDefinition> AbilityDefinitionCache => abilityDefinitionCache;
+        public static IReadOnlyDictionary<AbilityId, AbilityDefinition> AbilityDefinitionCache => abilityDefinitionCache;
 
         /// <summary>
         /// Asynchronously loads all ability definitions labeled "ability-definition" from Addressables.
@@ -31,14 +31,14 @@ namespace PokemonGame.Abilities.Definition
                 return;
             }
 
-            abilityDefinitionCache = new Dictionary<AbilityID, AbilityDefinition>();
+            abilityDefinitionCache = new Dictionary<AbilityId, AbilityDefinition>();
             abilityDefinitionHandle = Addressables.LoadAssetsAsync<AbilityDefinition>(AddressablesLabel, null);
 
             IList<AbilityDefinition> definitions = await abilityDefinitionHandle.Task;
 
             foreach (var definition in definitions)
             {
-                AbilityID key = definition.ID;
+                AbilityId key = definition.ID;
 
                 if (!abilityDefinitionCache.ContainsKey(key))
                 {
@@ -59,7 +59,7 @@ namespace PokemonGame.Abilities.Definition
         /// Gets an ability definition by ID. Returns null if not found or not initialized.
         /// </summary>
         /// <param name="id">The ability ID to retrieve.</param>
-        public static AbilityDefinition Get(AbilityID id)
+        public static AbilityDefinition Get(AbilityId id)
         {
             if (abilityDefinitionCache == null)
             {
@@ -69,6 +69,29 @@ namespace PokemonGame.Abilities.Definition
 
             abilityDefinitionCache.TryGetValue(id, out var definition);
             return definition;
+        }
+
+        /// <summary>
+        /// Tries to get an ability definition by ID.
+        /// Returns true if found; false otherwise (or if not initialized).
+        /// </summary>
+        public static bool TryGet(AbilityId id, out AbilityDefinition definition)
+        {
+            definition = null;
+
+            if (abilityDefinitionCache == null)
+            {
+                Log.Error(nameof(AbilityDefinitionLoader), "Not initialized. Call LoadAllAsync() first.");
+                return false;
+            }
+
+            if (abilityDefinitionCache.TryGetValue(id, out var def))
+            {
+                definition = def;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>

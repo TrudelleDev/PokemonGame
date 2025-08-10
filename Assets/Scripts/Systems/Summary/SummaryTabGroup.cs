@@ -38,7 +38,7 @@ namespace PokemonGame.Systems.Summary
         /// <param name="pokemon">The Pokémon instance to display in the summary screen.</param>
         public void Bind(Pokemon pokemon)
         {
-            if (pokemon?.Data == null)
+            if (pokemon?.Definition == null)
             {
                 Unbind();
                 return;
