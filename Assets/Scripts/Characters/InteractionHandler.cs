@@ -22,37 +22,42 @@ namespace PokemonGame.Characters
 
         private void Update()
         {
+            // Manual interact
             if (Input.GetKeyDown(KeyBind.Accept))
-                TryInteract();
+            {
+                CheckForInteractables();
+            }
+
+            // Auto triggers
+            CheckForTriggers();
         }
 
-        /// <summary>
-        /// Casts a ray in the player's facing direction and interacts with any valid target.
-        /// </summary>
-        private void TryInteract()
+        private void CheckForInteractables()
         {
-            // Calculate direction and origin of the raycast
-            Vector2 playerFacingDirection = character.CurrentDirection.ToVector2();
-            Vector3 rayOrigin = transform.position + Vector3.up * OFFSET_Y;
+            RaycastAndCall<IInteract>(interactable => interactable.Interact(character));
+        }
 
-            // Draw debug ray in Scene view for visual reference
-            Debug.DrawRay(rayOrigin, playerFacingDirection * RAYCAST_DISTANCE, Color.green, 0.5f);
+        private void CheckForTriggers()
+        {
+            RaycastAndCall<ITrigger>(trigger => trigger.Trigger(character));
+        }
 
-            // Perform raycast to detect interactable objects
-            int hitCount = Physics2D.RaycastNonAlloc(rayOrigin, playerFacingDirection, hitBuffer, RAYCAST_DISTANCE);
+        private void RaycastAndCall<T>(System.Action<T> callback)
+        {
+            Vector2 direction = character.CurrentDirection.ToVector2();
+            Vector3 origin = transform.position + Vector3.up * OFFSET_Y;
+
+            int hitCount = Physics2D.RaycastNonAlloc(origin, direction, hitBuffer, RAYCAST_DISTANCE);
 
             for (int i = 0; i < hitCount; i++)
             {
                 Collider2D collider = hitBuffer[i].collider;
+                if (collider == null) continue;
 
-                if (collider == null)
-                    continue; // Skip if nothing was hit
-
-                // Call Interact on all components implementing IInteract
-                IInteract[] interactables = collider.GetComponents<IInteract>();
-                foreach (IInteract interactable in interactables)
+                T[] components = collider.GetComponents<T>();
+                foreach (T comp in components)
                 {
-                    interactable.Interact(character);
+                    callback(comp);
                 }
             }
         }

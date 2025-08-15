@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Threading.Tasks;
+using PokemonGame.Transitions.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,7 +14,7 @@ namespace PokemonGame.Transitions.Controllers
     /// Works with UI Images whose materials use a _Color property for alpha.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public class AlphaFadeController : Transition
+    public class AlphaFadeController : MonoBehaviour, ITransition
     {
         private const float FullyOpaque = 1f;
         private const float FullyTransparent = 0f;
@@ -22,9 +23,6 @@ namespace PokemonGame.Transitions.Controllers
         [Title("Settings")]
         [SerializeField, Tooltip("Duration of the fade effect in seconds.")]
         private float duration = 1f;
-
-        [SerializeField, Tooltip("Use unscaled time (ignores Time.timeScale).")]
-        private bool useUnscaledTime = true;
 
         private Material runtimeMaterial;
         private Coroutine fadeRoutine;
@@ -39,7 +37,8 @@ namespace PokemonGame.Transitions.Controllers
             image.material = runtimeMaterial;
 
             SetAlpha(FullyTransparent);
-            gameObject.SetActive(false);
+
+            ServiceLocator.Register<AlphaFadeController>(this);
         }
 
         private void OnDestroy()
@@ -52,32 +51,10 @@ namespace PokemonGame.Transitions.Controllers
         }
 
         /// <summary>
-        /// Starts an asynchronous fade-in (transparent to black/opaque).
-        /// Use when transitioning into a new scene or UI state.
-        /// </summary>
-        public Task FadeInAsync()
-        {
-            var tcs = PrepareFadeCompletionSource();
-            FadeIn(() => tcs.TrySetResult(true));
-            return tcs.Task;
-        }
-
-        /// <summary>
-        /// Starts an asynchronous fade-out (black/opaque to transparent).
-        /// Use when revealing gameplay or a new UI view.
-        /// </summary>
-        public Task FadeOutAsync()
-        {
-            var tcs = PrepareFadeCompletionSource();
-            FadeOut(() => tcs.TrySetResult(true));
-            return tcs.Task;
-        }
-
-        /// <summary>
         /// Immediately begins a fade-in (transparent to black/opaque) using a callback on completion.
         /// </summary>
         /// <param name="onComplete">Invoked after the fade finishes.</param>
-        public override void FadeIn(Action onComplete = null)
+        public void FadeIn(Action onComplete = null)
         {
             StartFade(FullyOpaque, onComplete);
         }
@@ -86,9 +63,31 @@ namespace PokemonGame.Transitions.Controllers
         /// Immediately begins a fade-out (black/opaque to transparent) using a callback on completion.
         /// </summary>
         /// <param name="onComplete">Invoked after the fade finishes.</param>
-        public override void FadeOut(Action onComplete = null)
+        public void FadeOut(Action onComplete = null)
         {
             StartFade(FullyTransparent, onComplete);
+        }
+
+        /// <summary>
+        /// Starts an asynchronous fade-in (transparent to black/opaque).
+        /// Use when transitioning into a new scene or UI state.
+        /// </summary>
+        public Task FadeInAsync()
+        {
+            TaskCompletionSource<bool> fadeCompletion = PrepareFadeCompletionSource();
+            FadeIn(() => fadeCompletion.TrySetResult(true));
+            return fadeCompletion.Task;
+        }
+
+        /// <summary>
+        /// Starts an asynchronous fade-out (black/opaque to transparent).
+        /// Use when revealing gameplay or a new UI view.
+        /// </summary>
+        public Task FadeOutAsync()
+        {
+            TaskCompletionSource<bool> fadeCompletion = PrepareFadeCompletionSource();
+            FadeOut(() => fadeCompletion.TrySetResult(true));
+            return fadeCompletion.Task;
         }
 
         private void StartFade(float targetAlpha, Action onComplete)
@@ -99,7 +98,7 @@ namespace PokemonGame.Transitions.Controllers
             {
                 StopCoroutine(fadeRoutine);
             }
-               
+
             gameObject.SetActive(true);
             fadeRoutine = StartCoroutine(FadeRoutine(targetAlpha, onComplete));
         }
@@ -113,11 +112,6 @@ namespace PokemonGame.Transitions.Controllers
             {
                 SetAlpha(targetAlpha);
 
-                if (Mathf.Approximately(targetAlpha, 0f))
-                {
-                    gameObject.SetActive(false);
-                }
-                  
                 fadeRoutine = null;
                 onComplete?.Invoke();
                 fadeCompletionSource?.TrySetResult(true);
@@ -128,8 +122,7 @@ namespace PokemonGame.Transitions.Controllers
 
             while (elapsedTime < duration)
             {
-                elapsedTime += useUnscaledTime ? Time.unscaledDeltaTime : Time.deltaTime;
-
+                elapsedTime += Time.unscaledDeltaTime;
                 float progressTime = Mathf.Clamp01(elapsedTime / duration);
                 SetAlpha(Mathf.Lerp(startAlpha, targetAlpha, progressTime));
                 yield return null;
@@ -137,12 +130,6 @@ namespace PokemonGame.Transitions.Controllers
 
             SetAlpha(targetAlpha);
 
-            // Disable the object if fully transparent
-            if (Mathf.Approximately(targetAlpha, 0f))
-            {
-                gameObject.SetActive(false);
-            }
-                
             fadeRoutine = null;
             onComplete?.Invoke();
             fadeCompletionSource?.TrySetResult(true);

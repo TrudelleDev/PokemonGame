@@ -8,6 +8,9 @@ using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System;
+
+
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
@@ -22,18 +25,19 @@ namespace PokemonGame
 #if UNITY_EDITOR
         [Header("Scenes")]
         [Tooltip("Persistent gameplay systems scene. Will be set active after loading.")]
-        [SerializeField, Required] private SceneAsset gameCoreScene;
+        [SerializeField, Required]
+        private SceneAsset gameCoreScene;
 
         [Tooltip("Initial map scene to load after the core scene.")]
-        [SerializeField, Required] private SceneAsset viridianForestScene;
+        [SerializeField, Required]
+        private SceneAsset initialScene;
+
+        [SerializeField, Required]
+        private SceneAsset transitionScene;
 #endif
 
-        [Header("Transition")]
-        [Tooltip("Fade controller used for scene transitions.")]
-        [SerializeField, Required] private AlphaFadeController sceneFadeController;
-
         private async void Start()
-        {
+        {          
             // Load all core definitions sequentially
             await PokemonDefinitionLoader.LoadAllAsync();
             await AbilityDefinitionLoader.LoadAllAsync();
@@ -41,19 +45,24 @@ namespace PokemonGame
             await MoveDefinitionLoader.LoadAllAsync();
             await ItemDefinitionLoader.LoadAllAsync();
 
+            await LoadAdditiveAsync(GetSceneName(transitionScene));
+            AlphaFadeController transition = ServiceLocator.Get<AlphaFadeController>();
+            
             // Fade to black before loading scenes
-            await sceneFadeController.FadeInAsync();
+            await transition.FadeInAsync();
 
             // Load scenes
             await LoadAdditiveAsync(GetSceneName(gameCoreScene));
-            await LoadAdditiveAsync(GetSceneName(viridianForestScene));
+            await LoadAdditiveAsync(GetSceneName(initialScene));
 
             // Set GameCore as active scene
             Scene core = SceneManager.GetSceneByName(GetSceneName(gameCoreScene));
             SceneManager.SetActiveScene(core);
 
+            await Task.Delay(TimeSpan.FromSeconds(1f));
+
             // Fade out to reveal gameplay
-            await sceneFadeController.FadeOutAsync();
+            await transition.FadeOutAsync();
 
             // Unload Boot scene
             SceneManager.UnloadSceneAsync(gameObject.scene);
@@ -66,9 +75,9 @@ namespace PokemonGame
                 return;
             }
 
-            AsyncOperation operation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
+            AsyncOperation loadSceneOperation = SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
 
-            while (!operation.isDone)
+            while (!loadSceneOperation.isDone)
             {
                 await Task.Yield();
             }

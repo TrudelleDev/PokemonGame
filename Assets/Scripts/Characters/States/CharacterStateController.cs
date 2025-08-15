@@ -33,7 +33,7 @@ namespace PokemonGame.Characters.States
         {
             animator = GetComponent<Animator>();
             AnimatorController = new CharacterAnimatorController(animator);
-            FacingDirection = Direction.Down;
+            FacingDirection = Direction.Up;
 
             // Initialize states
             IdleState = new CharacterIdleState(this);

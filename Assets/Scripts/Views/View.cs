@@ -1,5 +1,8 @@
 ﻿using System.Collections;
-using PokemonGame.Transitions;
+using PokemonGame.Transitions.Controllers;
+using PokemonGame.Transitions.Enums;
+using PokemonGame.Transitions.Extensions;
+using PokemonGame.Transitions.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -7,16 +10,40 @@ namespace PokemonGame.Views
 {
     /// <summary>
     /// Base class for all UI views. Provides standard show/hide logic
-    /// and handles transitions to other views using a TransitionHandler.
+    /// and handles transitions between views.
     /// </summary>
-    [RequireComponent(typeof(TransitionHandler))]
     [RequireComponent(typeof(CloseView))]
     public abstract class View : MonoBehaviour
     {
         [Title("Transition")]
         [SerializeField, Required]
-        [Tooltip("Handles transition logic between views.")]
-        private TransitionHandler transitionHandler;
+        [Tooltip("The type of transition to use when switching from this view to another.")]
+        private TransitionType transitionType;
+
+        private ITransition transition;
+
+        private void Awake()
+        {
+            transition = GetTransitionFromEnum(transitionType);
+        }
+
+        private ITransition GetTransitionFromEnum(TransitionType type)
+        {
+            switch (type)
+            {
+                case TransitionType.AlphaFade:
+                    return ServiceLocator.Get<AlphaFadeController>();
+
+                case TransitionType.MaskedFade:
+                    return ServiceLocator.Get<MaskedFadeController>();
+
+                case TransitionType.None:
+                    return null;
+                default:
+                    Log.Warning(nameof(View), $"Unsupported transition type: {type}");
+                    return null;
+            }
+        }
 
         /// <summary>
         /// Called once before the view is first shown.
@@ -35,18 +62,12 @@ namespace PokemonGame.Views
         public void Hide() => gameObject.SetActive(false);
 
         /// <summary>
-        /// Handles transition to another view. If no target is provided, just hides this view.
+        /// Transitions to another view. 
+        /// If transition is <c>null</c> (e.g., <see cref="TransitionType.None"/>), instantly swaps.
         /// </summary>
-        /// <param name="targetView">The view to transition to.</param>
         public virtual IEnumerator HandleTransition(View targetView)
         {
-            if (targetView == null)
-            {
-                Hide();
-                yield break;
-            }
-
-            yield return transitionHandler.PlayTransition(this, targetView);
+            yield return transition.RunViewTransition(this, targetView);
         }
     }
 }
