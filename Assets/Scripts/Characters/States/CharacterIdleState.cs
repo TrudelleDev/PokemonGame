@@ -24,7 +24,7 @@
         {
             Direction direction = controller.Input.CurrentDirection;
 
-            if (direction == Direction.None) return; 
+            if (direction == Direction.None) return;
 
             if (controller.FacingDirection != direction)
             {
@@ -36,7 +36,7 @@
             }
             else
             {
-                controller.SetState(controller.CollisionState); // Transition to collision if tile is not passable.
+                controller.SetState(controller.CollisionState);
             }
         }
 

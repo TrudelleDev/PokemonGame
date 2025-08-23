@@ -4,12 +4,9 @@ using PokemonGame.Items.Definition;
 using PokemonGame.Moves.Definition;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Natures;
-using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System;
-
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,8 +15,8 @@ using UnityEditor;
 namespace PokemonGame
 {
     /// <summary>
-    /// Loads core game data, fades in, loads main and map scenes, then fades out.
-    /// </summary>
+    /// Loads core game data, then loads GameCore and Initial map scenes additively.
+    /// Sets the Initial map as the active scene and unloads Boot.
     public class BootLoader : MonoBehaviour
     {
 #if UNITY_EDITOR
@@ -37,7 +34,7 @@ namespace PokemonGame
 #endif
 
         private async void Start()
-        {          
+        {
             // Load all core definitions sequentially
             await PokemonDefinitionLoader.LoadAllAsync();
             await AbilityDefinitionLoader.LoadAllAsync();
@@ -45,24 +42,14 @@ namespace PokemonGame
             await MoveDefinitionLoader.LoadAllAsync();
             await ItemDefinitionLoader.LoadAllAsync();
 
+            // Load GameCore and Initial map scenes
             await LoadAdditiveAsync(GetSceneName(transitionScene));
-            AlphaFadeController transition = ServiceLocator.Get<AlphaFadeController>();
-            
-            // Fade to black before loading scenes
-            await transition.FadeInAsync();
-
-            // Load scenes
             await LoadAdditiveAsync(GetSceneName(gameCoreScene));
             await LoadAdditiveAsync(GetSceneName(initialScene));
 
-            // Set GameCore as active scene
-            Scene core = SceneManager.GetSceneByName(GetSceneName(gameCoreScene));
-            SceneManager.SetActiveScene(core);
-
-            await Task.Delay(TimeSpan.FromSeconds(1f));
-
-            // Fade out to reveal gameplay
-            await transition.FadeOutAsync();
+            // Set Initial map as active scene
+            Scene map = SceneManager.GetSceneByName(GetSceneName(initialScene));
+            SceneManager.SetActiveScene(map);
 
             // Unload Boot scene
             SceneManager.UnloadSceneAsync(gameObject.scene);

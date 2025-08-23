@@ -1,30 +1,68 @@
-﻿using PokemonGame.Characters;
+﻿using PokemonGame.Characters.Spawn.Enums;
 using UnityEngine;
 
-namespace PokemonGame.Assets.Scripts.Characters.Spawn
+namespace PokemonGame.Characters.Spawn
 {
+    /// <summary>
+    /// Spawns the player at the correct location when a scene loads.
+    /// Uses <see cref="SpawnLocationManager"/> to determine the target spawn point,
+    /// and positions the player at the corresponding <see cref="SpawnLocation"/>.
+    /// </summary>
     public class PlayerSpawner : MonoBehaviour
     {
-        [SerializeField] private GameObject spawnPoint;
-
         private void Start()
         {
-            // Find the existing player object (from persistent scene)
             Character player = FindObjectOfType<Character>();
 
             if (player == null)
             {
-                Debug.LogWarning("No player found in scene.");
+                Log.Warning(nameof(PlayerSpawner), "No player found in scene.");
                 return;
             }
-            if (spawnPoint != null)
+
+            SpawnLocationID targetID = SpawnLocationManager.Instance.NextSpawnLocation;
+
+            if (targetID == SpawnLocationID.None)
             {
-                player.transform.SetLocalPositionAndRotation(spawnPoint.transform.position, spawnPoint.transform.rotation);
+                Log.Info(nameof(PlayerSpawner), "No spawn point requested. Player will remain at current position.");
             }
             else
             {
-                Debug.LogWarning("No spawn point assigned to PlayerSpawner.");
+                SpawnLocation spawnPoint = FindSpawnPoint(targetID);
+
+                if (spawnPoint != null)
+                {
+                    player.transform.SetLocalPositionAndRotation(
+                        spawnPoint.transform.position,
+                        spawnPoint.transform.rotation
+                    );
+                }
+                else
+                {
+                    Log.Warning(nameof(PlayerSpawner), $"No spawn point with ID {targetID} found in scene.");
+                }
             }
+
+            // Always clear after use
+            SpawnLocationManager.Instance.Clear();
+        }
+
+        /// <summary>
+        /// Searches the current scene for a spawn point matching the given ID.
+        /// </summary>
+        private SpawnLocation FindSpawnPoint(SpawnLocationID id)
+        {
+            SpawnLocation[] points = FindObjectsOfType<SpawnLocation>();
+
+            foreach (SpawnLocation point in points)
+            {
+                if (point.ID == id)
+                {
+                    return point;
+                }
+            }
+
+            return null;
         }
     }
 }

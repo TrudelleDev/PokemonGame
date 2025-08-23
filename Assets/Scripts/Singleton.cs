@@ -2,6 +2,10 @@
 
 namespace PokemonGame
 {
+    /// <summary>
+    /// Generic base class for implementing a singleton MonoBehaviour.
+    /// Ensures only one instance exists and persists across scene loads.
+    /// </summary>
     public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
         public static T Instance { get; private set; }
@@ -10,13 +14,13 @@ namespace PokemonGame
         {
             if (Instance != null && Instance != this)
             {
-                Debug.LogWarning($"[Singleton<{typeof(T).Name}>] Duplicate detected, destroying.");
+                Log.Warning(nameof(Singleton<T>), $"Duplicate {typeof(T).Name} detected, destroying.");
                 Destroy(gameObject);
                 return;
             }
 
             Instance = (T)this;
-            //DontDestroyOnLoad(gameObject); // Optional
+            //DontDestroyOnLoad(gameObject);
         }
     }
 }

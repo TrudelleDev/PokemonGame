@@ -1227,6 +1227,50 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &290694531
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 290694533}
+  - component: {fileID: 290694532}
+  m_Layer: 0
+  m_Name: PlayerSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &290694532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290694531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 295effe78fedd934cba613fdf551fb5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &290694533
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 290694531}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &347319388
 GameObject:
   m_ObjectHideFlags: 0
@@ -3690,7 +3734,7 @@ GameObject:
   - component: {fileID: 918419005}
   - component: {fileID: 918419007}
   m_Layer: 3
-  m_Name: SceneChangerTrigger
+  m_Name: SceneTrigger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3739,7 +3783,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2, y: 1}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!4 &918419006
 Transform:
@@ -3750,7 +3794,7 @@ Transform:
   m_GameObject: {fileID: 918419004}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.5, y: 7, z: 0}
+  m_LocalPosition: {x: 5.5, y: 6.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3765,10 +3809,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 918419004}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6afe98381b7ed1f4c8be95ee11dbba39, type: 3}
+  m_Script: {fileID: 11500000, guid: 55d1c52c107770443949dc4c5ad9b793, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: {fileID: 102900000, guid: 085f745a4ef4a0a48af9c845c6b0305a, type: 3}
+  targetSpawnLocation: 4
 --- !u!1 &1476155966
 GameObject:
   m_ObjectHideFlags: 0
@@ -3921,51 +3966,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!1 &1564300842
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1564300844}
-  - component: {fileID: 1564300843}
-  m_Layer: 0
-  m_Name: PlayerSpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1564300843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564300842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 295effe78fedd934cba613fdf551fb5e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  spawnPoint: {fileID: 1926264159}
---- !u!4 &1564300844
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1564300842}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.348953, y: 7.1047053, z: -0.04468747}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1595921841
 GameObject:
   m_ObjectHideFlags: 0
@@ -52373,6 +52373,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1926264160}
+  - component: {fileID: 1926264161}
   m_Layer: 0
   m_Name: SpawnPoint
   m_TagString: Untagged
@@ -52395,6 +52396,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1926264161
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1926264159}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61cd03d0d62ada643a6f62fe7e8bf516, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawnLocationID: 1
+  gizmoSize: 1
+  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!1 &2059959257
 GameObject:
   m_ObjectHideFlags: 0
@@ -81686,7 +81702,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 3
+  m_SortingOrder: 4
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -83491,6 +83507,6 @@ SceneRoots:
   - {fileID: 1909971888}
   - {fileID: 1702364716}
   - {fileID: 1716729031}
-  - {fileID: 918419006}
   - {fileID: 1926264160}
-  - {fileID: 1564300844}
+  - {fileID: 290694533}
+  - {fileID: 918419006}

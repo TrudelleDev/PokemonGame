@@ -167,7 +167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameCoreScene: {fileID: 102900000, guid: 689894ea053c49845a10ec667ef66de9, type: 3}
-  initialScene: {fileID: 102900000, guid: 97d013d6bf7ab0640a31d47cc4e3d602, type: 3}
+  initialScene: {fileID: 102900000, guid: 085f745a4ef4a0a48af9c845c6b0305a, type: 3}
   transitionScene: {fileID: 102900000, guid: 0510a8abded46dc4db82fd8edb06e823, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

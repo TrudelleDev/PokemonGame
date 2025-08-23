@@ -1,4 +1,5 @@
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Pause;
 using UnityEngine;
 
 namespace PokemonGame.Characters.States
@@ -39,7 +40,7 @@ namespace PokemonGame.Characters.States
             IdleState = new CharacterIdleState(this);
             RefacingState = new CharacterRefacingState(this);
             WalkingState = new CharacterWalkingState(this);
-            CollisionState = new CharacterCollisionState(this);
+            CollisionState = new CharacterCollisionState(this); 
         }
 
         private void Start()
@@ -49,8 +50,15 @@ namespace PokemonGame.Characters.States
 
         private void Update()
         {
-            if (PauseControl.IsGamePaused) return;
-
+            if (PauseManager.IsPaused)
+            {
+                if (CurrentState != IdleState)
+                {
+                    SetState(IdleState); // force Idle when paused
+                }
+                return;
+            }
+               
             CurrentState?.Update();
         }
 
