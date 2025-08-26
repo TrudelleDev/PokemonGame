@@ -3887,7 +3887,11 @@ Transform:
   m_GameObject: {fileID: 1990210029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+<<<<<<< HEAD
+  m_LocalPosition: {x: 1, y: -2, z: 0}
+=======
   m_LocalPosition: {x: 1.5, y: -2, z: 0}
+>>>>>>> origin/main
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4066,8 +4070,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 692cdb844d2e14846b4b42e7c1d5cfcb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  walkClip: {fileID: 7400000, guid: a705d923782d16d488faeeac0b3bb62d, type: 2}
   input: {fileID: 1990210042}
   tileMover: {fileID: 1990210046}
+  startingDirection: 2
 --- !u!114 &1990210046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4198,10 +4204,17 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
+<<<<<<< HEAD
+    x: 1.0780141
+    y: 0.0070921984
+    width: 1.1347518
+    height: 1.1347518
+=======
     x: 1.0629371
     y: 0.013986014
     width: 1.1188811
     height: 1.1188811
+>>>>>>> origin/main
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -13219,7 +13232,7 @@ Canvas:
   m_VertexColorAlwaysGammaSpace: 1
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1379892295
   m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!114 &8742342643413715548

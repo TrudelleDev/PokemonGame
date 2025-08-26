@@ -1,20 +1,20 @@
+using PokemonGame.Characters.Inputs.Enums;
 using UnityEngine;
 
 namespace PokemonGame.Characters.Inputs
 {
     /// <summary>
-    /// Abstract base class for handling character input.
+    /// Base class for handling character input.
     /// </summary>
     public abstract class CharacterInput : MonoBehaviour
     {
         /// <summary>
-        /// Gets the current movement direction of the character.
-        /// This is updated based on input in derived classes.
+        /// Current movement direction, set by derived classes.
         /// </summary>
-        public Direction CurrentDirection { get; protected set; }
+        public InputDirection InputDirection { get; protected set; }
 
         /// <summary>
-        /// Called every frame to handle input updates.
+        /// Updates input each frame.
         /// </summary>
         protected abstract void Update();
     }

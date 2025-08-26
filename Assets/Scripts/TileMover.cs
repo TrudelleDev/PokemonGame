@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using PokemonGame.Characters.Enums;
+using PokemonGame.Characters.Inputs.Enums;
 using UnityEngine;
 
 namespace PokemonGame
@@ -67,7 +69,7 @@ namespace PokemonGame
         /// </summary>
         /// <param name="direction">Direction to test for obstacles.</param>
         /// <returns>True if the path is clear; otherwise, false.</returns>
-        public bool CanMoveInDirection(Direction direction)
+        public bool CanMoveInDirection(FacingDirection direction)
         {
             return raycaster.IsPathClear(direction);
         }

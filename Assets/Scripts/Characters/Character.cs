@@ -4,32 +4,41 @@ using UnityEngine;
 
 namespace PokemonGame.Characters
 {
+    /// <summary>
+    /// Represents a character in the game world.
+    /// Handles grid snapping, unique ID generation, and references to the state controller.
+    /// </summary>
     public class Character : MonoBehaviour
     {
-        private const float CENTER_OFFSET = 0.5f;
+        [SerializeField, Required]
+        [Tooltip("The display name of this character (e.g., NPC name or player).")]
+        private string characterName;
 
-        [SerializeField, Required] 
-        protected string characterName;
-
-        private CharacterStateController stateController;
-        public Direction CurrentDirection => stateController.FacingDirection;
-
+        [ShowInInspector, Required]
+        [Tooltip("The character's name, read-only at runtime.")]
         public string CharacterName => characterName;
+
+        [ReadOnly, ShowInInspector]
+        [Tooltip("Unique identifier automatically generated at runtime for this character.")]
         public string ID { get; private set; }
 
+        private CharacterStateController stateController;
+
+        public CharacterStateController StateController => stateController;
 
         private void Start()
         {
-            // Make sure the position are rounded values before offsetting the character.
-            transform.position = new Vector3(Mathf.Round(transform.position.x), Mathf.Round(transform.position.y), 0);
-
-            // Offset the character to the middle center of the tile in x axis.    
-            transform.position -= new Vector3(CENTER_OFFSET, 0, 0);
-
             stateController = GetComponent<CharacterStateController>();
+            SnapToGrid();
 
             IDGenerator generator = new IDGenerator(10000, 99999);
             ID = generator.GetID();
+        }
+
+        private void SnapToGrid()
+        {
+            Vector3 position = transform.position;
+            transform.position = new Vector3(Mathf.Round(position.x), Mathf.Round(position.y), 0);
         }
     }
 }

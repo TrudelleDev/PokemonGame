@@ -1,4 +1,8 @@
-﻿namespace PokemonGame.Characters.States
+﻿using PokemonGame.Characters.Enums;
+using PokemonGame.Characters.Inputs.Enums;
+using PokemonGame.Characters.Inputs.Extensions;
+
+namespace PokemonGame.Characters.States
 {
     /// <summary>
     /// Represents the idle state where the character is not moving.
@@ -8,46 +12,56 @@
     {
         private readonly CharacterStateController controller;
 
-        /// <summary>
-        /// Creates a new idle state with the specified controller.
-        /// </summary>
-        /// <param name="controller">Controls state transitions for the character.</param>
         public CharacterIdleState(CharacterStateController controller)
         {
             this.controller = controller;
         }
 
-        /// <summary>
-        /// Checks input each frame to determine if a state transition is needed.
-        /// </summary>
         public void Update()
         {
-            Direction direction = controller.Input.CurrentDirection;
+            InputDirection inputDirection = controller.Input.InputDirection;
 
+<<<<<<< HEAD
+            if (inputDirection == InputDirection.None)
+                return;
+=======
             if (direction == Direction.None) return;
+>>>>>>> origin/main
 
-            if (controller.FacingDirection != direction)
+            FacingDirection nextFacingDirection = inputDirection.ToFacingDirection();
+
+            // Turn first if facing a different way
+            if (controller.FacingDirection != nextFacingDirection)
             {
-                controller.SetState(controller.RefacingState); // Transition to refacing if the facing direction is not the same as the current direction.
+                controller.FacingDirection = nextFacingDirection;
+                controller.SetState(controller.RefacingState);
+                return;
             }
-            else if (controller.TileMover.CanMoveInDirection(direction))
+
+            // Walk if movement is possible
+            if (controller.TileMover.CanMoveInDirection(nextFacingDirection))
             {
+<<<<<<< HEAD
+                controller.SetState(controller.WalkingState);
+                return;
+=======
                 controller.SetState(controller.WalkingState); // Transition to walking if tile is passable.
             }
             else
             {
                 controller.SetState(controller.CollisionState);
+>>>>>>> origin/main
             }
+
+            // Otherwise, collision feedback
+            controller.SetState(controller.CollisionState);
         }
 
-        /// <summary>
-        /// Called when entering the idle state. No setup required.
-        /// </summary>
-        public void Enter() { }
+        public void Enter()
+        {
+            controller.AnimatorController.PlayIdle(controller.FacingDirection);
+        }
 
-        /// <summary>
-        /// Called when exiting the idle state. No cleanup required.
-        /// </summary>
         public void Exit() { }
     }
 }

@@ -1,15 +1,18 @@
 ﻿using System.Collections;
+using PokemonGame.Characters.Enums;
+using PokemonGame.Characters.Enums.Extensions;
+using PokemonGame.Characters.Inputs.Enums;
+using PokemonGame.Characters.Inputs.Extensions;
 using UnityEngine;
 
 namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// Handles walking behavior, moving the character one tile in the input direction.
+    /// Walking state: moves the character one tile in the current facing direction.
     /// Transitions to the next state after movement completes based on updated input.
     /// </summary>
     public class CharacterWalkingState : ICharacterState
     {
-        private const float WalkingAnimationLenght = 0.25f;
         private readonly CharacterStateController controller;
         private Coroutine walkRoutine;
 
@@ -18,22 +21,27 @@ namespace PokemonGame.Characters.States
             this.controller = controller;
         }
 
-        /// <summary>
-        /// Called when entering the walking state. Begins tile movement.
-        /// </summary>
         public void Enter()
         {
-            walkRoutine = controller.StartCoroutine(Walk());
+            InputDirection inputDirection = controller.Input.InputDirection;
+            FacingDirection facingDirection = inputDirection.ToFacingDirection();
+
+            // Update facing before moving
+            controller.FacingDirection = facingDirection;
+
+            // Blocked, switch to collision
+            if (!controller.TileMover.CanMoveInDirection(facingDirection))
+            {
+                controller.SetState(controller.CollisionState);
+                return;
+            }
+
+            // Safe to move, start walking coroutine
+            walkRoutine = controller.StartCoroutine(Walk(facingDirection));
         }
 
-        /// <summary>
-        /// No per-frame logic needed during walking.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// Called when exiting the walking state. Stops the walk coroutine if it's running.
-        /// </summary>
         public void Exit()
         {
             if (walkRoutine != null)
@@ -44,32 +52,29 @@ namespace PokemonGame.Characters.States
         }
 
         /// <summary>
-        /// Moves the character and determines the next state based on updated input.
+        /// Executes tile movement, then determines the next state from updated input.
         /// </summary>
-        private IEnumerator Walk()
+        private IEnumerator Walk(FacingDirection direction)
         {
-            Direction direction = controller.Input.CurrentDirection;
-            Vector2Int move = direction.ToVector();
-            Vector3 destination = controller.transform.position + new Vector3(move.x * TilemapInfo.CellSize.x, move.y * TilemapInfo.CellSize.y, 0f);
+            Vector2Int move = direction.ToVector2Int();
+            Vector3 destination = controller.transform.position +
+                new Vector3(move.x * TilemapInfo.CellSize.x, move.y * TilemapInfo.CellSize.y, 0f);
 
-            controller.FacingDirection = direction;
+            controller.AnimatorController.UpdateDirection(direction);
             controller.AnimatorController.PlayWalkStep();
 
-            yield return controller.TileMover.MoveToTile(destination, WalkingAnimationLenght);
+            yield return controller.TileMover.MoveToTile(destination, controller.WalkDuration);
 
-            Direction newDirection = controller.Input.CurrentDirection;
+            InputDirection nextInputDirection = controller.Input.InputDirection;
 
-            if (newDirection == Direction.None)
+            if (nextInputDirection == InputDirection.None)
             {
                 controller.SetState(controller.IdleState);
             }
-            else if (controller.TileMover.CanMoveInDirection(newDirection))
-            {
-                controller.SetState(controller.WalkingState);
-            }
             else
             {
-                controller.SetState(controller.CollisionState);
+                // Re-check CanMove in Enter()
+                controller.SetState(controller.WalkingState);
             }
         }
     }

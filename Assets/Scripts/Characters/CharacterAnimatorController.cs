@@ -1,10 +1,13 @@
-﻿using UnityEngine;
+﻿using PokemonGame.Characters.Enums;
+using PokemonGame.Characters.Enums.Extensions;
+using UnityEngine;
 
 namespace PokemonGame.Characters
 {
     /// <summary>
-    /// Handles character animation control, including direction updates, walking steps, collisions, and refacing.
-    /// Wraps around Unity's Animator for better separation of concerns.
+    /// Wraps Unity's Animator to control character animations:
+    /// idle, walking, collisions, and refacing.
+    /// Provides a clean separation between animation logic and state handling.
     /// </summary>
     public class CharacterAnimatorController
     {
@@ -21,27 +24,34 @@ namespace PokemonGame.Characters
         private static readonly int CollideSecondStepTrigger = Animator.StringToHash("CollideSecondStep");
 
         /// <summary>
-        /// Constructs a new animation controller wrapper for the given Animator.
+        /// Creates a new wrapper for the provided <see cref="Animator"/>.
         /// </summary>
-        /// <param name="animator">Animator component to control.</param>
+        /// <param name="animator">Animator component used for controlling character animations.</param>
         public CharacterAnimatorController(Animator animator)
         {
             this.animator = animator;
         }
 
         /// <summary>
-        /// Updates animation parameters to match the given facing direction.
+        /// Updates animator parameters (Vertical/Horizontal) to match the given facing direction.
         /// </summary>
-        /// <param name="direction">Movement or facing direction.</param>
-        public void UpdateDirection(Direction direction)
+        public void UpdateDirection(FacingDirection direction)
         {
-            Vector2Int dir = direction.ToVector();
+            Vector2Int dir = direction.ToVector2Int();
             animator.SetFloat(VerticalParam, dir.y);
             animator.SetFloat(HorizontalParam, dir.x);
         }
 
         /// <summary>
-        /// Plays alternating walking step animations to simulate movement.
+        /// Plays idle pose for the given direction (no trigger needed).
+        /// </summary>
+        public void PlayIdle(FacingDirection direction)
+        {
+            UpdateDirection(direction);
+        }
+
+        /// <summary>
+        /// Plays alternating walk step triggers to animate walking motion.
         /// </summary>
         public void PlayWalkStep()
         {
@@ -50,7 +60,7 @@ namespace PokemonGame.Characters
         }
 
         /// <summary>
-        /// Plays alternating collision animations for visual feedback on movement failure.
+        /// Plays alternating collision step triggers for blocked movement feedback.
         /// </summary>
         public void PlayCollisionStep()
         {
@@ -59,10 +69,11 @@ namespace PokemonGame.Characters
         }
 
         /// <summary>
-        /// Plays a turning-in-place animation without movement.
+        /// Updates facing direction and plays the refacing animation.
         /// </summary>
-        public void PlayRefacing()
+        public void PlayRefacing(FacingDirection direction)
         {
+            UpdateDirection(direction);
             animator.SetTrigger(RefacingTrigger);
         }
     }

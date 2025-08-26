@@ -1,7 +1,10 @@
 ﻿using PokemonGame.Characters;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Characters.Spawn.Enums;
+<<<<<<< HEAD
+=======
 using PokemonGame.Transitions;
+>>>>>>> origin/main
 using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
 using UnityEditor;

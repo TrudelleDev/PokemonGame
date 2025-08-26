@@ -1,4 +1,6 @@
 using System.Collections;
+using PokemonGame.Characters;
+using PokemonGame.Pause;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -46,6 +48,7 @@ namespace PokemonGame.Systems.Dialogue
             currentIndex = 0;
 
             content.SetActive(true);
+            PauseManager.SetPaused(true);
             StartCoroutine(DisplayNextLine());
         }
 
@@ -63,6 +66,7 @@ namespace PokemonGame.Systems.Dialogue
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBind.Accept));
             }
 
+            PauseManager.SetPaused(false);
             content.SetActive(false);
         }
 

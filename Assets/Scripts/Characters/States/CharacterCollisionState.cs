@@ -1,58 +1,54 @@
-﻿namespace PokemonGame.Characters.States
+﻿using PokemonGame.Characters.Enums;
+using PokemonGame.Characters.Inputs.Enums;
+using PokemonGame.Characters.Inputs.Extensions;
+
+namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// State representing a character's collision when trying to move into a blocked tile.
-    /// Plays a collision animation and determines the next state based on input and tile conditions.
+    /// Handles collision when trying to move into a blocked tile.
+    /// Plays a collision animation, then decides the next state.
     /// </summary>
     public class CharacterCollisionState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
-        /// <summary>
-        /// Initializes the state with the given controller.
-        /// </summary>
-        /// <param name="controller">The controller managing character states and transitions.</param>
         public CharacterCollisionState(CharacterStateController controller)
         {
             this.controller = controller;
         }
 
-        /// <summary>
-        /// Triggers the collision animation when entering the state.
-        /// </summary>
         public void Enter()
         {
             controller.AnimatorController.PlayCollisionStep();
         }
 
-        /// <summary>
-        /// No frame-specific logic in this state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// No specific cleanup when exiting the state.
-        /// </summary>
         public void Exit() { }
 
-        /// <summary>
-        /// Determines the next state based on the collision result.
-        /// </summary>
         public void OnCollisionComplete()
         {
-            Direction direction = controller.Input.CurrentDirection;
+            InputDirection inputDir = controller.Input.InputDirection;
 
-            if (direction == Direction.None)
+            // No input, return idle
+            if (inputDir == InputDirection.None)
             {
-                controller.SetState(controller.IdleState); // Transition to idle if no direction.
+                controller.SetState(controller.IdleState);
+                return;
             }
-            else if (controller.TileMover.CanMoveInDirection(direction))
+
+            // Update facing to match attempted direction
+            FacingDirection desiredFacing = inputDir.ToFacingDirection();
+            controller.FacingDirection = desiredFacing;
+
+            // Retry movement if possible, otherwise stay in collision
+            if (controller.TileMover.CanMoveInDirection(desiredFacing))
             {
-                controller.SetState(controller.WalkingState); // Transition to walking if tile is passable.
+                controller.SetState(controller.WalkingState);
             }
             else
             {
-                controller.SetState(controller.CollisionState); // Remain in collision if still blocked.
+                controller.SetState(controller.CollisionState);
             }
         }
     }
