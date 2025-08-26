@@ -1,10 +1,7 @@
 using PokemonGame.Characters.Enums;
 using PokemonGame.Characters.Inputs;
 using PokemonGame.Pause;
-<<<<<<< HEAD
 using Sirenix.OdinInspector;
-=======
->>>>>>> origin/main
 using UnityEngine;
 
 namespace PokemonGame.Characters.States
@@ -82,20 +79,11 @@ namespace PokemonGame.Characters.States
             {
                 if (CurrentState != IdleState)
                 {
-<<<<<<< HEAD
                     SetState(IdleState);
                 }
                    
                 return;
             }
-
-=======
-                    SetState(IdleState); // force Idle when paused
-                }
-                return;
-            }
-               
->>>>>>> origin/main
             CurrentState?.Update();
         }
 

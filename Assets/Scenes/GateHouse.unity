@@ -122,7 +122,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
-<<<<<<< HEAD
 --- !u!1 &269636166
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,8 +383,6 @@ MonoBehaviour:
   maxX: 1
   minY: -1
   maxY: 1
-=======
->>>>>>> origin/main
 --- !u!1 &499083359
 GameObject:
   m_ObjectHideFlags: 0
@@ -619,11 +616,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-<<<<<<< HEAD
   m_TileAnchor: {x: 0.5, y: 0, z: 0}
-=======
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
->>>>>>> origin/main
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -642,7 +635,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
-<<<<<<< HEAD
 --- !u!1 &734013343
 GameObject:
   m_ObjectHideFlags: 0
@@ -918,8 +910,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 8c21fb21e36386840b5b460e261bcaff, type: 2}
-=======
->>>>>>> origin/main
 --- !u!1 &1092055894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1676,11 +1666,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Origin: {x: -8, y: -6, z: 0}
   m_Size: {x: 13, y: 15, z: 1}
-<<<<<<< HEAD
   m_TileAnchor: {x: 0.5, y: 0, z: 0}
-=======
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
->>>>>>> origin/main
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4016,11 +4002,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-<<<<<<< HEAD
   m_TileAnchor: {x: 0.5, y: 0, z: 0}
-=======
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
->>>>>>> origin/main
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4883,11 +4865,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -7, y: -6, z: 0}
   m_Size: {x: 11, y: 15, z: 1}
-<<<<<<< HEAD
   m_TileAnchor: {x: 0.5, y: 0, z: 0}
-=======
-  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
->>>>>>> origin/main
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4950,8 +4928,5 @@ SceneRoots:
   - {fileID: 1445160381}
   - {fileID: 1838574834}
   - {fileID: 1572669358}
-<<<<<<< HEAD
   - {fileID: 269636167}
   - {fileID: 734013354}
-=======
->>>>>>> origin/main

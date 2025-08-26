@@ -21,12 +21,8 @@ namespace PokemonGame.Characters.States
         {
             InputDirection inputDirection = controller.Input.InputDirection;
 
-<<<<<<< HEAD
             if (inputDirection == InputDirection.None)
                 return;
-=======
-            if (direction == Direction.None) return;
->>>>>>> origin/main
 
             FacingDirection nextFacingDirection = inputDirection.ToFacingDirection();
 
@@ -41,16 +37,12 @@ namespace PokemonGame.Characters.States
             // Walk if movement is possible
             if (controller.TileMover.CanMoveInDirection(nextFacingDirection))
             {
-<<<<<<< HEAD
                 controller.SetState(controller.WalkingState);
                 return;
-=======
-                controller.SetState(controller.WalkingState); // Transition to walking if tile is passable.
             }
             else
             {
                 controller.SetState(controller.CollisionState);
->>>>>>> origin/main
             }
 
             // Otherwise, collision feedback
