@@ -1,15 +1,14 @@
 using System.Collections;
-using PokemonGame.Characters;
+using PokemonGame.Audio;
 using PokemonGame.Pause;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Systems.Dialogue
+namespace PokemonGame.Dialogue
 {
     /// <summary>
-    /// Displays dialogue lines with a typewriter effect and waits for player input to advance.
-    /// Singleton for global access.
+    /// Dialogue box that displays lines with a typewriter effect.
     /// </summary>
     public class DialogueBox : Singleton<DialogueBox>
     {
@@ -23,26 +22,35 @@ namespace PokemonGame.Systems.Dialogue
 
         [Title("Settings")]
         [SerializeField, Required]
-        [Tooltip("Delay between each character for the typewriter effect.")]
+        [Tooltip("Delay between each character for the typewriter effect (in seconds).")]
         private float timeDelay = 0.05f;
+
+        [Header("Audio")]
+        [SerializeField, Required]
+        [Tooltip("Sound effect that plays when a new dialogue line begins.")]
+        private AudioClip interactClip;
 
         private string[] currentDialogue;
         private int currentIndex;
 
         /// <summary>
+        /// Gets a value indicating whether the dialogue box is currently visible.
+        /// </summary>
+        public bool IsOpen => content.activeInHierarchy;
+
+        /// <summary>
         /// Starts a dialogue sequence with the given lines.
         /// </summary>
-        /// <param name="dialogue">An array of dialogue lines to display.</param>
+        /// <param name="dialogue">The dialogue lines to display.</param>
         public void ShowDialogue(string[] dialogue)
         {
             if (dialogue == null || dialogue.Length == 0)
             {
-                Debug.LogWarning("[DialogueBox] Tried to show empty or null dialogue.");
+                Log.Warning(nameof(DialogueBox), "Tried to show empty or null dialogue.");
                 return;
             }
 
-            if (content.activeInHierarchy)
-                return;
+            if (IsOpen) return;
 
             currentDialogue = dialogue;
             currentIndex = 0;
@@ -52,47 +60,36 @@ namespace PokemonGame.Systems.Dialogue
             StartCoroutine(DisplayNextLine());
         }
 
-        /// <summary>
-        /// Displays each dialogue line one at a time, waiting for player input to continue.
-        /// </summary>
         private IEnumerator DisplayNextLine()
         {
             while (currentIndex < currentDialogue.Length)
             {
+                // Play sound safely
+                AudioManager.Instance.PlaySFX(interactClip);
+
                 yield return StartCoroutine(TypeLine(currentDialogue[currentIndex]));
                 currentIndex++;
 
-                // Wait for player to press Accept key before continuing
+                // Small yield so input can't be "missed" in the same frame
+                yield return null;
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBind.Accept));
             }
 
             PauseManager.SetPaused(false);
             content.SetActive(false);
+            displayText.text = "";
         }
 
-        /// <summary>
-        /// Types out a single line with a typewriter effect.
-        /// </summary>
-        /// <param name="line">The line of dialogue to type.</param>
         private IEnumerator TypeLine(string line)
         {
             displayText.text = "";
-
-            WaitForSecondsRealtime delay = new WaitForSecondsRealtime(timeDelay);
+            var delay = new WaitForSecondsRealtime(timeDelay);
 
             foreach (char letter in line)
             {
                 displayText.text += letter;
                 yield return delay;
             }
-        }
-
-        /// <summary>
-        /// Returns true if the dialogue box is currently visible.
-        /// </summary>
-        public bool IsOpen()
-        {
-            return content.activeInHierarchy;
         }
     }
 }
