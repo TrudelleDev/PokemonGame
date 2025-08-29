@@ -4,8 +4,11 @@ using PokemonGame.Characters.Interfaces;
 using PokemonGame.Characters.Spawn.Enums;
 using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace PokemonGame
 {
@@ -15,11 +18,16 @@ namespace PokemonGame
     public class SceneTrigger : MonoBehaviour, ITrigger
     {
 #if UNITY_EDITOR
-        [Header("Scene Settings")]
+        [Header("Scene Settings (Editor Only)")]
         [SerializeField, Required]
-        [Tooltip("The scene to load when the trigger is activated.")]
+        [Tooltip("Scene asset to load when the trigger is activated.")]
         private SceneAsset sceneToLoad;
 #endif
+
+        [Header("Scene Settings (Runtime)")]
+        [SerializeField, ReadOnly]
+        [Tooltip("Scene name used at runtime (auto-populated from SceneAsset).")]
+        private string sceneToLoadName;
 
         [Header("Spawn Settings")]
         [SerializeField, Required]
@@ -31,12 +39,12 @@ namespace PokemonGame
         [Tooltip("Sound effect played when transitioning (e.g., entering/exiting a building).")]
         private AudioClip transitionClip;
 
-        private string sceneToLoadName;
         private SceneTransitionController transitionController;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
+            // Auto-populate scene name whenever SceneAsset is changed
             if (sceneToLoad != null)
             {
                 sceneToLoadName = sceneToLoad.name;
