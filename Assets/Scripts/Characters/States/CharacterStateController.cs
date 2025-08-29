@@ -1,5 +1,6 @@
 using PokemonGame.Characters.Enums;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Characters.Inputs.Enums;
 using PokemonGame.Pause;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,6 +17,10 @@ namespace PokemonGame.Characters.States
         [SerializeField, Required]
         [Tooltip("Walking animation clip. Its length determines the duration of a single tile movement.")]
         private AnimationClip walkClip;
+
+        [Header("Audio Settings")]
+        [SerializeField, Required]
+        private AudioClip collisonClip;
 
         [Header("Dependencies")]    
         [SerializeField, Required]
@@ -37,6 +42,8 @@ namespace PokemonGame.Characters.States
         public CharacterInput Input => input;
         public TileMover TileMover => tileMover;
         public float WalkDuration => walkClip.length;
+
+        public AudioClip CollisionClip => collisonClip;
 
         public CharacterIdleState IdleState { get; private set; }
         public CharacterRefacingState RefacingState { get; private set; }
@@ -85,6 +92,15 @@ namespace PokemonGame.Characters.States
                 return;
             }
             CurrentState?.Update();
+        }
+
+        /// <summary>
+        /// Immediately cancels the current state and returns the character to Idle.
+        /// Useful for interruptions (pause, cutscenes, forced reset).
+        /// </summary>
+        public void CancelToIdle()
+        {
+            SetState(IdleState);
         }
 
         /// <summary>

@@ -9,36 +9,51 @@ namespace PokemonGame.Characters.States
 {
     /// <summary>
     /// Walking state: moves the character one tile in the current facing direction.
-    /// Transitions to the next state after movement completes based on updated input.
+    /// Triggers interactions and handles collisions before moving.
     /// </summary>
     public class CharacterWalkingState : ICharacterState
     {
         private readonly CharacterStateController controller;
+        private readonly InteractionHandler interactionHandler;
         private Coroutine walkRoutine;
 
         public CharacterWalkingState(CharacterStateController controller)
         {
             this.controller = controller;
+            interactionHandler = controller.GetComponent<InteractionHandler>();
         }
 
         public void Enter()
         {
-            InputDirection inputDirection = controller.Input.InputDirection;
-            FacingDirection facingDirection = inputDirection.ToFacingDirection();
+            InputDirection input = controller.Input.InputDirection;
+            if (input == InputDirection.None)
+            {
+                controller.SetState(controller.IdleState);
+                return;
+            }
 
-            // Update facing before moving
-            controller.FacingDirection = facingDirection;
+            FacingDirection facing = input.ToFacingDirection();
+            controller.FacingDirection = facing;
 
-            // Blocked, switch to collision
-            if (!controller.TileMover.CanMoveInDirection(facingDirection))
+            // Check triggers BEFORE walking
+            if (interactionHandler != null && interactionHandler.CheckForTriggers(input.ToVector2()) == true)
+            {
+                controller.SetState(controller.IdleState);
+                return;
+            }
+
+            // Blocked tile → collision state
+            if (!controller.TileMover.CanMoveInDirection(facing))
             {
                 controller.SetState(controller.CollisionState);
                 return;
             }
 
-            // Safe to move, start walking coroutine
-            walkRoutine = controller.StartCoroutine(Walk(facingDirection));
+            // Safe to move → walk coroutine
+            walkRoutine = controller.StartCoroutine(Walk(facing));
         }
+
+
 
         public void Update() { }
 
@@ -52,7 +67,7 @@ namespace PokemonGame.Characters.States
         }
 
         /// <summary>
-        /// Executes tile movement, then determines the next state from updated input.
+        /// Executes tile movement, then decides next state based on new input.
         /// </summary>
         private IEnumerator Walk(FacingDirection direction)
         {
@@ -65,17 +80,11 @@ namespace PokemonGame.Characters.States
 
             yield return controller.TileMover.MoveToTile(destination, controller.WalkDuration);
 
-            InputDirection nextInputDirection = controller.Input.InputDirection;
-
-            if (nextInputDirection == InputDirection.None)
-            {
-                controller.SetState(controller.IdleState);
-            }
-            else
-            {
-                // Re-check CanMove in Enter()
-                controller.SetState(controller.WalkingState);
-            }
+            // Decide next state
+            InputDirection nextInput = controller.Input.InputDirection;
+            controller.SetState(nextInput == InputDirection.None
+                ? controller.IdleState
+                : controller.WalkingState);
         }
     }
 }

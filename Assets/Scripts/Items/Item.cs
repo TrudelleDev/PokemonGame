@@ -1,59 +1,57 @@
 using System;
 using PokemonGame.Items.Definition;
 using PokemonGame.Items.Enums;
-using PokemonGame.Items.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Items
 {
     /// <summary>
-    /// Runtime stackable item that wraps an ItemStack and resolves its definition.
+    /// Represents a runtime item stack in the player's inventory or world.
+    /// Each item references a static <see cref="ItemDefinition"/> (name, category, icon, etc.)
+    /// and maintains a mutable quantity that can be increased or decreased at runtime.
     /// </summary>
     [Serializable]
     public class Item
     {
         [SerializeField, Required]
-        [Tooltip("The underlying stack data for this item.")]
-        private ItemStack stack;
+        [Tooltip("Reference to the item's static definition.")]
+        private ItemDefinition definition;
+
+        [SerializeField, Required, Range(1, 99)]
+        [Tooltip("Number of items in this stack.")]
+        private int quantity = 1;
 
         /// <summary>
-        /// The underlying stack data (ID + quantity).
+        /// Gets the static definition for this item (metadata such as name, category, and icon).
         /// </summary>
-        public ItemStack Stack => stack;
+        public ItemDefinition Definition => definition;
 
         /// <summary>
-        /// The unique ID for this item.
+        /// Gets the unique ID of this item, provided by its definition.
+        /// Returns <see cref="ItemId.None"/> if the definition is missing.
         /// </summary>
-        public ItemId ID => stack.ItemID;
+        public ItemId ID => definition != null ? definition.ItemId : ItemId.None;
 
         /// <summary>
-        /// The current quantity of this item (clamped to >= 0).
+        /// Gets or sets the current quantity of this item stack.
+        /// The value is always clamped to be non-negative.
         /// </summary>
         public int Quantity
         {
-            get => stack.Quantity;
-            set => stack = new ItemStack(ID, Mathf.Max(0, value));
+            get => quantity;
+            set => quantity = Mathf.Max(0, value);
         }
 
         /// <summary>
-        /// The resolved item definition for this item, or null if not found.
+        /// Creates a new item stack instance at runtime.
         /// </summary>
-        public ItemDefinition Definition
+        /// <param name="definition">The static definition of the item.</param>
+        /// <param name="quantity">The number of items in this stack.</param>
+        public Item(ItemDefinition definition, int quantity = 1)
         {
-            get
-            {
-                ItemDefinitionLoader.TryGet(ID, out var definition);
-                return definition;
-            }
-        }
-
-        /// <summary>
-        /// Creates a new Item from the given stack.
-        /// </summary>
-        public Item(ItemStack stack)
-        {
-            this.stack = stack;
+            this.definition = definition;
+            this.quantity = Mathf.Max(0, quantity);
         }
     }
 }

@@ -534,6 +534,52 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1990210044}
+--- !u!1 &420937233
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 420937235}
+  - component: {fileID: 420937234}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &420937234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420937233}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2667be329d6d6049a43eac9a9a46987, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmGroup: {fileID: 8008709457918690755, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
+  sfxGroup: {fileID: -5583654715033347684, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
+--- !u!4 &420937235
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 420937233}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &432214966 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 6051706205316444792, guid: b8ec068a323c1a842a66e7089f65ff31, type: 3}
@@ -3871,6 +3917,7 @@ GameObject:
   - component: {fileID: 1990210048}
   - component: {fileID: 1990210049}
   - component: {fileID: 1990210050}
+  - component: {fileID: 1990210051}
   m_Layer: 3
   m_Name: Player
   m_TagString: Untagged
@@ -3887,7 +3934,7 @@ Transform:
   m_GameObject: {fileID: 1990210029}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1, y: -2, z: 0}
+  m_LocalPosition: {x: 1.5, y: -2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3980,10 +4027,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingParty:
   - level: 5
-    pokemonId: 25
-    natureId: 1
-    abilityId: 1
-    moveIds: 01000000
+    pokemonDefinition: {fileID: 11400000, guid: cb68ac9dfb0069640973c6cd50f9da9a, type: 2}
+    natureDefinition: {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
+    abilityDefinition: {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
+    moveDefinitions:
+    - {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
 --- !u!114 &1990210042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4053,7 +4101,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Red
+  displayName: Red
 --- !u!114 &1990210045
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4067,9 +4115,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkClip: {fileID: 7400000, guid: a705d923782d16d488faeeac0b3bb62d, type: 2}
+  collisonClip: {fileID: 8300000, guid: 700179018b63ab44dad3c67845a67a37, type: 3}
   input: {fileID: 1990210042}
   tileMover: {fileID: 1990210046}
-  startingDirection: 2
+  startingDirection: 1
 --- !u!114 &1990210046
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4113,7 +4162,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item:
     startingItems:
-    - itemId: 1
+    - definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
       quantity: 1
   keyItem:
     startingItems: []
@@ -4131,6 +4180,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad10563b4e087ab44b154542c4512557, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  raycastDistance: 1
+  offsetY: 0.5
+  interactionMask:
+    serializedVersion: 2
+    m_Bits: 59
 --- !u!114 &1990210050
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4144,6 +4198,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   offset: 0
+--- !u!114 &1990210051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1990210029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e664f9625646e94e84e04e19c2b9780, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2013771036
 GameObject:
   m_ObjectHideFlags: 0
@@ -4200,10 +4266,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 1.0780141
-    y: 0.0070921984
-    width: 1.1347518
-    height: 1.1347518
+    x: 0
+    y: 0
+    width: 1
+    height: 1
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -7336,12 +7402,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Hello, there!
+  m_text: 'Alex put the Poke Ball
 
-    Glad to meet you!<sprite name="Arrow>'
+    in the Poke Balls Pocket.'
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7375,15 +7441,15 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 5
-  m_wordSpacing: 10
+  m_characterSpacing: 0
+  m_wordSpacing: 8
   m_lineSpacing: 10
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 5
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -8309,8 +8375,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -3.652, y: 0.13500023}
-  m_SizeDelta: {x: 201.16, y: 35.798}
+  m_AnchoredPosition: {x: -0.05, y: -1.5}
+  m_SizeDelta: {x: 207.44, y: 37.14}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &3805561860847911186
 GameObject:
@@ -12891,6 +12957,7 @@ MonoBehaviour:
   content: {fileID: 472399839}
   displayText: {fileID: 2586107499583247442}
   timeDelay: 0.025
+  interactClip: {fileID: 8300000, guid: 667105b33932a2c48951a4831c6cb4fb, type: 3}
 --- !u!222 &8525945494671376445
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -13965,3 +14032,4 @@ SceneRoots:
   - {fileID: 1990210030}
   - {fileID: 529088978}
   - {fileID: 2088294302}
+  - {fileID: 420937235}

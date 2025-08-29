@@ -32,10 +32,7 @@ namespace PokemonGame.Characters.Spawn
 
                 if (spawnPoint != null)
                 {
-                    player.transform.SetLocalPositionAndRotation(
-                        spawnPoint.transform.position,
-                        spawnPoint.transform.rotation
-                    );
+                    player.Teleport(spawnPoint.transform.position);
                 }
                 else
                 {

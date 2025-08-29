@@ -1,29 +1,22 @@
-﻿using PokemonGame.Characters.Enums.Extensions;
+﻿using PokemonGame.Characters;
 using PokemonGame.Characters.Interfaces;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Characters
 {
     /// <summary>
-    /// Handles player interactions by raycasting in the facing direction
-    /// and invoking interaction methods on objects in front of the character.
-    /// Supports both manual "accept" interactions and automatic trigger checks.
+    /// Handles interaction raycasts in front of a character.
+    /// Supports both manual interactables (e.g., NPCs, signs)
+    /// and automatic triggers (e.g., warp tiles, cutscenes).
     /// </summary>
     public class InteractionHandler : MonoBehaviour
     {
         [Header("Raycast Settings")]
-        [SerializeField, Required]
-        [Tooltip("Maximum distance the raycast checks for interactables.")]
-        private float raycastDistance = 1f;
+        [SerializeField] private float raycastDistance = 1f;
 
-        [SerializeField,Required]
-        [Tooltip("Vertical offset from the character pivot to cast the ray.")]
-        private float offsetY = 0.5f;
+        [SerializeField] private float offsetY = 0.5f;
 
-        [SerializeField, Required]
-        [Tooltip("Which layers are considered interactable.")]
-        private LayerMask interactionMask = Physics2D.DefaultRaycastLayers;
+        [SerializeField] private LayerMask interactionMask = Physics2D.DefaultRaycastLayers;
 
         private Character character;
         private readonly RaycastHit2D[] hitBuffer = new RaycastHit2D[5];
@@ -33,50 +26,61 @@ namespace PokemonGame.Characters
             character = GetComponent<Character>();
         }
 
-        private void Update()
+        /// <summary>
+        /// Executes all interactables in front of the character.
+        /// Returns true if at least one was triggered.
+        /// </summary>
+        public bool CheckForInteractables(Vector2 direction)
         {
-            // Manual interact
-            if (Input.GetKeyDown(KeyBind.Accept))
+            return RaycastAndCall<IInteract>(direction, interactable =>
             {
-                CheckForInteractables();
-            }
-
-            // Auto triggers
-            CheckForTriggers();
-        }
-
-        private void CheckForInteractables()
-        {
-            RaycastAndCall<IInteract>(interactable => interactable.Interact(character));
-        }
-
-        private void CheckForTriggers()
-        {
-            RaycastAndCall<ITrigger>(trigger => trigger.Trigger(character));
+                interactable.Interact(character);
+                return false; // don't stop — run all interactables
+            });
         }
 
         /// <summary>
-        /// Generic raycast method that finds all matching components in front of the character
-        /// and invokes a callback for each.
+        /// Executes the first trigger found in front of the character.
+        /// Returns true if a trigger was activated.
         /// </summary>
-        private void RaycastAndCall<T>(System.Action<T> callback)
+        public bool CheckForTriggers(Vector2 direction)
         {
-            Vector2 direction = character.StateController.FacingDirection.ToVector2Int();
-            Vector3 origin = transform.position + Vector3.up * offsetY;
+            return RaycastAndCall<ITrigger>(direction, trigger =>
+            {
+                trigger.Trigger(character);
+                return true; // stop after the first trigger
+            });
+        }
 
-            int hitCount = Physics2D.RaycastNonAlloc(origin, direction, hitBuffer, raycastDistance, interactionMask);
+        private bool RaycastAndCall<T>(Vector2 direction, System.Func<T, bool> callback)
+        {
+            if (direction == Vector2.zero) return false;
+
+            Vector3 origin = transform.position + Vector3.up * offsetY;
+            int hitCount = Physics2D.RaycastNonAlloc(
+                origin,
+                direction,
+                hitBuffer,
+                raycastDistance,
+                interactionMask
+            );
+
+            bool anyTriggered = false;
 
             for (int i = 0; i < hitCount; i++)
             {
                 Collider2D collider = hitBuffer[i].collider;
                 if (collider == null) continue;
 
-                T[] components = collider.GetComponents<T>();
-                foreach (T comp in components)
+                foreach (T comp in collider.GetComponents<T>())
                 {
-                    callback(comp);
+                    anyTriggered = true;
+                    if (callback(comp))
+                        return true; // stop if callback signals
                 }
             }
+
+            return anyTriggered;
         }
     }
 }

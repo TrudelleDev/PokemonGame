@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - ability-definition
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 68f9e0f533f990a41a9671b1b53a2df0
+    m_Address: Assets/ScriptableObjects/Pewter_City.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - audio-definition
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb68ac9dfb0069640973c6cd50f9da9a
     m_Address: Assets/ScriptableObjects/Pokemons/PikachuData.asset
     m_ReadOnly: 0

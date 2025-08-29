@@ -130,9 +130,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2434978051964044446, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 89677807cdc48f442b2d3d876653234f, type: 3}
+    - target: {fileID: 2434978051964044446, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
+      propertyPath: m_Material
+      value: 
+      objectReference: {fileID: 2100000, guid: fb0e02e69a79e2d4bbe3c8f43a7f338c, type: 2}
+    - target: {fileID: 2434978051964044446, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
+      propertyPath: m_PreserveAspect
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3851925045643030319, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
       propertyPath: m_Name
-      value: BattleTransition
+      value: MaskedFadeTransition
       objectReference: {fileID: 0}
     - target: {fileID: 3851925045643030319, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
       propertyPath: m_IsActive
@@ -144,7 +156,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7624990706354433577, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
       propertyPath: m_Name
-      value: ViewTransition
+      value: AlphaFadeTransition
+      objectReference: {fileID: 0}
+    - target: {fileID: 7624990706354433577, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7654533958213112953, guid: 94dad29eafd41d149ae9b9f03022236a, type: 3}
       propertyPath: m_Pivot.x

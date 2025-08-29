@@ -5,53 +5,49 @@ using PokemonGame.Characters.Inputs.Extensions;
 namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// Represents the idle state where the character is not moving.
-    /// Transitions to walking, refacing, or collision states based on input and tile conditions.
+    /// Idle state: the character is standing still.
+    /// Evaluates input each frame and transitions to refacing, walking, or collision.
     /// </summary>
     public class CharacterIdleState : ICharacterState
     {
         private readonly CharacterStateController controller;
+        private readonly InteractionHandler interactionHandler;
 
         public CharacterIdleState(CharacterStateController controller)
         {
             this.controller = controller;
-        }
-
-        public void Update()
-        {
-            InputDirection inputDirection = controller.Input.InputDirection;
-
-            if (inputDirection == InputDirection.None)
-                return;
-
-            FacingDirection nextFacingDirection = inputDirection.ToFacingDirection();
-
-            // Turn first if facing a different way
-            if (controller.FacingDirection != nextFacingDirection)
-            {
-                controller.FacingDirection = nextFacingDirection;
-                controller.SetState(controller.RefacingState);
-                return;
-            }
-
-            // Walk if movement is possible
-            if (controller.TileMover.CanMoveInDirection(nextFacingDirection))
-            {
-                controller.SetState(controller.WalkingState);
-                return;
-            }
-            else
-            {
-                controller.SetState(controller.CollisionState);
-            }
-
-            // Otherwise, collision feedback
-            controller.SetState(controller.CollisionState);
+            interactionHandler = controller.GetComponent<InteractionHandler>();
         }
 
         public void Enter()
         {
             controller.AnimatorController.PlayIdle(controller.FacingDirection);
+        }
+
+        public void Update()
+        {
+            InputDirection input = controller.Input.InputDirection;
+
+            if (input == InputDirection.None)
+                return;
+
+            FacingDirection facing = input.ToFacingDirection();
+
+            // Trigger interactions before moving
+            interactionHandler?.CheckForTriggers(input.ToVector2Int());
+
+            // Reface if needed
+            if (controller.FacingDirection != facing)
+            {
+                controller.FacingDirection = facing;
+                controller.SetState(controller.RefacingState);
+                return;
+            }
+
+            // Walk or collide
+            controller.SetState(controller.TileMover.CanMoveInDirection(facing)
+                ? controller.WalkingState
+                : controller.CollisionState);
         }
 
         public void Exit() { }

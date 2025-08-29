@@ -141,6 +141,8 @@ GameObject:
   - component: {fileID: 269636176}
   - component: {fileID: 269636177}
   - component: {fileID: 269636178}
+  - component: {fileID: 269636179}
+  - component: {fileID: 269636180}
   m_Layer: 3
   m_Name: Lass
   m_TagString: Untagged
@@ -157,7 +159,7 @@ Transform:
   m_GameObject: {fileID: 269636166}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: -3, z: 0}
+  m_LocalPosition: {x: -2.5, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -293,6 +295,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkClip: {fileID: 7400000, guid: 465d93c122efe0449a7f83f00e92fa64, type: 2}
+  collisonClip: {fileID: 0}
   input: {fileID: 269636170}
   tileMover: {fileID: 269636171}
   startingDirection: 1
@@ -308,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Lass
+  displayName: Lass
 --- !u!61 &269636176
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -383,6 +386,31 @@ MonoBehaviour:
   maxX: 1
   minY: -1
   maxY: 1
+--- !u!114 &269636179
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269636166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8d21dcffcd9484b916ebf6d8289548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  definition: {fileID: 11400000, guid: 77dfc18891f44ca4287a84913e232e5a, type: 2}
+--- !u!114 &269636180
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269636166}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e8341c798a97046be9aef18246e9e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &499083359
 GameObject:
   m_ObjectHideFlags: 0
@@ -616,7 +644,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -655,6 +683,7 @@ GameObject:
   - component: {fileID: 734013345}
   - component: {fileID: 734013344}
   - component: {fileID: 734013355}
+  - component: {fileID: 734013356}
   m_Layer: 3
   m_Name: Lady
   m_TagString: Untagged
@@ -814,6 +843,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walkClip: {fileID: 7400000, guid: dfa84af32b991ba449ea5166930a340e, type: 2}
+  collisonClip: {fileID: 8300000, guid: 700179018b63ab44dad3c67845a67a37, type: 3}
   input: {fileID: 734013348}
   tileMover: {fileID: 734013349}
   startingDirection: 2
@@ -829,7 +859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a556215c348579246b314c5e6b6e25af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterName: Youngster Girl
+  displayName: Lady
 --- !u!212 &734013353
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -891,7 +921,7 @@ Transform:
   m_GameObject: {fileID: 734013343}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4, y: -2.93, z: 0}
+  m_LocalPosition: {x: 4.5, y: -3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -909,7 +939,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d8d21dcffcd9484b916ebf6d8289548, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 8c21fb21e36386840b5b460e261bcaff, type: 2}
+  definition: {fileID: 11400000, guid: f0b8c7a966238b64293d97b806952b6d, type: 2}
+--- !u!114 &734013356
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 734013343}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5e8341c798a97046be9aef18246e9e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &864203187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 864203189}
+  - component: {fileID: 864203188}
+  m_Layer: 0
+  m_Name: SceneBGMPlayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &864203188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864203187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cef3134415247a4b9fa9656f5febe9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip: {fileID: 8300000, guid: 236c1e53c2a273044aa935385e095dff, type: 3}
+--- !u!4 &864203189
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 864203187}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1092055894
 GameObject:
   m_ObjectHideFlags: 0
@@ -1666,7 +1753,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 0}
   m_Origin: {x: -8, y: -6, z: 0}
   m_Size: {x: 13, y: 15, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -3118,7 +3205,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -3538,7 +3625,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -3665,7 +3752,7 @@ Transform:
   m_GameObject: {fileID: 1572669355}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: 3.5, z: 0}
+  m_LocalPosition: {x: 1.5, y: 2.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3685,6 +3772,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sceneToLoad: {fileID: 102900000, guid: 97d013d6bf7ab0640a31d47cc4e3d602, type: 3}
   targetSpawnLocation: 1
+  transitionClip: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
 --- !u!1 &1838574833
 GameObject:
   m_ObjectHideFlags: 0
@@ -4002,7 +4090,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -8, y: -5, z: 0}
   m_Size: {x: 12, y: 14, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4396,7 +4484,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -5, y: -5, z: 0}
   m_Size: {x: 9, y: 14, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4865,7 +4953,7 @@ Tilemap:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Origin: {x: -7, y: -6, z: 0}
   m_Size: {x: 11, y: 15, z: 1}
-  m_TileAnchor: {x: 0.5, y: 0, z: 0}
+  m_TileAnchor: {x: 0.5, y: 0.5, z: 0}
   m_TileOrientation: 0
   m_TileOrientationMatrix:
     e00: 1
@@ -4930,3 +5018,4 @@ SceneRoots:
   - {fileID: 1572669358}
   - {fileID: 269636167}
   - {fileID: 734013354}
+  - {fileID: 864203189}

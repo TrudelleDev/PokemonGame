@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Systems.Inventory
+﻿namespace PokemonGame.Inventory
 {
     /// <summary>
     /// Defines a binding contract for UI components that display items from a specific inventory category.

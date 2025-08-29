@@ -1,11 +1,8 @@
 using System;
 using PokemonGame.Abilities;
 using PokemonGame.Abilities.Definition;
-using PokemonGame.Abilities.Enums;
 using PokemonGame.Moves;
 using PokemonGame.Moves.Definition;
-using PokemonGame.Moves.Enums;
-using PokemonGame.Natures.Enums;
 using PokemonGame.Pokemons.Definition;
 using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Models;
@@ -15,18 +12,36 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemons
 {
+    /// <summary>
+    /// Runtime Pokémon instance built from static definitions (species, nature, ability, moves).
+    /// Holds dynamic state like level, stats, gender, health, and owner info.
+    /// </summary>
     [Serializable]
     public class Pokemon
     {
-        [SerializeField, Required] private int level;
-        [SerializeField, Required] private PokemonId pokemonId;
-        [SerializeField, Required] private NatureId natureId;
-        [SerializeField, Required] private AbilityId abilityId;
-        [SerializeField, Required] private MoveId[] moveIds;
+        [SerializeField, Required, Range(1, 100)]
+        [Tooltip("The level of this Pokémon.")]
+        private int level = 1;
+
+        [SerializeField, Required]
+        [Tooltip("Pokemon definition for this Pokémon.")]
+        private PokemonDefinition pokemonDefinition;
+
+        [SerializeField, Required]
+        [Tooltip("Nature definition that affects stat growth.")]
+        private NatureDefinition natureDefinition;
+
+        [SerializeField, Required]
+        [Tooltip("Ability definition for this Pokémon.")]
+        private AbilityDefinition abilityDefinition;
+
+        [SerializeField, Required]
+        [Tooltip("Moves known by this Pokémon.")]
+        private MoveDefinition[] moveDefinitions;
 
         private static readonly IDGenerator idGenerator = new IDGenerator(1000, 9999);
 
-        public PokemonDefinition Definition { get; private set; }
+        public PokemonDefinition Definition => pokemonDefinition;
         public Nature Nature { get; private set; }
         public Ability Ability { get; private set; }
         public Move[] Moves { get; private set; }
@@ -43,83 +58,50 @@ namespace PokemonGame.Pokemons
 
         public event Action<float> OnHealthChange;
 
-        public Pokemon(int level, PokemonId pokemonId, NatureId natureId, AbilityId abilityId, MoveId[] moveIds)
+        public Pokemon(int level, PokemonDefinition species, NatureDefinition natureDef, AbilityDefinition abilityDef, MoveDefinition[] moveDefs)
         {
             this.level = level;
-            this.pokemonId = pokemonId;
-            this.natureId = natureId;
-            this.abilityId = abilityId;
-            this.moveIds = moveIds;
+            this.pokemonDefinition = species;
+            this.natureDefinition = natureDef;
+            this.abilityDefinition = abilityDef;
+            this.moveDefinitions = moveDefs;
 
             GenerateAbility();
             GenerateNature();
-            GetPokemonDefinition();
             GenerateMoves();
-
             Initialize();
         }
 
         public Pokemon Clone()
         {
-            var moves = (MoveId[])moveIds.Clone();
-            return new Pokemon(level, pokemonId, natureId, abilityId, moves);
+            var clonedMoves = (MoveDefinition[])moveDefinitions.Clone();
+            return new Pokemon(level, pokemonDefinition, natureDefinition, abilityDefinition, clonedMoves);
         }
 
         private void GenerateNature()
         {
-            if (!NatureDefinitionLoader.TryGet(natureId, out var natureDefinition))
-            {
-                Debug.LogError($"Missing Nature definition for {natureId}");
-                return;
-            }
-
             Nature = new Nature(natureDefinition);
         }
 
         private void GenerateAbility()
         {
-            if (!AbilityDefinitionLoader.TryGet(abilityId, out var abilityDefinition))
-            {
-                Debug.LogError($"Missing Ability definition for {abilityId}");
-                return;
-            }
-
             Ability = new Ability(abilityDefinition);
-        }
-
-        private void GetPokemonDefinition()
-        {
-            if (!PokemonDefinitionLoader.TryGet(pokemonId, out var pokemonDefinition))
-            {
-                Debug.LogError($"Missing Pokemon definition for {pokemonId}");
-                return;
-            }
-
-            Definition = pokemonDefinition;
         }
 
         private void GenerateMoves()
         {
-            Moves = new Move[moveIds.Length];
-
-            for (int i = 0; i < moveIds.Length; i++)
+            Moves = new Move[moveDefinitions.Length];
+            for (int i = 0; i < moveDefinitions.Length; i++)
             {
-                if (MoveDefinitionLoader.TryGet(moveIds[i], out var moveDef))
-                {
-                    Moves[i] = new Move(moveDef);
-                }
-                else
-                {
-                    Debug.LogWarning($"Missing Move definition for {moveIds[i]}");
-                    Moves[i] = null; // or a default "Empty Move" instance
-                }
+                Moves[i] = moveDefinitions[i] != null ? new Move(moveDefinitions[i]) : null;
             }
         }
+
         private void Initialize()
         {
             IndividualValue = StatsCalculator.GenerateIndividualValues();
             EffortValue = new PokemonStats(0, 0, 0, 0, 0, 0);
-            CoreStat = StatsCalculator.CalculateCoreStats(Definition, IndividualValue, EffortValue, level);
+            CoreStat = StatsCalculator.CalculateCoreStats(pokemonDefinition, IndividualValue, EffortValue, level);
             GetGender();
 
             ID = idGenerator.GetID();
@@ -130,7 +112,7 @@ namespace PokemonGame.Pokemons
         private void GetGender()
         {
             float roll = UnityEngine.Random.Range(0f, 100f);
-            Gender = roll < Definition.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
+            Gender = roll < pokemonDefinition.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
         }
     }
 }

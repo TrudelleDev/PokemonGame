@@ -1,4 +1,5 @@
-﻿using PokemonGame.Characters.Enums;
+﻿using PokemonGame.Audio;
+using PokemonGame.Characters.Enums;
 using PokemonGame.Characters.Inputs.Enums;
 using PokemonGame.Characters.Inputs.Extensions;
 
@@ -20,6 +21,11 @@ namespace PokemonGame.Characters.States
         public void Enter()
         {
             controller.AnimatorController.PlayCollisionStep();
+
+            if (AudioManager.Instance != null)
+            {
+                AudioManager.Instance.PlaySFX(controller.CollisionClip);
+            }
         }
 
         public void Update() { }

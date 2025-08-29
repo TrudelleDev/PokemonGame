@@ -2,10 +2,9 @@ using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Definition;
 using PokemonGame.Items.Enums;
-using PokemonGame.Items.Models;
 using UnityEngine;
 
-namespace PokemonGame.Systems.Inventory
+namespace PokemonGame.Inventory
 {
     /// <summary>
     /// Manages the player's inventory, organizing items into separate sections
@@ -47,24 +46,29 @@ namespace PokemonGame.Systems.Inventory
         }
 
         /// <summary>
-        /// Add a stack to the appropriate section.
+        /// Adds an item to the appropriate section of the inventory.
         /// </summary>
-        public void Add(ItemStack stack)
+        /// <param name="item">The runtime item instance to add.</param>
+        public void Add(Item item)
         {
             EnsureInitialized();
 
-            if (!stack.IsValid) return;
+            if (item == null || item.ID == ItemId.None || item.Quantity <= 0)
+            {
+                Debug.LogWarning("[InventoryManager] Attempted to add invalid item.");
+                return;
+            }
 
-            ItemDefinition def = ItemDefinitionLoader.Get(stack.ItemID);
+            var def = item.Definition;
             if (def == null)
             {
-                Debug.LogWarning($"[InventoryManager] Missing ItemDefinition for '{stack.ItemID}'. Did you load definitions?");
+                Debug.LogWarning($"[InventoryManager] Missing definition for ID '{item.ID}'. Did you load definitions?");
                 return;
             }
 
             if (categories.TryGetValue(def.Category, out var section) && section != null)
             {
-                section.Add(stack);
+                section.Add(item); // if your InventoryCategory still works with stacks
             }
             else
             {

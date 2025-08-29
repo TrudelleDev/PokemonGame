@@ -1,6 +1,6 @@
+using PokemonGame.Inventory;
 using PokemonGame.Items.Enums;
 using PokemonGame.Menu.Controllers;
-using PokemonGame.Systems.Inventory;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace PokemonGame.Views
     /// </summary>
     public class InventoryView : View
     {
-        [Title("Categories")]
+        [Header("Categories")]
 
         [SerializeField, Required]
         [Tooltip("Category for regular items.")]

@@ -15,7 +15,7 @@ MonoBehaviour:
   m_DefaultGroup: b00cadabc593f5249bcc3f72027e137a
   m_currentHash:
     serializedVersion: 2
-    Hash: 7111700673dbe214b94f5770de5ae2ca
+    Hash: e3264be331d78a3af2272f4a5f067310
   m_OptimizeCatalogSize: 0
   m_BuildRemoteCatalog: 0
   m_BundleLocalCatalog: 0
@@ -93,6 +93,7 @@ MonoBehaviour:
     - nature-definition
     - move-definition
     - item-definition
+    - audio-definition
   m_SchemaTemplates: []
   m_GroupTemplateObjects:
   - {fileID: 11400000, guid: dec2d1c933418f940a5bb04df8c95496, type: 2}
