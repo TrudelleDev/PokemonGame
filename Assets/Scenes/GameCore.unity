@@ -3691,6 +3691,69 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 4748056098846890741, guid: 8a186a156b19e454282a7fccf28a7d60, type: 3}
   m_PrefabInstance: {fileID: 1678298391}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1905274549
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1905274550}
+  - component: {fileID: 1905274551}
+  - component: {fileID: 1905274552}
+  m_Layer: 0
+  m_Name: BattleSystem
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1905274550
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905274549}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1905274551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905274549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a69301a0365f7264f802e37d9fd87a1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneTrigger: {fileID: 1905274552}
+--- !u!114 &1905274552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1905274549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55d1c52c107770443949dc4c5ad9b793, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneToLoad: {fileID: 102900000, guid: d4bad4ac43c3d9e4199866ecee3228f5, type: 3}
+  sceneToLoadName: Battle
+  targetSpawnLocation: 0
+  transitionType: 2
+  transitionClip: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
 --- !u!1 &1925742980
 GameObject:
   m_ObjectHideFlags: 0
@@ -14033,3 +14096,4 @@ SceneRoots:
   - {fileID: 529088978}
   - {fileID: 2088294302}
   - {fileID: 420937235}
+  - {fileID: 1905274550}

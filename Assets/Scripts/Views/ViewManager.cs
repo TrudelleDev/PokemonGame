@@ -107,7 +107,7 @@ namespace PokemonGame.Views
             {
                 yield return previous.HandleTransition(target);
             }
-               
+
             target.Show();
             currentView = target;
             isTransitioning = false;

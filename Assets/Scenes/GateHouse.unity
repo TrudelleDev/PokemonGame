@@ -3771,7 +3771,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: {fileID: 102900000, guid: 97d013d6bf7ab0640a31d47cc4e3d602, type: 3}
+  sceneToLoadName: ViridianForest
   targetSpawnLocation: 1
+  transitionType: 0
   transitionClip: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
 --- !u!1 &1838574833
 GameObject:

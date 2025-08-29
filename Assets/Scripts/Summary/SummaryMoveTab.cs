@@ -4,7 +4,7 @@ using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Systems.Summary
+namespace PokemonGame.Summary
 {
     /// <summary>
     /// Controls the move tab of the Pokémon summary screen.

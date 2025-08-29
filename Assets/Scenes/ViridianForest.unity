@@ -3813,7 +3813,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: {fileID: 102900000, guid: 085f745a4ef4a0a48af9c845c6b0305a, type: 3}
+  sceneToLoadName: GateHouse
   targetSpawnLocation: 4
+  transitionType: 1
   transitionClip: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
 --- !u!1 &1476155966
 GameObject:

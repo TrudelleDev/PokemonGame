@@ -1,6 +1,6 @@
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
-using PokemonGame.Systems.Summary;
+using PokemonGame.Summary;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

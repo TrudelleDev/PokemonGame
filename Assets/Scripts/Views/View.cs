@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using PokemonGame.Transitions;
 using PokemonGame.Transitions.Controllers;
 using PokemonGame.Transitions.Enums;
 using PokemonGame.Transitions.Extensions;
@@ -24,25 +25,7 @@ namespace PokemonGame.Views
 
         private void Awake()
         {
-            transition = GetTransitionFromEnum(transitionType);
-        }
-
-        private ITransition GetTransitionFromEnum(TransitionType type)
-        {
-            switch (type)
-            {
-                case TransitionType.AlphaFade:
-                    return ServiceLocator.Get<AlphaFadeController>();
-
-                case TransitionType.MaskedFade:
-                    return ServiceLocator.Get<MaskedFadeController>();
-
-                case TransitionType.None:
-                    return null;
-                default:
-                    Log.Warning(nameof(View), $"Unsupported transition type: {type}");
-                    return null;
-            }
+            transition = TransitionResolver.Resolve(transitionType);
         }
 
         /// <summary>

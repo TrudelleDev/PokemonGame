@@ -68,28 +68,6 @@ namespace PokemonGame.Transitions.Controllers
             StartFade(FullyTransparent, onComplete);
         }
 
-        /// <summary>
-        /// Starts an asynchronous fade-in (transparent to black/opaque).
-        /// Use when transitioning into a new scene or UI state.
-        /// </summary>
-        public Task FadeInAsync()
-        {
-            TaskCompletionSource<bool> fadeCompletion = PrepareFadeCompletionSource();
-            FadeIn(() => fadeCompletion.TrySetResult(true));
-            return fadeCompletion.Task;
-        }
-
-        /// <summary>
-        /// Starts an asynchronous fade-out (black/opaque to transparent).
-        /// Use when revealing gameplay or a new UI view.
-        /// </summary>
-        public Task FadeOutAsync()
-        {
-            TaskCompletionSource<bool> fadeCompletion = PrepareFadeCompletionSource();
-            FadeOut(() => fadeCompletion.TrySetResult(true));
-            return fadeCompletion.Task;
-        }
-
         private void StartFade(float targetAlpha, Action onComplete)
         {
             // Stops any ongoing fade transition before starting a new one.
@@ -133,14 +111,6 @@ namespace PokemonGame.Transitions.Controllers
             fadeRoutine = null;
             onComplete?.Invoke();
             fadeCompletionSource?.TrySetResult(true);
-        }
-
-        private TaskCompletionSource<bool> PrepareFadeCompletionSource()
-        {
-            // Complete any previous waiter to avoid dangling tasks
-            fadeCompletionSource?.TrySetResult(true);
-            fadeCompletionSource = new TaskCompletionSource<bool>();
-            return fadeCompletionSource;
         }
 
         private void SetAlpha(float alpha)

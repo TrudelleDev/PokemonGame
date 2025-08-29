@@ -5,6 +5,7 @@ using PokemonGame.Characters.Spawn.Enums;
 using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using PokemonGame.Transitions.Enums;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -18,27 +19,31 @@ namespace PokemonGame
     public class SceneTrigger : MonoBehaviour, ITrigger
     {
 #if UNITY_EDITOR
-        [Header("Scene Settings (Editor Only)")]
+        [Header("Scenes (Editor Only)")]
         [SerializeField, Required]
         [Tooltip("Scene asset to load when the trigger is activated.")]
         private SceneAsset sceneToLoad;
 #endif
 
-        [Header("Scene Settings (Runtime)")]
-        [SerializeField, ReadOnly]
-        [Tooltip("Scene name used at runtime (auto-populated from SceneAsset).")]
-        private string sceneToLoadName;
-
-        [Header("Spawn Settings")]
+        [Header("Spawn")]
         [SerializeField, Required]
         [Tooltip("The spawn location in the target scene where the player will appear.")]
         private SpawnLocationID targetSpawnLocation;
 
-        [Header("Audio")]
+        [Header("Transition")]
         [SerializeField, Required]
-        [Tooltip("Sound effect played when transitioning (e.g., entering/exiting a building).")]
+        [Tooltip("Type of transition effect used when changing scenes.")]
+        private TransitionType transitionType;
+
+        [Header("Audio")]
+        [SerializeField]
+        private bool hasAudio;
+
+        [SerializeField, ShowIf("hasAudio")]
+        [Tooltip("Sound effect played when transitioning.")]
         private AudioClip transitionClip;
 
+        private string sceneToLoadName;
         private SceneTransitionController transitionController;
 
 #if UNITY_EDITOR
@@ -64,10 +69,12 @@ namespace PokemonGame
         /// <param name="character">The character activating the trigger (usually the player).</param>
         public void Trigger(Character character)
         {
-            transitionController = ServiceLocator.Get<SceneTransitionController>();
+            if (hasAudio && transitionClip != null)
+            {
+                AudioManager.Instance.PlaySFX(transitionClip);
+            }
 
-            AudioManager.Instance.PlaySFX(transitionClip);
-            transitionController.StartTransition(sceneToLoadName, targetSpawnLocation);
+            transitionController.StartTransition(sceneToLoadName, targetSpawnLocation, transitionType);
         }
     }
 }
