@@ -1,6 +1,6 @@
 using System.Collections;
-using PokemonGame.Characters.Spawn;
-using PokemonGame.Characters.Spawn.Enums;
+using PokemonGame.MapEntry;
+using PokemonGame.MapEntry.Enums;
 using PokemonGame.Pause;
 using PokemonGame.Transitions.Constants;
 using PokemonGame.Transitions.Enums;
@@ -12,7 +12,9 @@ using UnityEngine.SceneManagement;
 namespace PokemonGame.Transitions.Controllers
 {
     /// <summary>
-    /// Handles cross-scene transitions with optional fade in/out and spawn placement.
+    /// Controls scene-to-scene transitions.
+    /// Supports optional fade in/out effects and positions the player
+    /// at the correct map entry point after loading.
     /// </summary>
     public class SceneTransitionController : MonoBehaviour
     {
@@ -29,10 +31,13 @@ namespace PokemonGame.Transitions.Controllers
         }
 
         /// <summary>
-        /// Starts a transition into the given scene at the given spawn location.
-        /// If transitionType is None, performs an instant swap.
+        /// Begins a transition into the target scene at the specified map entry point.
+        /// Uses the given transition type (instant, fade, etc.).
         /// </summary>
-        public void StartTransition(string sceneToLoadName, SpawnLocationID spawnLocation, TransitionType transitionType)
+        /// <param name="sceneToLoadName">The name of the target scene to load.</param>
+        /// <param name="mapEntryID">The entry point where the player should appear.</param>
+        /// <param name="transitionType">The type of transition effect to apply.</param>
+        public void StartTransition(string sceneToLoadName, MapEntryID mapEntryID, TransitionType transitionType)
         {
             if (isTransitioning)
                 return;
@@ -40,18 +45,18 @@ namespace PokemonGame.Transitions.Controllers
             ITransition transition = TransitionResolver.Resolve(transitionType);
 
             isTransitioning = true;
-            StartCoroutine(RunTransition(sceneToLoadName, spawnLocation, transition));
+            StartCoroutine(RunTransition(sceneToLoadName, mapEntryID, transition));
         }
 
-        private IEnumerator RunTransition(string sceneToLoadName, SpawnLocationID spawnLocation, ITransition transition)
+        private IEnumerator RunTransition(string sceneToLoadName, MapEntryID mapEntryID, ITransition transition)
         {
             Scene sourceScene = SceneManager.GetActiveScene();
             PauseManager.SetPaused(true);
 
-            // Store spawn location for PlayerSpawner
-            SpawnLocationManager.Instance.SetNextSpawnLocation(spawnLocation);
+            // Store entry point for player placement
+            MapEntryRegistry.SetNextEntry(mapEntryID);
 
-            // Optional fade in
+            // Fade in (optional)
             if (transition != null)
             {
                 yield return transition.FadeInCoroutine();
@@ -62,6 +67,7 @@ namespace PokemonGame.Transitions.Controllers
             yield return sceneLoadOperation;
 
             Scene targetScene = SceneManager.GetSceneByName(sceneToLoadName);
+
             if (targetScene.IsValid())
             {
                 SceneManager.SetActiveScene(targetScene);
@@ -69,12 +75,13 @@ namespace PokemonGame.Transitions.Controllers
 
             // Unload previous scene
             AsyncOperation unloadSceneOperation = SceneManager.UnloadSceneAsync(sourceScene);
+
             if (unloadSceneOperation != null)
             {
                 yield return unloadSceneOperation;
             }
 
-            // Optional fade out
+            // Fade out (optional)
             if (transition != null)
             {
                 yield return new WaitForSecondsRealtime(TransitionConstants.HoldOnBlackSeconds);

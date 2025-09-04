@@ -1,3 +1,4 @@
+using PokemonGame.Characters;
 using PokemonGame.Inventory;
 using PokemonGame.Items.Enums;
 using PokemonGame.Menu.Controllers;
@@ -15,15 +16,15 @@ namespace PokemonGame.Views
 
         [SerializeField, Required]
         [Tooltip("Category for regular items.")]
-        private InventoryCategoryUI itemCategory;
+        private InventorySectionUI itemCategory;
 
         [SerializeField, Required]
         [Tooltip("Category for key items.")]
-        private InventoryCategoryUI keyItemCategory;
+        private InventorySectionUI keyItemCategory;
 
         [SerializeField, Required]
         [Tooltip("Category for Poké Balls.")]
-        private InventoryCategoryUI ballCategory;
+        private InventorySectionUI ballCategory;
 
         [Title("Inventory Manager")]
 

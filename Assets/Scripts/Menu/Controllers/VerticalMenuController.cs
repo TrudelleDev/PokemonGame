@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using PokemonGame.Characters.Inputs;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -48,19 +49,19 @@ namespace PokemonGame.Menu.Controllers
                 return;
             }
 
-            if (Input.GetKeyDown(KeyBind.Down))
+            if (Input.GetKeyDown(KeyBinds.Down))
             {
                 MoveNext();
             }
-            else if (Input.GetKeyDown(KeyBind.Up))
+            else if (Input.GetKeyDown(KeyBinds.Up))
             {
                 MovePrevious();
             }
-            else if (Input.GetKeyDown(KeyBind.Accept))
+            else if (Input.GetKeyDown(KeyBinds.Interact))
             {
                 TriggerClick();
             }
-            else if (Input.GetKeyDown(KeyBind.Cancel))
+            else if (Input.GetKeyDown(KeyBinds.Cancel))
             {
                 OnCancel?.Invoke(currentButton);
             }

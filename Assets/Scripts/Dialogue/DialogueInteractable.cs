@@ -1,4 +1,5 @@
 using PokemonGame.Characters;
+using PokemonGame.Characters.Core;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Pause;
 using Sirenix.OdinInspector;
@@ -10,7 +11,7 @@ namespace PokemonGame.Dialogue
     /// Interactable that starts a dialogue.
     /// </summary>
     [DisallowMultipleComponent]
-    public class DialogueInteractable : MonoBehaviour, IInteract
+    public class DialogueInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required]
         [Tooltip("Dialogue shown when interacted with.")]

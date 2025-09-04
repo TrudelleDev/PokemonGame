@@ -3,15 +3,18 @@ using UnityEngine;
 namespace PokemonGame
 {
     /// <summary>
-    /// Stores global tilemap configuration information used across the game.
-    /// Provides shared access to values like cell size for grid-based calculations.
+    /// Provides global access to the tile grid cell size.
+    /// Reads from the attached Grid when the scene loads.
     /// </summary>
-    public static class TilemapInfo
+    [DisallowMultipleComponent]
+    [RequireComponent(typeof(Grid))]
+    public class TilemapInfo : MonoBehaviour
     {
-        /// <summary>
-        /// The size of a single tile cell in world units.
-        /// This value should be initialized during game setup.
-        /// </summary>
-        public static Vector3 CellSize;
+        public static Vector3 CellSize { get; private set; }
+
+        private void Awake()
+        {
+            CellSize = GetComponent<Grid>().cellSize;
+        }
     }
 }

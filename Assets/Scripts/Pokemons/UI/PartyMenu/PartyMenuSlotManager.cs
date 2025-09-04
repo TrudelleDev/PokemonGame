@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using PokemonGame.Characters;
+using PokemonGame.Characters.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +14,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
     {
         [SerializeField, Required]
         [Tooltip("Reference to the current player party.")]
-        private Party party;
+        private PartyManager party;
 
         private List<PartyMenuSlot> slots;
 
@@ -38,9 +40,9 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
             for (int i = 0; i < slots.Count; i++)
             {
-                if (i < party.Pokemons.Count)
+                if (i < party.Members.Count)
                 {
-                    slots[i].Bind(party.Pokemons[i]);
+                    slots[i].Bind(party.Members[i]);
                 }
                 else
                 {

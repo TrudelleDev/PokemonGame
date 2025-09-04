@@ -1,13 +1,11 @@
 ﻿using PokemonGame.Audio;
-using PokemonGame.Characters.Enums;
-using PokemonGame.Characters.Inputs.Enums;
-using PokemonGame.Characters.Inputs.Extensions;
+using PokemonGame.Characters.Direction;
 
 namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// Handles collision when trying to move into a blocked tile.
-    /// Plays a collision animation, then decides the next state.
+    /// State entered when the character attempts to move into a blocked tile.
+    /// Plays a collision animation, triggers optional SFX, and decides the next state.
     /// </summary>
     public class CharacterCollisionState : ICharacterState
     {
@@ -22,33 +20,43 @@ namespace PokemonGame.Characters.States
         {
             controller.AnimatorController.PlayCollisionStep();
 
-            if (AudioManager.Instance != null)
+            // Play collision sound if defined
+            if (controller.CollisionAudioClip != null && AudioManager.Instance != null)
             {
-                AudioManager.Instance.PlaySFX(controller.CollisionClip);
+                AudioManager.Instance.PlaySFX(controller.CollisionAudioClip);
             }
         }
 
+        /// <summary>
+        /// No update logic required for collision state.
+        /// </summary>
         public void Update() { }
 
+        /// <summary>
+        /// No cleanup required for collision state.
+        /// </summary>
         public void Exit() { }
 
+        /// <summary>
+        /// Called by an animation event when the collision step finishes.
+        /// Decides the next state based on current input and tile availability.
+        /// </summary>
         public void OnCollisionComplete()
         {
-            InputDirection inputDir = controller.Input.InputDirection;
+            InputDirection currentDirection = controller.Input.CurrentDirection;
 
-            // No input, return idle
-            if (inputDir == InputDirection.None)
+            if (currentDirection == InputDirection.None)
             {
                 controller.SetState(controller.IdleState);
                 return;
             }
 
-            // Update facing to match attempted direction
-            FacingDirection desiredFacing = inputDir.ToFacingDirection();
-            controller.FacingDirection = desiredFacing;
+            // Update facing direction to match attempted input
+            FacingDirection desiredFacingDirection = currentDirection.ToFacingDirection();
+            controller.FacingDirection = desiredFacingDirection;
 
-            // Retry movement if possible, otherwise stay in collision
-            if (controller.TileMover.CanMoveInDirection(desiredFacing))
+            // Retry movement if possible, otherwise re-enter collision state
+            if (controller.TileMover.CanMoveInDirection(desiredFacingDirection))
             {
                 controller.SetState(controller.WalkingState);
             }

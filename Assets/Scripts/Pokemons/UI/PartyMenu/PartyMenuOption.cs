@@ -1,4 +1,5 @@
 using System;
+using PokemonGame.Characters.Inputs;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Views;
 using UnityEngine;
@@ -35,7 +36,7 @@ namespace PokemonGame
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyBind.Cancel))
+            if (Input.GetKeyDown(KeyBinds.Cancel))
             {
                 OnCancelClick();
             }

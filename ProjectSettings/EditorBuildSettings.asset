@@ -6,7 +6,7 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Boot.unity
+    path: Assets/Scenes/StartupScene.unity
     guid: b433b20a025e2474b87b49df934e6f93
   - enabled: 1
     path: Assets/Scenes/ViridianForest.unity
@@ -23,5 +23,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Battle.unity
     guid: d4bad4ac43c3d9e4199866ecee3228f5
+  - enabled: 1
+    path: Assets/Scenes/UIScene.unity
+    guid: d32d759928edb3a48a36e53c51d6dd05
+  - enabled: 1
+    path: Assets/Scenes/PlayerScene.unity
+    guid: fc670f8995988034bbb12ae22a5265ac
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 00ab7c0d2d81a494abc71c93eb35d67e, type: 2}

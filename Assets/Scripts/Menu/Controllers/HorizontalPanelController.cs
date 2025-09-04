@@ -1,3 +1,4 @@
+using PokemonGame.Characters.Inputs;
 using UnityEngine;
 
 namespace PokemonGame.Menu.Controllers
@@ -9,11 +10,11 @@ namespace PokemonGame.Menu.Controllers
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyBind.Right) && currentPanelIndex < transform.childCount - 1)
+            if (Input.GetKeyDown(KeyBinds.Right) && currentPanelIndex < transform.childCount - 1)
             {
                 currentPanelIndex++;
             }
-            if (Input.GetKeyDown(KeyBind.Left) && currentPanelIndex > 0)
+            if (Input.GetKeyDown(KeyBinds.Left) && currentPanelIndex > 0)
             {
                 currentPanelIndex--;
             }

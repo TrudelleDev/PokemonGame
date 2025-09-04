@@ -1256,6 +1256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 295effe78fedd934cba613fdf551fb5e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 0}
 --- !u!4 &290694533
 Transform:
   m_ObjectHideFlags: 0
@@ -3813,9 +3814,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneToLoad: {fileID: 102900000, guid: 085f745a4ef4a0a48af9c845c6b0305a, type: 3}
-  sceneToLoadName: GateHouse
   targetSpawnLocation: 4
   transitionType: 1
+  hasAudio: 0
   transitionClip: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
 --- !u!1 &1476155966
 GameObject:
@@ -52494,7 +52495,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1909971886}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47bb69c8ff0e9174da0fc2197d64e27d, type: 3}
+  m_Script: {fileID: 11500000, guid: 64f84cd965878a347bfd1da328dbea5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1926264159
@@ -52538,12 +52539,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1926264159}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 61cd03d0d62ada643a6f62fe7e8bf516, type: 3}
+  m_Script: {fileID: 11500000, guid: b8485fca7eb2c554285c3e1f71039169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnLocationID: 1
-  gizmoSize: 1
-  gizmoColor: {r: 0, g: 1, b: 0, a: 1}
+  locationID: 1
 --- !u!1 &2059959257
 GameObject:
   m_ObjectHideFlags: 0

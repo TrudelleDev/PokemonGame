@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
-using PokemonGame.Characters.Enums;
-using PokemonGame.Characters.Inputs.Enums;
+using PokemonGame.Characters.Direction;
 using UnityEngine;
 
 namespace PokemonGame
@@ -11,6 +10,7 @@ namespace PokemonGame
     /// Can be used by any object that moves in discrete steps, such as characters, NPCs, or tiles.
     /// Integrates with <see cref="TileRaycaster"/> to validate movement paths.
     /// </summary>
+    [DisallowMultipleComponent]
     [RequireComponent(typeof(TileRaycaster))]
     public class TileMover : MonoBehaviour
     {

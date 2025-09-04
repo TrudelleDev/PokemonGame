@@ -1,3 +1,5 @@
+using PokemonGame.Characters;
+using PokemonGame.Characters.Party;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
 using PokemonGame.Summary;
@@ -22,7 +24,7 @@ namespace PokemonGame.Views
 
         [SerializeField, Required]
         [Tooltip("Reference to the player's party for selecting the current Pokémon.")]
-        private Party party;
+        private PartyManager party;
 
         /// <summary>
         /// Called when the view is enabled.

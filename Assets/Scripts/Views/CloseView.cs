@@ -1,3 +1,4 @@
+using PokemonGame.Characters.Inputs;
 using UnityEngine;
 
 namespace PokemonGame.Views
@@ -8,7 +9,7 @@ namespace PokemonGame.Views
     public class CloseView : MonoBehaviour
     {
         [Tooltip("Keys that trigger this view to close.")]
-        [SerializeField] private KeyCode[] closeKeys = { KeyBind.Cancel };
+        [SerializeField] private KeyCode[] closeKeys = { KeyBinds.Cancel };
 
         private void Update()
         {

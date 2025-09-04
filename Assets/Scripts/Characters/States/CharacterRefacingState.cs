@@ -8,19 +8,39 @@
     {
         private readonly CharacterStateController controller;
 
+        /// <summary>
+        /// Creates a new refacing state for the given controller.
+        /// </summary>
+        /// <param name="controller">The character controller that owns this state.</param>
         public CharacterRefacingState(CharacterStateController controller)
         {
             this.controller = controller;
         }
 
+        /// <summary>
+        /// Enters the refacing state and plays the refacing animation.
+        /// If no animator is available, immediately transitions back to idle.
+        /// </summary>
         public void Enter()
         {
-            // Play turn animation in current facing direction
-            controller.AnimatorController.PlayRefacing(controller.FacingDirection);
+            if (controller.AnimatorController != null)
+            {
+                controller.AnimatorController.PlayRefacing(controller.FacingDirection);
+            }
+            else
+            {
+                controller.SetState(controller.IdleState);
+            }
         }
 
+        /// <summary>
+        /// No update logic required for refacing state.
+        /// </summary>
         public void Update() { }
 
+        /// <summary>
+        /// No cleanup required for idle state.
+        /// </summary>
         public void Exit() { }
 
         /// <summary>

@@ -1,5 +1,6 @@
 using System.Collections;
 using PokemonGame.Audio;
+using PokemonGame.Characters.Inputs;
 using PokemonGame.Pause;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -72,7 +73,7 @@ namespace PokemonGame.Dialogue
 
                 // Small yield so input can't be "missed" in the same frame
                 yield return null;
-                yield return new WaitUntil(() => Input.GetKeyDown(KeyBind.Accept));
+                yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
             }
 
             PauseManager.SetPaused(false);

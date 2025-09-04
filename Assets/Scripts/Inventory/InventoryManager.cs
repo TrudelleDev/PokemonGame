@@ -1,144 +1,129 @@
 using System.Collections.Generic;
 using PokemonGame.Items;
-using PokemonGame.Items.Definition;
 using PokemonGame.Items.Enums;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Manages the player's inventory, organizing items into separate sections
-    /// based on their type (e.g., regular items, key items, Poké Balls).
-    /// Provides methods to add, remove, and retrieve items.
+    /// Central component that manages the character's inventory.
+    /// Keeps items organized by section and provides add/remove/query operations.
     /// </summary>
     public class InventoryManager : MonoBehaviour
     {
-        [Header("Inventory Sections")]
+        [SerializeField, Required]
+        [Tooltip("Definition asset that seeds this inventory at startup.")]
+        private InventoryDefinition inventory;
 
-        [Tooltip("Regular items (e.g., Potions, Repels).")]
-        [SerializeField] private InventoryCategory item;
-
-        [Tooltip("Key items (e.g., Bike, Maps).")]
-        [SerializeField] private InventoryCategory keyItem;
-
-        [Tooltip("Poké Balls and similar items.")]
-        [SerializeField] private InventoryCategory ball;
-
-
-        private Dictionary<ItemCategory, InventoryCategory> categories;
+        private Dictionary<ItemCategory, InventorySection> sections;
 
         /// <summary>
-        /// Initializes the inventory by binding each category and creating the internal lookup dictionary.
+        /// Initializes the inventory by binding each section and creating the internal lookup dictionary.
         /// This should be called before interacting with the inventory.
         /// </summary>
         public void Initialize()
         {
-            item?.Initialize();
-            keyItem?.Initialize();
-            ball?.Initialize();
+            inventory.GeneralItems.Initialize();
+            inventory.KeyItems.Initialize();
+            inventory.Pokeballs.Initialize();
 
-            categories = new Dictionary<ItemCategory, InventoryCategory>
+            sections = new()
             {
-                { ItemCategory.General, item },
-                { ItemCategory.KeyItem, keyItem },
-                { ItemCategory.Pokeball, ball }
+                [ItemCategory.General] = inventory.GeneralItems,
+                [ItemCategory.KeyItem] = inventory.KeyItems,
+                [ItemCategory.Pokeball] = inventory.Pokeballs
             };
         }
 
         /// <summary>
         /// Adds an item to the appropriate section of the inventory.
+        /// Items are categorized by their item type (General, KeyItem, Pokeball).
         /// </summary>
-        /// <param name="item">The runtime item instance to add.</param>
+        /// <param name="item">The item to add to the inventory.</param>
         public void Add(Item item)
         {
-            EnsureInitialized();
-
             if (item == null || item.ID == ItemId.None || item.Quantity <= 0)
             {
-                Debug.LogWarning("[InventoryManager] Attempted to add invalid item.");
+                Log.Warning(nameof(InventoryManager), "Attempted to add invalid item.");
                 return;
             }
 
-            var def = item.Definition;
-            if (def == null)
+            if (item.Definition == null)
             {
-                Debug.LogWarning($"[InventoryManager] Missing definition for ID '{item.ID}'. Did you load definitions?");
+                Log.Warning(nameof(InventoryManager), $"Missing definition for ID '{item.ID}'. Did you load definitions?");
                 return;
             }
 
-            if (categories.TryGetValue(def.Category, out var section) && section != null)
+            if (sections.TryGetValue(item.Definition.Category, out var section) && section != null)
             {
-                section.Add(item); // if your InventoryCategory still works with stacks
+                section.Add(item);
             }
             else
             {
-                Debug.LogWarning($"[InventoryManager] Unhandled item category '{def.Category}'.");
+                Log.Warning(nameof(InventoryManager), $"No inventory category found for '{item.Definition.Category}'.");
             }
         }
 
         /// <summary>
-        /// Removes the specified item stack from its inventory category (by ItemId).
-        /// If the stack's count reaches zero, the section should remove it internally.
+        /// Removes the specified item stack from its corresponding inventory section.
         /// </summary>
-        /// <param name="item">The runtime item instance to remove.</param>
+        /// <param name="item">The item to remove from the inventory.</param>
         public void Remove(Item item)
         {
-            EnsureInitialized();
-
-            if (item == null) return;
-
-            var id = item.ID;
-            if (id == ItemId.None)
+            if (item == null || item.ID == ItemId.None)
             {
-                Log.Warning(nameof(InventoryManager), "Attempted to remove item with Unknown ID.");
+                Log.Warning(nameof(InventoryManager), "Attempted to remove invalid item.");
                 return;
             }
 
-            var def = ItemDefinitionLoader.Get(id);
-            if (def == null)
+            if (item.Definition == null)
             {
-                Log.Warning(nameof(InventoryManager), $"Missing ItemDefinition for ID '{id}'. Did you load item definitions?");
+                Log.Warning(nameof(InventoryManager), $"Missing definition for ID '{item.ID}'. Did you load definitions?");
                 return;
             }
 
-            if (categories.TryGetValue(def.Category, out var section))
+            if (sections.TryGetValue(item.Definition.Category, out var section))
             {
                 section.Remove(item);
             }
             else
             {
-                Log.Warning(nameof(InventoryManager), $"Unhandled item type '{def.Category}'.");
+                Log.Warning(nameof(InventoryManager), $"No inventory category found for '{item.Definition.Category}'.");
             }
         }
 
         /// <summary>
-        /// Retrieves the inventory section corresponding to a given item type.
+        /// Retrieves the inventory section corresponding to the specified item category.
         /// </summary>
-        /// <param name="type">The type of item (e.g., Item, KeyItem, Pokeball).</param>
-        /// <returns>The matching InventoryCategory, or null if not found.</returns>
-        public InventoryCategory GetSection(ItemCategory type)
+        /// <param name="type">The item category (e.g., General, KeyItem, Pokeball).</param>
+        /// <returns>The inventory section for the specified item category, or null if not found.</returns>
+        public InventorySection GetSection(ItemCategory type)
         {
-            EnsureInitialized();
-            return categories.TryGetValue(type, out var section) ? section : null;
+            if (sections.TryGetValue(type, out var section))
+            {
+                return section;
+            }
+
+            return null;
         }
 
         /// <summary>
-        /// Checks if the inventory contains at least one instance of an item by ID.
+        /// Checks if the inventory contains at least one instance of an item by its ID and category.
         /// </summary>
-        /// <param name="itemId">The item ID to look for.</param>
-        /// <param name="type">The item type section to check within.</param>
-        /// <returns>True if found, otherwise false.</returns>
+        /// <param name="itemId">The item ID to check for.</param>
+        /// <param name="type">The category of item to check in (e.g., General, KeyItem, Pokeball).</param>
+        /// <returns>True if the item exists in the inventory, otherwise false.</returns>
         public bool HasItem(ItemId itemId, ItemCategory type)
         {
-            EnsureInitialized();
-            var section = GetSection(type);
-            return section != null && section.Contains(itemId);
-        }
+            InventorySection section = GetSection(type);
 
-        private void EnsureInitialized()
-        {
-            if (categories == null)
-                Initialize();
+            if (section != null)
+            {
+                return section.Contains(itemId);
+            }
+
+            return false;
         }
     }
 }

@@ -1,11 +1,14 @@
 ﻿using PokemonGame.Audio;
 using PokemonGame.Characters;
 using PokemonGame.Characters.Interfaces;
-using PokemonGame.Characters.Spawn.Enums;
 using PokemonGame.Transitions.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using PokemonGame.Transitions.Enums;
+using PokemonGame.MapEntry.Enums;
+using PokemonGame.Characters.Core;
+
+
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -16,7 +19,7 @@ namespace PokemonGame
     /// <summary>
     /// Trigger that transitions the player between scenes (e.g., entering/exiting a building, cave, or route).
     /// </summary>
-    public class SceneTrigger : MonoBehaviour, ITrigger
+    public class SceneTrigger : MonoBehaviour, ITriggerable
     {
 #if UNITY_EDITOR
         [Header("Scenes (Editor Only)")]
@@ -28,7 +31,7 @@ namespace PokemonGame
         [Header("Spawn")]
         [SerializeField, Required]
         [Tooltip("The spawn location in the target scene where the player will appear.")]
-        private SpawnLocationID targetSpawnLocation;
+        private MapEntryID targetSpawnLocation;
 
         [Header("Transition")]
         [SerializeField, Required]

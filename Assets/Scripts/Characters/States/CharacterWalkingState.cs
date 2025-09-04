@@ -1,31 +1,40 @@
 ﻿using System.Collections;
-using PokemonGame.Characters.Enums;
-using PokemonGame.Characters.Enums.Extensions;
-using PokemonGame.Characters.Inputs.Enums;
-using PokemonGame.Characters.Inputs.Extensions;
+using PokemonGame.Characters.Core;
+using PokemonGame.Characters.Direction;
 using UnityEngine;
 
 namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// Walking state: moves the character one tile in the current facing direction.
-    /// Triggers interactions and handles collisions before moving.
+    /// Walking state: the character moves one tile in the current facing direction.
+    /// Triggers are checked before movement, collisions are handled, and movement
+    /// is executed via coroutine with animation.
     /// </summary>
     public class CharacterWalkingState : ICharacterState
     {
         private readonly CharacterStateController controller;
-        private readonly InteractionHandler interactionHandler;
+        private readonly CharacterTriggerHandler triggerHandler;
         private Coroutine walkRoutine;
 
+        /// <summary>
+        /// Creates a new walking state for the given controller.
+        /// Caches the <see cref="CharacterTriggerHandler"/> if present.
+        /// </summary>
+        /// <param name="controller">The character controller that owns this state.</param>
         public CharacterWalkingState(CharacterStateController controller)
         {
             this.controller = controller;
-            interactionHandler = controller.GetComponent<InteractionHandler>();
+            triggerHandler = controller.GetComponent<CharacterTriggerHandler>();
         }
 
+        /// <summary>
+        /// Enters the walking state and attempts to move one tile.
+        /// Handles idle fallback, triggers, and collisions before starting movement.
+        /// </summary>
         public void Enter()
         {
-            InputDirection input = controller.Input.InputDirection;
+            InputDirection input = controller.Input.CurrentDirection;
+
             if (input == InputDirection.None)
             {
                 controller.SetState(controller.IdleState);
@@ -36,7 +45,7 @@ namespace PokemonGame.Characters.States
             controller.FacingDirection = facing;
 
             // Check triggers BEFORE walking
-            if (interactionHandler != null && interactionHandler.CheckForTriggers(input.ToVector2()) == true)
+            if (triggerHandler != null && triggerHandler.CheckForTriggers(input.ToVector2Int()))
             {
                 controller.SetState(controller.IdleState);
                 return;
@@ -53,10 +62,14 @@ namespace PokemonGame.Characters.States
             walkRoutine = controller.StartCoroutine(Walk(facing));
         }
 
-
-
+        /// <summary>
+        /// No update logic required for walking state.
+        /// </summary>
         public void Update() { }
-
+  
+        /// <summary>
+        /// Exits the walking state and stops any active walk coroutine.
+        /// </summary>
         public void Exit()
         {
             if (walkRoutine != null)
@@ -67,8 +80,9 @@ namespace PokemonGame.Characters.States
         }
 
         /// <summary>
-        /// Executes tile movement, then decides next state based on new input.
+        /// Executes tile movement, then decides the next state based on new input.
         /// </summary>
+        /// <param name="direction">The direction to walk in.</param>
         private IEnumerator Walk(FacingDirection direction)
         {
             Vector2Int move = direction.ToVector2Int();
@@ -80,11 +94,17 @@ namespace PokemonGame.Characters.States
 
             yield return controller.TileMover.MoveToTile(destination, controller.WalkDuration);
 
-            // Decide next state
-            InputDirection nextInput = controller.Input.InputDirection;
-            controller.SetState(nextInput == InputDirection.None
-                ? controller.IdleState
-                : controller.WalkingState);
+            // Decide next state after movement
+            InputDirection nextInput = controller.Input.CurrentDirection;
+
+            if (nextInput == InputDirection.None)
+            {
+                controller.SetState(controller.IdleState);
+            }
+            else
+            {
+                controller.SetState(controller.WalkingState); // Will re-run checks in Enter()
+            }
         }
     }
 }

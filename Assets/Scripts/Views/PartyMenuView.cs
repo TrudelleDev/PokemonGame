@@ -1,3 +1,5 @@
+using PokemonGame.Characters;
+using PokemonGame.Characters.Party;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Menu.UI;
 using PokemonGame.Pokemons;
@@ -16,7 +18,7 @@ namespace PokemonGame.Views
     {
         [SerializeField, Required]
         [Tooltip("Reference to the current player party. Used to track and select Pokémon.")]
-        private Party party;
+        private PartyManager party;
 
         [SerializeField, Required]
         [Tooltip("Button used to cancel out of the party menu. Triggers view closing or returns to slot selection.")]

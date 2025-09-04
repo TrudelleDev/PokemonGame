@@ -1,4 +1,4 @@
-using PokemonGame.Characters.Inputs.Enums;
+using PokemonGame.Characters.Direction;
 using UnityEngine;
 
 namespace PokemonGame.Characters.Inputs
@@ -11,11 +11,21 @@ namespace PokemonGame.Characters.Inputs
         /// <summary>
         /// Current movement direction, set by derived classes.
         /// </summary>
-        public InputDirection InputDirection { get; protected set; }
+        public InputDirection CurrentDirection { get; protected set; }
 
         /// <summary>
-        /// Updates input each frame.
+        /// True only on the frame the interact button was pressed.
         /// </summary>
-        protected abstract void Update();
+        public bool InteractPressed { get; protected set; }
+
+        private void Update()
+        {
+            ReadInput();
+        }
+
+        /// <summary>
+        /// Reads input values each frame. Must be implemented by subclasses.
+        /// </summary>
+        protected abstract void ReadInput();
     }
 }

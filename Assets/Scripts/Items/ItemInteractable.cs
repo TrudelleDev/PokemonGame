@@ -1,7 +1,8 @@
 ﻿using PokemonGame.Audio;
-using PokemonGame.Characters;
+using PokemonGame.Characters.Core;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Dialogue;
+using PokemonGame.Inventory;
 using PokemonGame.Items.Definition;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,14 +13,14 @@ namespace PokemonGame.Items
     /// Interactable item pickup: grants an item stack to the interacting character,
     /// shows a Pokémon-style message, and then destroys itself.
     /// </summary>
-    public class ItemInteractable : MonoBehaviour, IInteract
+    public class ItemInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required]
         [Tooltip("The item stack this pickup grants.")]
         private Item item;
 
         [Header("Audio")]
-        [SerializeField,Required]
+        [SerializeField, Required]
         [Tooltip("Sound played when the item is received.")]
         private AudioClip receiveItemClip;
 
@@ -31,7 +32,7 @@ namespace PokemonGame.Items
             {
                 return;
             }
-               
+
             consumed = true;
 
             ItemDefinition definition = item.Definition;
@@ -47,10 +48,14 @@ namespace PokemonGame.Items
             {
                 AudioManager.Instance.PlaySFX(receiveItemClip);
             }
-                
+
             DialogueBox.Instance.ShowDialogue(new[] { itemFoundLine, putInBagLine });
 
-            player.InventoryManager.Add(item);
+            if (player.TryGetComponent<InventoryManager>(out var inventory))
+            {
+                inventory.Add(item);
+            }
+
             Destroy(gameObject);
         }
     }

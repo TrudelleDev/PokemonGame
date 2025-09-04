@@ -1,4 +1,4 @@
-using PokemonGame.Characters;
+using PokemonGame.Characters.Core;
 using UnityEngine;
 
 namespace PokemonGame

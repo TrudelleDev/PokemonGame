@@ -1,3 +1,4 @@
+using PokemonGame.Characters.Inputs;
 using PokemonGame.Characters.States;
 using PokemonGame.Dialogue;
 using PokemonGame.Views;
@@ -23,7 +24,7 @@ namespace PokemonGame
 
             if (DialogueBox.Instance.IsOpen) return;
 
-            if (Input.GetKeyDown(KeyBind.Start))
+            if (Input.GetKeyDown(KeyBinds.Menu))
             {
                 TryOpenMenu();
             }

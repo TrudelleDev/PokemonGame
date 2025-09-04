@@ -19,23 +19,28 @@ namespace PokemonGame.Pokemons
     [Serializable]
     public class Pokemon
     {
+        [BoxGroup("Progression")]
         [SerializeField, Required, Range(1, 100)]
         [Tooltip("The level of this Pokémon.")]
         private int level = 1;
 
+        [BoxGroup("Definitions")]
         [SerializeField, Required]
         [Tooltip("Pokemon definition for this Pokémon.")]
         private PokemonDefinition pokemonDefinition;
 
+        [BoxGroup("Definitions")]
         [SerializeField, Required]
         [Tooltip("Nature definition that affects stat growth.")]
         private NatureDefinition natureDefinition;
 
+        [BoxGroup("Definitions")]
         [SerializeField, Required]
         [Tooltip("Ability definition for this Pokémon.")]
         private AbilityDefinition abilityDefinition;
 
-        [SerializeField, Required]
+        [BoxGroup("Definitions")]
+        [SerializeField, Required, Space]
         [Tooltip("Moves known by this Pokémon.")]
         private MoveDefinition[] moveDefinitions;
 
