@@ -1,10 +1,11 @@
-﻿using UnityEngine;
+﻿using PokemonGame.SceneManagement;
+using UnityEngine;
 
 namespace PokemonGame.Battle
 {
     public class BattleTrigger : MonoBehaviour
     {
-        [SerializeField] private SceneTrigger sceneTrigger;
+        [SerializeField] private SceneTransitionTrigger sceneTrigger;
 
         private void Update()
         {

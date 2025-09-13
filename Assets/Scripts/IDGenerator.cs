@@ -22,7 +22,6 @@ namespace PokemonGame
                 int randomIndex = Random.Range(0, avaliableIDs.Count);
                 int randomID = avaliableIDs[randomIndex];
                 avaliableIDs.RemoveAt(randomIndex);
-                Debug.Log("New ID: " + randomID);
                 return randomID.ToString();
             }
 

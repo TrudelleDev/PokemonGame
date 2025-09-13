@@ -1,98 +1,86 @@
-﻿using System;
-using System.Collections.Generic;
-using PokemonGame.MapEntry.Enums;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 namespace PokemonGame.MapEntry
 {
     /// <summary>
-    /// Manages map entry points across scenes.
-    /// Tracks active entry points, stores the next target,
-    /// and signals when entries are ready for player placement.
+    /// Global registry for map entry points.
+    /// Tracks <see cref="EntryPointMarker"/> instances in each scene and 
+    /// provides lookup for relocating the player or NPCs.
     /// </summary>
     public static class MapEntryRegistry
     {
-        private static readonly Dictionary<MapEntryID, MapEntryPoint> locations = new();
+        /// <summary>
+        /// The ID of the entry point to use when the next scene loads.
+        /// </summary>
+        public static MapEntryID NextEntryId { get; private set; } = MapEntryID.None;
+
+        private static readonly Dictionary<MapEntryID, EntryPointMarker> entryMarkers = new();
 
         /// <summary>
-        /// The next entry point where the player should appear. Defaults to None.
+        /// Registers an entry point marker with the registry.
         /// </summary>
-        public static MapEntryID NextEntry { get; private set; } = MapEntryID.None;
-
-        /// <summary>
-        /// Event fired when all entry points in a map have been registered.
-        /// </summary>
-        public static event Action OnEntryPointsReady;
-
-        /// <summary>
-        /// Registers a map entry point.
-        /// </summary>
-        /// <param name="point">The entry point to add.</param>
-        public static void Register(MapEntryPoint point)
+        /// <param name="marker">The marker instance to register.</param>
+        public static void Register(EntryPointMarker marker)
         {
-            if (locations.ContainsKey(point.ID))
+            if (marker == null)
             {
-                Log.Warning(nameof(MapEntryRegistry), $"Duplicate entry point ID detected: {point.ID} in scene {point.gameObject.scene.name}");
                 return;
             }
 
-            locations.Add(point.ID, point);
+            entryMarkers[marker.EntryId] = marker;
         }
 
         /// <summary>
-        /// Unregisters a map entry point.
+        /// Unregisters an entry point marker, if it matches the instance currently stored.
         /// </summary>
-        /// <param name="point">The entry point to remove.</param>
-        public static void Unregister(MapEntryPoint point)
+        /// <param name="marker">The marker instance to unregister.</param>
+        public static void Unregister(EntryPointMarker marker)
         {
-            if (locations.ContainsKey(point.ID))
+            if (marker == null)
             {
-                locations.Remove(point.ID);
+                return;
+            }
+
+            if (entryMarkers.TryGetValue(marker.EntryId, out EntryPointMarker existing) && existing == marker)
+            {
+                entryMarkers.Remove(marker.EntryId);
             }
         }
 
         /// <summary>
-        /// Tries to get the world position of a map entry point.
+        /// Sets the ID of the entry point to use for the next scene load.
         /// </summary>
-        /// <param name="id">The entry point ID.</param>
-        /// <param name="position">Outputs the position if found.</param>
-        /// <returns>True if an entry point was found; otherwise false.</returns>
-        public static bool TryGetPosition(MapEntryID id, out Vector3 position)
+        /// <param name="entryId">The ID of the entry point to set as next.</param>
+        public static void SetNextEntry(MapEntryID entryId)
         {
-            if (locations.TryGetValue(id, out var point))
+            NextEntryId = entryId;
+        }
+
+        /// <summary>
+        /// Clears the pending next entry point.
+        /// </summary>
+        public static void Clear()
+        {
+            NextEntryId = MapEntryID.None;
+        }
+
+        /// <summary>
+        /// Attempts to resolve the world position of a given entry point.
+        /// </summary>
+        /// <param name="entryId">The entry ID to look up.</param>
+        /// <param name="position">Outputs the world position of the entry if found, otherwise <c>default</c>.</param>
+        /// <returns><c>true</c> if the entry was found and position resolved; otherwise <c>false</c>.</returns>
+        public static bool TryGetEntryPosition(MapEntryID entryId, out Vector3 position)
+        {
+            if (entryMarkers.TryGetValue(entryId, out EntryPointMarker marker))
             {
-                position = point.transform.position;
+                position = marker.Position;
                 return true;
             }
 
             position = Vector3.zero;
             return false;
-        }
-
-        /// <summary>
-        /// Raises the EntryPointsReady event to signal that
-        /// all entry points in the current map are registered.
-        /// </summary>
-        public static void NotifyEntryPointsReady()
-        {
-            OnEntryPointsReady?.Invoke();
-        }
-
-        /// <summary>
-        /// Sets the next entry point for the player.
-        /// </summary>
-        /// <param name="id">The entry point ID to set.</param>
-        public static void SetNextEntry(MapEntryID id)
-        {
-            NextEntry = id;
-        }
-
-        /// <summary>
-        /// Clears the stored entry point (resets to None).
-        /// </summary>
-        public static void Clear()
-        {
-            NextEntry = MapEntryID.None;
         }
     }
 }

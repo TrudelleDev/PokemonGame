@@ -1,5 +1,6 @@
 ﻿using PokemonGame.Characters.Direction;
 using PokemonGame.Characters.Interfaces;
+using PokemonGame.Raycasting;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

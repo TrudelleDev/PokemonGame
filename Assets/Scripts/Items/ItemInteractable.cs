@@ -4,6 +4,7 @@ using PokemonGame.Characters.Interfaces;
 using PokemonGame.Dialogue;
 using PokemonGame.Inventory;
 using PokemonGame.Items.Definition;
+using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -49,7 +50,7 @@ namespace PokemonGame.Items
                 AudioManager.Instance.PlaySFX(receiveItemClip);
             }
 
-            DialogueBox.Instance.ShowDialogue(new[] { itemFoundLine, putInBagLine });
+            ViewManager.Instance.Get<DialogueBoxView>().ShowDialogue(new[] { itemFoundLine, putInBagLine });
 
             if (player.TryGetComponent<InventoryManager>(out var inventory))
             {

@@ -1,7 +1,8 @@
 using PokemonGame.Characters.Inputs;
 using PokemonGame.Characters.States;
-using PokemonGame.Dialogue;
+using PokemonGame.Pause;
 using PokemonGame.Views;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame
@@ -11,18 +12,16 @@ namespace PokemonGame
     /// </summary>
     public class GameMenuOpener : MonoBehaviour
     {
-        [Tooltip("The view for the game menu.")]
-        [SerializeField] private GameMenuView gameMenuView;
-
+        [SerializeField, Required]
         [Tooltip("The player state controller.")]
-        [SerializeField] private CharacterStateController playerStateController;
-
+        private CharacterStateController playerStateController;
 
         private void Update()
         {
-            if (playerStateController.TileMover.IsMoving) return;
-
-            if (DialogueBox.Instance.IsOpen) return;
+            if (PauseManager.IsPaused || playerStateController.TileMover.IsMoving)
+            {
+                return;
+            }
 
             if (Input.GetKeyDown(KeyBinds.Menu))
             {
@@ -35,7 +34,7 @@ namespace PokemonGame
         /// </summary>
         private void TryOpenMenu()
         {
-            if (ViewManager.Instance.IsHistoryEmpty())
+            if (!ViewManager.Instance.HasActiveView)
             {
                 ViewManager.Instance.Show<GameMenuView>();
             }

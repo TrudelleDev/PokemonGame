@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bd51a3fc4a03841a6c3b5ceeaaef7c, type: 3}
   m_Name: ViridianForestGateHouse_Lass_RattataInfo
   m_EditorClassIdentifier: 
-  dialogues:
-  - "Rattata may be small, but dont \nunderestimate its wicked bite."
-  - Have you caught one already?
+  lines:
+  - 

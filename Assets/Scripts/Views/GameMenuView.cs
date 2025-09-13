@@ -26,7 +26,7 @@ namespace PokemonGame.Views
         /// <summary>
         /// Sets up button listeners. Called once before the view is shown.
         /// </summary>
-        public override void Initialize()
+        public override void Preload()
         {
             partyButton.onClick.AddListener(OnPartyClick);
             inventoryButton.onClick.AddListener(OnInventoryClick);

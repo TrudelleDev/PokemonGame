@@ -1,56 +1,45 @@
-﻿using System.Collections;
-using PokemonGame.Transitions;
-using PokemonGame.Transitions.Controllers;
-using PokemonGame.Transitions.Enums;
-using PokemonGame.Transitions.Extensions;
-using PokemonGame.Transitions.Interfaces;
+﻿using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Base class for all UI views. Provides standard show/hide logic
-    /// and handles transitions between views.
+    /// Base class for all UI views. Provides standard show/hide logic.
+    /// Transition handling is managed externally by <see cref="ViewManager"/>.
     /// </summary>
-    [RequireComponent(typeof(CloseView))]
     public abstract class View : MonoBehaviour
     {
         [Title("Transition")]
         [SerializeField, Required]
-        [Tooltip("The type of transition to use when switching from this view to another.")]
+        [Tooltip("Transition to use when navigating away from this view.")]
         private TransitionType transitionType;
 
-        private ITransition transition;
-
-        private void Awake()
-        {
-            transition = TransitionResolver.Resolve(transitionType);
-        }
+        /// <summary>
+        /// The transition type assigned to this view.
+        /// </summary>
+        public TransitionType TransitionType => transitionType;
 
         /// <summary>
         /// Called once before the view is first shown.
         /// Override this to bind button events or initialize UI state.
         /// </summary>
-        public virtual void Initialize() { }
+        public virtual void Preload() { }
 
         /// <summary>
-        /// Enables the view GameObject.
+        /// Shows the view by enabling its GameObject.
         /// </summary>
-        public void Show() => gameObject.SetActive(true);
-
-        /// <summary>
-        /// Disables the view GameObject.
-        /// </summary>
-        public void Hide() => gameObject.SetActive(false);
-
-        /// <summary>
-        /// Transitions to another view. 
-        /// If transition is <c>null</c> (e.g., <see cref="TransitionType.None"/>), instantly swaps.
-        /// </summary>
-        public virtual IEnumerator HandleTransition(View targetView)
+        public virtual void Show()
         {
-            yield return transition.RunViewTransition(this, targetView);
+            gameObject.SetActive(true);
+        }
+
+        /// <summary>
+        /// Hides the view by disabling its GameObject.
+        /// </summary>
+        public virtual void Hide()
+        {
+            gameObject.SetActive(false);
         }
     }
 }

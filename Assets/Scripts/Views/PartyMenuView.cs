@@ -48,7 +48,7 @@ namespace PokemonGame.Views
         /// Called once before the view is shown for the first time.
         /// Sets up button and controller listeners.
         /// </summary>
-        public override void Initialize()
+        public override void Preload()
         {
             closeView = GetComponent<CloseView>();
 

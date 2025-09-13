@@ -37,7 +37,7 @@ namespace PokemonGame.Views
         /// <summary>
         /// Initializes inventory sections. Called once before first use.
         /// </summary>
-        public override void Initialize()
+        public override void Preload()
         {
             inventoryManager.Initialize();
 

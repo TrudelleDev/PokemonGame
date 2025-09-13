@@ -6,28 +6,31 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/StartupScene.unity
+    path: Assets/Scenes/BootScene.unity
     guid: b433b20a025e2474b87b49df934e6f93
   - enabled: 1
-    path: Assets/Scenes/ViridianForest.unity
+    path: Assets/Scenes/MainMenuScene.unity
+    guid: 672642bcfbb23014b926753ce15aedfb
+  - enabled: 1
+    path: Assets/Scenes/Maps/ViridianForestScene.unity
     guid: 97d013d6bf7ab0640a31d47cc4e3d602
   - enabled: 1
-    path: Assets/Scenes/GameCore.unity
+    path: Assets/Scenes/GameCoreScene.unity
     guid: 689894ea053c49845a10ec667ef66de9
   - enabled: 1
-    path: Assets/Scenes/GateHouse.unity
+    path: Assets/Scenes/Maps/GateHouseScene.unity
     guid: 085f745a4ef4a0a48af9c845c6b0305a
   - enabled: 1
-    path: Assets/Scenes/Transition.unity
-    guid: 0510a8abded46dc4db82fd8edb06e823
-  - enabled: 1
-    path: Assets/Scenes/Battle.unity
+    path: Assets/Scenes/BattleScene.unity
     guid: d4bad4ac43c3d9e4199866ecee3228f5
-  - enabled: 1
-    path: Assets/Scenes/UIScene.unity
-    guid: d32d759928edb3a48a36e53c51d6dd05
   - enabled: 1
     path: Assets/Scenes/PlayerScene.unity
     guid: fc670f8995988034bbb12ae22a5265ac
+  - enabled: 1
+    path: Assets/Scenes/TransitionScene.unity
+    guid: 48975019fc531c9409bd62d627838c46
+  - enabled: 1
+    path: Assets/Scenes/AudioScene.unity
+    guid: 9062cb6ac3a7e0c4bbde89969ab728c9
   m_configObjects:
     com.unity.addressableassets: {fileID: 11400000, guid: 00ab7c0d2d81a494abc71c93eb35d67e, type: 2}

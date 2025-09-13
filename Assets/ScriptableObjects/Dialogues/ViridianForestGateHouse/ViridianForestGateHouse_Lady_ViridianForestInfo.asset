@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bd51a3fc4a03841a6c3b5ceeaaef7c, type: 3}
   m_Name: ViridianForestGateHouse_Lady_ViridianForestInfo
   m_EditorClassIdentifier: 
-  dialogues:
+  lines:
   - 'Are you going to Viridian Forest?
 
     Its a natural maze in there.'
-  - Be careful you dont get lost.
+  - Be carefull you dont get lost.

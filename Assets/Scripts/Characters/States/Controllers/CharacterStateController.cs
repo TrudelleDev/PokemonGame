@@ -94,12 +94,20 @@ namespace PokemonGame.Characters.States
             CollisionState = new CharacterCollisionState(this);
         }
 
+        /// <summary>
+        /// Sets the initial facing direction and enters the idle state.
+        /// Called by Unity on the first frame this object is active.
+        /// </summary>
         protected virtual void Start()
         {
             FacingDirection = startingDirection;
             SetState(IdleState);
         }
 
+        /// <summary>
+        /// Updates the active character state each frame.
+        /// If the game is paused, forces the character into idle.
+        /// </summary>
         protected virtual void Update()
         {
             if (PauseManager.IsPaused)
@@ -108,6 +116,7 @@ namespace PokemonGame.Characters.States
                 {
                     SetState(IdleState);
                 }
+
                 return;
             }
 

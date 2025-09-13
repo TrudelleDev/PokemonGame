@@ -12,7 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47bd51a3fc4a03841a6c3b5ceeaaef7c, type: 3}
   m_Name: Sign_01_ViridianForest
   m_EditorClassIdentifier: 
-  dialogues:
-  - Trainer Tips
-  - "Weaken Pok\xE9mon before attempting capture!"
-  - When healthy, they may escape!
+  lines:
+  - 

@@ -1,148 +1,274 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using PokemonGame.Pause;
+using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
-using Unity.VisualScripting;
 using UnityEngine;
 
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Manages view transitions and view history stack.
-    /// Handles showing, hiding, and returning to previous views.
+    /// Manages UI view transitions and navigation history.
+    /// Responsible for showing, hiding, and returning to previous views,
+    /// applying transitions defined per <see cref="View"/>.
     /// </summary>
     public class ViewManager : Singleton<ViewManager>
-    {    
+    {
+        [Title("Settings")]
+        [SerializeField]
+        [Tooltip("Extra hold time while screen is black during transitions. 0 = no hold.")]
+        private float blackScreenHoldDuration = 1f;
+
+        [Title("Views")]
         [SerializeField, Required]
-        [Tooltip("All views managed by the ViewManager.")]
+        [Tooltip("All views managed by this ViewManager.")]
         private View[] views;
 
-        private View currentView;
+        [Title("Debug")]
+        [Tooltip("All views managed by this ViewManager.")]
+        [SerializeField] 
+        private bool enableDebugLogs = false;
 
-        /// <summary>
-        /// Stack used to keep track of navigation history.
-        /// </summary>
+        private bool isTransitioning;
+        private View currentView;
         private readonly Stack<View> history = new();
 
         /// <summary>
-        /// Prevents overlapping transitions.
+        /// Returns whether the history stack is empty.
         /// </summary>
-        private bool isTransitioning = false;
+        public bool HasActiveView => history.Count > 0;
 
-        public void Initialize()
+        /// <summary>
+        /// Preloads all registered views and hides them at startup.
+        /// </summary>
+        protected override void Awake()
         {
+            base.Awake();
+
             foreach (View view in views)
             {
-                view.Initialize();
+                view.Preload();
                 view.Hide();
             }
         }
 
         /// <summary>
-        /// Shows the requested view and pushes the previous view to history.
+        /// Shows the requested view. If another view is active,
+        /// it is pushed onto history before switching.
         /// </summary>
-        /// <typeparam name="T">Type of view to show.</typeparam>
-        /// <param name="remember">Whether to remember the current view in history.</param>
-        public void Show<T>(bool remember = true) where T : View
+        public void Show<T>() where T : View
         {
-            if (isTransitioning) return;
+            if (isTransitioning)
+            {
+                return;
+            }
 
+            foreach (View view in views)
+            {
+                if (view is not T target)
+                {
+                    continue;
+                }
+
+                if (currentView == null)
+                {
+                    StartCoroutine(OpenFirstView(target));
+                }
+                else
+                {
+                    StartCoroutine(SwitchBetweenViews(currentView, target, false));
+                }
+
+                break;
+            }
+        }
+
+        /// <summary>
+        /// Retrieves a registered view of the given type.
+        /// Returns null if the view is not found.
+        /// </summary>
+        public T Get<T>() where T : View
+        {
             foreach (View view in views)
             {
                 if (view is T target)
                 {
-                    StartCoroutine(ShowWithTransition(target, remember));
-                    return;
+                    return target;
                 }
             }
+
+            return null;
         }
 
         /// <summary>
-        /// Returns to the previous view from history.
+        /// Opens the first view without transition.
+        /// </summary>
+        private IEnumerator OpenFirstView(View toView)
+        {
+            isTransitioning = true;
+            toView.Show();
+            currentView = toView;
+            history.Push(currentView);
+            isTransitioning = false;
+            UpdatePauseState();
+            DebugHistory();
+            yield break;
+        }
+
+
+        /// <summary>
+        /// Closes the current active view and removes it from history.
+        /// </summary>
+        public void CloseCurrentView()
+        {
+            if (isTransitioning || currentView == null)
+                return;
+
+            // Pop if it's in history
+            if (history.Count > 0 && history.Peek() == currentView)
+            {
+                history.Pop();
+            }
+
+            StartCoroutine(CloseLastView(currentView));
+        }
+
+        /// <summary>
+        /// Closes the last active view without transition.
+        /// </summary>
+        private IEnumerator CloseLastView(View fromView)
+        {
+            isTransitioning = true;
+            fromView.Hide();
+            currentView = null;
+            isTransitioning = false;
+            UpdatePauseState();
+            DebugHistory();
+            yield break;
+        }
+
+        /// <summary>
+        /// Returns to the previous view. If no history remains,
+        /// the current view is closed instead.
         /// </summary>
         public void GoToPreviousView()
         {
-            if (isTransitioning || history.Count == 0) return;
-
-            View previous = history.Pop();
-
-            if (previous == currentView)
+            if (isTransitioning || currentView == null)
             {
-                StartCoroutine(CloseCurrentView());
+                return;
             }
-            else
+
+            if (history.Count > 0)
             {
-                StartCoroutine(ShowPreviousViewWithTransition(previous));
-            }
-        }
+                View previous = history.Pop();
 
-        /// <summary>
-        /// Whether any views are stored in history.
-        /// </summary>
-        public bool IsHistoryEmpty() => history.Count == 0;
-
-        /// <summary>
-        /// Shows a view with transition, optionally remembering the current view.
-        /// </summary>
-        private IEnumerator ShowWithTransition(View target, bool remember)
-        {
-            if (target == null || target == currentView)
-                yield break;
-
-            isTransitioning = true;
-            View previous = currentView;
-
-            if (remember)
-            {
-                if (previous != null)
+                if (previous != null && previous != currentView)
                 {
-                    history.Push(previous);
+                    StartCoroutine(SwitchBetweenViews(currentView, previous, true));
                 }
                 else
                 {
-                    history.Push(target); // Add first view to history
-                }                  
+                    StartCoroutine(CloseLastView(currentView));
+                }
             }
-
-            if (previous != null)
+            else
             {
-                yield return previous.HandleTransition(target);
+                StartCoroutine(CloseLastView(currentView));
+            }
+        }
+
+        /// <summary>
+        /// Switches between two views, applying transition if available.
+        /// </summary>
+        private IEnumerator SwitchBetweenViews(View fromView, View toView, bool isBackNavigation)
+        {
+            isTransitioning = true;
+
+            if (!isBackNavigation)
+            {
+                history.Push(fromView);
             }
 
-            target.Show();
-            currentView = target;
+            Transition transition = TransitionLibrary.Instance.Resolve(fromView.TransitionType);
+
+            if (transition != null)
+            {
+                yield return RunViewTransition(transition, fromView, toView);
+            }
+            else
+            {
+                SwapViews(fromView, toView);
+            }
+
+            toView.Show();
+            currentView = toView;
+            UpdatePauseState();
+            DebugHistory();
             isTransitioning = false;
         }
 
         /// <summary>
-        /// Closes the current view with transition and clears the current reference.
+        /// Executes a fade transition between two views.
         /// </summary>
-        private IEnumerator CloseCurrentView()
+        private IEnumerator RunViewTransition(Transition transition, View fromView, View toView)
         {
-            isTransitioning = true;
-
-            if (currentView != null)
+            if (transition == null)
             {
-                yield return currentView.HandleTransition(null);
-                currentView = null;
+                SwapViews(fromView, toView);
+                yield break;
             }
 
-            isTransitioning = false;
+            yield return transition.FadeInCoroutine();
+            SwapViews(fromView, toView);
+
+            if (blackScreenHoldDuration > 0f)
+            {
+                yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
+            }
+
+            yield return transition.FadeOutCoroutine();
         }
 
         /// <summary>
-        /// Transitions to a previously stored view.
+        /// Utility to hide the old view and show the new one instantly.
         /// </summary>
-        private IEnumerator ShowPreviousViewWithTransition(View previous)
+        private void SwapViews(View fromView, View toView)
         {
-            isTransitioning = true;
-
-            if (currentView != null)
+            if (fromView != null)
             {
-                yield return currentView.HandleTransition(previous);
+                fromView.Hide();
             }
-                
-            currentView = previous;
-            isTransitioning = false;
+
+            if (toView != null)
+            {
+                toView.Show();
+            }
+        }
+
+        /// <summary>
+        /// Updates the pause state based on whether there are active views.
+        /// </summary>
+        private void UpdatePauseState()
+        {
+            PauseManager.SetPaused(history.Count > 0);
+        }
+
+        /// <summary>
+        /// Prints the current and history stack of views to the console for debugging.
+        /// </summary>
+        private void DebugHistory()
+        {
+            if (history.Count == 0)
+            {
+                Log.Info(nameof(ViewManager), "History is empty. No active views.");
+                return;
+            }
+
+            string[] names = history.Select(v => v != null ? v.GetType().Name : "Null").ToArray();
+            string stack = string.Join(" -> ", names);
+
+            Log.Info(nameof(ViewManager), $" Current: {(currentView != null ? currentView.GetType().Name : "None")} | History: {stack}");
         }
     }
 }
