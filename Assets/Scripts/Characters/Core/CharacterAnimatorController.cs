@@ -1,4 +1,5 @@
 ﻿using PokemonGame.Characters.Direction;
+using PokemonGame.Utilities;
 using UnityEngine;
 
 namespace PokemonGame.Characters.Core

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PokemonGame.Pause;
 using PokemonGame.Transitions;
+using PokemonGame.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

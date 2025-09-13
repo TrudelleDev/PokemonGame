@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Utilities
 {
     /// <summary>
     /// Dynamically updates the <see cref="SpriteRenderer.sortingOrder"/> 

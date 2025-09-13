@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using PokemonGame.MapEntry;
 using PokemonGame.Pause;
 using PokemonGame.Transitions;
+using PokemonGame.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 

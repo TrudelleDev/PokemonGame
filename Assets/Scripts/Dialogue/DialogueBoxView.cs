@@ -1,6 +1,7 @@
 using System.Collections;
 using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Utilities;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using TMPro;

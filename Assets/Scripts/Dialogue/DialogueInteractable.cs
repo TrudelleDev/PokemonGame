@@ -1,6 +1,7 @@
 using PokemonGame.Characters.Core;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Pause;
+using PokemonGame.Utilities;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;

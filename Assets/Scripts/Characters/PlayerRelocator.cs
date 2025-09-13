@@ -1,6 +1,7 @@
 ﻿using PokemonGame.Characters.Core;
 using PokemonGame.MapEntry;
 using PokemonGame.SceneManagement;
+using PokemonGame.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

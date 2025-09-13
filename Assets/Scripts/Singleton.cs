@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using PokemonGame.Utilities;
+using UnityEngine;
 
 namespace PokemonGame
 {

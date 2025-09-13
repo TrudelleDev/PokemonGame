@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PokemonGame
+namespace PokemonGame.Utilities
 {
     public static class Log
     {

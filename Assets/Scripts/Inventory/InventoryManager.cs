@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Enums;
+using PokemonGame.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
