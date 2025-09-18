@@ -3,48 +3,69 @@ using System.Collections.Generic;
 using PokemonGame.Characters.Inputs;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 namespace PokemonGame.Menu.Controllers
 {
     /// <summary>
-    /// Controls vertical navigation between UI buttons using keyboard-style input.
-    /// Automatically gathers buttons from configured sources and always starts at the first element.
+    /// Handles vertical navigation between <see cref="MenuButton"/>s
+    /// using keyboard or controller input.
     /// </summary>
     public class VerticalMenuController : MonoBehaviour
     {
-        [Title("Auto Button Assignment")]
-        [Tooltip("Parents to scan for Button components.")]
+        [Title("Button Sources")]
+        [Tooltip("Parents to scan for MenuButton components.")]
         [ValidateInput(nameof(HasSources), "Assign at least one button source.")]
         [ChildGameObjectsOnly]
         [SerializeField, Required]
         private List<Transform> buttonSources = new();
 
-        private readonly List<Button> buttons = new();
-        private Button currentButton;
+        private readonly List<MenuButton> buttons = new();
+        private MenuButton currentButton;
 
-        public event Action<Button> OnSelect;
-        public event Action<Button> OnClick;
-        public event Action<Button> OnCancel;
+        /// <summary>
+        /// Raised when a new button is selected.
+        /// </summary>
+        public event Action<MenuButton> OnSelect;
 
-        public Button CurrentButton => currentButton;
+        /// <summary>
+        /// Raised when the current button is clicked.
+        /// </summary>
+        public event Action<MenuButton> OnClick;
 
-        private EventSystem ES => EventSystem.current;
+        /// <summary>
+        /// Raised when cancel input is pressed.
+        /// </summary>
+        public event Action<MenuButton> OnCancel;
 
-        private void Awake()
-        {
-            RefreshButtons();
-        }
+        /// <summary>
+        /// Gets the currently selected button, or null if none.
+        /// </summary>
+        public MenuButton CurrentButton => currentButton;
 
+        /// <summary>
+        /// Gets or sets whether this controller accepts input.
+        /// </summary>
+        public bool AcceptInput { get; set; } = true;
+
+        /// <summary>
+        /// Refreshes the button list when enabled.
+        /// </summary>
         private void OnEnable()
         {
             RefreshButtons();
         }
 
+        private void Start()
+        {
+            RefreshButtons();
+        }
+
+        /// <summary>
+        /// Processes navigation, click, and cancel input.
+        /// </summary>
         private void Update()
         {
-            if (buttons.Count == 0 || currentButton == null)
+            if (!AcceptInput || buttons.Count == 0 || currentButton == null)
             {
                 return;
             }
@@ -68,28 +89,40 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Clears and repopulates the internal button list, then selects the first interactable.
+        /// Collects all menu buttons from the assigned sources
+        /// and selects the first interactable one.
         /// </summary>
         public void RefreshButtons()
         {
-            buttons.Clear();
-
-            for (int i = 0; i < buttonSources.Count; i++)
+            if (currentButton != null)
             {
-                Transform source = buttonSources[i];
-                if (source == null) continue;
-
-                buttons.AddRange(source.GetComponentsInChildren<Button>(true));
+                currentButton.SetSelected(false);
+                currentButton = null;
             }
 
-            SelectFirstElement();
+            buttons.Clear();
+
+            foreach (Transform source in buttonSources)
+            {
+                if (source == null)
+                {
+                    continue;
+                }
+
+                buttons.AddRange(source.GetComponentsInChildren<MenuButton>(true));
+            }
+
+            SelectFirst();
         }
 
-        private void SelectFirstElement()
+        /// <summary>
+        /// Selects the first interactable button.
+        /// </summary>
+        public void SelectFirst()
         {
-            foreach (Button button in buttons)
+            foreach (MenuButton button in buttons)
             {
-                if (button != null && button.interactable)
+                if (button != null && button.IsInteractable)
                 {
                     SelectButton(button);
                     return;
@@ -97,34 +130,69 @@ namespace PokemonGame.Menu.Controllers
             }
 
             currentButton = null;
-            ES?.SetSelectedGameObject(null);
         }
 
-        private bool HasSources() => buttonSources != null && buttonSources.Count > 0;
-
-        private void SelectButton(Button button)
+        /// <summary>
+        /// Validates that at least one button source is assigned.
+        /// </summary>
+        private bool HasSources()
         {
+            return buttonSources != null && buttonSources.Count > 0;
+        }
+
+        /// <summary>
+        /// Selects the given button and raises selection events.
+        /// </summary>
+        /// <param name="button">The button to select.</param>
+        private void SelectButton(MenuButton button)
+        {
+            if (currentButton != null)
+            {
+                currentButton.SetSelected(false);
+            }
+
             currentButton = button;
-            ES?.SetSelectedGameObject(button.gameObject);
+            currentButton.SetSelected(true);
+
             OnSelect?.Invoke(button);
         }
 
+        /// <summary>
+        /// Invokes the click action on the current button.
+        /// </summary>
         private void TriggerClick()
         {
-            currentButton?.onClick.Invoke();
+            if (currentButton != null)
+            {
+                currentButton.Click();
+            }
+
             OnClick?.Invoke(currentButton);
         }
 
+        /// <summary>
+        /// Selects the next interactable button.
+        /// Stops at the last button instead of looping.
+        /// </summary>
         private void MoveNext()
         {
-            int index = buttons.IndexOf(currentButton);
-            if (index < 0) return;
-
-            for (int i = index + 1; i < buttons.Count; i++)
+            if (buttons.Count == 0)
             {
-                Button button = buttons[i];
+                return;
+            }
 
-                if (button != null && button.interactable)
+            int index = buttons.IndexOf(currentButton);
+
+            if (index < 0)
+            {
+                return;
+            }
+
+            for (int nextIndex = index + 1; nextIndex < buttons.Count; nextIndex++)
+            {
+                MenuButton button = buttons[nextIndex];
+
+                if (button != null && button.IsInteractable)
                 {
                     SelectButton(button);
                     return;
@@ -132,16 +200,29 @@ namespace PokemonGame.Menu.Controllers
             }
         }
 
+        /// <summary>
+        /// Selects the previous interactable button.
+        /// Stops at the first button instead of looping.
+        /// </summary>
         private void MovePrevious()
         {
-            int index = buttons.IndexOf(currentButton);
-            if (index < 0) return;
-
-            for (int i = index - 1; i >= 0; i--)
+            if (buttons.Count == 0)
             {
-                Button button = buttons[i];
+                return;
+            }
 
-                if (button != null && button.interactable)
+            int index = buttons.IndexOf(currentButton);
+
+            if (index < 0)
+            {
+                return;
+            }
+
+            for (int previousIndex = index - 1; previousIndex >= 0; previousIndex--)
+            {
+                MenuButton button = buttons[previousIndex];
+
+                if (button != null && button.IsInteractable)
                 {
                     SelectButton(button);
                     return;

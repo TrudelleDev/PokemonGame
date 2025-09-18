@@ -3,7 +3,7 @@ using System.Collections;
 using PokemonGame.Characters.Direction;
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Tile
 {
     /// <summary>
     /// Provides smooth, grid-based movement and directional path checking.

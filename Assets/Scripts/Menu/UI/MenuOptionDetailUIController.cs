@@ -40,7 +40,7 @@ namespace PokemonGame.Menu.UI
             menuController.OnSelect -= OnMenuSelect;
         }
 
-        private void OnMenuSelect(Button menuButton)
+        private void OnMenuSelect(MenuButton menuButton)
         {
             if (menuButton.TryGetComponent<IMenuOptionDisplaySource>(out var source) && source.Displayable != null)
             {

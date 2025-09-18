@@ -1,16 +1,16 @@
 using System;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Views;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame
 {
     public class PartyMenuOption : MonoBehaviour
     {
-        [SerializeField] private Button summaryButton;
-        [SerializeField] private Button cancelButton;
+        [SerializeField] private MenuButton summaryButton;
+        [SerializeField] private MenuButton cancelButton;
 
         private VerticalMenuController optionMenuController;
 
@@ -18,10 +18,17 @@ namespace PokemonGame
 
         private void Awake()
         {
-            summaryButton.onClick.AddListener(OnSummaryClick);
-            cancelButton.onClick.AddListener(OnCancelClick);
+            summaryButton.OnClick += OnSummaryClick;
+            cancelButton.OnClick += OnCancelClick;
 
             optionMenuController = GetComponentInChildren<VerticalMenuController>();
+        }
+
+        private void OnDestroy()
+        {
+            summaryButton.OnClick -= OnSummaryClick;
+            cancelButton.OnClick -= OnCancelClick;
+
         }
 
         private void OnSummaryClick()

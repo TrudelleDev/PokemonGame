@@ -1,12 +1,10 @@
-using PokemonGame.Characters;
 using PokemonGame.Characters.Party;
+using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
-using PokemonGame.Menu.UI;
-using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI.PartyMenu;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 namespace PokemonGame.Views
 {
@@ -22,7 +20,7 @@ namespace PokemonGame.Views
 
         [SerializeField, Required]
         [Tooltip("Button used to cancel out of the party menu. Triggers view closing or returns to slot selection.")]
-        private Button cancelButton;
+        private MenuButton cancelButton;
 
         [SerializeField, Required]
         [Tooltip("Option menu UI shown after selecting a Pokémon. Allows actions like 'View', 'Use Item', etc.")]
@@ -54,7 +52,7 @@ namespace PokemonGame.Views
 
             partySlotController.OnClick += OnPartySlotClick;
             partyMenuOption.OnCancel += OnPartyOptionCancel;
-            cancelButton.onClick.AddListener(OnCancel);
+            cancelButton.OnClick += OnCancel;
         }
 
         /// <summary>
@@ -80,7 +78,7 @@ namespace PokemonGame.Views
         /// Called when a party slot is clicked.
         /// Selects the Pokémon and opens the party option menu.
         /// </summary>
-        private void OnPartySlotClick(Button menuButton)
+        private void OnPartySlotClick(MenuButton menuButton)
         {
             var slot = menuButton.GetComponent<PartyMenuSlot>();
 
@@ -118,11 +116,17 @@ namespace PokemonGame.Views
         /// </summary>
         private void TogglePartyOptionMenu(bool show)
         {
-            partyOptionController.enabled = show;
+            partyOptionController.AcceptInput = show;
             partyMenuOption.gameObject.SetActive(show);
 
-            partySlotController.enabled = !show;
+            partySlotController.AcceptInput = !show;
             closeView.enabled = !show;
+
+            if (!show && partySlotController.CurrentButton != null)
+            {
+                // Reselect the last slot when returning
+                EventSystem.current.SetSelectedGameObject(partySlotController.CurrentButton.gameObject);
+            }
 
             dialogBox.SetText(show ? "What you gonna do?" : "Choose a Pokémon or cancel.");
         }

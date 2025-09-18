@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using PokemonGame.Characters.Core;
 using PokemonGame.Characters.Direction;
+using PokemonGame.Utilities;
 using UnityEngine;
 
 namespace PokemonGame.Characters.States
@@ -66,7 +67,7 @@ namespace PokemonGame.Characters.States
         /// No update logic required for walking state.
         /// </summary>
         public void Update() { }
-  
+
         /// <summary>
         /// Exits the walking state and stops any active walk coroutine.
         /// </summary>

@@ -1,8 +1,8 @@
+using PokemonGame.Menu;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame.Pokemons.UI.PartyMenu
 {
@@ -10,7 +10,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
     /// Displays a Pokémon's information in a party menu slot, including name, level, health, gender, and sprite.
     /// Handles data binding and unbinding, and gracefully resets visuals if no valid Pokémon is assigned.
     /// </summary>
-    [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(MenuButton))]
     public class PartyMenuSlot : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
         private static readonly int IdleHash = Animator.StringToHash("Idle");
@@ -46,11 +46,11 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
 
         public Pokemon BoundPokemon { get; private set; }
 
-        private Button menuButton;
+        private MenuButton menuButton;
 
         private void Awake()
         {
-            menuButton = GetComponent<Button>();
+            menuButton = GetComponent<MenuButton>();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace PokemonGame.Pokemons.UI.PartyMenu
             contentRoot.SetActive(visible);
 
             if (menuButton != null)
-                menuButton.interactable = visible;
+                menuButton.SetInteractable(visible);
         }
     }
 }
