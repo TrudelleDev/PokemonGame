@@ -75,7 +75,7 @@ namespace PokemonGame.Inventory
 
             // Clear UI content and refresh the menu buttons
             ClearContent();
-            menuController.RefreshButtons();
+            //menuController.RefreshButtons();
         }
    
         /// <summary>
@@ -131,7 +131,7 @@ namespace PokemonGame.Inventory
         private void OnSectionChanged()
         {
             RefreshUI();
-            menuController.RefreshButtons();
+          //  menuController.RefreshButtons();
         }
     }
 }

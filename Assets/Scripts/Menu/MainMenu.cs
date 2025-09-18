@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
 using Sirenix.OdinInspector;
 using PokemonGame.SceneManagement;
 
@@ -20,16 +19,16 @@ namespace PokemonGame.Menu
         [Title("UI Buttons")]
 
         [SerializeField, Required]
-        [Tooltip("Button that starts a new game.")]
-        private Button newGameButton;
+        [Tooltip("Button that continues from a saved game (placeholder).")]
+        private MenuButton continueButton;
 
         [SerializeField, Required]
-        [Tooltip("Button that continues from a saved game (placeholder).")]
-        private Button continueButton;
+        [Tooltip("Button that starts a new game.")]
+        private MenuButton newGameButton;
 
         [SerializeField, Required]
         [Tooltip("Button that exits the application.")]
-        private Button exitButton;
+        private MenuButton exitButton;
 
         private GameStarter mainMenuLoader;
 
@@ -37,16 +36,16 @@ namespace PokemonGame.Menu
         {
             mainMenuLoader = GetComponent<GameStarter>();
 
-            newGameButton.onClick.AddListener(OnNewGame);
-            continueButton.onClick.AddListener(OnContinue);
-            exitButton.onClick.AddListener(OnExit);
+            continueButton.OnClick += OnContinue;
+            newGameButton.OnClick += OnNewGame;
+            exitButton.OnClick += OnExit;
         }
 
         private void OnDestroy()
         {
-            newGameButton.onClick.RemoveListener(OnNewGame);
-            continueButton.onClick.RemoveListener(OnContinue);
-            exitButton.onClick.RemoveListener(OnExit);
+            continueButton.OnClick -= OnContinue;
+            newGameButton.OnClick -= OnNewGame;
+            exitButton.OnClick -= OnExit;
         }
 
         private void OnNewGame()

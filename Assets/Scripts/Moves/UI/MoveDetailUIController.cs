@@ -1,7 +1,7 @@
-﻿using PokemonGame.Menu.Controllers;
+﻿using PokemonGame.Menu;
+using PokemonGame.Menu.Controllers;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame.Moves.UI
 {
@@ -24,14 +24,12 @@ namespace PokemonGame.Moves.UI
             controller.OnSelect += OnControllerSelect;
         }
 
-       
-
         private void OnDestroy()
         {
             controller.OnSelect -= OnControllerSelect;
         }
 
-        private void OnControllerSelect(Button button)
+        private void OnControllerSelect(MenuButton button)
         {
             MoveSlotUI summaryMove = button.GetComponent<MoveSlotUI>();
 

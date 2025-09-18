@@ -1,6 +1,6 @@
+using PokemonGame.Menu;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame.Views
 {
@@ -13,24 +13,24 @@ namespace PokemonGame.Views
 
         [SerializeField, Required]
         [Tooltip("Button to open the party menu.")]
-        private Button partyButton;
+        private MenuButton partyButton;
 
         [SerializeField, Required]
         [Tooltip("Button to open the inventory.")]
-        private Button inventoryButton;
+        private MenuButton inventoryButton;
 
         [SerializeField, Required]
         [Tooltip("Button to close the menu.")]
-        private Button exitButton;
+        private MenuButton exitButton;
 
         /// <summary>
         /// Sets up button listeners. Called once before the view is shown.
         /// </summary>
         public override void Preload()
         {
-            partyButton.onClick.AddListener(OnPartyClick);
-            inventoryButton.onClick.AddListener(OnInventoryClick);
-            exitButton.onClick.AddListener(OnExitClick);
+            partyButton.OnClick += OnPartyClick;
+            inventoryButton.OnClick += OnInventoryClick;
+            exitButton.OnClick += OnExitClick;
         }
 
         /// <summary>
@@ -38,9 +38,9 @@ namespace PokemonGame.Views
         /// </summary>
         private void OnDestroy()
         {
-            partyButton.onClick.RemoveListener(OnPartyClick);
-            inventoryButton.onClick.RemoveListener(OnInventoryClick);
-            exitButton.onClick.RemoveListener(OnExitClick);
+            partyButton.OnClick -= OnPartyClick;
+            inventoryButton.OnClick -= OnInventoryClick;
+            exitButton.OnClick -= OnExitClick;
         }
 
         private void OnPartyClick()

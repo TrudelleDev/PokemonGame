@@ -3,7 +3,7 @@ using PokemonGame.Raycasting;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Tile
 {
     /// <summary>
     /// Provides directional raycasting functionality for obstacle detection.

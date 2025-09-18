@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace PokemonGame
+namespace PokemonGame.Utilities
 {
     /// <summary>
     /// Provides global access to the tile grid cell size.

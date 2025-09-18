@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using PokemonGame.Utilities;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.MapEntry
