@@ -1,6 +1,5 @@
-using PokemonGame.Characters;
-using PokemonGame.Characters.Party;
 using PokemonGame.Menu.Controllers;
+using PokemonGame.Party;
 using PokemonGame.Pokemons;
 using PokemonGame.Summary;
 using Sirenix.OdinInspector;

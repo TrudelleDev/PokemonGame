@@ -3,7 +3,7 @@ using PokemonGame.Pokemons;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Party
+namespace PokemonGame.Party
 {
     /// <summary>
     /// Defines a trainer's party with a fixed set of Pokémon.
