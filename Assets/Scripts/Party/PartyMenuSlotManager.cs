@@ -1,10 +1,8 @@
 using System.Collections.Generic;
-using PokemonGame.Characters;
-using PokemonGame.Characters.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI.PartyMenu
+namespace PokemonGame.Party
 {
     /// <summary>
     /// Manages and binds Pokémon party data to UI slots.

@@ -4,7 +4,7 @@ using PokemonGame.Pokemons;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Party
+namespace PokemonGame.Party
 {
     /// <summary>
     /// Manages the lifecycle of a Pokémon party: initializes from a definition,
@@ -39,7 +39,7 @@ namespace PokemonGame.Characters.Party
             {
                 return;
             }
-              
+
             foreach (Pokemon pokemon in initialPartyDefinition.Members)
             {
                 AddPokemon(pokemon.Clone());
