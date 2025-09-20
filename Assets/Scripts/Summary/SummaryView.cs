@@ -1,4 +1,4 @@
-﻿using PokemonGame.Party;
+using PokemonGame.Party;
 using PokemonGame.Pokemons;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;

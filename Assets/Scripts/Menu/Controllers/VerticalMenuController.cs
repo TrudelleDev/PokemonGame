@@ -119,7 +119,7 @@ namespace PokemonGame.Menu.Controllers
         /// <summary>
         /// Selects the first interactable button.
         /// </summary>
-        private void SelectFirst()
+        public void SelectFirst()
         {
             foreach (MenuButton button in buttons)
             {
