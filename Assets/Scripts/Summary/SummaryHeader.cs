@@ -1,7 +1,7 @@
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI;
-using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Summary
@@ -11,17 +11,31 @@ namespace PokemonGame.Summary
     /// Displays the Pokémon's name, level, gender, and sprite.
     /// Safely handles null or incomplete Pokémon data by clearing the UI.
     /// </summary>
-    public class SummaryHeader : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class SummaryHeader : MonoBehaviour
     {
+        [Title("Text")]
         [SerializeField, Required]
-        [Tooltip("Handles display of the Pokémon's name, level, gender, and sprite.")]
-        private PokemonHeaderUI pokemonHeaderUI;
+        [Tooltip("Displays the Pokémon's name.")]
+        private TextMeshProUGUI nameText;
+
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's level.")]
+        private TextMeshProUGUI levelText;
+
+        [Title("Sprites")]
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's front-facing sprite.")]
+        private PokemonSprite frontSprite;
+
+        [SerializeField, Required]
+        [Tooltip("Displays the Pokémon's gender icon.")]
+        private PokemonGenderSprite genderIcon;
 
         /// <summary>
-        /// Binds the specified Pokémon to the header UI elements.
-        /// Clears the UI if the Pokémon or its core data is null.
+        /// Binds the given Pokémon data to the name, level, gender icon, and sprite.
+        /// Clears the UI if <paramref name="pokemon"/> is null or missing required data.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display.</param>
+        /// <param name="pokemon">The Pokémon instance to display, or null to clear the UI.</param>
         public void Bind(Pokemon pokemon)
         {
             if (pokemon?.Definition == null)
@@ -30,15 +44,21 @@ namespace PokemonGame.Summary
                 return;
             }
 
-            pokemonHeaderUI.Bind(pokemon);
+            nameText.text = pokemon.Definition.DisplayName;
+            levelText.text = $"<size=12>Lv</size>{pokemon.Level}";
+            genderIcon.Bind(pokemon);
+            frontSprite.Bind(pokemon);
         }
 
         /// <summary>
-        /// Clears the UI elements, removing any previously displayed data.
+        /// Clears the UI elements by removing all Pokémon-related data.
         /// </summary>
         public void Unbind()
         {
-            pokemonHeaderUI.Unbind();
+            nameText.text = string.Empty;
+            levelText.text = string.Empty;
+            genderIcon.Unbind();
+            frontSprite.Unbind();
         }
     }
 }

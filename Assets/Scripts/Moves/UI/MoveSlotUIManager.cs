@@ -1,8 +1,8 @@
 using System.Collections.Generic;
+using PokemonGame.Menu;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
-using PokemonGame.Shared.Interfaces;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame.Moves.UI
 {
@@ -10,7 +10,7 @@ namespace PokemonGame.Moves.UI
     /// Manages and binds a Pokémon's moves to the summary screen UI slots.
     /// Handles populating move data and enabling/disabling interaction.
     /// </summary>
-    public class MoveSlotUIManager : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class MoveSlotUIManager : MonoBehaviour
     {
         /// <summary>
         /// Binds all of a Pokémon's moves to the corresponding summary UI slots.
@@ -37,12 +37,14 @@ namespace PokemonGame.Moves.UI
             {
                 Transform child = transform.GetChild(i);
                 MoveSlotUI moveSlot = child.GetComponent<MoveSlotUI>();
-                Button button = child.GetComponent<Button>();
+                MenuButton button = child.GetComponent<MenuButton>();
 
                 if (moveSlot != null && button != null)
                 {
                     moveSlot.Unbind();
-                    button.interactable = false;
+                    button.SetInteractable(false);
+
+                    print(button.IsInteractable);
                 }
             }
         }
@@ -53,12 +55,12 @@ namespace PokemonGame.Moves.UI
             {
                 Transform child = transform.GetChild(i);
                 MoveSlotUI moveSlot = child.GetComponent<MoveSlotUI>();
-                Button button = child.GetComponent<Button>();
+                MenuButton button = child.GetComponent<MenuButton>();
 
                 if (moveSlot != null && button != null)
                 {
                     moveSlot.Bind(moves[i]);
-                    button.interactable = true;
+                    button.SetInteractable(true);
                 }
             }
         }

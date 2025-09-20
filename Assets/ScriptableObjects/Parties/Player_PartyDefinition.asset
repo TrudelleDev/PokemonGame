@@ -19,3 +19,4 @@ MonoBehaviour:
     abilityDefinition: {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
     moveDefinitions:
     - {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+    - {fileID: 11400000, guid: 98edf6d637916eb428373e3d4adfe153, type: 2}

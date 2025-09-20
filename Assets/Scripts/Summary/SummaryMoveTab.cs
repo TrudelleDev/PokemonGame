@@ -1,6 +1,6 @@
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Moves.UI;
 using PokemonGame.Pokemons;
-using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,7 +11,7 @@ namespace PokemonGame.Summary
     /// Handles binding Pokémon data to the identity panel and move slots.
     /// Manages visibility of the header during enable/disable.
     /// </summary>
-    public class SummaryMoveTab : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class SummaryMoveTab : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's name, level, and gender.")]

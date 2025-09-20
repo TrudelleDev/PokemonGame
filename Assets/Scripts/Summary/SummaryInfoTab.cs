@@ -1,6 +1,7 @@
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI;
 using PokemonGame.Shared.Interfaces;
+using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -11,7 +12,7 @@ namespace PokemonGame.Summary
     /// Displays Pokédex number, name, unique ID, type icons, and trainer details.
     /// Supports dynamic data binding and clears the UI when data is missing or invalid.
     /// </summary>
-    public class SummaryInfoTab : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class SummaryInfoTab : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's overview information such as name, types, and ID.")]

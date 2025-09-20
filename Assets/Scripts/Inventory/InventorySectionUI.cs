@@ -1,4 +1,5 @@
 ﻿using PokemonGame.Items.UI;
+using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Utilities;
 using PokemonGame.Views;
@@ -20,7 +21,7 @@ namespace PokemonGame.Inventory
 
         [SerializeField, Required]
         [Tooltip("Button prefab for cancelling and returning to the previous view.")]
-        private Button cancelButton;
+        private MenuButton cancelButton;
 
         [SerializeField, Required]
         [Tooltip("Parent container for item UI elements.")]
@@ -30,7 +31,7 @@ namespace PokemonGame.Inventory
         [Tooltip("Menu controller used to manage navigation between items.")]
         private VerticalMenuController menuController;
 
-        private Button activeCancelButton;
+        private MenuButton activeCancelButton;
         private InventorySection currentSection;
 
         /// <summary>
@@ -61,7 +62,7 @@ namespace PokemonGame.Inventory
             // Remove cancel button listener and destroy it if it's active
             if (activeCancelButton != null)
             {
-                activeCancelButton.onClick.RemoveListener(HandleCancelClick);
+                activeCancelButton.OnClick -= HandleCancelClick;
                 Destroy(activeCancelButton.gameObject);
                 activeCancelButton = null;
             }
@@ -101,7 +102,7 @@ namespace PokemonGame.Inventory
             if (activeCancelButton == null)
             {
                 activeCancelButton = Instantiate(cancelButton, contentParent);
-                activeCancelButton.onClick.AddListener(HandleCancelClick);
+                activeCancelButton.OnClick += HandleCancelClick;
             }
 
             // Ensure the cancel button is last in the hierarchy to appear at the bottom

@@ -1,14 +1,13 @@
-using PokemonGame.Menu.Controllers;
-using PokemonGame.Party;
+ï»¿using PokemonGame.Party;
 using PokemonGame.Pokemons;
-using PokemonGame.Summary;
+using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Views
+namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Displays detailed information about the selected Pokémon,
+    /// Displays detailed information about the selected PokÃ©mon,
     /// including stats, skills, and moves.
     /// </summary>
     public class SummaryView : View
@@ -18,21 +17,15 @@ namespace PokemonGame.Views
         private SummaryTabGroup summaryTabs;
 
         [SerializeField, Required]
-        [Tooltip("Controller for horizontal navigation between summary pages.")]
-        private HorizontalPanelController panelController;
-
-        [SerializeField, Required]
-        [Tooltip("Reference to the player's party for selecting the current Pokémon.")]
+        [Tooltip("Reference to the player's party for selecting the current PokÃ©mon.")]
         private PartyManager party;
 
         /// <summary>
         /// Called when the view is enabled.
-        /// Resets the panel controller and binds the summary tabs to the selected Pokémon.
+        /// Resets the panel controller and binds the summary tabs to the selected PokÃ©mon.
         /// </summary>
-        private void OnEnable()
+        public void OnEnable()
         {
-            panelController.ResetController();
-
             Pokemon selectedPokemon = party.SelectedPokemon;
 
             if (selectedPokemon == null)

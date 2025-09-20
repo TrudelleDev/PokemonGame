@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using PokemonGame.Characters.Inputs;
 using Sirenix.OdinInspector;
@@ -53,11 +54,7 @@ namespace PokemonGame.Menu.Controllers
         private void OnEnable()
         {
             RefreshButtons();
-        }
-
-        private void Start()
-        {
-            RefreshButtons();
+            StartCoroutine(DeferredSelectFirst());
         }
 
         /// <summary>
@@ -92,7 +89,7 @@ namespace PokemonGame.Menu.Controllers
         /// Collects all menu buttons from the assigned sources
         /// and selects the first interactable one.
         /// </summary>
-        public void RefreshButtons()
+        private void RefreshButtons()
         {
             if (currentButton != null)
             {
@@ -111,14 +108,18 @@ namespace PokemonGame.Menu.Controllers
 
                 buttons.AddRange(source.GetComponentsInChildren<MenuButton>(true));
             }
+        }
 
+        private IEnumerator DeferredSelectFirst()
+        {
+            yield return null; // wait one frame
             SelectFirst();
         }
 
         /// <summary>
         /// Selects the first interactable button.
         /// </summary>
-        public void SelectFirst()
+        private void SelectFirst()
         {
             foreach (MenuButton button in buttons)
             {
