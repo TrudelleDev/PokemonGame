@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c027530a4240d89428df68f951d82e57, type: 3}
-  m_Name: Pewter_City
+  m_Script: {fileID: 11500000, guid: 47bd51a3fc4a03841a6c3b5ceeaaef7c, type: 3}
+  m_Name: ViridianForest_TrainerTips02_Dialogue
   m_EditorClassIdentifier: 
-  id: BGM_Pewter_City
-  category: 0
-  clip: {fileID: 8300000, guid: 236c1e53c2a273044aa935385e095dff, type: 3}
+  lines:
+  - Trainer Tips
+  - "If your Pok\xE9mon are weak and you\nwant to avoid battles, stay away"
+  - from grassy areas!

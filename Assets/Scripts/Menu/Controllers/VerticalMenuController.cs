@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,8 +9,10 @@ using UnityEngine;
 namespace PokemonGame.Menu.Controllers
 {
     /// <summary>
-    /// Handles vertical navigation between <see cref="MenuButton"/>s
-    /// using keyboard or controller input.
+    /// Vertical menu controller for keyboard/controller input.
+    /// Scans configured parents for buttons, selects the first interactable on enable,
+    /// handles Up/Down navigation with wrap-around, plays a selection sound on change,
+    /// and exposes events for select, click, and cancel actions.
     /// </summary>
     public class VerticalMenuController : MonoBehaviour
     {
@@ -20,36 +23,41 @@ namespace PokemonGame.Menu.Controllers
         [SerializeField, Required]
         private List<Transform> buttonSources = new();
 
+        [Title("Audio")]
+        [SerializeField, Required]
+        [Tooltip("Sound played when the selection changes.")]
+        private AudioClip selectSound;
+
         private readonly List<MenuButton> buttons = new();
         private MenuButton currentButton;
 
         /// <summary>
-        /// Raised when a new button is selected.
+        /// Raised when a new button becomes selected.
         /// </summary>
         public event Action<MenuButton> OnSelect;
 
         /// <summary>
-        /// Raised when the current button is clicked.
+        /// Raised when the currently selected button is activated.
         /// </summary>
         public event Action<MenuButton> OnClick;
 
         /// <summary>
-        /// Raised when cancel input is pressed.
+        /// Raised when cancel input is pressed while a button is selected.
         /// </summary>
         public event Action<MenuButton> OnCancel;
 
         /// <summary>
-        /// Gets the currently selected button, or null if none.
+        /// The button that is currently selected, or null if none.
         /// </summary>
         public MenuButton CurrentButton => currentButton;
 
         /// <summary>
-        /// Gets or sets whether this controller accepts input.
+        /// Enables or disables input handling for this controller.
         /// </summary>
         public bool AcceptInput { get; set; } = true;
 
         /// <summary>
-        /// Refreshes the button list when enabled.
+        /// Rebuilds the button list and schedules selection of the first interactable button.
         /// </summary>
         private void OnEnable()
         {
@@ -58,7 +66,7 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Processes navigation, click, and cancel input.
+        /// Reads input and dispatches navigation (Up/Down), activation (Interact), and cancel actions.
         /// </summary>
         private void Update()
         {
@@ -86,8 +94,7 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Collects all menu buttons from the assigned sources
-        /// and selects the first interactable one.
+        /// Collects all buttons from the configured sources and clears the current selection.
         /// </summary>
         private void RefreshButtons()
         {
@@ -110,6 +117,9 @@ namespace PokemonGame.Menu.Controllers
             }
         }
 
+        /// <summary>
+        /// Waits one frame (to allow layout/activation) and then selects the first interactable button.
+        /// </summary>
         private IEnumerator DeferredSelectFirst()
         {
             yield return null; // wait one frame
@@ -117,7 +127,7 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Selects the first interactable button.
+        /// Selects the first interactable button in the list, if any; otherwise clears selection.
         /// </summary>
         public void SelectFirst()
         {
@@ -125,7 +135,7 @@ namespace PokemonGame.Menu.Controllers
             {
                 if (button != null && button.IsInteractable)
                 {
-                    SelectButton(button);
+                    SelectButton(button, false);
                     return;
                 }
             }
@@ -134,7 +144,7 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Validates that at least one button source is assigned.
+        /// Validation helper to ensure at least one button source is assigned.
         /// </summary>
         private bool HasSources()
         {
@@ -142,10 +152,12 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Selects the given button and raises selection events.
+        /// Applies selection to the specified button, optionally plays the selection sound,
+        /// and raises the selection event.
         /// </summary>
-        /// <param name="button">The button to select.</param>
-        private void SelectButton(MenuButton button)
+        /// <param name="button">Button to select.</param>
+        /// <param name="playSound">Whether to play the selection sound.</param>
+        private void SelectButton(MenuButton button, bool playSound = true)
         {
             if (currentButton != null)
             {
@@ -155,11 +167,16 @@ namespace PokemonGame.Menu.Controllers
             currentButton = button;
             currentButton.SetSelected(true);
 
+            if (playSound)
+            {
+                AudioManager.Instance.PlaySFX(selectSound);
+            }
+
             OnSelect?.Invoke(button);
         }
 
         /// <summary>
-        /// Invokes the click action on the current button.
+        /// Activates the current button, plays the selection sound, and raises the click event.
         /// </summary>
         private void TriggerClick()
         {
@@ -168,12 +185,13 @@ namespace PokemonGame.Menu.Controllers
                 currentButton.Click();
             }
 
+            AudioManager.Instance.PlaySFX(selectSound);
             OnClick?.Invoke(currentButton);
         }
 
         /// <summary>
-        /// Selects the next interactable button.
-        /// Stops at the last button instead of looping.
+        /// Moves selection to the next interactable button.
+        /// Wraps to the first interactable button after reaching the end.
         /// </summary>
         private void MoveNext()
         {
@@ -189,6 +207,7 @@ namespace PokemonGame.Menu.Controllers
                 return;
             }
 
+            // Forward search
             for (int nextIndex = index + 1; nextIndex < buttons.Count; nextIndex++)
             {
                 MenuButton button = buttons[nextIndex];
@@ -199,11 +218,22 @@ namespace PokemonGame.Menu.Controllers
                     return;
                 }
             }
+
+            // Wrap-around search (start -> before current)
+            for (int wrapIndex = 0; wrapIndex < index; wrapIndex++)
+            {
+                MenuButton button = buttons[wrapIndex];
+                if (button != null && button.IsInteractable)
+                {
+                    SelectButton(button);
+                    return;
+                }
+            }
         }
 
         /// <summary>
-        /// Selects the previous interactable button.
-        /// Stops at the first button instead of looping.
+        /// Moves selection to the previous interactable button.
+        /// Wraps to the last interactable button after reaching the start.
         /// </summary>
         private void MovePrevious()
         {
@@ -219,10 +249,22 @@ namespace PokemonGame.Menu.Controllers
                 return;
             }
 
+            // Backward search
             for (int previousIndex = index - 1; previousIndex >= 0; previousIndex--)
             {
                 MenuButton button = buttons[previousIndex];
 
+                if (button != null && button.IsInteractable)
+                {
+                    SelectButton(button);
+                    return;
+                }
+            }
+
+            // Wrap-around search (end -> after current)
+            for (int wrapIndex = buttons.Count - 1; wrapIndex > index; wrapIndex--)
+            {
+                MenuButton button = buttons[wrapIndex];
                 if (button != null && button.IsInteractable)
                 {
                     SelectButton(button);

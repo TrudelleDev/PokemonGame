@@ -24,9 +24,6 @@ EditorBuildSettings:
     path: Assets/Scenes/BattleScene.unity
     guid: d4bad4ac43c3d9e4199866ecee3228f5
   - enabled: 1
-    path: Assets/Scenes/PlayerScene.unity
-    guid: fc670f8995988034bbb12ae22a5265ac
-  - enabled: 1
     path: Assets/Scenes/TransitionScene.unity
     guid: 48975019fc531c9409bd62d627838c46
   - enabled: 1

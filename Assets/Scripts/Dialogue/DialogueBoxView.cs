@@ -72,6 +72,8 @@ namespace PokemonGame.Dialogue
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
             }
 
+            yield return null;
+
             ViewManager.Instance.CloseCurrentView();
             dialogueText.text = "";
         }

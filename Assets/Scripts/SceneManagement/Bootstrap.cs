@@ -35,10 +35,16 @@ namespace PokemonGame.SceneManagement
         private SceneAsset audioScene;
 #endif
 
-        // Resolved scene names
+        // Persisted scene names for runtime (these are serialized so they exist in builds)
+        [SerializeField, HideInInspector]
         private string mainMenuSceneName;
+
+        [SerializeField, HideInInspector]
         private string transitionSceneName;
+
+        [SerializeField, HideInInspector]
         private string audioSceneName;
+
 
 #if UNITY_EDITOR
         private void OnValidate()

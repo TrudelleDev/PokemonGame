@@ -17,7 +17,7 @@ namespace PokemonGame.Items
     public class ItemInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required]
-        [Tooltip("The item stack this pickup grants.")]
+        [Tooltip("The item this pickup grants.")]
         private Item item;
 
         [Header("Audio")]
@@ -50,6 +50,7 @@ namespace PokemonGame.Items
                 AudioManager.Instance.PlaySFX(receiveItemClip);
             }
 
+            ViewManager.Instance.Show<DialogueBoxView>();
             ViewManager.Instance.Get<DialogueBoxView>().ShowDialogue(new[] { itemFoundLine, putInBagLine });
 
             if (player.TryGetComponent<InventoryManager>(out var inventory))

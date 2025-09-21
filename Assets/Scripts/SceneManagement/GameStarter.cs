@@ -24,10 +24,6 @@ namespace PokemonGame.SceneManagement
         private SceneAsset coreScene;
 
         [SerializeField, Required]
-        [Tooltip("Player scene (player prefab and controllers).")]
-        private SceneAsset playerScene;
-
-        [SerializeField, Required]
         [Tooltip("Initial map scene to enter on New Game.")]
         private SceneAsset initialMapScene;
 #endif
@@ -42,14 +38,12 @@ namespace PokemonGame.SceneManagement
         private TransitionType startGameTransition;
 
         private string coreSceneName;
-        private string playerSceneName;
         private string initialMapSceneName;
 
 #if UNITY_EDITOR
         private void OnValidate()
         {
             coreSceneName = coreScene ? coreScene.name : string.Empty;
-            playerSceneName = playerScene ? playerScene.name : string.Empty;
             initialMapSceneName = initialMapScene ? initialMapScene.name : string.Empty;
         }
 #endif
@@ -61,7 +55,7 @@ namespace PokemonGame.SceneManagement
         /// </summary>
         public void StartNewGame()
         {
-            string[] sceneNames = { playerSceneName, coreSceneName, initialMapSceneName };
+            string[] sceneNames = {coreSceneName, initialMapSceneName };
             SceneTransitionManager.Instance.StartTransition(sceneNames, spawnLocationId, startGameTransition);
         }
 
