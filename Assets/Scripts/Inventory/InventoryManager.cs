@@ -8,9 +8,10 @@ using UnityEngine;
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Central component that manages the character's inventory.
-    /// Keeps items organized by section and provides add/remove/query operations.
+    /// Manages the player’s inventory.
+    /// Organizes items into sections and provides add, remove, and query operations.
     /// </summary>
+    [DisallowMultipleComponent]
     public class InventoryManager : MonoBehaviour
     {
         [SerializeField, Required]
@@ -20,8 +21,8 @@ namespace PokemonGame.Inventory
         private Dictionary<ItemCategory, InventorySection> sections;
 
         /// <summary>
-        /// Initializes the inventory by binding each section and creating the internal lookup dictionary.
-        /// This should be called before interacting with the inventory.
+        /// Initializes the inventory and prepares each section for use.
+        /// Call this before interacting with the inventory.
         /// </summary>
         public void Initialize()
         {
@@ -39,92 +40,56 @@ namespace PokemonGame.Inventory
 
         /// <summary>
         /// Adds an item to the appropriate section of the inventory.
-        /// Items are categorized by their item type (General, KeyItem, Pokeball).
+        /// Returns true if the item was successfully added.
         /// </summary>
-        /// <param name="item">The item to add to the inventory.</param>
-        public void Add(Item item)
+        public bool Add(Item item)
         {
-            if (item == null || item.ID == ItemId.None || item.Quantity <= 0)
+            if (item == null || item.ID == ItemId.None || item.Quantity <= 0 || item.Definition == null)
             {
                 Log.Warning(nameof(InventoryManager), "Attempted to add invalid item.");
-                return;
+                return false;
             }
 
-            if (item.Definition == null)
-            {
-                Log.Warning(nameof(InventoryManager), $"Missing definition for ID '{item.ID}'. Did you load definitions?");
-                return;
-            }
-
-            if (sections.TryGetValue(item.Definition.Category, out var section) && section != null)
+            if (sections.TryGetValue(item.Definition.Category, out InventorySection section))
             {
                 section.Add(item);
+                return true;
             }
-            else
-            {
-                Log.Warning(nameof(InventoryManager), $"No inventory category found for '{item.Definition.Category}'.");
-            }
+
+            Log.Warning(nameof(InventoryManager), $"No section found for category '{item.Definition.Category}'.");
+            return false;
         }
 
         /// <summary>
-        /// Removes the specified item stack from its corresponding inventory section.
+        /// Removes one unit of the given item from its section.
+        /// Returns true if the item was successfully removed.
         /// </summary>
-        /// <param name="item">The item to remove from the inventory.</param>
-        public void Remove(Item item)
+        public bool Remove(Item item)
         {
-            if (item == null || item.ID == ItemId.None)
+            if (item == null || item.ID == ItemId.None || item.Definition == null)
             {
                 Log.Warning(nameof(InventoryManager), "Attempted to remove invalid item.");
-                return;
+                return false;
             }
 
-            if (item.Definition == null)
-            {
-                Log.Warning(nameof(InventoryManager), $"Missing definition for ID '{item.ID}'. Did you load definitions?");
-                return;
-            }
-
-            if (sections.TryGetValue(item.Definition.Category, out var section))
+            if (sections.TryGetValue(item.Definition.Category, out InventorySection section))
             {
                 section.Remove(item);
+                return true;
             }
-            else
-            {
-                Log.Warning(nameof(InventoryManager), $"No inventory category found for '{item.Definition.Category}'.");
-            }
+
+            Log.Warning(nameof(InventoryManager), $"No section found for category '{item.Definition.Category}'.");
+            return false;
         }
 
         /// <summary>
-        /// Retrieves the inventory section corresponding to the specified item category.
+        /// Gets the inventory section for the specified category.
+        /// Returns null if not found.
         /// </summary>
-        /// <param name="type">The item category (e.g., General, KeyItem, Pokeball).</param>
-        /// <returns>The inventory section for the specified item category, or null if not found.</returns>
         public InventorySection GetSection(ItemCategory type)
         {
-            if (sections.TryGetValue(type, out var section))
-            {
-                return section;
-            }
-
-            return null;
-        }
-
-        /// <summary>
-        /// Checks if the inventory contains at least one instance of an item by its ID and category.
-        /// </summary>
-        /// <param name="itemId">The item ID to check for.</param>
-        /// <param name="type">The category of item to check in (e.g., General, KeyItem, Pokeball).</param>
-        /// <returns>True if the item exists in the inventory, otherwise false.</returns>
-        public bool HasItem(ItemId itemId, ItemCategory type)
-        {
-            InventorySection section = GetSection(type);
-
-            if (section != null)
-            {
-                return section.Contains(itemId);
-            }
-
-            return false;
+            sections.TryGetValue(type, out var section);
+            return section;
         }
     }
 }

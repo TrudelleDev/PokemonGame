@@ -1,41 +1,46 @@
-﻿using PokemonGame.Items.UI;
+﻿using PokemonGame.Items;
+using PokemonGame.Items.UI;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Utilities;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// UI controller that displays items from an <see cref="InventorySection"/>.
-    /// Spawns item entries, listens for changes, and provides a cancel button to return to the previous view.
+    /// UI controller responsible for displaying all items from an
+    /// <see cref="InventorySection"/>. Handles spawning <see cref="ItemUI"/> entries,
+    /// listening for section changes, and providing a cancel button to
+    /// return to the previous view.
     /// </summary>
+    [DisallowMultipleComponent]
     public class InventorySectionUI : MonoBehaviour
     {
+        [Title("Prefabs")]
         [SerializeField, Required]
-        [Tooltip("Prefab used to display an item entry.")]
+        [Tooltip("Prefab used to represent a single inventory item entry.")]
         private ItemUI itemUIPrefab;
 
         [SerializeField, Required]
-        [Tooltip("Button prefab for cancelling and returning to the previous view.")]
-        private MenuButton cancelButton;
+        [Tooltip("Prefab for the cancel button, used to return to the previous view.")]
+        private MenuButton cancelButtonPrefab;
 
         [SerializeField, Required]
-        [Tooltip("Parent container for item UI elements.")]
+        [Tooltip("Parent container where all item entries and the cancel button are instantiated.")]
         private Transform contentParent;
 
         [SerializeField, Required]
-        [Tooltip("Menu controller used to manage navigation between items.")]
+        [Tooltip("Menu controller that manages navigation between item entries.")]
         private VerticalMenuController menuController;
 
-        private MenuButton activeCancelButton;
+        private MenuButton cancelButton;
         private InventorySection currentSection;
 
         /// <summary>
-        /// Binds the UI to a given inventory section and starts listening for item changes.
+        /// Binds this UI to a given <see cref="InventorySection"/>,
+        /// subscribes to item change events, and populates the display.
         /// </summary>
         /// <param name="section">The inventory section to bind to.</param>
         public void Bind(InventorySection section)
@@ -51,71 +56,58 @@ namespace PokemonGame.Inventory
             currentSection = section;
             currentSection.OnItemsChanged += OnSectionChanged;
 
-            RefreshUI();
+            OnSectionChanged();
         }
 
         /// <summary>
-        /// Unbinds from the current inventory section and clears the UI content.
+        /// Unbinds from the current section, unsubscribes from events,
+        /// clears UI content, and removes the cancel button.
         /// </summary>
         public void Unbind()
         {
-            // Remove cancel button listener and destroy it if it's active
-            if (activeCancelButton != null)
+            if (cancelButton != null)
             {
-                activeCancelButton.OnClick -= HandleCancelClick;
-                Destroy(activeCancelButton.gameObject);
-                activeCancelButton = null;
+                cancelButton.OnClick -= OnCancelButtonClick;
+                Destroy(cancelButton.gameObject);
+                cancelButton = null;
             }
 
-            // Unsubscribe from the section's item changes event and reset category
             if (currentSection != null)
             {
                 currentSection.OnItemsChanged -= OnSectionChanged;
                 currentSection = null;
             }
 
-            // Clear UI content and refresh the menu buttons
             ClearContent();
-            //menuController.RefreshButtons();
         }
-   
+
         /// <summary>
-        /// Refreshes the UI to display the current items in the inventory section.
+        /// Temporarily disables navigation for this section.
         /// </summary>
-        private void RefreshUI()
+        public void Freeze()
         {
-            if (currentSection == null)
-            {
-                return;
-            }
-
-            ClearContent();
-
-            // Instantiate and bind ItemUI for each item in the section
-            foreach (var item in currentSection.Items)
-            {
-                ItemUI itemUI = Instantiate(itemUIPrefab, contentParent);
-                itemUI.Bind(item);
-            }
-
-            // Instantiate cancel button if not already active
-            if (activeCancelButton == null)
-            {
-                activeCancelButton = Instantiate(cancelButton, contentParent);
-                activeCancelButton.OnClick += HandleCancelClick;
-            }
-
-            // Ensure the cancel button is last in the hierarchy to appear at the bottom
-            activeCancelButton.transform.SetAsLastSibling();
+            menuController.enabled = false;
         }
 
+        /// <summary>
+        /// Re-enables navigation for this section.
+        /// </summary>
+        public void UnFreeze()
+        {
+            menuController.enabled = true;
+        }
+
+        /// <summary>
+        /// Removes all dynamically spawned UI elements,
+        /// leaving only the cancel button (if present).
+        /// </summary>
         private void ClearContent()
         {
             for (int i = contentParent.childCount - 1; i >= 0; i--)
             {
                 GameObject child = contentParent.GetChild(i).gameObject;
 
-                if (activeCancelButton != null && child == activeCancelButton.gameObject)
+                if (cancelButton != null && child == cancelButton.gameObject)
                 {
                     continue;
                 }
@@ -124,15 +116,40 @@ namespace PokemonGame.Inventory
             }
         }
 
-        private void HandleCancelClick()
-        {
-            ViewManager.Instance.GoToPreviousView();
-        }
-
+        /// <summary>
+        /// Refreshes the UI by rebuilding the item list
+        /// and ensuring the cancel button exists.
+        /// </summary>
         private void OnSectionChanged()
         {
-            RefreshUI();
-          //  menuController.RefreshButtons();
+            if (currentSection == null)
+            {
+                return;
+            }
+
+            ClearContent();
+
+            foreach (Item item in currentSection.Items)
+            {
+                ItemUI itemUI = Instantiate(itemUIPrefab, contentParent);
+                itemUI.Bind(item);
+            }
+
+            if (cancelButton == null)
+            {
+                cancelButton = Instantiate(cancelButtonPrefab, contentParent);
+                cancelButton.OnClick += OnCancelButtonClick;
+            }
+
+            cancelButton.transform.SetAsLastSibling();
+        }
+
+        /// <summary>
+        /// Closes the current view when the cancel button is clicked.
+        /// </summary>
+        private void OnCancelButtonClick()
+        {
+            ViewManager.Instance.CloseCurrentView();
         }
     }
 }

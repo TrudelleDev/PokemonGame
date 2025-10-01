@@ -1,4 +1,5 @@
 using PokemonGame.Items.Enums;
+using PokemonGame.Pokemons;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,7 +7,8 @@ using UnityEngine;
 namespace PokemonGame.Items.Definition
 {
     /// <summary>
-    /// Defines a game item.
+    /// Abstract base definition for all game items.
+    /// Stores identity, visuals, description, and category.
     /// </summary>
     public abstract class ItemDefinition : ScriptableObject, IDisplayable
     {
@@ -69,5 +71,7 @@ namespace PokemonGame.Items.Definition
         /// Item category.
         /// </summary>
         public ItemCategory Category => category;
+
+        public abstract ItemUseResult Use(Pokemon target);
     }
 }

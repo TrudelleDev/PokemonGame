@@ -1,4 +1,5 @@
 ﻿using PokemonGame.Shared.Interfaces;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Menu.Definition
@@ -17,6 +18,11 @@ namespace PokemonGame.Menu.Definition
         [SerializeField, TextArea]
         [Tooltip("The description text displayed for the cancel option.")]
         private string description;
+
+        [SerializeField, Required]
+        private string displayName;
+
+        public string DisplayName => displayName;
 
         /// <summary>
         /// The icon displayed for this cancel menu option.

@@ -11,38 +11,33 @@ namespace PokemonGame.Views
 {
     /// <summary>
     /// Manages UI view transitions and navigation history.
-    /// Responsible for showing, hiding, and returning to previous views,
-    /// applying transitions defined per <see cref="View"/>.
+    /// Supports main views (with transitions) and overlays (which freeze the underlying main view).
     /// </summary>
     public class ViewManager : Singleton<ViewManager>
     {
-        [Title("Settings")]
-        [SerializeField]
+        [SerializeField, Required]
         [Tooltip("Extra hold time while screen is black during transitions. 0 = no hold.")]
         private float blackScreenHoldDuration = 1f;
 
-        [Title("Views")]
         [SerializeField, Required]
         [Tooltip("All views managed by this ViewManager.")]
         private View[] views;
 
-        [Title("Debug")]
-        [Tooltip("All views managed by this ViewManager.")]
-        [SerializeField] 
+        [SerializeField]
+        [Tooltip("Print debug logs for active views and history.")]
         private bool enableDebugLogs = false;
 
         private bool isTransitioning;
-        private View currentView;
-        private readonly Stack<View> history = new();
+        private View currentView;                     // Active main view
+        private readonly Stack<View> history = new(); // Back stack of main views
+        private readonly List<View> overlayViews = new(); // Overlay views stacked on top
 
         /// <summary>
-        /// Returns whether the history stack is empty.
+        /// Gets a value indicating whether there is at least one active view
+        /// (either a main view or one or more overlays).
         /// </summary>
-        public bool HasActiveView => history.Count > 0;
+        public bool HasActiveView => currentView != null || overlayViews.Count > 0;
 
-        /// <summary>
-        /// Preloads all registered views and hides them at startup.
-        /// </summary>
         protected override void Awake()
         {
             base.Awake();
@@ -55,40 +50,10 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Shows the requested view. If another view is active,
-        /// it is pushed onto history before switching.
+        /// Retrieves a registered view of the given type without showing it.
+        /// Returns <c>null</c> if the view is not found.
         /// </summary>
-        public void Show<T>() where T : View
-        {
-            if (isTransitioning)
-            {
-                return;
-            }
-
-            foreach (View view in views)
-            {
-                if (view is not T target)
-                {
-                    continue;
-                }
-
-                if (currentView == null)
-                {
-                    StartCoroutine(OpenFirstView(target));
-                }
-                else
-                {
-                    StartCoroutine(SwitchBetweenViews(currentView, target, false));
-                }
-
-                break;
-            }
-        }
-
-        /// <summary>
-        /// Retrieves a registered view of the given type.
-        /// Returns null if the view is not found.
-        /// </summary>
+        /// <typeparam name="T">The type of <see cref="View"/> to retrieve.</typeparam>
         public T Get<T>() where T : View
         {
             foreach (View view in views)
@@ -98,46 +63,134 @@ namespace PokemonGame.Views
                     return target;
                 }
             }
+            return null;
+        }
+
+        /// <summary>
+        /// Shows the specified view type. 
+        /// If it is an overlay, it is added on top of the current view and the current view is frozen. 
+        /// If it is a main view, transitions are applied and the history is updated.
+        /// </summary>
+        /// <typeparam name="T">The type of <see cref="View"/> to show.</typeparam>
+        /// <returns>The instance of the view shown, or <c>null</c> if not found.</returns
+        public T Show<T>() where T : View
+        {
+            if (isTransitioning)
+            {
+                return null;
+            }
+
+            foreach (View view in views)
+            {
+                if (view is not T target)
+                {
+                    continue;
+                }
+
+                if (target.IsOverlay)
+                {
+                    currentView.Freeze();
+                    target.Show();
+                    overlayViews.Add(target);
+                }
+                else
+                {
+                    foreach (View overlayView in overlayViews)
+                    {
+                        overlayView.Hide();
+                    }
+
+                    overlayViews.Clear();
+                    currentView.Unfreeze();
+
+                    if (currentView == null)
+                    {
+                        StartCoroutine(OpenFirstView(target));
+                    }
+                    else
+                    {
+                        StartCoroutine(SwitchBetweenViews(currentView, target, false));
+                    }
+                }
+
+                UpdatePauseState();
+                DebugHistory();
+                return target;
+            }
 
             return null;
         }
 
         /// <summary>
-        /// Opens the first view without transition.
+        /// Closes the top-most active view.
+        /// If the top-most view is an overlay, it will be hidden and the main view is unfrozen
+        /// when the last overlay is closed. If the top-most view is a main view, the manager
+        /// transitions back to the previous one in history, or closes it entirely if no history remains.
         /// </summary>
+        public void CloseCurrentView()
+        {
+            if (isTransitioning)
+            {
+                return;
+            }
+
+            if (overlayViews.Count > 0)
+            {
+                // Close top overlay
+                int lastIndex = overlayViews.Count - 1;
+                View overlayView = overlayViews[lastIndex];
+                overlayViews.RemoveAt(lastIndex);
+                overlayView.Hide();
+
+                if (overlayViews.Count == 0)
+                {
+                    currentView.Unfreeze();
+                }
+            }
+            else if (currentView != null)
+            {
+                if (history.Count > 0)
+                {
+                    View previousView = history.Pop();
+
+                    if (previousView != null && previousView != currentView)
+                    {
+                        StartCoroutine(SwitchBetweenViews(currentView, previousView, true));
+                    }
+                    else
+                    {
+                        StartCoroutine(CloseLastView(currentView));
+                    }
+                }
+                else
+                {
+                    StartCoroutine(CloseLastView(currentView));
+                }
+            }
+
+            UpdatePauseState();
+            DebugHistory();
+        }
+
+        /// <summary>
+        /// Opens the very first view without transitions.
+        /// </summary>
+        /// <param name="toView">The view that will be shown as the initial active view.</param>
         private IEnumerator OpenFirstView(View toView)
         {
             isTransitioning = true;
             toView.Show();
             currentView = toView;
-            history.Push(currentView);
             isTransitioning = false;
             UpdatePauseState();
             DebugHistory();
             yield break;
         }
 
-
         /// <summary>
-        /// Closes the current active view and removes it from history.
+        /// Closes the last active view when no history remains.
         /// </summary>
-        public void CloseCurrentView()
-        {
-            if (isTransitioning || currentView == null)
-                return;
-
-            // Pop if it's in history
-            if (history.Count > 0 && history.Peek() == currentView)
-            {
-                history.Pop();
-            }
-
-            StartCoroutine(CloseLastView(currentView));
-        }
-
-        /// <summary>
-        /// Closes the last active view without transition.
-        /// </summary>
+        /// <param name="fromView">The view that will be closed and hidden.</param>
         private IEnumerator CloseLastView(View fromView)
         {
             isTransitioning = true;
@@ -150,38 +203,15 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Returns to the previous view. If no history remains,
-        /// the current view is closed instead.
+        /// Switches between two main views, optionally treating it as back navigation.
+        /// Handles transitions and history stack updates.
         /// </summary>
-        public void GoToPreviousView()
-        {
-            if (isTransitioning || currentView == null)
-            {
-                return;
-            }
-
-            if (history.Count > 0)
-            {
-                View previous = history.Pop();
-
-                if (previous != null && previous != currentView)
-                {
-                    StartCoroutine(SwitchBetweenViews(currentView, previous, true));
-                }
-                else
-                {
-                    StartCoroutine(CloseLastView(currentView));
-                }
-            }
-            else
-            {
-                StartCoroutine(CloseLastView(currentView));
-            }
-        }
-
-        /// <summary>
-        /// Switches between two views, applying transition if available.
-        /// </summary>
+        /// <param name="fromView">The currently active view that will be hidden.</param>
+        /// <param name="toView">The new view that will be shown.</param>
+        /// <param name="isBackNavigation">
+        /// True if this switch is the result of navigating back (history pop),
+        /// false if it is forward navigation (history push).
+        /// </param>
         private IEnumerator SwitchBetweenViews(View fromView, View toView, bool isBackNavigation)
         {
             isTransitioning = true;
@@ -202,24 +232,21 @@ namespace PokemonGame.Views
                 SwapViews(fromView, toView);
             }
 
-            toView.Show();
             currentView = toView;
+            isTransitioning = false;
             UpdatePauseState();
             DebugHistory();
-            isTransitioning = false;
         }
 
         /// <summary>
-        /// Executes a fade transition between two views.
+        /// Executes a full transition sequence: 
+        /// fade in, swap views, optional black screen hold, then fade out.
         /// </summary>
+        /// <param name="transition">The transition effect to perform.</param>
+        /// <param name="fromView">The currently active view being replaced.</param>
+        /// <param name="toView">The new view being shown.</param>
         private IEnumerator RunViewTransition(Transition transition, View fromView, View toView)
         {
-            if (transition == null)
-            {
-                SwapViews(fromView, toView);
-                yield break;
-            }
-
             yield return transition.FadeInCoroutine();
             SwapViews(fromView, toView);
 
@@ -232,44 +259,46 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Utility to hide the old view and show the new one instantly.
+        /// Swaps one view for another without transition effects.
         /// </summary>
+        /// <param name="fromView">The currently active view to hide. Can be null.</param>
+        /// <param name="toView">The new view to show. Can be null.</param>
         private void SwapViews(View fromView, View toView)
         {
-            if (fromView != null)
+            if(fromView != null)
             {
                 fromView.Hide();
             }
 
-            if (toView != null)
+            if(toView != null)
             {
                 toView.Show();
             }
         }
 
         /// <summary>
-        /// Updates the pause state based on whether there are active views.
+        /// Updates the pause state depending on whether any views are active.
         /// </summary>
         private void UpdatePauseState()
         {
-            PauseManager.SetPaused(history.Count > 0);
+            PauseManager.SetPaused(HasActiveView);
         }
 
         /// <summary>
-        /// Prints the current and history stack of views to the console for debugging.
+        /// Prints debug information about the current view, overlays, and navigation history.
         /// </summary>
         private void DebugHistory()
         {
-            if (history.Count == 0)
+            if (!enableDebugLogs)
             {
-                Log.Info(nameof(ViewManager), "History is empty. No active views.");
                 return;
             }
 
-            string[] names = history.Select(v => v != null ? v.GetType().Name : "Null").ToArray();
-            string stack = string.Join(" -> ", names);
+            string current = currentView != null ? currentView.GetType().Name : "None";
+            string overlayNames = overlayViews.Count > 0 ? string.Join(", ", overlayViews.Select(v => v.GetType().Name)) : "None";
+            string stack = history.Count > 0 ? string.Join(" -> ", history.Select(v => v?.GetType().Name ?? "Null")) : "Empty";
 
-            Log.Info(nameof(ViewManager), $" Current: {(currentView != null ? currentView.GetType().Name : "None")} | History: {stack}");
+            Log.Info(nameof(ViewManager), $"Current: {current}, Overlays: [{overlayNames}] | History: {stack}");
         }
     }
 }

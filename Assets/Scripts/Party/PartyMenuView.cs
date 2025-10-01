@@ -1,5 +1,7 @@
+using System;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
+using PokemonGame.Pokemons;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -13,12 +15,8 @@ namespace PokemonGame.Party
     /// </summary>
     public class PartyMenuView : View
     {
-        private const string DialogueChoosePokemon = "Choose a Pokémon or cancel.";
-        private const string DialogueOptionMenu = "What will you do?";
-
-        [SerializeField, Required]
-        [Tooltip("ViewManager for handling local views like the party option menu.")]
-        private ViewManager innerViewManager;
+        private const string ChoosePokemonMessage = "Choose a Pokémon or cancel.";
+        private const string ActionMessage = "What will you do?";
 
         [Title("References")]
         [SerializeField, Required]
@@ -30,10 +28,6 @@ namespace PokemonGame.Party
         private MenuButton cancelButton;
 
         [SerializeField, Required]
-        [Tooltip("Option menu shown after selecting a Pokémon.")]
-        private PartyMenuOption partyMenuOption;
-
-        [SerializeField, Required]
         [Tooltip("Text box displaying contextual instructions.")]
         private TextMeshProUGUI dialogueText;
 
@@ -42,88 +36,68 @@ namespace PokemonGame.Party
         [Tooltip("Controls navigation between party slots.")]
         private VerticalMenuController partySlotController;
 
-        [SerializeField, Required]
-        [Tooltip("Controls navigation inside the option menu.")]
-        private VerticalMenuController partyOptionController;
-
-        public override void Preload()
-        {
-            partySlotController.OnClick += OnPartySlotClick;
-            partyMenuOption.OnCancel += OnPartyOptionCancel;
-            cancelButton.OnClick += OnCancel;
-        }
-
-        private void OnDestroy()
-        {
-            partySlotController.OnClick -= OnPartySlotClick;
-            partyMenuOption.OnCancel -= OnPartyOptionCancel;
-            cancelButton.OnClick -= OnCancel;
-        }
+        /// <summary>
+        /// Raised when the player selects a Pokémon from the menu.
+        /// </summary>
+        public event Action<Pokemon> OnPokemonSelected;
 
         private void OnEnable()
         {
-            SetOptionMenuActive(false); // ensure clean state
+            partySlotController.OnClick += OnPartySlotClick;
+            cancelButton.OnClick += OnCancelButtonClick;
+
+            dialogueText.text = ChoosePokemonMessage;
+        }
+
+        private void OnDisable()
+        {
+            partySlotController.OnClick -= OnPartySlotClick;
+            cancelButton.OnClick -= OnCancelButtonClick;
         }
 
         /// <summary>
-        /// Opens the option menu for the clicked Pokémon slot.
+        /// Freezes the view, disabling party slot navigation
+        /// and showing the option message instead.
         /// </summary>
+        public override void Freeze()
+        {
+            partySlotController.enabled = false;
+            dialogueText.text = ActionMessage;
+        }
+
+        /// <summary>
+        /// Unfreezes the view, re-enabling party slot navigation
+        /// and showing the default choose message.
+        /// </summary>
+        public override void Unfreeze()
+        {
+            partySlotController.enabled = true;
+            dialogueText.text = ChoosePokemonMessage;
+        }
+
+        /// <summary>
+        /// Handles clicks on a party slot and raises <see cref="OnPokemonSelected"/>
+        /// if the slot contains a valid Pokémon.
+        /// </summary>
+        /// <param name="menuButton">The clicked menu button.</param>
         private void OnPartySlotClick(MenuButton menuButton)
         {
             PartyMenuSlot menuSlot = menuButton.GetComponent<PartyMenuSlot>();
 
-            if(menuSlot == null || menuSlot.BoundPokemon == null) 
+            if (menuSlot == null || menuSlot.BoundPokemon == null)
             {
                 return;
             }
 
             party.SelectPokemon(menuSlot.BoundPokemon);
-            SetOptionMenuActive(true);
+
+            // Notify listeners about the selected Pokémon
+            OnPokemonSelected?.Invoke(menuSlot.BoundPokemon);
         }
 
-        /// <summary>
-        /// Closes the option menu and re-enables slot navigation.
-        /// </summary>
-        private void OnPartyOptionCancel()
+        private void OnCancelButtonClick()
         {
-            SetOptionMenuActive(false);
-        }
-
-        /// <summary>
-        /// Exits the party menu if no option menu is active.
-        /// </summary>
-        private void OnCancel()
-        {
-            if (!partyMenuOption.gameObject.activeInHierarchy)
-            {
-                ViewManager.Instance.GoToPreviousView();
-            }
-        }
-
-        /// <summary>
-        /// Switches between slot controller and option controller.
-        /// </summary>
-        private void SetOptionMenuActive(bool active)
-        {
-            partyOptionController.AcceptInput = active;
-            partySlotController.AcceptInput = !active;
-
-            if (active)
-            {
-                innerViewManager.Show<PartyMenuOption>();
-                dialogueText.text = DialogueOptionMenu;
-            }
-            else
-            {
-                innerViewManager.CloseCurrentView();
-                dialogueText.text = DialogueChoosePokemon;
-
-                // auto-reselect the last party slot if any
-                if (partySlotController.CurrentButton != null)
-                {
-                    partySlotController.CurrentButton.SetSelected(true);
-                }
-            }
+            ViewManager.Instance.CloseCurrentView();
         }
     }
 }

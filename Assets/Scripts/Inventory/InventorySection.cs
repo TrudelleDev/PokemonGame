@@ -2,35 +2,37 @@ using System;
 using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Enums;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// A section in the inventory (e.g., Items, Key Items, Poké Balls).
-    /// Holds item entries and manages stacking, removal, and lookups.
+    /// Represents a section in the inventory (e.g., General Items, Key Items, Poké Balls).
+    /// Manages item storage, stacking, removal, and change notifications.
     /// </summary>
     [Serializable]
     public class InventorySection
     {
-        [SerializeField]
-        [Tooltip("Initial items for this section.")]
+        [SerializeField, Required]
+        [Tooltip("Initial items that seed this section when initialized.")]
         private List<Item> startingItems = new();
 
         private readonly List<Item> items = new();
 
-        /// <summary> 
-        /// The items currently in this section.
+        /// <summary>
+        /// Gets a read-only view of the items currently in this section.
         /// </summary>
         public IReadOnlyList<Item> Items => items;
 
         /// <summary>
-        /// Raised whenever items in this section change (addition or removal).
+        /// Raised whenever the items in this section are modified 
+        /// (addition, removal, or clearing).
         /// </summary>
         public event Action OnItemsChanged;
 
         /// <summary>
-        /// Initializes this section, clearing it and adding any predefined items.
+        /// Initializes this section by clearing it and reloading its predefined starting items.
         /// </summary>
         public void Initialize()
         {
@@ -38,7 +40,7 @@ namespace PokemonGame.Inventory
 
             foreach (Item item in startingItems)
             {
-                if (item != null && item.ID != ItemId.None)
+                if (IsValid(item))
                 {
                     Add(new Item(item.Definition, item.Quantity));
                 }
@@ -46,13 +48,13 @@ namespace PokemonGame.Inventory
         }
 
         /// <summary>
-        /// Adds an item to this section, stacking it if already present.
-        /// If the item already exists, its quantity is updated (up to a max of 99).
+        /// Attempts to add an item to this section. If the item already exists,
+        /// its stack quantity is increased (capped at 99).
         /// </summary>
-        /// <param name="item">The item to add. Must have a valid definition and quantity.</param>
+        /// <param name="item">The item to add. Must be valid and have a quantity &gt; 0.</param>
         public void Add(Item item)
         {
-            if (item == null || item.ID == ItemId.None)
+            if (!IsValid(item))
             {
                 return;
             }
@@ -63,24 +65,24 @@ namespace PokemonGame.Inventory
 
                 if (storedItem.ID == item.ID)
                 {
-                    storedItem.Quantity = Mathf.Min(99, storedItem.Quantity + item.Quantity); // cap at 99
-                    OnItemsChanged?.Invoke();
+                    storedItem.Quantity = Mathf.Min(99, storedItem.Quantity + item.Quantity);
+                    NotifyChanged();
                     return;
                 }
             }
 
             items.Add(new Item(item.Definition, item.Quantity));
-            OnItemsChanged?.Invoke();
+            NotifyChanged();
         }
 
         /// <summary>
-        /// Removes a quantity of an item from this section.
-        /// If the quantity goes to zero, the item is removed.
+        /// Removes a single unit of the given item. If the stack reaches zero,
+        /// the item is removed entirely from the section.
         /// </summary>
-        /// <param name="item">The item entry to remove, including the quantity to subtract.</param>
+        /// <param name="item">The item to remove. Must be valid.</param>
         public void Remove(Item item)
         {
-            if (item == null || item.ID == ItemId.None)
+            if (!IsValid(item))
             {
                 return;
             }
@@ -89,53 +91,17 @@ namespace PokemonGame.Inventory
             {
                 if (items[i].ID == item.ID)
                 {
-                    items[i].Quantity -= item.Quantity;
+                    items[i].Quantity--;
 
                     if (items[i].Quantity <= 0)
                     {
                         items.RemoveAt(i);
                     }
 
-                    OnItemsChanged?.Invoke();
+                    NotifyChanged();
                     return;
                 }
             }
-        }
-
-        /// <summary>
-        /// Returns the total quantity of a given item in this section.
-        /// </summary>
-        /// <param name="itemId">The ID of the item to check.</param>
-        /// <returns>The quantity of the item, or 0 if not found.</returns>
-        public int GetQuantity(ItemId itemId)
-        {
-            foreach (var item in items)
-            {
-                if (item.ID == itemId)
-                {
-                    return item.Quantity;
-                }
-            }
-
-            return 0;
-        }
-
-        /// <summary>
-        /// Checks whether this section contains an item with the specified ID.
-        /// </summary>
-        /// <param name="itemId">The ID of the item to check for.</param>
-        /// <returns>True if the item exists, otherwise false.</returns>
-        public bool Contains(ItemId itemId)
-        {
-            foreach (var item in items)
-            {
-                if (item.ID == itemId)
-                {
-                    return true;
-                }
-            }
-
-            return false;
         }
 
         /// <summary>
@@ -144,7 +110,17 @@ namespace PokemonGame.Inventory
         public void Clear()
         {
             items.Clear();
-            OnItemsChanged?.Invoke();
+            NotifyChanged();
         }
+
+        /// <summary>
+        /// Checks whether the given item is valid for storage.
+        /// </summary>
+        private bool IsValid(Item item)
+        {
+            return item != null && item.ID != ItemId.None;
+        }
+
+        private void NotifyChanged() => OnItemsChanged?.Invoke();
     }
 }

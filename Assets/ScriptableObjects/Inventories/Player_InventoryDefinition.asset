@@ -15,7 +15,7 @@ MonoBehaviour:
   generalItems:
     startingItems:
     - definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
-      quantity: 1
+      quantity: 3
   keyItems:
     startingItems: []
   pokeballs:

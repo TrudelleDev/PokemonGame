@@ -68,6 +68,12 @@ namespace PokemonGame.Audio
                 return;
             }
 
+            if (sfxSource.isPlaying && sfxSource.clip == clip)
+            {
+                return; // already playing
+            }
+
+            sfxSource.clip = clip;
             sfxSource.PlayOneShot(clip);
         }
 

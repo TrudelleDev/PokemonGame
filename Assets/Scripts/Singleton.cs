@@ -9,26 +9,18 @@ namespace PokemonGame
     /// </summary>
     public abstract class Singleton<T> : MonoBehaviour where T : Singleton<T>
     {
-        [SerializeField]
-        [Tooltip("If true, this instance acts as the global singleton.")]
-        private bool isGlobal = true;
-
         public static T Instance { get; private set; }
 
         protected virtual void Awake()
         {
-            if (isGlobal)
+            if (Instance != null && Instance != this)
             {
-                if (Instance != null && Instance != this)
-                {
-                    Log.Warning(nameof(Singleton<T>), $"Duplicate {typeof(T).Name} detected, destroying.");
-                    Destroy(gameObject);
-                    return;
-                }
-
-                Instance = (T)this;
-                //DontDestroyOnLoad(gameObject);
+                Log.Warning(nameof(Singleton<T>), $"Duplicate {typeof(T).Name} detected, destroying.");
+                Destroy(gameObject);
+                return;
             }
+
+            Instance = (T)this;
         }
     }
 }

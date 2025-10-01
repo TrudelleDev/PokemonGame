@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 7823168193368366164}
   - component: {fileID: 6638448060034292476}
   m_Layer: 5
-  m_Name: MenuButton
+  m_Name: CursorMenuButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -194,6 +194,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 1
   cursorArrow: {fileID: 5852075439200412666}
+  cursorNormalSprite: {fileID: 21300000, guid: 80ba4ee7050665744ba3457b9e8fbc0d, type: 3}
+  cursorSelectSprite: {fileID: 21300000, guid: b53625d68a8437642b5e7fc281a00990, type: 3}
 --- !u!1 &7601481161520111405
 GameObject:
   m_ObjectHideFlags: 0

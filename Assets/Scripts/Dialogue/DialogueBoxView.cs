@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
@@ -33,6 +34,10 @@ namespace PokemonGame.Dialogue
         private string[] lines;
         private int lineIndex;
 
+        private Coroutine dialogueCoroutine;
+
+        public event Action OnDialogueFinished;
+
         /// <summary>
         /// Begins a new dialogue sequence with the given lines.
         /// Opens this view and starts the typewriter coroutine.
@@ -46,11 +51,18 @@ namespace PokemonGame.Dialogue
                 return;
             }
 
+            // Stop any currently running dialogue, to prevent dialogue overlapse.
+            if (dialogueCoroutine != null)
+            {
+                StopCoroutine(dialogueCoroutine);
+                dialogueCoroutine = null;
+            }
+
             this.lines = lines;
             lineIndex = 0;
             dialogueText.text = "";
 
-            StartCoroutine(RunDialogueSequence());
+            dialogueCoroutine = StartCoroutine(RunDialogueSequence());
         }
 
         /// <summary>
@@ -61,19 +73,20 @@ namespace PokemonGame.Dialogue
         {
             while (lineIndex < lines.Length)
             {
-                // Play sound safely
                 AudioManager.Instance.PlaySFX(dialogueSfx);
 
                 yield return StartCoroutine(TypeLineCoroutine(lines[lineIndex]));
                 lineIndex++;
-
-                // Small yield so input can't be "missed" in the same frame
+              
                 yield return null;
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
             }
 
+            // Skip one frame so the final interact press
+            // can’t instantly reopen the dialogue.
             yield return null;
 
+            OnDialogueFinished?.Invoke();
             ViewManager.Instance.CloseCurrentView();
             dialogueText.text = "";
         }

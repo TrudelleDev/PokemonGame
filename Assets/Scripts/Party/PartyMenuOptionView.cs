@@ -11,12 +11,8 @@ namespace PokemonGame.Party
     /// Displays the option menu when selecting a Pokémon in the party.
     /// Provides actions such as opening the summary screen or canceling.
     /// </summary>
-    public class PartyMenuOption : View
+    public class PartyMenuOptionView : View
     {
-        [SerializeField, Required]
-        [Tooltip("Inner ViewManager used to close this option menu.")]
-        private ViewManager innerViewManager;
-
         [Title("Buttons")]
         [SerializeField, Required]
         [Tooltip("Button to open the SummaryView.")]
@@ -25,11 +21,6 @@ namespace PokemonGame.Party
         [SerializeField, Required]
         [Tooltip("Button to close the option menu and return to the party menu.")]
         private MenuButton cancelButton;
-
-        /// <summary>
-        /// Raised when the cancel button is pressed.
-        /// </summary>
-        public event Action OnCancel;
 
         private void Awake()
         {
@@ -50,8 +41,7 @@ namespace PokemonGame.Party
 
         private void OnCancelClick()
         {
-            innerViewManager.CloseCurrentView();
-            OnCancel?.Invoke();
+            ViewManager.Instance.CloseCurrentView();
         }
     }
 }

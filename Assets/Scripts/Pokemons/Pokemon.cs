@@ -56,12 +56,13 @@ namespace PokemonGame.Pokemons
         public PokemonStats IndividualValue { get; private set; }
         public PokemonStats EffortValue { get; private set; }
         public PokemonGender Gender { get; private set; }
-        public float HealthRemaining { get; private set; }
+        public int HealthRemaining { get; private set; }
         public string OwnerName { get; set; } = "RED";
         public string LocationEncounter { get; set; } = "Pallet Town";
         public string ID { get; private set; }
+        public int MaxHealth => CoreStat.HealthPoint;
 
-        public event Action<float> OnHealthChange;
+        public event Action<int, int> OnHealthChange; // oldHp, newHp
 
         public Pokemon(int level, PokemonDefinition species, NatureDefinition natureDef, AbilityDefinition abilityDef, MoveDefinition[] moveDefs)
         {
@@ -110,8 +111,12 @@ namespace PokemonGame.Pokemons
             GetGender();
 
             ID = idGenerator.GetID();
-            HealthRemaining = CoreStat.HealthPoint;
-            OnHealthChange?.Invoke(HealthRemaining);
+            //  HealthRemaining = CoreStat.HealthPoint;
+
+            HealthRemaining = 1;
+
+            // Old health and new health are the same during init
+            OnHealthChange?.Invoke(HealthRemaining, HealthRemaining);
         }
 
         private void GetGender()
@@ -119,5 +124,30 @@ namespace PokemonGame.Pokemons
             float roll = UnityEngine.Random.Range(0f, 100f);
             Gender = roll < pokemonDefinition.GenderRatio.MaleRatio ? PokemonGender.Male : PokemonGender.Female;
         }
+
+        /// <summary>
+        /// Restores HP up to the Pokémon's max health.
+        /// </summary>
+        /// <param name="amount">The amount of HP to restore.</param>
+        /// <returns>The actual amount of HP restored.</returns>
+        public int RestoreHP(int amount)
+        {
+            if (amount <= 0 || HealthRemaining >= MaxHealth)
+            {
+                return 0;
+            }
+
+            int old = HealthRemaining;
+            HealthRemaining = Mathf.Min(HealthRemaining + amount, MaxHealth);
+            int healed = HealthRemaining - old;
+
+            if (healed > 0)
+            {
+                OnHealthChange?.Invoke(old, HealthRemaining);
+            }
+
+            return healed;
+        }
     }
 }
+

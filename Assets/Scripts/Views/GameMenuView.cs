@@ -1,3 +1,4 @@
+using PokemonGame.Inventory;
 using PokemonGame.Menu;
 using PokemonGame.Party;
 using Sirenix.OdinInspector;
@@ -56,7 +57,7 @@ namespace PokemonGame.Views
 
         private void OnExitClick()
         {
-            ViewManager.Instance.GoToPreviousView();
+            ViewManager.Instance.CloseCurrentView();
         }
     }
 }

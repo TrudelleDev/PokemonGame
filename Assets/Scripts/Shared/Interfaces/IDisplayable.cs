@@ -8,6 +8,11 @@ namespace PokemonGame.Shared.Interfaces
     public interface IDisplayable
     {
         /// <summary>
+        /// Gets the display name shown in the UI.
+        /// </summary>
+        string DisplayName { get; }
+
+        /// <summary>
         /// The textual description to display.
         /// </summary>
         string Description { get; }

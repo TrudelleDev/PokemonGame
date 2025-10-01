@@ -4,25 +4,26 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Menu.UI
+namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Displays a displayable object's description and icon.
+    /// Shows an item's description and icon in the inventory detail panel.
     /// </summary>
-    public class MenuOptionDetailUI : MonoBehaviour, IBindable<IDisplayable>, IUnbind
+    public class InventoryItemDetailPanel : MonoBehaviour, IUnbind
     {
         [SerializeField, Required]
-        [Tooltip("Text field for the description.")]
+        [Tooltip("Text field displaying the item's description.")]
         private TextMeshProUGUI descriptionText;
 
         [SerializeField, Required]
-        [Tooltip("Image for the icon.")]
+        [Tooltip("Image displaying the item's icon.")]
         private Image iconImage;
 
         /// <summary>
-        /// Binds to the given displayable object, or clears if null.
+        /// Updates the panel with data from the given <see cref="IDisplayable"/>.
+        /// Clears the panel if <paramref name="displayable"/> is null.
         /// </summary>
-        /// <param name="displayable">Object providing description and icon.</param>
+        /// <param name="displayable">The object providing description and icon.</param>
         public void Bind(IDisplayable displayable)
         {
             if (displayable == null)
@@ -37,7 +38,7 @@ namespace PokemonGame.Menu.UI
         }
 
         /// <summary>
-        /// Clears the current binding and hides the UI.
+        /// Clears the panel, removing text and hiding the icon.
         /// </summary>
         public void Unbind()
         {

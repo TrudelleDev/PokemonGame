@@ -1,6 +1,7 @@
 using PokemonGame.Menu;
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI;
+using PokemonGame.Pokemons.UI.Health;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -9,7 +10,7 @@ namespace PokemonGame.Party
 {
     /// <summary>
     /// Displays a Pokémon's information in a party menu slot, including name, level, health, gender, and sprite.
-    /// Handles data binding and unbinding, and gracefully resets visuals if no valid Pokémon is assigned.
+    /// Handles data binding/unbinding and resets visuals gracefully when no valid Pokémon is assigned.
     /// </summary>
     [RequireComponent(typeof(MenuButton))]
     public class PartyMenuSlot : MonoBehaviour
@@ -45,6 +46,9 @@ namespace PokemonGame.Party
         [Tooltip("Root GameObject container for the visual components.")]
         private GameObject contentRoot;
 
+        /// <summary>
+        /// The Pokémon currently bound to this slot, or null if none.
+        /// </summary>
         public Pokemon BoundPokemon { get; private set; }
 
         private MenuButton menuButton;
@@ -57,6 +61,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// Binds a Pokémon to the slot and displays its data. Clears the slot if null or invalid.
         /// </summary>
+        /// <param name="pokemon">The Pokémon to bind, or null to clear the slot.</param>
         public void Bind(Pokemon pokemon)
         {
             if (pokemon?.Definition == null)
@@ -66,9 +71,17 @@ namespace PokemonGame.Party
             }
 
             BoundPokemon = pokemon;
-
+            pokemon.OnHealthChange += OnPokemonHealthChange;
             SetSlotVisibility(true);
             UpdateDisplay(pokemon);
+        }
+
+        /// <summary>
+        /// Responds to HP changes by updating the display.
+        /// </summary>
+        private void OnPokemonHealthChange(int oldHealth, int newHealth)
+        {
+            UpdateDisplay(BoundPokemon);
         }
 
         /// <summary>
@@ -93,6 +106,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// Updates all UI elements with the given Pokémon's data.
         /// </summary>
+        /// <param name="pokemon">The Pokémon whose data is displayed.</param>
         private void UpdateDisplay(Pokemon pokemon)
         {
             nameText.text = pokemon.Definition.DisplayName;
@@ -112,6 +126,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// Shows or hides the slot and updates interactability.
         /// </summary>
+        /// <param name="visible">True to show the slot, false to hide it.</param>
         private void SetSlotVisibility(bool visible)
         {
             contentRoot.SetActive(visible);
