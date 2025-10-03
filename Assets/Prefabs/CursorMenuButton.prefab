@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Bag
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -194,8 +194,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   interactable: 1
   cursorArrow: {fileID: 5852075439200412666}
-  cursorNormalSprite: {fileID: 21300000, guid: 80ba4ee7050665744ba3457b9e8fbc0d, type: 3}
-  cursorSelectSprite: {fileID: 21300000, guid: b53625d68a8437642b5e7fc281a00990, type: 3}
 --- !u!1 &7601481161520111405
 GameObject:
   m_ObjectHideFlags: 0
@@ -261,7 +259,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 80ba4ee7050665744ba3457b9e8fbc0d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 96626056162a0194f9b7244069bf53fd, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

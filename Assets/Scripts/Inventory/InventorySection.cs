@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Enums;
+using PokemonGame.Menu;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

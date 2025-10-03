@@ -31,9 +31,8 @@ namespace PokemonGame.Menu.UI
         [Tooltip("Color used when button is disabled.")]
         private Color disabledColor = Color.white;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             ApplyColor(normalColor);
         }
 

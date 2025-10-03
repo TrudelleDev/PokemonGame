@@ -1,4 +1,5 @@
-﻿using PokemonGame.Characters.Inputs;
+﻿using PokemonGame.Audio;
+using PokemonGame.Characters.Inputs;
 using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -12,17 +13,24 @@ namespace PokemonGame.Views
     public abstract class View : MonoBehaviour
     {
         [Title("Settings")]
-        [SerializeField, Tooltip("Enable to allow this view to be closed by key input.")]
+        [SerializeField]
+        [Tooltip("Enable to allow this view to be closed by key input.")]
         private bool allowKeyClose = false;
 
         [SerializeField, Required]
         [Tooltip("If true, this view will be layered on top of others rather than replacing them.")]
         private bool isOverlay;
 
+        [Title("Audio")]
+        [SerializeField]
+        private AudioClip closeSound;
+
         [Title("Transition")]
         [SerializeField, Required]
         [Tooltip("Transition to use when navigating away from this view.")]
         private TransitionType transitionType;
+        
+        public bool IsOpen { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether this view is an overlay (appears on top of others).
@@ -55,6 +63,7 @@ namespace PokemonGame.Views
         /// </summary>
         public virtual void Show()
         {
+            IsOpen = true;
             gameObject.SetActive(true);
         }
 
@@ -63,6 +72,7 @@ namespace PokemonGame.Views
         /// </summary>
         public virtual void Hide()
         {
+            IsOpen = false;
             gameObject.SetActive(false);
         }
 
@@ -71,6 +81,11 @@ namespace PokemonGame.Views
         /// </summary>
         protected virtual void Update()
         {
+            if (ViewManager.Instance != null && ViewManager.Instance.IsTransitioning)
+            {
+                return;
+            }
+
             if (!allowKeyClose)
             {
                 return;
@@ -79,6 +94,11 @@ namespace PokemonGame.Views
             if (Input.GetKeyDown(KeyBinds.Cancel))
             {
                 ViewManager.Instance.CloseCurrentView();
+
+                if (closeSound != null) 
+                {
+                    AudioManager.Instance.PlaySFX(closeSound);
+                }            
             }
         }
     }

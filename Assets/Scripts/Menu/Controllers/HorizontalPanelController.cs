@@ -1,5 +1,6 @@
 using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -25,6 +26,11 @@ namespace PokemonGame.Menu.Controllers
         /// </summary>
         private void Update()
         {
+            if (ViewManager.Instance != null && ViewManager.Instance.IsTransitioning)
+            {
+                return;
+            }
+
             if (Input.GetKeyDown(KeyBinds.Right) && currentPanelIndex < transform.childCount - 1)
             {
                 currentPanelIndex++;

@@ -14,9 +14,8 @@ namespace PokemonGame.Menu
         [Tooltip("The arrow image displayed when this button is selected.")]
         private Image cursorArrow;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             cursorArrow.enabled = false;
         }
 

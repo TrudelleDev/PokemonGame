@@ -39,11 +39,6 @@ namespace PokemonGame.Inventory
             sectionController = GetComponent<HorizontalPanelController>();
         }
 
-        private void OnEnable()
-        {
-            sectionController.ResetController();
-        }
-
         /// <summary>
         /// Initializes the inventory and binds all sections.
         /// </summary>

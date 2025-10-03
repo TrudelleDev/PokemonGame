@@ -4249,6 +4249,7 @@ MonoBehaviour:
   spawnLocationId: 5
   sceneTransition: 1
   transitionSfx: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
+  targetSceneName: GateHouseScene
 --- !u!1 &962913981
 GameObject:
   m_ObjectHideFlags: 0
@@ -53150,7 +53151,7 @@ GameObject:
   - component: {fileID: 1838943830}
   - component: {fileID: 1838943829}
   m_Layer: 3
-  m_Name: Potion04
+  m_Name: Antidote01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -53169,7 +53170,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   item:
-    definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
+    definition: {fileID: 11400000, guid: 87b5113ad6a24ba4bb132d4f0cebad25, type: 2}
     quantity: 1
   receiveItemClip: {fileID: 8300000, guid: 38e6d0436445a314b886315eae37f289, type: 3}
 --- !u!212 &1838943830

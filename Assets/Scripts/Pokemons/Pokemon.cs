@@ -61,8 +61,11 @@ namespace PokemonGame.Pokemons
         public string LocationEncounter { get; set; } = "Pallet Town";
         public string ID { get; private set; }
         public int MaxHealth => CoreStat.HealthPoint;
+        public StatusCondition Condition { get; private set; } = StatusCondition.None;
 
         public event Action<int, int> OnHealthChange; // oldHp, newHp
+
+        public event Action<StatusCondition> OnStatusChange;
 
         public Pokemon(int level, PokemonDefinition species, NatureDefinition natureDef, AbilityDefinition abilityDef, MoveDefinition[] moveDefs)
         {
@@ -111,9 +114,7 @@ namespace PokemonGame.Pokemons
             GetGender();
 
             ID = idGenerator.GetID();
-            //  HealthRemaining = CoreStat.HealthPoint;
-
-            HealthRemaining = 1;
+            HealthRemaining = CoreStat.HealthPoint;
 
             // Old health and new health are the same during init
             OnHealthChange?.Invoke(HealthRemaining, HealthRemaining);
@@ -147,6 +148,27 @@ namespace PokemonGame.Pokemons
             }
 
             return healed;
+        }
+
+        /// <summary>
+        /// Attempts to cure the Pokémon's status if it matches the specified condition.
+        /// </summary>
+        /// <param name="condition">The status condition this item attempts to cure.</param>
+        /// <returns>
+        /// True if the Pokémon had the specified condition and it was cured; 
+        /// false otherwise.
+        /// </returns>
+        public bool TryCureStatus(StatusCondition condition)
+        {
+            if (Condition != condition)
+            {
+                return false;
+            }
+
+            Condition = StatusCondition.None;
+            OnStatusChange?.Invoke(Condition);
+
+            return true;
         }
     }
 }

@@ -1,4 +1,3 @@
-using PokemonGame.Menu.Controllers;
 using PokemonGame.Moves.UI;
 using PokemonGame.Pokemons;
 using Sirenix.OdinInspector;
@@ -42,9 +41,11 @@ namespace PokemonGame.Summary
         /// <param name="pokemon">The Pokémon instance to display.</param>
         public void Bind(Pokemon pokemon)
         {
+            // always reset state first
+            Unbind();
+
             if (pokemon?.Definition == null)
             {
-                Unbind();
                 return;
             }
 

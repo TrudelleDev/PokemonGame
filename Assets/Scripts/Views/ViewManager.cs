@@ -27,10 +27,11 @@ namespace PokemonGame.Views
         [Tooltip("Print debug logs for active views and history.")]
         private bool enableDebugLogs = false;
 
-        private bool isTransitioning;
         private View currentView;                     // Active main view
         private readonly Stack<View> history = new(); // Back stack of main views
         private readonly List<View> overlayViews = new(); // Overlay views stacked on top
+
+        public bool IsTransitioning { get; private set; }
 
         /// <summary>
         /// Gets a value indicating whether there is at least one active view
@@ -75,7 +76,7 @@ namespace PokemonGame.Views
         /// <returns>The instance of the view shown, or <c>null</c> if not found.</returns
         public T Show<T>() where T : View
         {
-            if (isTransitioning)
+            if (IsTransitioning)
             {
                 return null;
             }
@@ -89,7 +90,11 @@ namespace PokemonGame.Views
 
                 if (target.IsOverlay)
                 {
-                    currentView.Freeze();
+                    if(currentView != null)
+                    {
+                        currentView.Freeze();
+                    }
+                    
                     target.Show();
                     overlayViews.Add(target);
                 }
@@ -101,7 +106,11 @@ namespace PokemonGame.Views
                     }
 
                     overlayViews.Clear();
-                    currentView.Unfreeze();
+
+                    if(currentView != null)
+                    {
+                        currentView.Unfreeze();
+                    }              
 
                     if (currentView == null)
                     {
@@ -129,7 +138,7 @@ namespace PokemonGame.Views
         /// </summary>
         public void CloseCurrentView()
         {
-            if (isTransitioning)
+            if (IsTransitioning)
             {
                 return;
             }
@@ -144,7 +153,10 @@ namespace PokemonGame.Views
 
                 if (overlayViews.Count == 0)
                 {
-                    currentView.Unfreeze();
+                    if(currentView != null)
+                    {
+                        currentView.Unfreeze();
+                    }
                 }
             }
             else if (currentView != null)
@@ -178,10 +190,10 @@ namespace PokemonGame.Views
         /// <param name="toView">The view that will be shown as the initial active view.</param>
         private IEnumerator OpenFirstView(View toView)
         {
-            isTransitioning = true;
+            IsTransitioning = true;
             toView.Show();
             currentView = toView;
-            isTransitioning = false;
+            IsTransitioning = false;
             UpdatePauseState();
             DebugHistory();
             yield break;
@@ -193,10 +205,10 @@ namespace PokemonGame.Views
         /// <param name="fromView">The view that will be closed and hidden.</param>
         private IEnumerator CloseLastView(View fromView)
         {
-            isTransitioning = true;
+            IsTransitioning = true;
             fromView.Hide();
             currentView = null;
-            isTransitioning = false;
+            IsTransitioning = false;
             UpdatePauseState();
             DebugHistory();
             yield break;
@@ -214,7 +226,7 @@ namespace PokemonGame.Views
         /// </param>
         private IEnumerator SwitchBetweenViews(View fromView, View toView, bool isBackNavigation)
         {
-            isTransitioning = true;
+            IsTransitioning = true;
 
             if (!isBackNavigation)
             {
@@ -233,7 +245,7 @@ namespace PokemonGame.Views
             }
 
             currentView = toView;
-            isTransitioning = false;
+            IsTransitioning = false;
             UpdatePauseState();
             DebugHistory();
         }
@@ -265,12 +277,12 @@ namespace PokemonGame.Views
         /// <param name="toView">The new view to show. Can be null.</param>
         private void SwapViews(View fromView, View toView)
         {
-            if(fromView != null)
+            if (fromView != null)
             {
                 fromView.Hide();
             }
 
-            if(toView != null)
+            if (toView != null)
             {
                 toView.Show();
             }

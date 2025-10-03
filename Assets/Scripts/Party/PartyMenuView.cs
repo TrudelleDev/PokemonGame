@@ -1,4 +1,5 @@
 using System;
+using PokemonGame.Dialogue;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
@@ -15,7 +16,7 @@ namespace PokemonGame.Party
     /// </summary>
     public class PartyMenuView : View
     {
-        private const string ChoosePokemonMessage = "Choose a Pokémon or cancel.";
+        private const string ChoosePokemonMessage = "Choose a Pokémon.";
         private const string ActionMessage = "What will you do?";
 
         [Title("References")]
@@ -93,6 +94,11 @@ namespace PokemonGame.Party
 
             // Notify listeners about the selected Pokémon
             OnPokemonSelected?.Invoke(menuSlot.BoundPokemon);
+
+            if (!ViewManager.Instance.Get<DialogueBoxView>().gameObject.activeInHierarchy)
+            {
+                ViewManager.Instance.Show<PartyMenuOptionView>();
+            }
         }
 
         private void OnCancelButtonClick()

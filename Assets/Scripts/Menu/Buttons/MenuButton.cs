@@ -19,17 +19,13 @@ namespace PokemonGame.Menu
         /// <summary>
         /// Gets whether the button is currently interactable.
         /// </summary>
-        public bool IsInteractable { get; private set; }
+        public bool IsInteractable => interactable;
 
         /// <summary>
         /// Gets whether the button is currently selected.
         /// </summary>
         public bool IsSelected { get; private set; }
 
-        protected virtual void Awake()
-        {
-            IsInteractable = interactable;
-        }
 
         /// <summary>
         /// Sets the selected state of the button and refreshes visuals.
@@ -57,7 +53,7 @@ namespace PokemonGame.Menu
                 return;
             }
 
-            IsInteractable = value;
+            interactable = value;
             RefreshVisual();
         }
 

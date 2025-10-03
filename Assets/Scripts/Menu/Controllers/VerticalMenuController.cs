@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -44,12 +45,13 @@ namespace PokemonGame.Menu.Controllers
         public MenuButton CurrentButton => currentButton;
 
         /// <summary>
-        /// Refreshes buttons and selects the first one on enable.
+        /// Refreshes buttons and restores selection on enable.
+        /// Uses a one-frame delay to allow UI to finish populating.
         /// </summary>
         private void OnEnable()
         {
-            RefreshButtons();
-            StartCoroutine(DeferredSelectFirst());
+            RebuildButtons();
+            StartCoroutine(DelayedSelect());
         }
 
         /// <summary>
@@ -57,6 +59,11 @@ namespace PokemonGame.Menu.Controllers
         /// </summary>
         private void Update()
         {
+            if (ViewManager.Instance != null && ViewManager.Instance.IsTransitioning)
+            {
+                return;
+            }
+
             if (buttons.Count == 0 || currentButton == null)
             {
                 return;
@@ -76,17 +83,29 @@ namespace PokemonGame.Menu.Controllers
             }
         }
 
-        /// <summary>
-        /// Rebuilds the button list from sources and clears selection.
-        /// </summary>
-        private void RefreshButtons()
+        private IEnumerator DelayedSelect()
         {
-            if (currentButton != null)
-            {
-                currentButton.SetSelected(false);
-                currentButton = null;
-            }
+            // Wait one frame so that dynamic UI has finished populating
+            yield return null;
 
+            if (currentButton != null && buttons.Contains(currentButton) && currentButton.IsInteractable)
+            {
+                SelectButton(currentButton, false);
+            }
+            else
+            {
+                SelectFirst();
+            }
+        }
+
+        /// <summary>
+        /// Rebuilds the internal button list by scanning all configured sources
+        /// for <see cref="MenuButton"/> components.
+        /// Does not change the current selection; use <c>OnEnable</c>
+        /// or explicit selection methods to restore or set a button.
+        /// </summary>
+        public void RebuildButtons()
+        {        
             buttons.Clear();
 
             foreach (Transform source in buttonSources)
@@ -96,15 +115,11 @@ namespace PokemonGame.Menu.Controllers
                     buttons.AddRange(source.GetComponentsInChildren<MenuButton>(true));
                 }
             }
-        }
 
-        /// <summary>
-        /// Waits one frame (for layout/activation) then selects the first interactable button.
-        /// </summary>
-        private IEnumerator DeferredSelectFirst()
-        {
-            yield return null;
-            SelectFirst();
+            foreach (var button in buttons)
+            {
+                print(button.name + button.IsInteractable);
+            }
         }
 
         /// <summary>

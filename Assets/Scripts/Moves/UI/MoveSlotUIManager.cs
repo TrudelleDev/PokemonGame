@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using PokemonGame.Menu;
-using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
 using UnityEngine;
 
@@ -18,8 +17,6 @@ namespace PokemonGame.Moves.UI
         /// <param name="pokemon">The Pokémon whose moves will be displayed.</param>
         public void Bind(Pokemon pokemon)
         {
-            Unbind();
-
             if (pokemon?.Moves == null)
             {
                 return;
@@ -43,8 +40,6 @@ namespace PokemonGame.Moves.UI
                 {
                     moveSlot.Unbind();
                     button.SetInteractable(false);
-
-                    print(button.IsInteractable);
                 }
             }
         }

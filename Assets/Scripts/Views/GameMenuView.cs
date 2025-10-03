@@ -1,3 +1,4 @@
+using PokemonGame.Characters.Inputs;
 using PokemonGame.Inventory;
 using PokemonGame.Menu;
 using PokemonGame.Party;
@@ -35,14 +36,22 @@ namespace PokemonGame.Views
             exitButton.OnClick += OnExitClick;
         }
 
-        /// <summary>
-        /// Cleans up listeners to prevent leaks or dangling references.
-        /// </summary>
         private void OnDestroy()
         {
             partyButton.OnClick -= OnPartyClick;
             inventoryButton.OnClick -= OnInventoryClick;
             exitButton.OnClick -= OnExitClick;
+        }
+
+        protected override void Update()
+        {
+            base.Update();
+
+            // Allow closing the menu with the same key that opens it
+            if (Input.GetKeyDown(KeyBinds.Menu))
+            {
+                ViewManager.Instance.CloseCurrentView();
+            }
         }
 
         private void OnPartyClick()

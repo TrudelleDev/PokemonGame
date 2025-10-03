@@ -37,7 +37,11 @@ namespace PokemonGame.SceneManagement
         [Tooltip("Transition animation used when entering gameplay from the main menu.")]
         private TransitionType startGameTransition;
 
+        // Persisted scene names for runtime (these are serialized so they exist in builds)
+        [SerializeField, HideInInspector]
         private string coreSceneName;
+
+        [SerializeField, HideInInspector]
         private string initialMapSceneName;
 
 #if UNITY_EDITOR

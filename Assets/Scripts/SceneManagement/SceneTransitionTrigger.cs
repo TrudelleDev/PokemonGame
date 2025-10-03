@@ -47,6 +47,8 @@ namespace PokemonGame.SceneManagement
         [Tooltip("Sound effect played during transition (optional).")]
         private AudioClip transitionSfx;
 
+        // Persisted scene names for runtime (these are serialized so they exist in builds)
+        [SerializeField, HideInInspector]
         private string targetSceneName;
 
 #if UNITY_EDITOR

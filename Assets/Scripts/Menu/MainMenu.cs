@@ -19,10 +19,6 @@ namespace PokemonGame.Menu
         [Title("UI Buttons")]
 
         [SerializeField, Required]
-        [Tooltip("Button that continues from a saved game (placeholder).")]
-        private MenuButton continueButton;
-
-        [SerializeField, Required]
         [Tooltip("Button that starts a new game.")]
         private MenuButton newGameButton;
 
@@ -36,26 +32,18 @@ namespace PokemonGame.Menu
         {
             mainMenuLoader = GetComponent<GameStarter>();
 
-            continueButton.OnClick += OnContinue;
             newGameButton.OnClick += OnNewGame;
             exitButton.OnClick += OnExit;
         }
 
         private void OnDestroy()
         {
-            continueButton.OnClick -= OnContinue;
             newGameButton.OnClick -= OnNewGame;
             exitButton.OnClick -= OnExit;
         }
 
         private void OnNewGame()
         {
-            mainMenuLoader.StartNewGame();
-        }
-
-        private void OnContinue()
-        {
-            // TODO: Replace with save/load system
             mainMenuLoader.StartNewGame();
         }
 

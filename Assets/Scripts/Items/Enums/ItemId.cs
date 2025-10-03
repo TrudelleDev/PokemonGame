@@ -6,6 +6,7 @@
     public enum ItemId
     {
         None = 0,
-        Potion = 1,
+        Potion,
+        Antidote,
     }
 }

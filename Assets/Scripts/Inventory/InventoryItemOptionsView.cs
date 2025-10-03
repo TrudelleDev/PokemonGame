@@ -2,6 +2,7 @@
 using PokemonGame.Items;
 using PokemonGame.Menu;
 using PokemonGame.Party;
+using PokemonGame.Pokemons;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,7 +10,7 @@ using UnityEngine;
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// View that presents options when an inventory item is selected.
+    /// Presents options when an inventory item is selected.
     /// Provides "Use" (opens <see cref="PartyMenuView"/>) and "Cancel" (closes the view).
     /// </summary>
     [DisallowMultipleComponent]
@@ -33,49 +34,67 @@ namespace PokemonGame.Inventory
         /// </summary>
         public Item SelectedItem { get; set; }
 
+        private PartyMenuView partyMenu;
+        private DialogueBoxView dialogueBox;
+
         private void OnEnable()
         {
-            useButton.OnClick += HandleUseClicked;
-            cancelButton.OnClick += HandleCancelClicked;
+            useButton.OnClick += OnUseButtonClick;
+            cancelButton.OnClick += OnCancelButtonClick;
         }
 
         private void OnDisable()
         {
-            useButton.OnClick -= HandleUseClicked;
-            cancelButton.OnClick -= HandleCancelClicked;
+            useButton.OnClick -= OnUseButtonClick;
+            cancelButton.OnClick -= OnCancelButtonClick;
+
+            partyMenu.OnPokemonSelected -= OnPokemonSelected;
+            dialogueBox.OnDialogueFinished -= OnDialogueFinished;
         }
 
         /// <summary>
-        /// Handles the "Use" button click by opening the party menu and applying the item.
+        /// Handles the "Use" button click by opening the party menu.
         /// </summary>
-        private void HandleUseClicked()
+        private void OnUseButtonClick()
         {
-            PartyMenuView partyMenu = ViewManager.Instance.Show<PartyMenuView>();
-
-            partyMenu.OnPokemonSelected += pokemon =>
-            {
-                ItemUseResult result = SelectedItem.Definition.Use(pokemon);
-
-                if (result.Used)
-                {
-                    inventory.Remove(SelectedItem);
-                }
-
-                DialogueBoxView dialogueBox = ViewManager.Instance.Show<DialogueBoxView>();
-
-                dialogueBox.OnDialogueFinished += () =>
-                {
-                    ViewManager.Instance.CloseCurrentView();
-                };
-
-                dialogueBox.ShowDialogue(result.Messages);
-            };
+            partyMenu = ViewManager.Instance.Show<PartyMenuView>();
+            partyMenu.OnPokemonSelected += OnPokemonSelected;
         }
 
         /// <summary>
-        /// Handles the "Cancel" button click by closing this view.
+        /// Called when a Pokémon is selected from the Party menu.
+        /// Applies the item, updates the inventory, and shows dialogue.
         /// </summary>
-        private void HandleCancelClicked()
+        private void OnPokemonSelected(Pokemon pokemon)
+        {
+            partyMenu.OnPokemonSelected -= OnPokemonSelected;
+
+            ItemUseResult result = SelectedItem.Definition.Use(pokemon);
+
+            if (result.Used)
+            {
+                inventory.Remove(SelectedItem);
+            }
+
+            dialogueBox = ViewManager.Instance.Show<DialogueBoxView>();
+            dialogueBox.OnDialogueFinished += OnDialogueFinished;
+            dialogueBox.ShowDialogue(result.Messages);
+        }
+
+        /// <summary>
+        /// Called when the dialogue box finishes showing messages.
+        /// Closes the current view and unsubscribes events.
+        /// </summary>
+        private void OnDialogueFinished()
+        {
+            dialogueBox.OnDialogueFinished -= OnDialogueFinished;
+            OnCancelButtonClick();
+        }
+
+        /// <summary>
+        /// Closes this options view.
+        /// </summary>
+        private void OnCancelButtonClick()
         {
             ViewManager.Instance.CloseCurrentView();
         }

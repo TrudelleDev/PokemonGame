@@ -29,6 +29,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - ability-definition
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: 87b5113ad6a24ba4bb132d4f0cebad25
+    m_Address: Assets/ScriptableObjects/Items/Antidote.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - item-definition
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: cb68ac9dfb0069640973c6cd50f9da9a
     m_Address: Assets/ScriptableObjects/Pokemons/PikachuData.asset
     m_ReadOnly: 0
