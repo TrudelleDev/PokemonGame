@@ -44,12 +44,12 @@ namespace PokemonGame.Tile
         /// <param name="animationDuration">Duration of the movement animation in seconds.</param>
         /// <returns>An enumerator used for coroutine execution.</returns>
         public IEnumerator MoveToTile(Vector3 destination, float animationDuration)
-        {
-            IsMoving = true;
-            OnMoveStart?.Invoke();
-
+        {       
             Vector3 startPosition = transform.position;
+            IsMoving = true;
             float elapsed = 0f;
+
+            OnMoveStart?.Invoke();
 
             while (elapsed < animationDuration)
             {

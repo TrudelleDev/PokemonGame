@@ -1,17 +1,19 @@
 ﻿using PokemonGame.SceneManagement;
+using UnityEditor;
 using UnityEngine;
 
 namespace PokemonGame.Battle
 {
     public class BattleTrigger : MonoBehaviour
     {
-        [SerializeField] private SceneTransitionTrigger sceneTrigger;
+        [SerializeField] private SceneAsset battleScene;
 
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                sceneTrigger.Trigger(null);
+                string[] scenes = { battleScene.name };
+                SceneTransitionManager.Instance.StartTransition(scenes, MapEntry.MapEntryID.None, Transitions.TransitionType.MaskedFade);
             }
         }
     }

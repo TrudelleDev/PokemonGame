@@ -169,6 +169,9 @@ MonoBehaviour:
   mainMenuScene: {fileID: 102900000, guid: 672642bcfbb23014b926753ce15aedfb, type: 3}
   transitionScene: {fileID: 102900000, guid: 48975019fc531c9409bd62d627838c46, type: 3}
   audioScene: {fileID: 102900000, guid: 9062cb6ac3a7e0c4bbde89969ab728c9, type: 3}
+  mainMenuSceneName: MainMenuScene
+  transitionSceneName: TransitionScene
+  audioSceneName: AudioScene
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

@@ -946,7 +946,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a69301a0365f7264f802e37d9fd87a1c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneTrigger: {fileID: 0}
+  battleScene: {fileID: 102900000, guid: d4bad4ac43c3d9e4199866ecee3228f5, type: 3}
 --- !u!224 &3403279198146541 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5125283804951312878, guid: b9049dfc83514644fb97b33d1eb78170, type: 3}
@@ -2433,7 +2433,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9200808988402430974}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe1e69136f144c34eb03d48d63da9457, type: 3}
   m_Name: 
@@ -4764,7 +4764,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0.24010418
-    y: 0.014814815
+    y: 0.018518519
     width: 0.25
     height: 0.2962963
   near clip plane: 0.3
@@ -10894,6 +10894,7 @@ GameObject:
   - component: {fileID: 1030817512087897650}
   - component: {fileID: 9200808988402430976}
   - component: {fileID: 9200808988402430975}
+  - component: {fileID: 9200808988402430977}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -10927,6 +10928,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventory: {fileID: 11400000, guid: 663321f697ca6354dba572c653e23486, type: 2}
+--- !u!114 &9200808988402430977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9200808988402430974}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6429b1be94c774dbc4e35e4d87bdbe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rustleTile: {fileID: 11400000, guid: 1a1b03f9fc3a9964ab8c3f7c66d4ae52, type: 2}
+  maxTrailCount: 3
 --- !u!114 &9204795802626899940
 MonoBehaviour:
   m_ObjectHideFlags: 0

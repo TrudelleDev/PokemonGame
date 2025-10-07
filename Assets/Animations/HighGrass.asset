@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbc434f004201ab4da7131e57bd2b613, type: 3}
+  m_Name: HighGrass
+  m_EditorClassIdentifier: 
+  frames:
+  - {fileID: -1429020457, guid: a1c679d28351f1a49bcdf5615dc5c60a, type: 3}
+  - {fileID: 642539931, guid: a1c679d28351f1a49bcdf5615dc5c60a, type: 3}
+  - {fileID: -629490219, guid: a1c679d28351f1a49bcdf5615dc5c60a, type: 3}
+  - {fileID: -1674321655, guid: a1c679d28351f1a49bcdf5615dc5c60a, type: 3}
+  fps: 6
+  autoClear: 1
+  colliderType: 0

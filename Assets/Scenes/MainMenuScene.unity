@@ -597,7 +597,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0bba46aa7c0d4bb4f950e948cba06979, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  continueButton: {fileID: 0}
   newGameButton: {fileID: 217225665}
   exitButton: {fileID: 1523511911}
 --- !u!4 &1520633725
@@ -628,9 +627,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   coreScene: {fileID: 102900000, guid: 689894ea053c49845a10ec667ef66de9, type: 3}
-  initialMapScene: {fileID: 102900000, guid: 085f745a4ef4a0a48af9c845c6b0305a, type: 3}
-  spawnLocationId: 5
+  initialMapScene: {fileID: 102900000, guid: 97d013d6bf7ab0640a31d47cc4e3d602, type: 3}
+  spawnLocationId: 1
   startGameTransition: 1
+  coreSceneName: GameCoreScene
+  initialMapSceneName: ViridianForestScene
 --- !u!1001 &1523511909
 PrefabInstance:
   m_ObjectHideFlags: 0
