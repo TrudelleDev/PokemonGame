@@ -13,6 +13,10 @@ namespace PokemonGame.Transitions.Controllers
     [RequireComponent(typeof(Image))]
     public class AlphaFadeController : Transition
     {
+        [SerializeField]
+        [Tooltip("Duration of the fade effect in seconds.")]
+        private float duration = 1f;
+
         private const float FullyOpaque = 1f;
         private const float FullyTransparent = 0f;
         private static readonly int ColorProperty = Shader.PropertyToID("_Color");

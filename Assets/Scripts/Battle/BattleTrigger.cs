@@ -1,20 +1,21 @@
-﻿using PokemonGame.SceneManagement;
-using UnityEditor;
+﻿using PokemonGame.Dialogue;
+using PokemonGame.Tile;
+using PokemonGame.Views;
 using UnityEngine;
 
 namespace PokemonGame.Battle
 {
     public class BattleTrigger : MonoBehaviour
     {
-        [SerializeField] private SceneAsset battleScene;
-
-        private void Update()
+        private void Start()
         {
-            if (Input.GetKeyDown(KeyCode.P))
-            {
-                string[] scenes = { battleScene.name };
-                SceneTransitionManager.Instance.StartTransition(scenes, MapEntry.MapEntryID.None, Transitions.TransitionType.MaskedFade);
-            }
+            GrassRustleSpawner.Instance.OnEnterGrass += OnGrassRustleSpawnerEnterGrass;
+        }
+
+        private void OnGrassRustleSpawnerEnterGrass()
+        {
+            ViewManager.Instance.Show<BattleView>();
+           
         }
     }
 }

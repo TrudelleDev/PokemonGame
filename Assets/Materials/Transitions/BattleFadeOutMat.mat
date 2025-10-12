@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MaskedFadeMat
+  m_Name: BattleFadeOutMat
   m_Shader: {fileID: 4800000, guid: 006c66e31365961449372f5f9916638d, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -28,7 +28,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
-        m_Texture: {fileID: 2800000, guid: c8aa1b5eea19b0848a414264c9ab4ce0, type: 3}
+        m_Texture: {fileID: 2800000, guid: ae320118ac0d4b845a5f74376ea54d08, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

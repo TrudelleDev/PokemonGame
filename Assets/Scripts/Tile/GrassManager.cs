@@ -15,22 +15,18 @@ namespace PokemonGame.Tile
 
         [SerializeField, Required]
         [Tooltip("Base environment Tilemap containing grass tiles.")]
-        private Tilemap highGrassTilemap;
+        private Tilemap grassTilemap;
 
         [SerializeField, Required]
         [Tooltip("FX Tilemap rendered in front of the player for grass rustle effects.")]
-        private Tilemap foregroundFxTilemap;
-
-        [SerializeField, Required]
-        [Tooltip("FX Tilemap rendered behind the player for trailing rustle effects.")]
-        private Tilemap backgroundFxTilemap;
+        private Tilemap fxTilemap;
 
         /// <summary>
         /// Registers the grass Tilemaps with the GrassRustleSpawner on startup.
         /// </summary>
         private void Start()
         {
-            GrassRustleSpawner.Instance.SetTilemaps(highGrassTilemap, foregroundFxTilemap);
+            GrassRustleSpawner.Instance.SetTilemaps(grassTilemap, fxTilemap);
         }
     }
 }

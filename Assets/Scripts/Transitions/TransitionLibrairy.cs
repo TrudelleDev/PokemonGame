@@ -10,9 +10,9 @@ namespace PokemonGame.Transitions
     [DisallowMultipleComponent]
     public class TransitionLibrary : Singleton<TransitionLibrary>
     {
-        [Header("Transition Controllers")]
+        [Title("Transition Controllers")]
         [SerializeField, Required] private Transition alphaFadeController;
-        [SerializeField, Required] private Transition maskedFadeController;
+        [SerializeField, Required] private Transition battleFlashController;
 
         /// <summary>
         /// Resolves a TransitionType into its corresponding Transition instance.
@@ -22,7 +22,7 @@ namespace PokemonGame.Transitions
             return type switch
             {
                 TransitionType.AlphaFade => alphaFadeController,
-                TransitionType.MaskedFade => maskedFadeController,
+                TransitionType.BattleIntro  => battleFlashController,
                 _ => null
             };
         }

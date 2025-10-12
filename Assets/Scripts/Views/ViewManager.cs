@@ -110,19 +110,12 @@ namespace PokemonGame.Views
                     if(currentView != null)
                     {
                         currentView.Unfreeze();
-                    }              
+                    }
 
-                    if (currentView == null)
-                    {
-                        StartCoroutine(OpenFirstView(target));
-                    }
-                    else
-                    {
-                        StartCoroutine(SwitchBetweenViews(currentView, target, false));
-                    }
+                    StartCoroutine(SwitchBetweenViews(currentView, target, false));
                 }
 
-                UpdatePauseState();
+                //UpdatePauseState();
                 DebugHistory();
                 return target;
             }
@@ -161,79 +154,50 @@ namespace PokemonGame.Views
             }
             else if (currentView != null)
             {
+                IsTransitioning = true;
+                UpdatePauseState();
+
                 if (history.Count > 0)
                 {
                     View previousView = history.Pop();
-
-                    if (previousView != null && previousView != currentView)
-                    {
-                        StartCoroutine(SwitchBetweenViews(currentView, previousView, true));
-                    }
-                    else
-                    {
-                        StartCoroutine(CloseLastView(currentView));
-                    }
+                    StartCoroutine(SwitchBetweenViews(currentView, previousView, true));
                 }
                 else
                 {
-                    StartCoroutine(CloseLastView(currentView));
+                    // No previous view — close with transition to "null"
+                    StartCoroutine(SwitchBetweenViews(currentView, null, true));
                 }
             }
 
-            UpdatePauseState();
+           // UpdatePauseState();
             DebugHistory();
         }
 
-        /// <summary>
-        /// Opens the very first view without transitions.
-        /// </summary>
-        /// <param name="toView">The view that will be shown as the initial active view.</param>
-        private IEnumerator OpenFirstView(View toView)
-        {
-            IsTransitioning = true;
-            toView.Show();
-            currentView = toView;
-            IsTransitioning = false;
-            UpdatePauseState();
-            DebugHistory();
-            yield break;
-        }
-
-        /// <summary>
-        /// Closes the last active view when no history remains.
-        /// </summary>
-        /// <param name="fromView">The view that will be closed and hidden.</param>
-        private IEnumerator CloseLastView(View fromView)
-        {
-            IsTransitioning = true;
-            fromView.Hide();
-            currentView = null;
-            IsTransitioning = false;
-            UpdatePauseState();
-            DebugHistory();
-            yield break;
-        }
-
-        /// <summary>
-        /// Switches between two main views, optionally treating it as back navigation.
-        /// Handles transitions and history stack updates.
-        /// </summary>
-        /// <param name="fromView">The currently active view that will be hidden.</param>
-        /// <param name="toView">The new view that will be shown.</param>
-        /// <param name="isBackNavigation">
-        /// True if this switch is the result of navigating back (history pop),
-        /// false if it is forward navigation (history push).
-        /// </param>
         private IEnumerator SwitchBetweenViews(View fromView, View toView, bool isBackNavigation)
         {
             IsTransitioning = true;
+            UpdatePauseState();
 
-            if (!isBackNavigation)
+            if (!isBackNavigation && fromView != null)
             {
                 history.Push(fromView);
             }
 
-            Transition transition = TransitionLibrary.Instance.Resolve(fromView.TransitionType);
+            // Choose which transition type based on navigation direction
+            TransitionType transitionType;
+
+            if (isBackNavigation && fromView != null)
+            {
+                // Use the outgoing view’s transition for back navigation
+                transitionType = fromView.TransitionType;
+            }
+            else
+            {
+                // Use the incoming view’s transition for forward navigation
+                transitionType = toView.TransitionType;
+            }
+
+            Transition transition = TransitionLibrary.Instance.Resolve(transitionType);
 
             if (transition != null)
             {
@@ -246,6 +210,7 @@ namespace PokemonGame.Views
 
             currentView = toView;
             IsTransitioning = false;
+
             UpdatePauseState();
             DebugHistory();
         }
@@ -289,11 +254,12 @@ namespace PokemonGame.Views
         }
 
         /// <summary>
-        /// Updates the pause state depending on whether any views are active.
+        /// Updates the pause state depending on whether any views are active or a transition is running.
         /// </summary>
         private void UpdatePauseState()
         {
-            PauseManager.SetPaused(HasActiveView);
+            bool shouldPause = HasActiveView || IsTransitioning;
+            PauseManager.SetPaused(shouldPause);
         }
 
         /// <summary>

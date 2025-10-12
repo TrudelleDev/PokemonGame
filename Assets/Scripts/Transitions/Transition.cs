@@ -11,9 +11,6 @@ namespace PokemonGame.Transitions
     /// </summary>
     public abstract class Transition : MonoBehaviour
     {
-        [SerializeField, Tooltip("Duration of the fade effect in seconds.")]
-        protected float duration = 1f;
-
         // Abstract implementations must be provided by subclasses.
         protected abstract void FadeInInternal(Action onComplete);
         protected abstract void FadeOutInternal(Action onComplete);

@@ -25,7 +25,7 @@ namespace PokemonGame.Tile
         [Tooltip("Maximum number of rustle tiles kept visible behind the player.")]
         private int maxTrailCount = 3;
 
-        private Tilemap highGrassTilemap;
+        private Tilemap grassTilemap;
         private Tilemap fxTilemap;
 
         private CharacterStateController controller;
@@ -33,7 +33,7 @@ namespace PokemonGame.Tile
 
         private readonly Queue<Vector3Int> rustleTrailQueue = new();
 
-        public event Action<Vector3Int> OnEnterGrass;
+        public event Action OnEnterGrass;
 
         protected override void Awake()
         {
@@ -56,11 +56,11 @@ namespace PokemonGame.Tile
         /// <summary>
         /// Assigns the Tilemaps used for high grass detection and FX rustle animations.
         /// </summary>
-        /// <param name="highGrassTilemap">Tilemap containing high grass tiles that trigger rustles.</param>
+        /// <param name="grassTilemap">Tilemap containing high grass tiles that trigger rustles.</param>
         /// <param name="fxTilemap">Tilemap used to display temporary rustle FX tiles.</param>
-        public void SetTilemaps(Tilemap highGrassTilemap, Tilemap fxTilemap)
+        public void SetTilemaps(Tilemap grassTilemap, Tilemap fxTilemap)
         {
-            this.highGrassTilemap = highGrassTilemap;
+            this.grassTilemap = grassTilemap;
             this.fxTilemap = fxTilemap;
         }
 
@@ -71,9 +71,14 @@ namespace PokemonGame.Tile
         /// </summary>
         private void OnMoveStart()
         {
-            Vector3Int currentCell = highGrassTilemap.WorldToCell(transform.position);
+            if (grassTilemap == null || fxTilemap == null)
+            {
+                return;
+            }
 
-            if (!highGrassTilemap.HasTile(currentCell))
+            Vector3Int currentCell = grassTilemap.WorldToCell(transform.position);
+
+            if (!grassTilemap.HasTile(currentCell))
             {
                 return;
             }
@@ -102,12 +107,17 @@ namespace PokemonGame.Tile
         /// </summary>
         private void OnMoveComplete()
         {
-            Vector3Int currentCell = highGrassTilemap.WorldToCell(transform.position);
-            bool isGrassTile = highGrassTilemap.HasTile(currentCell);
+            if (grassTilemap == null || fxTilemap == null)
+            {
+                return;
+            }
+
+            Vector3Int currentCell = grassTilemap.WorldToCell(transform.position);
+            bool isGrassTile = grassTilemap.HasTile(currentCell);
 
             if (isGrassTile)
             {
-                OnEnterGrass?.Invoke(currentCell);
+                OnEnterGrass?.Invoke();
 
                 if (currentRustle != null)
                 {

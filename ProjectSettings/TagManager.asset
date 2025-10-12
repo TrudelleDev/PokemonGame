@@ -41,20 +41,14 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Floor
+  - name: World_BelowPlayer
     uniqueID: 2167755339
     locked: 0
-  - name: BellowPlayer
+  - name: World
     uniqueID: 1165534729
     locked: 0
-  - name: Characters
+  - name: World_AbovePlayer
     uniqueID: 80569607
-    locked: 0
-  - name: AbovePlayer
-    uniqueID: 3550634747
-    locked: 0
-  - name: Items
-    uniqueID: 853235815
     locked: 0
   - name: UI
     uniqueID: 2915075001
