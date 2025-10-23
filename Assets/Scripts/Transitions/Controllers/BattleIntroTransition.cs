@@ -133,15 +133,15 @@ namespace PokemonGame.Transitions.Controllers
         /// waits for the hold duration, then instantly hides the mask.
         /// </summary>
         private IEnumerator RunFadeOut(Action onComplete)
-        {
-            onComplete?.Invoke();
-
+        {         
             if (holdDuration > 0f)
             {
                 yield return new WaitForSecondsRealtime(holdDuration);
             }
 
             maskRuntimeMaterial.SetFloat(CutoffProperty, 1f);
+
+            onComplete?.Invoke();
         }
 
         /// <summary>

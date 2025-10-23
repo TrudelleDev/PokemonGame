@@ -42,7 +42,9 @@ namespace PokemonGame.Audio
                 return;
             }
 
+            clip.LoadAudioData();
             bgmSource.clip = clip;
+            //bgmSource.time = 1f;
             bgmSource.Play();
         }
 
@@ -73,6 +75,7 @@ namespace PokemonGame.Audio
                 return; // already playing
             }
 
+            clip.LoadAudioData();
             sfxSource.clip = clip;
             sfxSource.PlayOneShot(clip);
         }

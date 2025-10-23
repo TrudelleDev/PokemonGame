@@ -376,19 +376,23 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+      objectReference: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_lineSpacing
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_wordSpacing
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+      objectReference: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+    - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
+      propertyPath: m_characterSpacing
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_VerticalAlignment
       value: 4096
@@ -803,19 +807,23 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+      objectReference: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_lineSpacing
       value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_wordSpacing
-      value: 20
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+      objectReference: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+    - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
+      propertyPath: m_characterSpacing
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_VerticalAlignment
       value: 4096
@@ -1040,8 +1048,8 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0.24010418
-    y: 0.014814815
+    x: 0.24947917
+    y: 0.005555555
     width: 0.25
     height: 0.2962963
   near clip plane: 0.3

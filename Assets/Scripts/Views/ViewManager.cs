@@ -97,6 +97,8 @@ namespace PokemonGame.Views
                     
                     target.Show();
                     overlayViews.Add(target);
+
+                    UpdatePauseState();
                 }
                 else
                 {
@@ -115,7 +117,6 @@ namespace PokemonGame.Views
                     StartCoroutine(SwitchBetweenViews(currentView, target, false));
                 }
 
-                //UpdatePauseState();
                 DebugHistory();
                 return target;
             }
@@ -151,6 +152,8 @@ namespace PokemonGame.Views
                         currentView.Unfreeze();
                     }
                 }
+
+                UpdatePauseState();
             }
             else if (currentView != null)
             {
@@ -169,7 +172,6 @@ namespace PokemonGame.Views
                 }
             }
 
-           // UpdatePauseState();
             DebugHistory();
         }
 

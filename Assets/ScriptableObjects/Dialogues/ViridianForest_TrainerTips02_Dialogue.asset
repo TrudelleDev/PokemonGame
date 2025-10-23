@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ViridianForest_TrainerTips02_Dialogue
   m_EditorClassIdentifier: 
   lines:
-  - Trainer Tips
+  - TRAINER TIPS
   - "If your Pok\xE9mon are weak and you\nwant to avoid battles, stay away"
   - from grassy areas!

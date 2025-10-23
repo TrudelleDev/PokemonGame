@@ -44,6 +44,8 @@ namespace PokemonGame.Party
             {
                 AddPokemon(pokemon.Clone());
             }
+
+            SelectPokemon(Members[0]);   
         }
 
         /// <summary>

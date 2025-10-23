@@ -11,12 +11,23 @@ namespace PokemonGame.Transitions
     /// </summary>
     public abstract class Transition : MonoBehaviour
     {
+        public static event Action OnFadeOutComplete;
+
         // Abstract implementations must be provided by subclasses.
         protected abstract void FadeInInternal(Action onComplete);
         protected abstract void FadeOutInternal(Action onComplete);
 
         public void FadeIn(Action onComplete = null) => FadeInInternal(onComplete);
-        public void FadeOut(Action onComplete = null) => FadeOutInternal(onComplete);
+        public void FadeOut(Action onComplete = null)
+        {
+            // Wrap the internal call so we trigger the event when done.
+            FadeOutInternal(() =>
+            {
+                OnFadeOutComplete?.Invoke();
+                onComplete?.Invoke();
+            });
+        }
+
 
         // Coroutine helpers
         public IEnumerator FadeInCoroutine()

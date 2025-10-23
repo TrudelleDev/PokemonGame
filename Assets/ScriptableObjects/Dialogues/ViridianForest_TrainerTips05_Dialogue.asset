@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: ViridianForest_TrainerTips05_Dialogue
   m_EditorClassIdentifier: 
   lines:
-  - Trainer Tips
+  - TRAINER TIPS
   - "You cant catch a Pok\xE9mon that\nbelongs to someone else."
   - "Throw Pok\xE9 Ball only at wild \nPok\xE9mon to catch them!"
