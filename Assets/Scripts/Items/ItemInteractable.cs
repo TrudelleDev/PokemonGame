@@ -50,8 +50,7 @@ namespace PokemonGame.Items
                 AudioManager.Instance.PlaySFX(receiveItemClip);
             }
 
-            ViewManager.Instance.Show<DialogueBoxView>();
-            ViewManager.Instance.Get<DialogueBoxView>().ShowDialogue(new[] { itemFoundLine, putInBagLine });
+            OverworldDialogueBox.Instance.Dialogue.ShowDialogue(new[] { itemFoundLine, putInBagLine });
 
             if (player.TryGetComponent<InventoryManager>(out var inventory))
             {

@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections;
-using PokemonGame.Dialogue;
-using PokemonGame.Views;
+﻿using System.Collections;
+using PokemonGame.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Battle
 {
     /// <summary>
-    /// Controls the full Pokémon-style battle intro sequence.
-    /// Waits for each animation to finish before continuing to the next phase.
+    /// Handles all visual battle animations for both player and opponent sides.
+    /// Controls platform, HUD, Pokémon, and Pokéball animations using Animator components.
     /// </summary>
     [DisallowMultipleComponent]
     public class BattleAnimation : MonoBehaviour
@@ -17,112 +15,149 @@ namespace PokemonGame.Battle
         private static readonly int EnterState = Animator.StringToHash("Enter");
         private static readonly int ExitState = Animator.StringToHash("Exit");
         private static readonly int ThrowState = Animator.StringToHash("Throw");
+        private static readonly int TakeDamageState = Animator.StringToHash("TakeDamage");
+        private static readonly int DeathState = Animator.StringToHash("Death");
 
         [Title("Player Animators")]
-        [SerializeField, Required] private Animator playerPlatformAnimator;
-        [SerializeField, Required] private Animator playerSpriteAnimator;
-        [SerializeField, Required] private Animator playerPokemonAnimator;
-        [SerializeField, Required] private Animator playerHudAnimator;
-        [SerializeField, Required] private Animator throwBallAnimator;
+        [SerializeField, Required, Tooltip("Animator controlling the player's battle platform.")]
+        private Animator playerPlatformAnimator;
+
+        [SerializeField, Required, Tooltip("Animator controlling the player's trainer sprite.")]
+        private Animator playerSpriteAnimator;
+
+        [SerializeField, Required, Tooltip("Animator controlling the player's active Pokémon sprite.")]
+        private Animator playerPokemonAnimator;
+
+        [SerializeField, Required, Tooltip("Animator controlling the player's HUD display.")]
+        private Animator playerHudAnimator;
+
+        [SerializeField, Required, Tooltip("Animator used for the Pokéball throw animation.")]
+        private Animator throwBallAnimator;
 
         [Title("Opponent Animators")]
-        [SerializeField, Required] private Animator opponentPlatformAnimator;
-        [SerializeField, Required] private Animator opponentSpriteAnimator;
-        [SerializeField, Required] private Animator opponentHudAnimator;
+        [SerializeField, Required, Tooltip("Animator controlling the opponent's battle platform.")]
+        private Animator opponentPlatformAnimator;
 
-        public event Action OnSequenceFinish;
+        [SerializeField, Required, Tooltip("Animator controlling the opponent's Pokémon sprite.")]
+        private Animator opponentSpriteAnimator;
 
-        private bool canThrowPokeball = false;
-        private bool canSendPokemon = false;
+        [SerializeField, Required, Tooltip("Animator controlling the opponent's HUD display.")]
+        private Animator opponentHudAnimator;
 
-        private BattleView battleView;
+        /// <summary>
+        /// Flag used by the Pokéball throw sequence to signal when to start the animation.
+        /// Set externally via <see cref="AnimationEventRelay"/>.
+        /// </summary>
+        public bool ThrowPokeball { get; set; }
 
-        public void Initialize(BattleView battleView)
+        // ─────────────────────────────
+        //   Opponent Animations
+        // ─────────────────────────────
+
+        /// <summary>
+        /// Plays the opponent's platform enter animation.
+        /// </summary>
+        public IEnumerator PlayOpponentPlatformEnter() => PlayAnimation(opponentPlatformAnimator, EnterState);
+
+        /// <summary>
+        /// Plays the opponent's HUD enter animation.
+        /// </summary>
+        public IEnumerator PlayOpponentHudEnter() => PlayAnimation(opponentHudAnimator, EnterState);
+
+        /// <summary>
+        /// Plays the opponent's damage animation.
+        /// </summary>
+        public IEnumerator PlayOpponentTakeDamage() => PlayAnimation(opponentSpriteAnimator, TakeDamageState);
+
+        /// <summary>
+        /// Plays the opponent's faint (death) animation.
+        /// </summary>
+        public IEnumerator PlayOpponentDeath() => PlayAnimation(opponentSpriteAnimator, DeathState);
+
+        // ─────────────────────────────
+        //   Player Animations
+        // ─────────────────────────────
+
+        /// <summary>
+        /// Plays the player's trainer exit animation.
+        /// </summary>
+        public void PlayPlayerExit() => playerSpriteAnimator.Play(ExitState);
+
+        /// <summary>
+        /// Plays the player's HUD enter animation.
+        /// </summary>
+        public IEnumerator PlayPlayerHudEnter() => PlayAnimation(playerHudAnimator, EnterState);
+
+        /// <summary>
+        /// Plays the player's Pokémon send-out animation.
+        /// </summary>
+        public IEnumerator PlayPlayerSendPokemonEnter() => PlayAnimation(playerPokemonAnimator, EnterState);
+
+        /// <summary>
+        /// Plays the player's Pokémon damage animation.
+        /// </summary>
+        public IEnumerator PlayPlayerTakeDamage() => PlayAnimation(playerPokemonAnimator, TakeDamageState);
+
+        /// <summary>
+        /// Plays the player's Pokémon faint (death) animation.
+        /// </summary>
+        public IEnumerator PlayPlayerDeath() => PlayAnimation(playerPokemonAnimator, DeathState);
+
+        /// <summary>
+        /// Waits for a flag trigger before playing the Pokéball throw animation.
+        /// </summary>
+        public IEnumerator PlayPlayerThrowBall()
         {
-            this.battleView = battleView;        
+            yield return new WaitUntil(() => ThrowPokeball);
+            throwBallAnimator.Play(ThrowState);
+            yield return AnimationUtility.WaitForAnimation(throwBallAnimator, ThrowState);
+            ThrowPokeball = false;
         }
 
-        private void DialogueBox_OnDialogueFinished()
+        // ─────────────────────────────
+        //   Global Animations
+        // ─────────────────────────────
+
+        /// <summary>
+        /// Plays the intro animations for both player and opponent.
+        /// </summary>
+        public void PlayIntro()
         {
-            canSendPokemon = true;
-        }
-
-        public void PlayIntroSequence()
-        {
-            StartCoroutine(PlaySequenceCoroutine());
-        }
-
-        public void SetCanThrowPokeball()
-        {
-            canThrowPokeball = true;
-        }
-
-        private IEnumerator PlaySequenceCoroutine()
-        {
-            DialogueBoxView dialogueBox = ViewManager.Instance.Get<DialogueBoxView>();
-            dialogueBox.OnLineFinished += DialogueBox_OnDialogueFinished;
-
-            dialogueBox.ShowDialogue(new[] { 
-                $"Wild {battleView.OpponentPokemon.Definition.DisplayName} just appeared!",
-                $"Go {battleView.PlayerPokemon.Definition.DisplayName}!"
-            });
-
-            // --- Phase 1: Platforms + Sprites ---
             playerPlatformAnimator.Play(EnterState);
             playerSpriteAnimator.Play(EnterState);
             opponentPlatformAnimator.Play(EnterState);
             opponentSpriteAnimator.Play(EnterState);
-
-            yield return WaitForAnimation(opponentPlatformAnimator, EnterState);
-
-            // --- Phase 2: Opponent HUD appears ---
-            opponentHudAnimator.Play(EnterState);
-            yield return WaitForAnimation(opponentHudAnimator, EnterState);
-
-            // --- Phase 3: Wait for player input (press any key to continue) ---
-            yield return new WaitUntil(() => canSendPokemon);
-
-            // --- Phase 4: Player throws Pokéball ---
-            playerSpriteAnimator.Play(ExitState);
-
-            yield return new WaitUntil(() => canThrowPokeball);
-
-            throwBallAnimator.Play(ThrowState);
-            yield return WaitForAnimation(throwBallAnimator, ThrowState);
-
-            // --- Phase 5: Pokémon appears + HUD ---
-            playerPokemonAnimator.Play(EnterState);
-            yield return WaitForAnimation(playerPokemonAnimator, EnterState);
-
-            playerHudAnimator.Play(EnterState);
-            yield return WaitForAnimation(playerHudAnimator, EnterState);
-
-            OnSequenceFinish?.Invoke();
         }
 
         /// <summary>
-        /// Waits until the given animator finishes playing the specified state.
+        /// Resets all Animator components to their default bind pose.
+        /// Useful before replaying the intro sequence.
         /// </summary>
-        private static IEnumerator WaitForAnimation(Animator animator, int stateHash)
+        public void ResetIntro()
         {
-            // Wait until the animator transitions into the target state
-            while (!animator.GetCurrentAnimatorStateInfo(0).shortNameHash.Equals(stateHash))
-            {
-                yield return null;
-            }
+            playerHudAnimator.Rebind();
+            playerPlatformAnimator.Rebind();
+            playerPokemonAnimator.Rebind();
+            playerSpriteAnimator.Rebind();
+            throwBallAnimator.Rebind();
 
-            // Wait until animation reaches the end (normalizedTime >= 1)
-            var info = animator.GetCurrentAnimatorStateInfo(0);
-            while (info.shortNameHash == stateHash && info.normalizedTime < 1f)
-            {
-                yield return null;
-                info = animator.GetCurrentAnimatorStateInfo(0);
-            }
+            opponentHudAnimator.Rebind();
+            opponentPlatformAnimator.Rebind();
+            opponentSpriteAnimator.Rebind();
         }
 
-        public void PlayPlayerHudIdle()
+        /// <summary>
+        /// Plays the specified animation state on the given Animator and waits until it finishes.
+        /// </summary>
+        private IEnumerator PlayAnimation(Animator animator, int state)
         {
-            playerHudAnimator.Play("Idle");
+            if (animator == null)
+            {
+                yield break;
+            }
+
+            animator.Play(state);
+            yield return AnimationUtility.WaitForAnimation(animator, state);
         }
     }
 }

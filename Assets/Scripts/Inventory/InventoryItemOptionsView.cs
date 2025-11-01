@@ -1,6 +1,7 @@
 ﻿using PokemonGame.Dialogue;
 using PokemonGame.Items;
 using PokemonGame.Menu;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Party;
 using PokemonGame.Pokemons;
 using PokemonGame.Views;
@@ -35,7 +36,14 @@ namespace PokemonGame.Inventory
         public Item SelectedItem { get; set; }
 
         private PartyMenuView partyMenu;
-        private DialogueBoxView dialogueBox;
+        private DialogueBox dialogueBox;
+        private VerticalMenuController controller;
+
+        private void Awake()
+        {
+            dialogueBox = OverworldDialogueBox.Instance.Dialogue;
+            controller = GetComponent<VerticalMenuController>();
+        }
 
         private void OnEnable()
         {
@@ -52,12 +60,23 @@ namespace PokemonGame.Inventory
             dialogueBox.OnDialogueFinished -= OnDialogueFinished;
         }
 
+        public override void Freeze()
+        {
+            controller.enabled = false;
+        }
+
+        public override void Unfreeze()
+        {
+            controller.enabled = true;
+        }
+
         /// <summary>
         /// Handles the "Use" button click by opening the party menu.
         /// </summary>
         private void OnUseButtonClick()
         {
             partyMenu = ViewManager.Instance.Show<PartyMenuView>();
+            partyMenu.OppenedFromInventory = true;
             partyMenu.OnPokemonSelected += OnPokemonSelected;
         }
 
@@ -76,7 +95,6 @@ namespace PokemonGame.Inventory
                 inventory.Remove(SelectedItem);
             }
 
-            dialogueBox = ViewManager.Instance.Show<DialogueBoxView>();
             dialogueBox.OnDialogueFinished += OnDialogueFinished;
             dialogueBox.ShowDialogue(result.Messages);
         }
@@ -88,6 +106,7 @@ namespace PokemonGame.Inventory
         private void OnDialogueFinished()
         {
             dialogueBox.OnDialogueFinished -= OnDialogueFinished;
+            partyMenu.OppenedFromInventory = false;
             OnCancelButtonClick();
         }
 
@@ -96,7 +115,7 @@ namespace PokemonGame.Inventory
         /// </summary>
         private void OnCancelButtonClick()
         {
-            ViewManager.Instance.CloseCurrentView();
+            ViewManager.Instance.CloseTopView();
         }
     }
 }

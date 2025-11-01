@@ -23,16 +23,31 @@ namespace PokemonGame.Party
         [Tooltip("Button to close the option menu and return to the party menu.")]
         private MenuButton cancelButton;
 
+        private VerticalMenuController controller;
+        public event Action OnClose;
+
         private void Awake()
         {
             summaryButton.OnClick += OnSummaryClick;
             cancelButton.OnClick += OnCancelClick;
+
+            controller =  GetComponent<VerticalMenuController>();
         }
 
         private void OnDestroy()
         {
             summaryButton.OnClick -= OnSummaryClick;
             cancelButton.OnClick -= OnCancelClick;
+        }
+
+        public override void Freeze()
+        {
+            controller.enabled = false;
+        }
+
+        public override void Unfreeze()
+        {
+            controller.enabled = true;
         }
 
         private void OnSummaryClick()
@@ -42,7 +57,7 @@ namespace PokemonGame.Party
 
         private void OnCancelClick()
         {
-            ViewManager.Instance.CloseCurrentView();
+            ViewManager.Instance.CloseTopView();
         }
     }
 }

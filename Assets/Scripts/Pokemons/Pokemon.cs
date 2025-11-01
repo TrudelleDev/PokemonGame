@@ -150,6 +150,34 @@ namespace PokemonGame.Pokemons
             return healed;
         }
 
+        public int Attack(Move move, Pokemon target)
+        {
+            return move.Definition.Power;
+        }
+
+        public int TakeDamage(int amount)
+        {
+            if (amount <= 0 || HealthRemaining <= 0)
+            {
+                return 0;
+            }
+
+            int oldHp = HealthRemaining;
+            int actualDamage = Mathf.Min(amount, HealthRemaining);
+            HealthRemaining -= actualDamage;
+
+            // Notify listeners (UI, battle logic, etc.)
+            OnHealthChange?.Invoke(oldHp, HealthRemaining);
+
+            // Optionally trigger faint event here later
+            if (HealthRemaining <= 0)
+            {
+                Debug.Log($"{Definition.DisplayName} fainted!");
+            }
+
+            return actualDamage;
+        }
+
         /// <summary>
         /// Attempts to cure the Pokémon's status if it matches the specified condition.
         /// </summary>

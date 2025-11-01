@@ -7,7 +7,8 @@ using UnityEngine;
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Base class for all UI views. Provides standard show, hide, and close logic.
+    /// Base class for all UI views. 
+    /// Provides standard show, hide, and close logic with independent open/close transitions.
     /// </summary>
     public abstract class View : MonoBehaviour
     {
@@ -17,55 +18,43 @@ namespace PokemonGame.Views
         [Tooltip("Enable to allow this view to be closed by key input (e.g., Cancel button).")]
         private bool allowKeyClose = false;
 
-        [BoxGroup(Group), SerializeField, Required]
-        [Tooltip("If true, this view will be layered on top of others rather than replacing them.")]
-        private bool isOverlay;
-
         [BoxGroup(Group), SerializeField]
         [Tooltip("Sound effect played when this view is closed manually.")]
         private AudioClip closeSound;
 
+        [Title("Transitions")]
         [BoxGroup(Group), SerializeField, Required]
-        [Tooltip("Transition type to use when navigating away from this view.")]
-        private TransitionType transitionType;
+        [Tooltip("Transition used when opening this view.")]
+        private TransitionType openTransition = TransitionType.None;
+
+        [BoxGroup(Group), SerializeField, Required]
+        [Tooltip("Transition used when closing this view.")]
+        private TransitionType closeTransition = TransitionType.None;
+
+        private bool isFrozen;
 
         /// <summary>
-        /// Gets whether this view is currently open and visible.
+        /// Gets the transition used when this view opens.
         /// </summary>
-        public bool IsOpen { get; private set; }
+        public TransitionType OpenTransition => openTransition;
 
         /// <summary>
-        /// Gets whether this view appears as an overlay on top of others.
+        /// Gets the transition used when this view closes.
         /// </summary>
-        public bool IsOverlay => isOverlay;
+        public TransitionType CloseTransition => closeTransition;
 
-        /// <summary>
-        /// Gets the transition type used when showing or closing this view.
-        /// </summary>
-        public TransitionType TransitionType => transitionType;
 
         /// <summary>
         /// Called before the view is shown. Used for preloading assets or preparing data.
         /// </summary>
         public virtual void Preload() { }
 
-        /// <summary>
-        /// Called when the view is frozen (e.g., when a modal or pause menu is open).
-        /// Override to disable animations or input.
-        /// </summary>
-        public virtual void Freeze() { }
-
-        /// <summary>
-        /// Called when the view is unfrozen and resumes normal activity.
-        /// </summary>
-        public virtual void Unfreeze() { }
 
         /// <summary>
         /// Displays the view by enabling its GameObject.
         /// </summary>
         public virtual void Show()
         {
-            IsOpen = true;
             gameObject.SetActive(true);
         }
 
@@ -74,8 +63,24 @@ namespace PokemonGame.Views
         /// </summary>
         public virtual void Hide()
         {
-            IsOpen = false;
             gameObject.SetActive(false);
+        }
+
+        /// <summary>
+        /// Called when the view is frozen (e.g., when a modal or pause menu is open).
+        /// Override to disable animations or input.
+        /// </summary>
+        public virtual void Freeze() 
+        {
+            isFrozen = true;
+        }
+
+        /// <summary>
+        /// Called when the view is unfrozen and resumes normal activity.
+        /// </summary>
+        public virtual void Unfreeze() 
+        {
+            isFrozen = false; 
         }
 
         /// <summary>
@@ -83,6 +88,11 @@ namespace PokemonGame.Views
         /// </summary>
         protected virtual void Update()
         {
+            if (isFrozen)
+            {
+                return;
+            }
+
             if (!allowKeyClose)
             {
                 return;
@@ -100,7 +110,7 @@ namespace PokemonGame.Views
                     AudioManager.Instance.PlaySFX(closeSound);
                 }
 
-                ViewManager.Instance.CloseCurrentView();
+                ViewManager.Instance.CloseTopView();
             }
         }
     }

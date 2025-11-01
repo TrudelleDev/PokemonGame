@@ -1,70 +1,80 @@
 ﻿using System.Collections;
+using PokemonGame.Dialogue;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Handles the Pokémon battle intro sequence.
-    /// Waits for the intro animation to finish before moving to the player action state.
+    /// Handles the full introduction sequence of a Pokémon-style battle.
+    /// Transitions to <see cref="PlayerActionState"/> once complete.
     /// </summary>
     public class BattleIntroState : IBattleState
     {
-        private bool isSequenceFinished;
         private readonly BattleStateMachine machine;
+        private BattleView Battle => machine.BattleView;
 
         /// <summary>
-        /// Cached reference to the active <see cref="BattleView"/> context.
+        /// Initializes a new instance of the <see cref="BattleIntroState"/> class.
         /// </summary>
-        private BattleView View => machine.BattleView;
-
-        /// <summary>
-        /// Creates a new <see cref="BattleIntroState"/> instance.
-        /// </summary>
-        /// <param name="machine">The owning battle state machine.</param>
+        /// <param name="machine">The active <see cref="BattleStateMachine"/> controlling the battle flow.</param>
         public BattleIntroState(BattleStateMachine machine)
         {
             this.machine = machine;
         }
 
         /// <summary>
-        /// Called when the state becomes active.
-        /// Starts the intro sequence coroutine.
+        /// Called when the state is entered.
+        /// Starts the full intro coroutine, including dialogue and animations.
         /// </summary>
         public void Enter()
         {
-            isSequenceFinished = false;
-            View.BattleAnimation.OnSequenceFinish += OnIntroSequenceFinish;
-            View.StartCoroutine(PlayIntroSequence());
+            Battle.StartCoroutine(PlayIntroSequence());
         }
 
-        /// <summary>
-        /// Called when the state is exited.
-        /// Unsubscribes from animation events and resets the sequence flag.
-        /// </summary>
-        public void Exit()
-        {
-            View.BattleAnimation.OnSequenceFinish -= OnIntroSequenceFinish;
-            isSequenceFinished = false;
-        }
-
-        /// <summary>
-        /// Called every frame while the state is active.
-        /// </summary>
-        public void Update() { }
-
-        private void OnIntroSequenceFinish()
-        {
-            isSequenceFinished = true;
-        }
-
-        /// <summary>
-        /// Plays the intro animation and transitions to the next state upon completion.
-        /// </summary>
         private IEnumerator PlayIntroSequence()
         {
-            View.BattleAnimation.PlayIntroSequence();
-            yield return new WaitUntil(() => isSequenceFinished);
+            string opponentName = Battle.OpponentPokemon.Definition.DisplayName;
+            string playerName = Battle.PlayerPokemon.Definition.DisplayName;
+
+            Battle.DialogueBox.ShowDialogue(new[]
+            {
+                $"Wild {opponentName} appeared!",
+                $"Go {playerName}!"
+            });
+
+            Battle.BattleAnimation.ResetIntro();
+            Battle.BattleAnimation.PlayIntro();
+
+            yield return Battle.BattleAnimation.PlayOpponentPlatformEnter();
+            yield return Battle.BattleAnimation.PlayOpponentHudEnter();
+            yield return WaitForLineTypingComplete();
+
+            Battle.BattleAnimation.PlayPlayerExit();
+
+            yield return Battle.BattleAnimation.PlayPlayerThrowBall();
+            yield return Battle.BattleAnimation.PlayPlayerSendPokemonEnter();
+            yield return Battle.BattleAnimation.PlayPlayerHudEnter();
+
             machine.SetState(new PlayerActionState(machine));
         }
+
+        private IEnumerator WaitForLineTypingComplete()
+        {
+            bool done = false;
+
+            void OnComplete()
+            {
+                done = true;
+                Battle.DialogueBox.OnLineTypingComplete -= OnComplete;
+            }
+
+           Battle.DialogueBox.OnLineTypingComplete += OnComplete;
+
+            yield return new WaitUntil(() => done);
+        }
+
+        public void Update() { }
+
+        public void Exit() { }
     }
 }

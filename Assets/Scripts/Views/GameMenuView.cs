@@ -1,6 +1,7 @@
 using PokemonGame.Characters.Inputs;
 using PokemonGame.Inventory;
 using PokemonGame.Menu;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -26,6 +27,8 @@ namespace PokemonGame.Views
         [Tooltip("Button to close the menu.")]
         private MenuButton exitButton;
 
+        private VerticalMenuController controller;
+
         /// <summary>
         /// Sets up button listeners. Called once before the view is shown.
         /// </summary>
@@ -34,6 +37,11 @@ namespace PokemonGame.Views
             partyButton.OnClick += OnPartyClick;
             inventoryButton.OnClick += OnInventoryClick;
             exitButton.OnClick += OnExitClick;
+        }
+
+        private void Awake()
+        {
+            controller = GetComponent<VerticalMenuController>();
         }
 
         private void OnDestroy()
@@ -50,13 +58,24 @@ namespace PokemonGame.Views
             // Allow closing the menu with the same key that opens it
             if (Input.GetKeyDown(KeyBinds.Menu))
             {
-                ViewManager.Instance.CloseCurrentView();
+                ViewManager.Instance.CloseTopView();
             }
+        }
+        public override void Freeze()
+        {
+            controller.enabled = false;
+            base.Freeze();
+        }
+
+        public override void Unfreeze()
+        {
+            controller.enabled = true;
+            base.Unfreeze();
         }
 
         private void OnPartyClick()
         {
-            ViewManager.Instance.Show<PartyMenuView>();
+            PartyMenuView partyMenu = ViewManager.Instance.Show<PartyMenuView>();
         }
 
         private void OnInventoryClick()
@@ -66,7 +85,7 @@ namespace PokemonGame.Views
 
         private void OnExitClick()
         {
-            ViewManager.Instance.CloseCurrentView();
+            ViewManager.Instance.CloseTopView();
         }
     }
 }

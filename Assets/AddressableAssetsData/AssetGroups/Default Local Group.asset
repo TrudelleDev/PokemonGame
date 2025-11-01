@@ -17,6 +17,12 @@ MonoBehaviour:
     m_SerializedData: []
   m_GUID: b00cadabc593f5249bcc3f72027e137a
   m_SerializeEntries:
+  - m_GUID: 1742cd0be6a522548b9e7385c5704ec7
+    m_Address: Assets/ScriptableObjects/Pokemons/Weedle_Definition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - pokemon-definition
+    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 1fa1d44aad106b3459faa41ffae5a9d0
     m_Address: Assets/ScriptableObjects/Moves/Tackle.asset
     m_ReadOnly: 0

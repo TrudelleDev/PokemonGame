@@ -149,7 +149,7 @@ namespace PokemonGame.Inventory
         /// </summary>
         private void OnCancelButtonClick()
         {
-            ViewManager.Instance.CloseCurrentView();
+            ViewManager.Instance.CloseTopView();
         }
     }
 }

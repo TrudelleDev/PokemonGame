@@ -1,4 +1,6 @@
 ﻿using System;
+using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Menu
@@ -14,7 +16,12 @@ namespace PokemonGame.Menu
         [Tooltip("Whether this button starts interactable.")]
         private bool interactable = true;
 
+        [SerializeField, Required]
+        private TextMeshProUGUI label;
+
+
         public event Action OnClick;
+        public event Action OnSelect;
 
         /// <summary>
         /// Gets whether the button is currently interactable.
@@ -26,6 +33,11 @@ namespace PokemonGame.Menu
         /// </summary>
         public bool IsSelected { get; private set; }
 
+
+        public void SetLabel(string text)
+        {
+            label.text = text;
+        }
 
         /// <summary>
         /// Sets the selected state of the button and refreshes visuals.
@@ -40,6 +52,11 @@ namespace PokemonGame.Menu
 
             IsSelected = active;
             RefreshVisual();
+
+            if (active)
+            {
+                OnSelect?.Invoke();
+            }           
         }
 
         /// <summary>

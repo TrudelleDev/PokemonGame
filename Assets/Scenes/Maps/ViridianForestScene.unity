@@ -65513,7 +65513,7 @@ GameObject:
   - component: {fileID: 1876167740}
   - component: {fileID: 1876167739}
   m_Layer: 0
-  m_Name: SceneBGMPlayer
+  m_Name: MapSetting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -65532,6 +65532,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bgmClip: {fileID: 8300000, guid: a64cbfc1b574eab47a90df5c94adad24, type: 3}
+  dialogueSetting: {fileID: 11400000, guid: deb15854501f54848a648d0bb7c9c89f, type: 2}
 --- !u!4 &1876167740
 Transform:
   m_ObjectHideFlags: 0

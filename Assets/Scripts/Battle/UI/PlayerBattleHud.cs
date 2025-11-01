@@ -33,6 +33,8 @@ namespace PokemonGame.Battle.UI
         [Tooltip("Image showing the player's Pokémon back-facing battle sprite.")]
         private Image backSprite;
 
+        public HealthBar HealthBar => healthBar;
+
         /// <summary>
         /// Initializes the HUD with the given Pokémon data.
         /// </summary>
@@ -41,6 +43,7 @@ namespace PokemonGame.Battle.UI
         {
             if (pokemon?.Definition == null)
             {
+                Unbind();
                 return;
             }
  

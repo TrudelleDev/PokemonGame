@@ -185,6 +185,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   interactable: 1
+  label: {fileID: 0}
   cursorArrow: {fileID: 8620204295926458437}
 --- !u!1 &2035309106277200749
 GameObject:
@@ -253,8 +254,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Tackle
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -289,7 +290,7 @@ MonoBehaviour:
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
-  m_wordSpacing: 20
+  m_wordSpacing: 10
   m_lineSpacing: 0
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
@@ -387,8 +388,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99/99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -596,8 +597,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: pp
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: abaf0e86b4bff2742bdd2f9042a6ddb6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  m_sharedMaterial: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

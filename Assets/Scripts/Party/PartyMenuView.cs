@@ -1,5 +1,4 @@
 using System;
-using PokemonGame.Dialogue;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemons;
@@ -37,6 +36,8 @@ namespace PokemonGame.Party
         [Tooltip("Controls navigation between party slots.")]
         private VerticalMenuController partySlotController;
 
+        public bool OppenedFromInventory {  get; set; }
+
         /// <summary>
         /// Raised when the player selects a Pokémon from the menu.
         /// </summary>
@@ -64,6 +65,7 @@ namespace PokemonGame.Party
         {
             partySlotController.enabled = false;
             dialogueText.text = ActionMessage;
+            base.Freeze();
         }
 
         /// <summary>
@@ -74,6 +76,7 @@ namespace PokemonGame.Party
         {
             partySlotController.enabled = true;
             dialogueText.text = ChoosePokemonMessage;
+            base.Unfreeze();
         }
 
         /// <summary>
@@ -95,7 +98,7 @@ namespace PokemonGame.Party
             // Notify listeners about the selected Pokémon
             OnPokemonSelected?.Invoke(menuSlot.BoundPokemon);
 
-            if (!ViewManager.Instance.Get<DialogueBoxView>().gameObject.activeInHierarchy)
+            if (!OppenedFromInventory)
             {
                 ViewManager.Instance.Show<PartyMenuOptionView>();
             }
@@ -103,7 +106,8 @@ namespace PokemonGame.Party
 
         private void OnCancelButtonClick()
         {
-            ViewManager.Instance.CloseCurrentView();
+            
+            ViewManager.Instance.CloseTopView();
         }
     }
 }

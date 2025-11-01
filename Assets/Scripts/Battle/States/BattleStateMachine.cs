@@ -1,24 +1,25 @@
 ﻿namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Manages battle state transitions and updates during a Pokémon battle.
+    /// Controls the flow of battle by managing the active <see cref="IBattleState"/>.
+    /// Handles transitions between states such as intro, player actions, and results.
     /// </summary>
     public class BattleStateMachine
     {
         /// <summary>
-        /// Currently active battle state.
+        /// The currently active battle state.
         /// </summary>
         public IBattleState CurrentState { get; private set; }
 
         /// <summary>
-        /// Owning battle view context.
+        /// Reference to the <see cref="BattleView"/> associated with this state machine.
         /// </summary>
         public BattleView BattleView { get; }
 
         /// <summary>
-        /// Initializes a new BattleStateMachine with the given battle view context.
+        /// Initializes a new instance of the <see cref="BattleStateMachine"/> class.
         /// </summary>
-        /// <param name="battleView">The parent BattleView that owns this state machine.</param>
+        /// <param name="battleView">The <see cref="BattleView"/> that this state machine controls.</param>
         public BattleStateMachine(BattleView battleView)
         {
             BattleView = battleView;
@@ -26,8 +27,10 @@
 
         /// <summary>
         /// Switches to a new battle state.
+        /// Calls <see cref="IBattleState.Exit"/> on the current state and
+        /// <see cref="IBattleState.Enter"/> on the new state.
         /// </summary>
-        /// <param name="newState">State to activate.</param>
+        /// <param name="newState">The new state to transition to.</param>
         public void SetState(IBattleState newState)
         {
             if (newState == null || newState == CurrentState)
@@ -39,7 +42,7 @@
         }
 
         /// <summary>
-        /// Updates the current state each frame.
+        /// Updates the currently active state each frame.
         /// </summary>
         public void Update()
         {

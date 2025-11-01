@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
@@ -32,9 +33,17 @@ namespace PokemonGame.Pokemons.UI.Health
         private Pokemon boundPokemon;
         private Coroutine animateHealthCoroutine;
 
+        public event Action OnHealthAnimationFinished;
+
         private void Awake()
         {
             slider = GetComponent<Slider>();
+        }
+
+        private void EnsureSlider()
+        {
+            if(slider == null)
+                slider = GetComponent<Slider>();
         }
 
         /// <summary>
@@ -47,6 +56,8 @@ namespace PokemonGame.Pokemons.UI.Health
                 Unbind();
                 return;
             }
+
+            EnsureSlider();
 
             Unbind();
 
@@ -100,7 +111,6 @@ namespace PokemonGame.Pokemons.UI.Health
             }
 
             animateHealthCoroutine = StartCoroutine(AnimateHealthChange(oldHealth, newHealth));
-            UpdateFillImage(newHealth);
         }
 
         /// <summary>
@@ -112,6 +122,8 @@ namespace PokemonGame.Pokemons.UI.Health
             if (startValue == endValue)
             {
                 slider.value = endValue;
+                UpdateFillImage(endValue);
+                OnHealthAnimationFinished?.Invoke();
                 yield break;
             }
 
@@ -131,8 +143,17 @@ namespace PokemonGame.Pokemons.UI.Health
             for (int hp = startValue; hp != endValue + step; hp += step)
             {
                 slider.value = hp;
+
+                UpdateFillImage(hp);
+
                 yield return new WaitForSeconds(tickDelay);
             }
+
+            // Final update just to ensure precision
+            slider.value = endValue;
+            UpdateFillImage(endValue);
+            animateHealthCoroutine = null;
+            OnHealthAnimationFinished?.Invoke();
         }
 
         /// <summary>

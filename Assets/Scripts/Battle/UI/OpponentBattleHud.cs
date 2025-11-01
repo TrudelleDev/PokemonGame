@@ -29,6 +29,8 @@ namespace PokemonGame.Battle.UI
         [Tooltip("Image component showing the opponent Pokémon's front-facing battle sprite.")]
         private Image frontSprite;
 
+        public HealthBar HealthBar => healthBar;
+
         /// <summary>
         /// Initializes the opponent battle HUD with the given Pokémon data.
         /// </summary>
@@ -37,6 +39,7 @@ namespace PokemonGame.Battle.UI
         {
             if (pokemon?.Definition == null)
             {
+                Unbind();
                 return;
             }
 
