@@ -60,9 +60,10 @@ namespace PokemonGame.Battle.States
             if (opponent.HealthRemaining <= 0)
             {
                 yield return Battle.BattleAnimation.PlayOpponentDeath();
-
-                Battle.DialogueBox.ShowDialogue($"{opponent.Definition.DisplayName} fainted!");
-                Battle.DialogueBox.OnDialogueFinished += CloseView;
+                Battle.DialogueBox.ShowDialogue($"Wild {opponent.Definition.DisplayName} fainted!", manualArrowControl: true);
+                yield return WaitDialogueComplete();
+               
+                machine.SetState(new VictoryState(machine));
                 yield break;
             }
 
@@ -85,6 +86,20 @@ namespace PokemonGame.Battle.States
             yield return new WaitUntil(() => done);
         }
 
+        private IEnumerator WaitDialogueComplete()
+        {
+            bool done = false;
+
+            void OnComplete()
+            {
+                done = true;
+                Battle.DialogueBox.OnDialogueFinished -= OnComplete;
+            }
+
+            Battle.DialogueBox.OnDialogueFinished += OnComplete;
+            yield return new WaitUntil(() => done);
+        }
+
         private IEnumerator WaitForHealthAnimationComplete()
         {
             bool done = false;
@@ -99,11 +114,7 @@ namespace PokemonGame.Battle.States
             yield return new WaitUntil(() => done);
         }
 
-        private void CloseView()
-        {
-            Battle.DialogueBox.OnDialogueFinished -= CloseView;
-            ViewManager.Instance.CloseTopView();
-        }
+        
 
         public void Update() { }
 

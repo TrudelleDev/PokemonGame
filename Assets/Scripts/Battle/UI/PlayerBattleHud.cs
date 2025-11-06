@@ -1,4 +1,6 @@
 ﻿using PokemonGame.Pokemons;
+using PokemonGame.Pokemons.Enums;
+using PokemonGame.Pokemons.Experience;
 using PokemonGame.Pokemons.UI.Health;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -30,10 +32,14 @@ namespace PokemonGame.Battle.UI
         private HealthBar healthBar;
 
         [SerializeField, Required]
+        private ExperienceBar experienceBar;
+
+        [SerializeField, Required]
         [Tooltip("Image showing the player's Pokémon back-facing battle sprite.")]
         private Image backSprite;
 
         public HealthBar HealthBar => healthBar;
+        public ExperienceBar ExperienceBar => experienceBar;
 
         /// <summary>
         /// Initializes the HUD with the given Pokémon data.
@@ -44,14 +50,24 @@ namespace PokemonGame.Battle.UI
             if (pokemon?.Definition == null)
             {
                 Unbind();
+                pokemon.OnLevelChange -= OnPokemonLevelChange;
+
                 return;
             }
- 
+            
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = $"lv{pokemon.Level}";
+            levelText.text = pokemon.Level.ToString();
             healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
             healthBar.Bind(pokemon);
+            experienceBar.Bind(pokemon);
             backSprite.sprite = pokemon.Definition.Sprites.BackSprite;
+
+            pokemon.OnLevelChange += OnPokemonLevelChange;
+        }
+
+        private void OnPokemonLevelChange(int newLevel)
+        {
+            levelText.text = newLevel.ToString();
         }
 
         /// <summary>
@@ -64,6 +80,7 @@ namespace PokemonGame.Battle.UI
             healthText.text = "/";
             backSprite.sprite = null;
             healthBar.Unbind();
+            experienceBar.Unbind();
         }
     }
 }

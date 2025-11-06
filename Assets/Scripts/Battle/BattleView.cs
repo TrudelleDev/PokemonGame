@@ -40,7 +40,7 @@ namespace PokemonGame.Battle
         private MoveSelectionPanel moveSelectionPanel;
 
         [SerializeField, Required, Tooltip("Controller handling move selection logic and communication with the state machine.")]
-        private MoveSelectionController moveSelectionController;
+        private MoveSelectionView moveSelectionController;
 
         [SerializeField, Required]
         private DialogueBox dialogueBox;
@@ -57,7 +57,7 @@ namespace PokemonGame.Battle
         /// <summary>
         /// Gets the controller responsible for handling move selection logic.
         /// </summary>
-        public MoveSelectionController MoveSelectionController => moveSelectionController;
+        public MoveSelectionView MoveSelectionController => moveSelectionController;
 
         /// <summary>
         /// Gets the move selection panel used for displaying move options.
@@ -94,6 +94,9 @@ namespace PokemonGame.Battle
         /// </summary>
         public event Action OnBattleViewClose;
 
+        private bool isBattleInitialized = false;
+
+
         /// <summary>
         /// Initializes and configures a new battle session.
         /// Binds Pokémon data to HUDs and sets up the battle state machine.
@@ -111,6 +114,9 @@ namespace PokemonGame.Battle
             stateMachine = new BattleStateMachine(this);
 
             moveSelectionController.Initialize(stateMachine, playerPokemon.Moves);
+            BattleAnimation.ResetIntro();
+            isBattleInitialized = true;
+;
         }
 
         /// <summary>
@@ -119,7 +125,10 @@ namespace PokemonGame.Battle
         /// </summary>
         private void OnEnable()
         {
-            StartCoroutine(PlayIntro());
+            if (isBattleInitialized)
+            {
+                StartCoroutine(PlayIntro());
+            }
         }
 
         /// <summary>
@@ -129,6 +138,7 @@ namespace PokemonGame.Battle
         private void OnDisable()
         {
             OnBattleViewClose?.Invoke();
+            isBattleInitialized= false;
         }
 
         /// <summary>

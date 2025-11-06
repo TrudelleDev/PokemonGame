@@ -66,7 +66,7 @@ namespace PokemonGame.Battle.UI
                 return;
 
             ViewManager.Instance.CloseTopView();
-            ViewManager.Instance.Show<MoveSelectionController>();
+            ViewManager.Instance.Show<MoveSelectionView>();
         }
 
         private void ShowInventory()
@@ -81,7 +81,7 @@ namespace PokemonGame.Battle.UI
 
         private void RunAway()
         {
-            Hide();
+            ViewManager.Instance.CloseTopView();
             battle.StateMachine.SetState(new BattleRunState(battle.StateMachine));
         }
 

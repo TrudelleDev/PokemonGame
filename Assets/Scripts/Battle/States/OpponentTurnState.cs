@@ -75,7 +75,7 @@ namespace PokemonGame.Battle.States
         private void HandlePlayerFaint()
         {
             Battle.DialogueBox.OnDialogueFinished -= HandlePlayerFaint;
-            ViewManager.Instance.CloseTopView(); // Return to overworld
+           // ViewManager.Instance.CloseTopView(); // Return to overworld
         }
 
         private IEnumerator WaitForLineTypingComplete()

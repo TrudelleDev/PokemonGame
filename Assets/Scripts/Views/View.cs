@@ -1,4 +1,5 @@
-﻿using PokemonGame.Audio;
+﻿using System;
+using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
 using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
@@ -111,7 +112,13 @@ namespace PokemonGame.Views
                 }
 
                 ViewManager.Instance.CloseTopView();
+                Close();
             }
+        }
+
+        public virtual void Close()
+        {
+
         }
     }
 }

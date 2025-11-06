@@ -757,7 +757,7 @@ MonoBehaviour:
       m_Height: 8
       m_HorizontalBearingX: 0
       m_HorizontalBearingY: 8
-      m_HorizontalAdvance: 6
+      m_HorizontalAdvance: 4
     m_GlyphRect:
       m_X: 35
       m_Y: 41
@@ -2800,7 +2800,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0ec719b63905cbb478e69b0658cda420, type: 3}
+        m_Texture: {fileID: 2800000, guid: 72eb34e356790dd49b56fe129749d5b8, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []

@@ -43,18 +43,15 @@ namespace PokemonGame.Battle
             AudioManager.Instance.PlayBGM(battleBgm);
             BattleView battle = ViewManager.Instance.Show<BattleView>();
 
-
-            // TODO: Replace with random wild Pokémon selection once encounter system is implemented.
-            Pokemon weedle = new Pokemon(
+            battle.Initialize(
+                partyManager.SelectedPokemon,
+                new Pokemon(
                 5,
                 PokemonDefinitionLoader.Get(PokemonId.Weedle),
                 NatureDefinitionLoader.Get(NatureId.Adamant),
                 AbilityDefinitionLoader.Get(Abilities.Enums.AbilityId.None),
-                new[] { MoveDefinitionLoader.Get(Moves.Enums.MoveId.Tackle) }
-                );
-
-         
-            battle.Initialize(partyManager.SelectedPokemon, weedle);
+                new[] { MoveDefinitionLoader.Get(Moves.Enums.MoveId.Tackle)}
+                ));
         }
     }
 }

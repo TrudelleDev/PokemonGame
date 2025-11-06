@@ -15,12 +15,12 @@ namespace PokemonGame.Pokemons.Definition
 
         [BoxGroup("Identity")]
         [Tooltip("Name shown in UI.")]
-        [SerializeField, Required] 
+        [SerializeField, Required]
         private string displayName;
 
         [BoxGroup("Identity")]
         [Tooltip("Stable unique identifier for this Pokémon.")]
-        [SerializeField, Required] 
+        [SerializeField, Required]
         private PokemonId pokemonID;
 
         // ------------- Attributes -------------
@@ -28,17 +28,17 @@ namespace PokemonGame.Pokemons.Definition
         [Space]
         [BoxGroup("Attributes")]
         [Tooltip("Primary and optional secondary type of the Pokémon.")]
-        [SerializeField, Required] 
+        [SerializeField, Required]
         private PokemonType types;
 
         [BoxGroup("Attributes")]
         [Tooltip("Male/female ratio information.")]
-        [SerializeField, Required] 
+        [SerializeField, Required]
         private PokemonGenderRatio genderRatio;
 
         [BoxGroup("Attributes")]
         [Tooltip("Base stats used to calculate the Pokémon's final stats.")]
-        [SerializeField, Required] 
+        [SerializeField, Required]
         private PokemonStats baseStats;
 
         // ------------- Visuals -------------
@@ -46,7 +46,7 @@ namespace PokemonGame.Pokemons.Definition
         [Space]
         [BoxGroup("Visuals")]
         [Tooltip("Front/back/battle/menu sprites for this Pokémon.")]
-        [SerializeField] 
+        [SerializeField]
         private PokemonSprites sprites;
 
         [Space]

@@ -1,5 +1,4 @@
-﻿using PokemonGame.Dialogue;
-using PokemonGame.Views;
+﻿using PokemonGame.Views;
 
 namespace PokemonGame.Battle.States
 {
@@ -26,8 +25,9 @@ namespace PokemonGame.Battle.States
         /// </summary>
         public void Enter()
         {
-            Battle.DialogueBox.ShowDialogue("Got away safely!");
             Battle.DialogueBox.OnDialogueFinished += OnDialogueFinished;
+            Battle.DialogueBox.ShowDialogue("Got away safely!", manualArrowControl: true);
+
         }
 
         private void OnDialogueFinished()

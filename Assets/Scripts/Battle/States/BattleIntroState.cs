@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using PokemonGame.Dialogue;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States
@@ -36,18 +35,17 @@ namespace PokemonGame.Battle.States
             string opponentName = Battle.OpponentPokemon.Definition.DisplayName;
             string playerName = Battle.PlayerPokemon.Definition.DisplayName;
 
-            Battle.DialogueBox.ShowDialogue(new[]
-            {
-                $"Wild {opponentName} appeared!",
-                $"Go {playerName}!"
-            });
-
             Battle.BattleAnimation.ResetIntro();
             Battle.BattleAnimation.PlayIntro();
 
             yield return Battle.BattleAnimation.PlayOpponentPlatformEnter();
             yield return Battle.BattleAnimation.PlayOpponentHudEnter();
-            yield return WaitForLineTypingComplete();
+
+            Battle.DialogueBox.ShowDialogue($"Wild {opponentName} appeared!", manualArrowControl: true);
+
+            yield return WaitForDialogueComplete();
+
+            Battle.DialogueBox.ShowDialogue($"Go {playerName}!");
 
             Battle.BattleAnimation.PlayPlayerExit();
 
@@ -58,17 +56,17 @@ namespace PokemonGame.Battle.States
             machine.SetState(new PlayerActionState(machine));
         }
 
-        private IEnumerator WaitForLineTypingComplete()
+        private IEnumerator WaitForDialogueComplete()
         {
             bool done = false;
 
             void OnComplete()
             {
                 done = true;
-                Battle.DialogueBox.OnLineTypingComplete -= OnComplete;
+                Battle.DialogueBox.OnDialogueFinished -= OnComplete;
             }
 
-           Battle.DialogueBox.OnLineTypingComplete += OnComplete;
+            Battle.DialogueBox.OnDialogueFinished += OnComplete;
 
             yield return new WaitUntil(() => done);
         }

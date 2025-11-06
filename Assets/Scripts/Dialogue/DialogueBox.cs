@@ -70,6 +70,7 @@ namespace PokemonGame.Dialogue
         private void Awake()
         {
             ApplyTheme(defaultTheme);
+            Clear();
 
             if (autoClose)
             {
@@ -83,6 +84,12 @@ namespace PokemonGame.Dialogue
         /// <param name="theme">The theme asset that defines appearance settings for the dialogue box.</param>
         public void ApplyTheme(DialogueBoxTheme theme)
         {
+            if (theme == null)
+            {
+                Log.Warning(nameof(DialogueBox), "Tried to apply a null theme.");
+                return;
+            }
+
             currentTheme = theme;
             boxImage.sprite = currentTheme.BoxSprite;
             dialogueText.font = currentTheme.Font;
@@ -92,13 +99,25 @@ namespace PokemonGame.Dialogue
         }
 
         /// <summary>
+        /// Clears the dialogue text field.
+        /// </summary>
+        public void Clear()
+        {
+            dialogueText.text = " ";
+            dialogueText.ForceMeshUpdate();
+        }
+
+        /// <summary>
         /// Displays a single line of dialogue, instantly or with a typewriter effect.
         /// </summary>
         /// <param name="text">The dialogue text to display.</param>
         /// <param name="instant">If true, displays the text immediately without typing animation.</param>
-        public void ShowDialogue(string text, bool instant = false)
+        /// <param name="manualArrowControl">
+        /// If true, allows external logic to manually control when the arrow indicator appears.
+        /// </param>
+        public void ShowDialogue(string text, bool instant = false, bool manualArrowControl = false)
         {
-            ShowDialogue(new[] { text }, instant);
+            ShowDialogue(new[] { text }, instant, manualArrowControl);
         }
 
         /// <summary>
@@ -106,7 +125,10 @@ namespace PokemonGame.Dialogue
         /// </summary>
         /// <param name="lines">An array of dialogue lines to display in order.</param>
         /// <param name="instant">If true, displays all lines instantly without the typewriter effect.</param>
-        public void ShowDialogue(string[] lines, bool instant = false)
+        /// <param name="manualArrowControl">
+        /// If true, allows external logic to manually control when the arrow indicator appears.
+        /// </param>
+        public void ShowDialogue(string[] lines, bool instant = false, bool manualArrowControl = false)
         {
             if (lines == null || lines.Length == 0)
             {
@@ -120,35 +142,38 @@ namespace PokemonGame.Dialogue
             this.lines = lines;
             lineIndex = 0;
             instantMode = instant;
-            dialogueText.text = string.Empty;
+            Clear();
 
-            RestartCoroutine(ref dialogueCoroutine, RunDialogueSequence());
+            RestartCoroutine(ref dialogueCoroutine, RunDialogueSequence(manualArrowControl));
         }
 
         /// <summary>
-        /// Handles the dialogue flow by displaying each line sequentially
-        /// and waiting for player input before proceeding to the next.
+        /// Handles dialogue flow manually controlled by external logic.
+        /// Displays an arrow when waiting for player input between lines.
         /// </summary>
-        private IEnumerator RunDialogueSequence()
+        private IEnumerator RunDialogueSequence(bool manualArrowControl = false)
         {
             while (lineIndex < lines.Length)
             {
-                bool showArrow = lineIndex < lines.Length - 1;
-                yield return StartCoroutine(TypeLineCoroutine(lines[lineIndex], showArrow));
+                yield return StartCoroutine(TypeLineCoroutine(lines[lineIndex]));
 
-                lineIndex++;
                 OnLineTypingComplete?.Invoke();
 
+                if (lineIndex < lines.Length - 1 || manualArrowControl)
+                {
+                    ShowArrow();
+                }
+
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
+
+                lineIndex++;
             }
 
             OnDialogueFinished?.Invoke();
 
-            // Prevents immediate retriggering from the same input frame.
-            yield return null;
-
             if (autoClose)
             {
+                Clear();
                 content.SetActive(false);
                 PauseManager.SetPaused(false);
             }
@@ -158,21 +183,13 @@ namespace PokemonGame.Dialogue
         /// Renders a single line of dialogue text, either instantly or gradually
         /// using the configured typewriter delay between characters.
         /// </summary>
-        /// <param name="line">The text content of the dialogue line.</param>
-        /// <param name="showArrow">If true, displays a sprite arrow indicating there are more lines.</param>
-        private IEnumerator TypeLineCoroutine(string line, bool showArrow = true)
+        private IEnumerator TypeLineCoroutine(string line)
         {
             dialogueText.text = string.Empty;
 
             if (instantMode)
             {
                 dialogueText.text = line;
-
-                if (showArrow)
-                {
-                    dialogueText.text += ArrowSpriteAsset;
-                }
-
                 yield break;
             }
 
@@ -183,18 +200,11 @@ namespace PokemonGame.Dialogue
                 dialogueText.text += letter;
                 yield return delay;
             }
-
-            if (showArrow)
-            {
-                dialogueText.text += ArrowSpriteAsset;
-            }
         }
 
         /// <summary>
         /// Stops an active coroutine (if any) and starts a new one to replace it.
         /// </summary>
-        /// <param name="routine">Reference to the coroutine being restarted.</param>
-        /// <param name="sequence">The coroutine sequence to start.</param>
         private void RestartCoroutine(ref Coroutine routine, IEnumerator sequence)
         {
             if (routine != null)
@@ -203,6 +213,18 @@ namespace PokemonGame.Dialogue
             }
 
             routine = StartCoroutine(sequence);
+        }
+
+        /// <summary>
+        /// Displays an arrow sprite at the end of the dialogue text
+        /// to indicate continuation or waiting for player input.
+        /// </summary>
+        private void ShowArrow()
+        {
+            if (!dialogueText.text.EndsWith(ArrowSpriteAsset))
+            {
+                dialogueText.text += ArrowSpriteAsset;
+            }
         }
     }
 }

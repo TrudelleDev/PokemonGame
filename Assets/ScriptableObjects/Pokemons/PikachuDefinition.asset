@@ -27,6 +27,7 @@ MonoBehaviour:
     specialAttack: 50
     specialDefense: 50
     speed: 90
+  experienceGroup: {fileID: 11400000, guid: dcbd24c601b8a8f489539bd03795b333, type: 2}
   sprites:
     frontSprite: {fileID: 21300000, guid: 8f859a82c9f2bf547af9580ebbe1b813, type: 3}
     backSprite: {fileID: 21300000, guid: bb14c1658aabf634fba87e4974d0f5f1, type: 3}
