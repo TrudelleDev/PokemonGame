@@ -17,45 +17,66 @@ namespace PokemonGame.Battle
     [DisallowMultipleComponent]
     public class BattleView : View
     {
-        [Title("Dialogue Settings")]
-        [SerializeField, Required, Tooltip("Dialogue box configuration applied when the battle starts.")]
-        private DialogueBoxTheme setting;
+        [Title("Dialogue Box")]
+        [SerializeField, Required]
+        [Tooltip("Dialogue box theme applied when the battle starts.")]
+        private DialogueBoxTheme theme;
 
         [Title("Animation")]
-        [SerializeField, Required, Tooltip("Controls all battle animations for player and opponent.")]
+        [SerializeField, Required]
+        [Tooltip("Controls all battle animations for player and opponent.")]
         private BattleAnimation battleAnimation;
 
+        [Title("Audio")]
+        [SerializeField, Required]
+        [Tooltip("Handles all battle-related audio effects and music.")]
+        private BattleAudio battleAudio;
+
         [Title("HUDs")]
-        [SerializeField, Required, Tooltip("Displays the player's Pokémon information.")]
+        [SerializeField, Required]
+        [Tooltip("Displays the player's Pokémon information, such as HP, level, and status.")]
         private PlayerBattleHud playerBattleHud;
 
-        [SerializeField, Required, Tooltip("Displays the opponent's Pokémon information.")]
+        [SerializeField, Required]
+        [Tooltip("Displays the opponent's Pokémon information, such as HP, level, and status.")]
         private OpponentBattleHud opponentBattleHud;
 
         [Title("UI Panels")]
-        [SerializeField, Required, Tooltip("Panel containing the player's battle action options.")]
+        [SerializeField, Required]
+        [Tooltip("Panel containing the player's battle action options (Fight, Bag, Pokémon, Run).")]
         private PlayerActionPanel playerActionPanel;
 
-        [SerializeField, Required, Tooltip("Panel displaying available moves for selection.")]
+        [SerializeField, Required]
+        [Tooltip("Panel displaying the available moves for the player's Pokémon.")]
         private MoveSelectionPanel moveSelectionPanel;
 
-        [SerializeField, Required, Tooltip("Controller handling move selection logic and communication with the state machine.")]
+        [SerializeField, Required]
+        [Tooltip("Controller that manages move selection logic and communicates with the battle state machine.")]
         private MoveSelectionView moveSelectionController;
 
         [SerializeField, Required]
+        [Tooltip("The dialogue box used to display battle messages.")]
         private DialogueBox dialogueBox;
-
-        public DialogueBox DialogueBox => dialogueBox;
 
         private BattleStateMachine stateMachine;
 
         /// <summary>
-        /// Gets the <see cref="BattleAnimation"/> component controlling all animations.
+        /// Gets the dialogue box used for displaying battle messages.
+        /// </summary>
+        public DialogueBox DialogueBox => dialogueBox;
+
+        /// <summary>
+        /// Gets the battle audio controller.
+        /// </summary>
+        public BattleAudio BattleAudio => battleAudio;
+
+        /// <summary>
+        /// Gets the battle animation controller.
         /// </summary>
         public BattleAnimation BattleAnimation => battleAnimation;
 
         /// <summary>
-        /// Gets the controller responsible for handling move selection logic.
+        /// Gets the move selection controller responsible for handling move selection logic.
         /// </summary>
         public MoveSelectionView MoveSelectionController => moveSelectionController;
 
@@ -96,7 +117,6 @@ namespace PokemonGame.Battle
 
         private bool isBattleInitialized = false;
 
-
         /// <summary>
         /// Initializes and configures a new battle session.
         /// Binds Pokémon data to HUDs and sets up the battle state machine.
@@ -116,7 +136,6 @@ namespace PokemonGame.Battle
             moveSelectionController.Initialize(stateMachine, playerPokemon.Moves);
             BattleAnimation.ResetIntro();
             isBattleInitialized = true;
-;
         }
 
         /// <summary>
@@ -138,7 +157,7 @@ namespace PokemonGame.Battle
         private void OnDisable()
         {
             OnBattleViewClose?.Invoke();
-            isBattleInitialized= false;
+            isBattleInitialized = false;
         }
 
         /// <summary>
@@ -173,7 +192,7 @@ namespace PokemonGame.Battle
         /// </summary>
         public override void Freeze()
         {
-            //playerActionPanel.Freeze();
+            // playerActionPanel.Freeze();
             base.Freeze();
         }
 

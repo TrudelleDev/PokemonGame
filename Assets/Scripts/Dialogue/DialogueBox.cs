@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
 using PokemonGame.Pause;
 using PokemonGame.Utilities;
@@ -36,6 +37,10 @@ namespace PokemonGame.Dialogue
         [SerializeField, Required]
         [Tooltip("Root object containing all dialogue UI elements.")]
         private GameObject content;
+
+        [Title("Audio")]
+        [SerializeField, Required]
+        private AudioClip textAdvanceSfx;
 
         [Title("Settings")]
 
@@ -165,10 +170,12 @@ namespace PokemonGame.Dialogue
                 }
 
                 yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
+                AudioManager.Instance.PlaySFX(textAdvanceSfx);
 
                 lineIndex++;
             }
 
+            yield return null;
             OnDialogueFinished?.Invoke();
 
             if (autoClose)

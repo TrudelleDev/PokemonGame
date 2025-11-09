@@ -1,5 +1,4 @@
 ﻿using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Experience;
 using PokemonGame.Pokemons.UI.Health;
 using Sirenix.OdinInspector;
@@ -41,6 +40,8 @@ namespace PokemonGame.Battle.UI
         public HealthBar HealthBar => healthBar;
         public ExperienceBar ExperienceBar => experienceBar;
 
+        private Pokemon pokemon;
+
         /// <summary>
         /// Initializes the HUD with the given Pokémon data.
         /// </summary>
@@ -51,10 +52,13 @@ namespace PokemonGame.Battle.UI
             {
                 Unbind();
                 pokemon.OnLevelChange -= OnPokemonLevelChange;
+                pokemon.OnHealthChange -= OnPokemonHealthChange;
 
                 return;
             }
-            
+
+            this.pokemon = pokemon;
+
             nameText.text = pokemon.Definition.DisplayName;
             levelText.text = pokemon.Level.ToString();
             healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
@@ -63,11 +67,19 @@ namespace PokemonGame.Battle.UI
             backSprite.sprite = pokemon.Definition.Sprites.BackSprite;
 
             pokemon.OnLevelChange += OnPokemonLevelChange;
+            pokemon.OnHealthChange += OnPokemonHealthChange;
+        }
+
+        private void OnPokemonHealthChange(int oldHp, int newHp)
+        {
+            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
         }
 
         private void OnPokemonLevelChange(int newLevel)
         {
-            levelText.text = newLevel.ToString();
+            levelText.text = pokemon.Level.ToString();
+            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
+            //healthBar.Bind(pokemon);
         }
 
         /// <summary>

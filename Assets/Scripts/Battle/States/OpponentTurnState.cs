@@ -48,6 +48,8 @@ namespace PokemonGame.Battle.States
             Battle.DialogueBox.ShowDialogue($"{opponent.Definition.DisplayName} used {move.Definition.DisplayName}!");
 
             yield return WaitForLineTypingComplete();
+
+            Battle.BattleAudio.PlayDoDamageNomral();
             yield return Battle.BattleAnimation.PlayPlayerTakeDamage();
 
             int damage = opponent.Attack(move, player);

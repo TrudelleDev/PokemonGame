@@ -25,6 +25,7 @@ namespace PokemonGame.Battle.States
         /// </summary>
         public void Enter()
         {
+            Battle.BattleAudio.PlayRunAwaySfx();
             Battle.DialogueBox.OnDialogueFinished += OnDialogueFinished;
             Battle.DialogueBox.ShowDialogue("Got away safely!", manualArrowControl: true);
 
@@ -34,6 +35,7 @@ namespace PokemonGame.Battle.States
         {
             Battle.DialogueBox.OnDialogueFinished -= OnDialogueFinished;
             ViewManager.Instance.CloseTopView(); // Return to overworld
+            Battle.DialogueBox.Clear();
         }
 
         public void Update() { }

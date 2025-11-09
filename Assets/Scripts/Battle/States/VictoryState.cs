@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using PokemonGame.Audio;
 using PokemonGame.Pokemons;
 using PokemonGame.Views;
 using UnityEngine;
@@ -35,18 +36,23 @@ namespace PokemonGame.Battle.States
              playerPokemon = Battle.PlayerPokemon;
              opponentPokemon = Battle.OpponentPokemon;
 
-          
-            int expGained = playerPokemon.CalculateExpGain(opponentPokemon);
+            Battle.BattleAudio.PlayVictory();
 
+            int expGained = playerPokemon.CalculateExpGain(opponentPokemon);
+     
             Battle.DialogueBox.ShowDialogue($"{playerPokemon.Definition.DisplayName} gained{Environment.NewLine}{expGained} Exp. Points.", manualArrowControl: true);
 
             yield return WaitForDialogueCompleted();
 
             Battle.DialogueBox.Clear();
             playerPokemon.OnLevelChange += OnPlayerLevelUp;
+
+            Battle.BattleAudio.PlayGainExperienceSfx();
             playerPokemon.AddExperience(expGained);
 
             yield return WaitForExperienceAnimationComplete();
+
+            AudioManager.Instance.StopSFX();
 
             // If a level-up happened, show that message
             if (levelUpOccured)
@@ -55,7 +61,8 @@ namespace PokemonGame.Battle.States
                 Battle.DialogueBox.Clear();
             }
 
-         
+            
+
             yield return new WaitForSecondsRealtime(0.5f);
 
             // Cleanup and exit
@@ -70,9 +77,9 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator ShowLevelUpDialogue()
         {
-            Battle.DialogueBox.ShowDialogue(
-                $"{playerPokemon.Definition.DisplayName} grew to Level {playerPokemon.Level}!", manualArrowControl: true
-            );
+            Battle.BattleAudio.PlayLevelUpSfx();
+            Battle.DialogueBox.ShowDialogue($"{playerPokemon.Definition.DisplayName} grew to Level {playerPokemon.Level}!", manualArrowControl: true);
+
             yield return WaitForDialogueCompleted();
         }
 

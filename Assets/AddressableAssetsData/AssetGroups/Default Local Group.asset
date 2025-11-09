@@ -59,6 +59,12 @@ MonoBehaviour:
     m_SerializedLabels:
     - nature-definition
     FlaggedDuringContentUpdateRestriction: 0
+  - m_GUID: e6412b5f74dddbc43a15ea71e2509bb2
+    m_Address: Assets/ScriptableObjects/Pokemons/CharmanderDefinition.asset
+    m_ReadOnly: 0
+    m_SerializedLabels:
+    - pokemon-definition
+    FlaggedDuringContentUpdateRestriction: 0
   m_ReadOnly: 0
   m_Settings: {fileID: 11400000, guid: 38ef306e0e954b04e8f809c8a801f987, type: 2}
   m_SchemaSet:

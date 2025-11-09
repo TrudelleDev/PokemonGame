@@ -49,11 +49,14 @@ namespace PokemonGame.Battle.States
             Battle.DialogueBox.ShowDialogue($"{player.Definition.DisplayName} used {move.Definition.DisplayName}!");
 
             yield return WaitForLineTypingComplete();
+
+            Battle.BattleAudio.PlayDoDamageNomral();
             yield return Battle.BattleAnimation.PlayOpponentTakeDamage();
 
             int damage = player.Attack(move, opponent);
             opponent.TakeDamage(damage);
 
+            
             yield return WaitForHealthAnimationComplete();
 
             // Check if opponent fainted

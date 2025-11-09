@@ -40,6 +40,7 @@ namespace PokemonGame.Battle.States
 
             yield return Battle.BattleAnimation.PlayOpponentPlatformEnter();
             yield return Battle.BattleAnimation.PlayOpponentHudEnter();
+            Battle.BattleAudio.PlayPokemonCry(Battle.OpponentPokemon);
 
             Battle.DialogueBox.ShowDialogue($"Wild {opponentName} appeared!", manualArrowControl: true);
 
@@ -50,6 +51,11 @@ namespace PokemonGame.Battle.States
             Battle.BattleAnimation.PlayPlayerExit();
 
             yield return Battle.BattleAnimation.PlayPlayerThrowBall();
+
+            Battle.BattleAudio.PlayOpenPokeballSfx();
+            yield return new WaitForSecondsRealtime(0.25f);
+            Battle.BattleAudio.PlayPokemonCry(Battle.PlayerPokemon);
+
             yield return Battle.BattleAnimation.PlayPlayerSendPokemonEnter();
             yield return Battle.BattleAnimation.PlayPlayerHudEnter();
 

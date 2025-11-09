@@ -8,6 +8,7 @@
     {
         None = 0,
         Pikachu = 25,
-        Weedle = 13
+        Weedle = 13,
+        Charmander = 4
     }
 }

@@ -1,12 +1,8 @@
-﻿using PokemonGame.Abilities.Definition;
+﻿using System.Collections;
+using System.Collections.Generic;
 using PokemonGame.Audio;
-using PokemonGame.Moves.Definition;
-using PokemonGame.Natures.Enums;
 using PokemonGame.Party;
 using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Definition;
-using PokemonGame.Pokemons.Enums;
-using PokemonGame.Pokemons.Natures;
 using PokemonGame.Tile;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -30,6 +26,9 @@ namespace PokemonGame.Battle
         [Tooltip("Reference to the PartyManager that provides the player's current Pokémon.")]
         private PartyManager partyManager;
 
+        [SerializeField, Required]
+        private List<WildPokemonEntry> pokemonEntries;
+
         private void Start()
         {
             GrassRustleSpawner.Instance.OnEnterGrass += OnEnterGrass;
@@ -41,17 +40,42 @@ namespace PokemonGame.Battle
         private void OnEnterGrass()
         {
             AudioManager.Instance.PlayBGM(battleBgm);
+            AudioManager.Instance.SetBGMStartTime(1f);
+
             BattleView battle = ViewManager.Instance.Show<BattleView>();
 
-            battle.Initialize(
-                partyManager.SelectedPokemon,
-                new Pokemon(
-                5,
-                PokemonDefinitionLoader.Get(PokemonId.Weedle),
-                NatureDefinitionLoader.Get(NatureId.Adamant),
-                AbilityDefinitionLoader.Get(Abilities.Enums.AbilityId.None),
-                new[] { MoveDefinitionLoader.Get(Moves.Enums.MoveId.Tackle)}
-                ));
+            WildPokemonEntry wildPokemon = ChooseWildPokemon();
+
+            int level = Random.Range(wildPokemon.MinLevel, wildPokemon.MaxLevel + 1);
+
+            Pokemon pokemon = PokemonFactory.CreateWildPokemon(level, wildPokemon.Pokemon);
+
+            battle.Initialize(partyManager.SelectedPokemon, pokemon);
+        }
+
+        private WildPokemonEntry ChooseWildPokemon()
+        {
+            int totalRate = 0;
+
+            foreach (WildPokemonEntry entry in pokemonEntries)
+            {
+                totalRate += entry.EncounterRate;
+            }
+               
+            int roll = Random.Range(0, totalRate);
+            int cumulative = 0;
+
+            foreach (WildPokemonEntry entry in pokemonEntries)
+            {
+                cumulative += entry.EncounterRate;
+
+                if (roll < cumulative)
+                {
+                    return entry;
+                }            
+            }
+
+            return null;
         }
     }
 }

@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 84a92b25f83d49b9bc132d206b370281, type: 3}
-  m_Name: RedArrow
+  m_Name: Dialogue_Cursor
   m_EditorClassIdentifier: 
   hashCode: -1133252566
   material: {fileID: -3723102203712578495}

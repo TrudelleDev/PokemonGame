@@ -27,9 +27,15 @@ MonoBehaviour:
     specialAttack: 50
     specialDefense: 50
     speed: 90
-  experienceGroup: {fileID: 11400000, guid: dcbd24c601b8a8f489539bd03795b333, type: 2}
+  possibleAbilities:
+  - {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
+  possibleNatures:
+  - {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
+  levelUpMoves:
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: 98edf6d637916eb428373e3d4adfe153, type: 2}
   sprites:
     frontSprite: {fileID: 21300000, guid: 8f859a82c9f2bf547af9580ebbe1b813, type: 3}
-    backSprite: {fileID: 21300000, guid: bb14c1658aabf634fba87e4974d0f5f1, type: 3}
+    backSprite: {fileID: 21300000, guid: 5e60a44a19ca095469b65a4bf9e0f69b, type: 3}
     menuSprite: {fileID: -1717675739, guid: 0a91a631dc900494ba0858d000706b18, type: 3}
   menuSpriteOverrider: {fileID: 22100000, guid: bf93d10ba80a1be449107a9532c87d76, type: 2}

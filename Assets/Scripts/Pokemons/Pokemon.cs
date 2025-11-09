@@ -211,7 +211,16 @@ namespace PokemonGame.Pokemons
         private void LevelUp()
         {
             level++;
-            OnLevelChange.Invoke(level);
+
+            // Recalculate core stats based on new level
+            PokemonStats oldStats = CoreStat;
+            CoreStat = StatsCalculator.CalculateCoreStats(pokemonDefinition, IndividualValue, EffortValue, level);
+
+            // Adjust current HP proportionally
+            float healthPercent = (float)HealthRemaining / oldStats.HealthPoint;
+            HealthRemaining = Mathf.RoundToInt(CoreStat.HealthPoint * healthPercent);
+
+            OnLevelChange?.Invoke(level);
         }
 
         /// <summary>

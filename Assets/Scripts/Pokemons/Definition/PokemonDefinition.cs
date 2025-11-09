@@ -1,5 +1,10 @@
+using System.Collections.Generic;
+using PokemonGame.Abilities;
+using PokemonGame.Abilities.Definition;
+using PokemonGame.Moves;
 using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Models;
+using PokemonGame.Pokemons.Natures;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -8,7 +13,7 @@ namespace PokemonGame.Pokemons.Definition
     /// <summary>
     /// Defines a Pokémon's core data, types, stats, and visuals.
     /// </summary>
-    [CreateAssetMenu(fileName = "NewPokemonDefinition", menuName = "Pokemon/Pokemon Definition")]
+    [CreateAssetMenu(fileName = "NewPokemonDefinition", menuName = "PokemonGame/Pokemon/Definition")]
     public class PokemonDefinition : ScriptableObject
     {
         // ------------- Identity -------------
@@ -40,6 +45,38 @@ namespace PokemonGame.Pokemons.Definition
         [Tooltip("Base stats used to calculate the Pokémon's final stats.")]
         [SerializeField, Required]
         private PokemonStats baseStats;
+
+        // -------------- Abilities --------------
+
+        [Space]
+        [BoxGroup("Abilities")]
+        [SerializeField, Required]
+        [Tooltip("All abilities this Pokémon can possibly have.")]
+        private AbilityDefinition[] possibleAbilities;
+
+        // -------------- Nature --------------
+
+        [Space]
+        [BoxGroup("Natures")]
+        [SerializeField, Required]
+        [Tooltip("All possible natures this Pokémon can have.")]
+        private NatureDefinition[] possibleNatures;
+
+        // -------------- Moves --------------
+
+        [Space]
+        [BoxGroup("Moves")]
+        [SerializeField, Required]
+        [Tooltip("All moves this Pokémon can learn when leveling up.")]
+        private LevelUpMove[] levelUpMoves;
+
+        // -------------- Audio --------------
+
+        [Space]
+        [BoxGroup("Audio")]
+        [SerializeField, Required]
+        [Tooltip("The AudioClip that plays when this Pokémon cries.")]
+        private AudioClip cryClip;
 
         // ------------- Visuals -------------
 
@@ -88,6 +125,26 @@ namespace PokemonGame.Pokemons.Definition
         /// Base stats used to calculate the Pokémon's final stats.
         /// </summary>
         public PokemonStats BaseStats => baseStats;
+
+        /// <summary>
+        /// Gets all abilities this Pokémon can possibly have.
+        /// </summary>
+        public AbilityDefinition[] PossibleAbilities => possibleAbilities;
+
+        /// <summary>
+        /// Gets all possible natures this Pokémon can have.
+        /// </summary>
+        public NatureDefinition[] PossibleNatures => possibleNatures;
+
+        /// <summary>
+        /// Gets all moves this Pokémon can learn when leveling up.
+        /// </summary>
+        public LevelUpMove[] LevelUpMoves => levelUpMoves;
+
+        /// <summary>
+        /// Gets the AudioClip that plays when this Pokémon cries.
+        /// </summary>
+        public AudioClip CryClip => cryClip;
 
         /// <summary>
         /// Sprites for front, back, battle, and menu views.

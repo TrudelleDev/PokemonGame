@@ -4,25 +4,16 @@ using UnityEngine.Audio;
 
 namespace PokemonGame.Audio
 {
-    /// <summary>
-    /// Central audio manager that handles background music (BGM) 
-    /// and sound effects (SFX).
-    /// Uses AudioMixer groups for volume control and routing.
-    /// </summary>
     [DisallowMultipleComponent]
     public class AudioManager : Singleton<AudioManager>
     {
         [Header("Audio Mixer Group")]
-        [SerializeField, Required]
-        [Tooltip("Audio mixer group for background music.")]
-        private AudioMixerGroup bgmGroup;
-
-        [SerializeField, Required]
-        [Tooltip("Audio mixer group for sound effects (includes UI sounds).")]
-        private AudioMixerGroup sfxGroup;
+        [SerializeField, Required] private AudioMixerGroup bgmGroup;
+        [SerializeField, Required] private AudioMixerGroup sfxGroup;
 
         private AudioSource bgmSource;
         private AudioSource sfxSource;
+        private AudioSource sfxStoppableSource; // new source for stoppable SFX
 
         protected override void Awake()
         {
@@ -30,64 +21,87 @@ namespace PokemonGame.Audio
             CreateAudioSources();
         }
 
-        /// <summary>
-        /// Plays background music. 
-        /// If the given clip is already playing, nothing changes.
-        /// </summary>
-        /// <param name="clip">The music clip to play.</param>
+        #region BGM
         public void PlayBGM(AudioClip clip)
         {
-            if (clip == null || bgmSource.clip == clip)
-            {
+            if (clip == null)
                 return;
-            }
+
+            if (bgmSource.clip == clip && bgmSource.isPlaying)
+                return;
 
             clip.LoadAudioData();
             bgmSource.clip = clip;
-            //bgmSource.time = 1f;
-            bgmSource.Play();
+
+            double startTime = AudioSettings.dspTime;
+            bgmSource.PlayScheduled(startTime);
         }
 
-        /// <summary>
-        /// Stops the currently playing background music, if any.
-        /// </summary>
         public void StopBGM()
         {
             if (bgmSource.isPlaying)
-            {
                 bgmSource.Stop();
-            }
         }
 
+        public void SetBGMStartTime(float timeSeconds)
+        {
+            if (bgmSource.clip == null) return;
+            bgmSource.time = Mathf.Clamp(timeSeconds, 0f, bgmSource.clip.length);
+        }
+        #endregion
+
+        #region SFX
         /// <summary>
-        /// Plays a one-shot sound effect (includes UI sounds).
+        /// Plays a short one-shot SFX (cannot be stopped mid-play).
         /// </summary>
-        /// <param name="clip">The sound effect clip to play.</param>
         public void PlaySFX(AudioClip clip)
         {
             if (clip == null)
-            {
                 return;
-            }
 
-            if (sfxSource.isPlaying && sfxSource.clip == clip)
-            {
-                return; // already playing
-            }
-
-            clip.LoadAudioData();
-            sfxSource.clip = clip;
             sfxSource.PlayOneShot(clip);
         }
 
+        /// <summary>
+        /// Plays a SFX that can be stopped manually.
+        /// </summary>
+        public void PlaySFXStoppable(AudioClip clip)
+        {
+            if (clip == null)
+                return;
+
+            // Stop previous clip if playing
+            if (sfxStoppableSource.isPlaying)
+                sfxStoppableSource.Stop();
+
+            sfxStoppableSource.clip = clip;
+            sfxStoppableSource.Play();
+        }
+
+        /// <summary>
+        /// Stops the currently playing stoppable SFX.
+        /// </summary>
+        public void StopSFX()
+        {
+            if (sfxStoppableSource.isPlaying)
+                sfxStoppableSource.Stop();
+        }
+        #endregion
+
         private void CreateAudioSources()
         {
+            // BGM Source
             bgmSource = gameObject.AddComponent<AudioSource>();
             bgmSource.loop = true;
             bgmSource.outputAudioMixerGroup = bgmGroup;
 
+            // Short SFX Source
             sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.outputAudioMixerGroup = sfxGroup;
+
+            // Stoppable SFX Source
+            sfxStoppableSource = gameObject.AddComponent<AudioSource>();
+            sfxStoppableSource.outputAudioMixerGroup = sfxGroup;
         }
     }
 }

@@ -27,7 +27,14 @@ MonoBehaviour:
     specialAttack: 20
     specialDefense: 20
     speed: 50
-  experienceGroup: {fileID: 11400000, guid: dcbd24c601b8a8f489539bd03795b333, type: 2}
+  possibleAbilities:
+  - {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
+  possibleNatures:
+  - {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
+  levelUpMoves:
+  - level: 1
+    definition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+  cryClip: {fileID: 8300000, guid: c8826cb482d2c5e48b76751113965962, type: 3}
   sprites:
     frontSprite: {fileID: 21300000, guid: f7b00b1e3ca585f4f891745ac2919f4f, type: 3}
     backSprite: {fileID: 21300000, guid: 6b410a5f927f190408e4af86f48f0648, type: 3}
