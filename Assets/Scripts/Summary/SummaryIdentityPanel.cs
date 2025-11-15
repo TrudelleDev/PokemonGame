@@ -21,7 +21,7 @@ namespace PokemonGame.Summary
         [Title("Sprites")]
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's gender icon.")]
-        private PokemonGenderSprite genderIcon;
+        private PokemonGenderSymbol genderIcon;
 
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's menu sprite.")]

@@ -24,31 +24,13 @@ namespace PokemonGame.Inventory
         [Tooltip("UI section displaying general items.")]
         private InventorySectionUI generalItemSection;
 
-        [SerializeField, Required]
-        [Tooltip("UI section displaying key items.")]
-        private InventorySectionUI keyItemSection;
-
-        [SerializeField, Required]
-        [Tooltip("UI section displaying Poké Balls.")]
-        private InventorySectionUI ballSection;
-
-        private HorizontalPanelController sectionController;
-
-        private void Awake()
-        {
-            sectionController = GetComponent<HorizontalPanelController>();
-        }
-
         /// <summary>
         /// Initializes the inventory and binds all sections.
         /// </summary>
         public override void Preload()
         {
             inventoryManager.Initialize();
-
             generalItemSection.Bind(inventoryManager.GetSection(ItemCategory.General));
-            keyItemSection.Bind(inventoryManager.GetSection(ItemCategory.KeyItem));
-            ballSection.Bind(inventoryManager.GetSection(ItemCategory.Pokeball));
         }
 
         /// <summary>
@@ -56,11 +38,7 @@ namespace PokemonGame.Inventory
         /// </summary>
         public override void Freeze()
         {
-            sectionController.enabled = false;
-
             generalItemSection.Freeze();
-            keyItemSection.Freeze();
-            ballSection.Freeze();
         }
 
         /// <summary>
@@ -68,11 +46,7 @@ namespace PokemonGame.Inventory
         /// </summary>
         public override void Unfreeze()
         {
-            sectionController.enabled = true;
-
             generalItemSection.UnFreeze();
-            keyItemSection.UnFreeze();
-            ballSection.UnFreeze();
         }
     }
 }

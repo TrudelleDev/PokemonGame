@@ -156,6 +156,9 @@ namespace PokemonGame.Battle
         /// </summary>
         private void OnDisable()
         {
+            playerBattleHud.Unbind();
+            opponentBattleHud.Unbind();
+
             OnBattleViewClose?.Invoke();
             isBattleInitialized = false;
         }

@@ -58,7 +58,6 @@ namespace PokemonGame.Pokemons.UI.Health
             }
 
             EnsureSlider();
-
             Unbind();
 
             boundPokemon = pokemon;
@@ -105,6 +104,9 @@ namespace PokemonGame.Pokemons.UI.Health
         /// <param name="newHealth">The updated HP value after the change.</param>
         private void OnPokemonHealthChange(int oldHealth, int newHealth)
         {
+            if (!isActiveAndEnabled)
+                return;
+
             if (animateHealthCoroutine != null)
             {
                 StopCoroutine(animateHealthCoroutine);

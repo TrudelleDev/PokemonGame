@@ -27,15 +27,17 @@ namespace PokemonGame.Party
 
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's current HP.")]
-        private TextMeshProUGUI healthText;
+        private TextMeshProUGUI healthRemaining;
+
+        [SerializeField, Required]
+        private TextMeshProUGUI healthTotal;
+
+        [SerializeField, Required]
+        private PokemonGenderSymbol genderSymbol;
 
         [SerializeField, Required]
         [Tooltip("Displays a visual health bar representing HP.")]
         private HealthBar healthBar;
-
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's gender icon.")]
-        private PokemonGenderSprite genderIcon;
 
         [SerializeField, Required]
         [Tooltip("Animator for the Pokémon's sprite shown in the party menu.")]
@@ -93,9 +95,10 @@ namespace PokemonGame.Party
 
             nameText.text = string.Empty;
             levelText.text = string.Empty;
-            healthText.text = string.Empty;
+            healthRemaining.text = string.Empty;
+            healthTotal.text = string.Empty;
 
-            genderIcon.Unbind();
+            genderSymbol.Unbind();
             healthBar.Unbind();
 
             menuSpriteAnimator.runtimeAnimatorController = null;
@@ -110,10 +113,11 @@ namespace PokemonGame.Party
         private void UpdateDisplay(Pokemon pokemon)
         {
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = $"Lv {pokemon.Level}";
-            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
+            levelText.text = pokemon.Level.ToString();
+            healthRemaining.text = pokemon.HealthRemaining.ToString();
+            healthTotal.text = pokemon.CoreStat.HealthPoint.ToString();
 
-            genderIcon.Bind(pokemon);
+            genderSymbol.Bind(pokemon);
             healthBar.Bind(pokemon);
 
             if (pokemon.Definition.MenuSpriteOverrider != null)

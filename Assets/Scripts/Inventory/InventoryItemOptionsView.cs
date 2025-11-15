@@ -56,8 +56,8 @@ namespace PokemonGame.Inventory
             useButton.OnClick -= OnUseButtonClick;
             cancelButton.OnClick -= OnCancelButtonClick;
 
-            partyMenu.OnPokemonSelected -= OnPokemonSelected;
-            dialogueBox.OnDialogueFinished -= OnDialogueFinished;
+           // partyMenu.OnPokemonSelected -= OnPokemonSelected;
+           // dialogueBox.OnDialogueFinished -= OnDialogueFinished;
         }
 
         public override void Freeze()

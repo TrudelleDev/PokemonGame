@@ -28,7 +28,6 @@ namespace PokemonGame.Battle.States
         public void Enter()
         {
             Battle.DialogueBox.ShowDialogue($"What will\n{Battle.PlayerPokemon.Definition.DisplayName} do?", true);
-            // Battle.MoveSelectionController.Show();
             ViewManager.Instance.Show<PlayerActionPanel>();
         }
 

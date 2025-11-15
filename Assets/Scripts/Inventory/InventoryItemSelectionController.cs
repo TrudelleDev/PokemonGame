@@ -16,9 +16,9 @@ namespace PokemonGame.Inventory
     [DisallowMultipleComponent]
     public class InventoryItemSelectionController : MonoBehaviour
     {
-        [SerializeField, Required]
-        [Tooltip("Panel that displays item details for the currently selected item.")]
-        private InventoryItemSelectionPanel itemSelectionPanel;
+       // [SerializeField, Required]
+      //  [Tooltip("Panel that displays item details for the currently selected item.")]
+       // private InventoryItemSelectionPanel itemSelectionPanel;
 
         [SerializeField, Required]
         [Tooltip("Controller for vertical navigation between inventory items.")]
@@ -42,7 +42,7 @@ namespace PokemonGame.Inventory
         {
             if (button.TryGetComponent<ItemUI>(out ItemUI itemUI))
             {
-                itemSelectionPanel.Bind(itemUI.Item);
+              //  itemSelectionPanel.Bind(itemUI.Item);
 
                 InventoryItemOptionsView optionsView = ViewManager.Instance.Show<InventoryItemOptionsView>();
                 optionsView.SelectedItem = itemUI.Item;

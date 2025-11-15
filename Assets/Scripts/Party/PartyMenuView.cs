@@ -48,6 +48,7 @@ namespace PokemonGame.Party
             partySlotController.OnClick += OnPartySlotClick;
             cancelButton.OnClick += OnCancelButtonClick;
 
+            partySlotController.SelectFirst();
             dialogueText.text = ChoosePokemonMessage;
         }
 

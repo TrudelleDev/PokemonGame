@@ -29,7 +29,7 @@ namespace PokemonGame.Summary
 
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's gender icon.")]
-        private PokemonGenderSprite genderIcon;
+        private PokemonGenderSymbol genderIcon;
 
         /// <summary>
         /// Binds the given Pokémon data to the name, level, gender icon, and sprite.
@@ -45,7 +45,7 @@ namespace PokemonGame.Summary
             }
 
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = $"<size=12>Lv</size>{pokemon.Level}";
+            levelText.text = $"Lv{pokemon.Level}";
             genderIcon.Bind(pokemon);
             frontSprite.Bind(pokemon);
         }

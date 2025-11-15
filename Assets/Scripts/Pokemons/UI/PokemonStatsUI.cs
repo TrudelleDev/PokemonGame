@@ -1,4 +1,5 @@
-﻿using PokemonGame.Shared.Interfaces;
+﻿using PokemonGame.Pokemons.UI.Health;
+using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -10,6 +11,9 @@ namespace PokemonGame.Pokemons.UI
     /// </summary>
     public class PokemonStatsUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
     {
+        [SerializeField, Required]
+        private HealthBar healthBar;
+
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's current and max HP.")]
         private TextMeshProUGUI healthText;
@@ -40,6 +44,8 @@ namespace PokemonGame.Pokemons.UI
         /// <param name="pokemon">The Pokémon instance to bind.</param>
         public void Bind(Pokemon pokemon)
         {
+            healthBar.Bind(pokemon);
+
             healthText.text = $"{pokemon.HealthRemaining}/{pokemon.CoreStat.HealthPoint}";
             attackText.text = pokemon.CoreStat.Attack.ToString();
             defenseText.text = pokemon.CoreStat.Defense.ToString();
@@ -53,6 +59,8 @@ namespace PokemonGame.Pokemons.UI
         /// </summary>
         public void Unbind()
         {
+            healthBar.Unbind();
+
             healthText.text = string.Empty;
             attackText.text = string.Empty;
             defenseText.text = string.Empty;

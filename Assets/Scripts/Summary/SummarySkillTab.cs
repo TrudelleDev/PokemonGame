@@ -1,6 +1,7 @@
 using PokemonGame.Abilities.UI;
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI;
+using PokemonGame.Pokemons.UI.Experience;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -15,6 +16,10 @@ namespace PokemonGame.Summary
         [SerializeField, Required]
         [Tooltip("Group containing base stat UI elements (HP, Attack, Defense, etc.).")]
         private PokemonStatsUI statsUI;
+
+        [SerializeField]
+        private ExperienceUI experienceUI;
+
 
         [SerializeField, Required]
         [Tooltip("Group containing the Pokémon's ability name and effect description.")]
@@ -34,6 +39,7 @@ namespace PokemonGame.Summary
             }
 
             statsUI.Bind(pokemon);
+            experienceUI.Bind(pokemon);
             abilityUI.Bind(pokemon.Ability);
         }
 
@@ -43,6 +49,7 @@ namespace PokemonGame.Summary
         public void Unbind()
         {
             statsUI.Unbind();
+            experienceUI?.Unbind();
             abilityUI.Unbind();
         }
     }

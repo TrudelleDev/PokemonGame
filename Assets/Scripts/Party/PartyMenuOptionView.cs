@@ -40,6 +40,11 @@ namespace PokemonGame.Party
             cancelButton.OnClick -= OnCancelClick;
         }
 
+        private void OnEnable()
+        {
+            controller.SelectFirst();
+        }
+
         public override void Freeze()
         {
             controller.enabled = false;

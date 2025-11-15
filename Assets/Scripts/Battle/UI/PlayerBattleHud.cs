@@ -1,5 +1,5 @@
 ﻿using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.Experience;
+using PokemonGame.Pokemons.UI.Experience;
 using PokemonGame.Pokemons.UI.Health;
 using Sirenix.OdinInspector;
 using TMPro;
