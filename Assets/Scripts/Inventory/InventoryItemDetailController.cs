@@ -7,7 +7,9 @@ using UnityEngine;
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Controller that keeps the item detail panel in sync with the currently selected inventory menu option.
+    /// Keeps the inventory item detail panel synchronized with the currently
+    /// selected menu option. Updates the description and icon whenever
+    /// the selection changes.
     /// </summary>
     public class InventoryItemDetailController : MonoBehaviour
     {
@@ -19,9 +21,6 @@ namespace PokemonGame.Inventory
         [Tooltip("Menu controller that manages item navigation and selection events.")]
         private VerticalMenuController menuController;
 
-        /// <summary>
-        /// Subscribes to menu selection events when enabled.
-        /// </summary>
         private void OnEnable()
         {
             menuController.OnSelect += OnMenuSelect;
@@ -36,18 +35,15 @@ namespace PokemonGame.Inventory
             }
         }
 
-        /// <summary>
-        /// Unsubscribes from menu selection events when disabled.
-        /// </summary>
         private void OnDisable()
         {
             menuController.OnSelect -= OnMenuSelect;
         }
 
         /// <summary>
-        /// Updates the detail panel to reflect the selected menu button.
+        /// Updates the detail panel to display the item linked to the selected menu button.
+        /// Clears the panel if no valid display source is found.
         /// </summary>
-        /// <param name="menuButton">The currently selected menu button.</param>
         private void OnMenuSelect(MenuButton menuButton)
         {
             if (menuButton.TryGetComponent<IMenuOptionDisplaySource>(out var source) && source.Displayable != null)

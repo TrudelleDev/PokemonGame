@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Enums;
@@ -8,88 +9,125 @@ using UnityEngine;
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Manages the player’s inventory.
-    /// Organizes items into sections and provides add, remove, and query operations.
+    /// Manages a single inventory for a player or character.
+    /// Handles item storage, addition, removal, and notifies when the inventory changes.
     /// </summary>
     [DisallowMultipleComponent]
     public class InventoryManager : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Definition asset that seeds this inventory at startup.")]
-        private InventoryDefinition inventory;
+        [Tooltip("Initial items for this inventory.")]
+        private InventoryDefinition inventoryDefinition;
 
-        private Dictionary<ItemCategory, InventorySection> sections;
+        private readonly List<Item> items = new();
 
         /// <summary>
-        /// Initializes the inventory and prepares each section for use.
-        /// Call this before interacting with the inventory.
+        /// Read-only view of all items currently in the inventory.
+        /// </summary>
+        public IReadOnlyList<Item> Items => items;
+
+        /// <summary>
+        /// Raised whenever the inventory changes (items added, removed, or cleared).
+        /// </summary>
+        public event Action OnItemsChanged;
+
+        /// <summary>
+        /// Initializes the inventory by clearing any existing items and loading
+        /// the predefined starting items from the inventory definition.
         /// </summary>
         public void Initialize()
         {
-            inventory.GeneralItems.Initialize();
-            inventory.KeyItems.Initialize();
-            inventory.Pokeballs.Initialize();
+            Clear();
 
-            sections = new()
+            if (inventoryDefinition == null || inventoryDefinition.Items == null)
             {
-                [ItemCategory.General] = inventory.GeneralItems,
-                [ItemCategory.KeyItem] = inventory.KeyItems,
-                [ItemCategory.Pokeball] = inventory.Pokeballs
-            };
+                Log.Warning(nameof(InventoryManager), "InventoryDefinition is missing or empty.");
+                return;
+            }
+
+            foreach (Item item in inventoryDefinition.Items)
+            {
+                if (IsValid(item))
+                {
+                    Add(new Item(item.Definition, item.Quantity));
+                }
+            }
         }
 
         /// <summary>
-        /// Adds an item to the appropriate section of the inventory.
-        /// Returns true if the item was successfully added.
+        /// Adds an item to the inventory. If the item already exists,
+        /// increases its stack quantity up to a maximum of 99.
         /// </summary>
-        public bool Add(Item item)
+        /// <param name="item">The item to add. Must be valid and have a positive quantity.</param>
+        public void Add(Item item)
         {
-            if (item == null || item.ID == ItemId.None || item.Quantity <= 0 || item.Definition == null)
+            if (!IsValid(item))
             {
-                Log.Warning(nameof(InventoryManager), "Attempted to add invalid item.");
-                return false;
+                return;
             }
 
-            if (sections.TryGetValue(item.Definition.Category, out InventorySection section))
+            for (int i = 0; i < items.Count; i++)
             {
-                section.Add(item);
-                return true;
+                Item storedItem = items[i];
+
+                if (storedItem.ID == item.ID)
+                {
+                    storedItem.Quantity = Mathf.Min(99, storedItem.Quantity + item.Quantity);
+                    NotifyChanged();
+                    return;
+                }
             }
 
-            Log.Warning(nameof(InventoryManager), $"No section found for category '{item.Definition.Category}'.");
-            return false;
+            items.Add(new Item(item.Definition, item.Quantity));
+            NotifyChanged();
         }
 
         /// <summary>
-        /// Removes one unit of the given item from its section.
-        /// Returns true if the item was successfully removed.
+        /// Removes a single unit of the specified item from the inventory.
+        /// Removes the item entirely if the quantity reaches zero.
         /// </summary>
-        public bool Remove(Item item)
+        /// <param name="item">The item to remove. Must be valid.</param>
+        public void Remove(Item item)
         {
-            if (item == null || item.ID == ItemId.None || item.Definition == null)
+            if (!IsValid(item))
             {
-                Log.Warning(nameof(InventoryManager), "Attempted to remove invalid item.");
-                return false;
+                return;
             }
 
-            if (sections.TryGetValue(item.Definition.Category, out InventorySection section))
+            for (int i = 0; i < items.Count; i++)
             {
-                section.Remove(item);
-                return true;
-            }
+                if (items[i].ID == item.ID)
+                {
+                    items[i].Quantity--;
 
-            Log.Warning(nameof(InventoryManager), $"No section found for category '{item.Definition.Category}'.");
-            return false;
+                    if (items[i].Quantity <= 0)
+                    {
+                        items.RemoveAt(i);
+                    }
+
+                    NotifyChanged();
+                    return;
+                }
+            }
         }
 
         /// <summary>
-        /// Gets the inventory section for the specified category.
-        /// Returns null if not found.
+        /// Removes all items from the inventory.
         /// </summary>
-        public InventorySection GetSection(ItemCategory type)
+        public void Clear()
         {
-            sections.TryGetValue(type, out var section);
-            return section;
+            items.Clear();
+            NotifyChanged();
+        }
+
+        private bool IsValid(Item item)
+        {
+            return item != null && item.ID != ItemId.None;
+        }
+
+        private void NotifyChanged()
+        {
+            OnItemsChanged?.Invoke();
         }
     }
 }

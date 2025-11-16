@@ -7,9 +7,10 @@ using UnityEngine.UI;
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Shows an item's description and icon in the inventory detail panel.
+    /// Displays an item's icon and description in the inventory detail panel.
+    /// Can be bound to any object implementing <see cref="IDisplayable"/>.
     /// </summary>
-    public class InventoryItemDetailPanel : MonoBehaviour, IUnbind
+    public class InventoryItemDetailPanel : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the item's description.")]
@@ -21,7 +22,6 @@ namespace PokemonGame.Inventory
 
         /// <summary>
         /// Updates the panel with data from the given <see cref="IDisplayable"/>.
-        /// Clears the panel if <paramref name="displayable"/> is null.
         /// </summary>
         /// <param name="displayable">The object providing description and icon.</param>
         public void Bind(IDisplayable displayable)
@@ -38,7 +38,7 @@ namespace PokemonGame.Inventory
         }
 
         /// <summary>
-        /// Clears the panel, removing text and hiding the icon.
+        /// Clears the panel's text and hides the icon image.
         /// </summary>
         public void Unbind()
         {

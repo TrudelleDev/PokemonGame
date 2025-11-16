@@ -1,5 +1,4 @@
-﻿using PokemonGame.Assets.Scripts.Inventory;
-using PokemonGame.Items.UI;
+﻿using PokemonGame.Items.UI;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Views;
@@ -16,10 +15,6 @@ namespace PokemonGame.Inventory
     [DisallowMultipleComponent]
     public class InventoryItemSelectionController : MonoBehaviour
     {
-       // [SerializeField, Required]
-      //  [Tooltip("Panel that displays item details for the currently selected item.")]
-       // private InventoryItemSelectionPanel itemSelectionPanel;
-
         [SerializeField, Required]
         [Tooltip("Controller for vertical navigation between inventory items.")]
         private VerticalMenuController menuController;
@@ -42,8 +37,6 @@ namespace PokemonGame.Inventory
         {
             if (button.TryGetComponent<ItemUI>(out ItemUI itemUI))
             {
-              //  itemSelectionPanel.Bind(itemUI.Item);
-
                 InventoryItemOptionsView optionsView = ViewManager.Instance.Show<InventoryItemOptionsView>();
                 optionsView.SelectedItem = itemUI.Item;
             }

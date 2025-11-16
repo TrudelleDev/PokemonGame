@@ -1,44 +1,24 @@
-﻿using PokemonGame.Items;
+﻿using System.Collections.Generic;
+using PokemonGame.Items;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Inventory
 {
     /// <summary>
-    /// Defines a preset inventory for trainers, shops, or new game initialization.
-    /// Items are grouped into sections (General, Key Items, Poké Balls).
+    /// Defines the starting items for an inventory template. 
+    /// Can be used for players, NPCs, trainers, or shops.
     /// </summary>
-    [CreateAssetMenu(menuName = "Inventory/Inventory Definition", fileName = "NewInventoryDefinition")]
+    [CreateAssetMenu(menuName = "PokemonGame/Inventory/Definition", fileName = "NewInventoryDefinition")]
     public class InventoryDefinition : ScriptableObject
     {
-        [BoxGroup("Sections")]
         [SerializeField, Required]
-        [Tooltip("General items (e.g., Potions, Repels).")]
-        private InventorySection generalItems;
-
-        [BoxGroup("Sections")]
-        [SerializeField, Required]
-        [Tooltip("Key items (e.g., Bike, Maps).")]
-        private InventorySection keyItems;
-
-        [BoxGroup("Sections")]
-        [SerializeField, Required]
-        [Tooltip("Poké Balls and related items.")]
-        private InventorySection pokeballs;
+        [Tooltip("Starting items for this inventory template")]
+        private List<Item> items;
 
         /// <summary>
-        /// Items available in the General section.
+        /// Read-only list of items defined in this inventory template.
         /// </summary>
-        public InventorySection GeneralItems => generalItems;
-
-        /// <summary>
-        /// Items available in the Key Items section.
-        /// </summary>
-        public InventorySection KeyItems => keyItems;
-
-        /// <summary>
-        /// Items available in the Poké Ball section.
-        /// </summary>
-        public InventorySection Pokeballs => pokeballs;
+        public IReadOnlyList<Item> Items => items;
     }
 }
