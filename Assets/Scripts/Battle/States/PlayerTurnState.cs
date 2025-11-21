@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using PokemonGame.Dialogue;
-using PokemonGame.Moves;
+using PokemonGame.Move;
 using PokemonGame.Pokemons;
-using PokemonGame.Views;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States
@@ -17,7 +15,7 @@ namespace PokemonGame.Battle.States
         private const float TurnDelay = 1f;
 
         private readonly BattleStateMachine machine;
-        private readonly Move move;
+        private readonly MoveInstance move;
 
         private BattleView Battle => machine.BattleView;
 
@@ -26,7 +24,7 @@ namespace PokemonGame.Battle.States
         /// </summary>
         /// <param name="machine">The active <see cref="BattleStateMachine"/> managing the battle flow.</param>
         /// <param name="move">The move selected by the player to execute.</param>
-        public PlayerTurnState(BattleStateMachine machine, Move move)
+        public PlayerTurnState(BattleStateMachine machine, MoveInstance move)
         {
             this.machine = machine;
             this.move = move;
@@ -43,8 +41,8 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator ExecuteTurn()
         {
-            Pokemon player = Battle.PlayerPokemon;
-            Pokemon opponent = Battle.OpponentPokemon;
+            PokemonInstance player = Battle.PlayerPokemon;
+            PokemonInstance opponent = Battle.OpponentPokemon;
 
             Battle.DialogueBox.ShowDialogue($"{player.Definition.DisplayName} used {move.Definition.DisplayName}!");
 
@@ -56,7 +54,7 @@ namespace PokemonGame.Battle.States
             int damage = player.Attack(move, opponent);
             opponent.TakeDamage(damage);
 
-            
+
             yield return WaitForHealthAnimationComplete();
 
             // Check if opponent fainted
@@ -65,7 +63,7 @@ namespace PokemonGame.Battle.States
                 yield return Battle.BattleAnimation.PlayOpponentDeath();
                 Battle.DialogueBox.ShowDialogue($"Wild {opponent.Definition.DisplayName} fainted!", manualArrowControl: true);
                 yield return WaitDialogueComplete();
-               
+
                 machine.SetState(new VictoryState(machine));
                 yield break;
             }
@@ -117,7 +115,7 @@ namespace PokemonGame.Battle.States
             yield return new WaitUntil(() => done);
         }
 
-        
+
 
         public void Update() { }
 

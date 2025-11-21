@@ -48,7 +48,7 @@ namespace PokemonGame.Battle
 
             int level = Random.Range(wildPokemon.MinLevel, wildPokemon.MaxLevel + 1);
 
-            Pokemon pokemon = PokemonFactory.CreateWildPokemon(level, wildPokemon.Pokemon);
+            PokemonInstance pokemon = PokemonFactory.CreatePokemon(level, wildPokemon.Pokemon);
 
             battle.Initialize(partyManager.SelectedPokemon, pokemon);
         }

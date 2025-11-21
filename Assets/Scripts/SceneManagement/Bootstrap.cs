@@ -1,8 +1,5 @@
-﻿using PokemonGame.Abilities.Definition;
-using PokemonGame.Items.Definition;
-using PokemonGame.Moves.Definition;
+﻿using PokemonGame.Items.Definition;
 using PokemonGame.Pokemons.Definition;
-using PokemonGame.Pokemons.Natures;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -57,13 +54,6 @@ namespace PokemonGame.SceneManagement
 
         private async void Start()
         {
-            // Load definitions before showing the menu
-            await PokemonDefinitionLoader.LoadAllAsync();
-            await AbilityDefinitionLoader.LoadAllAsync();
-            await NatureDefinitionLoader.LoadAllAsync();
-            await MoveDefinitionLoader.LoadAllAsync();
-            await ItemDefinitionLoader.LoadAllAsync();
-
             // Load scenes
             await SceneLoader.LoadAdditiveAsync(audioSceneName);
             await SceneLoader.LoadAdditiveAsync(transitionSceneName);

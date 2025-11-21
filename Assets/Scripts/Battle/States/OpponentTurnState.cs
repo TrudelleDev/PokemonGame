@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using PokemonGame.Dialogue;
-using PokemonGame.Moves;
+using PokemonGame.Move;
 using PokemonGame.Pokemons;
-using PokemonGame.Views;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States
@@ -39,11 +37,11 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator ExecuteTurn()
         {
-            Pokemon opponent = Battle.OpponentPokemon;
-            Pokemon player = Battle.PlayerPokemon;
+            PokemonInstance opponent = Battle.OpponentPokemon;
+            PokemonInstance player = Battle.PlayerPokemon;
 
             // TODO: replace with AI move selection later
-            Move move = opponent.Moves[0];
+            MoveInstance move = opponent.Moves[0];
 
             Battle.DialogueBox.ShowDialogue($"{opponent.Definition.DisplayName} used {move.Definition.DisplayName}!");
 
@@ -77,7 +75,7 @@ namespace PokemonGame.Battle.States
         private void HandlePlayerFaint()
         {
             Battle.DialogueBox.OnDialogueFinished -= HandlePlayerFaint;
-           // ViewManager.Instance.CloseTopView(); // Return to overworld
+            // ViewManager.Instance.CloseTopView(); // Return to overworld
         }
 
         private IEnumerator WaitForLineTypingComplete()

@@ -9,7 +9,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays a Pokémon's trainer-related memo, including nature and encounter location.
     /// </summary>
-    public class TrainerMemoUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class TrainerMemoUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the trainer's memo, such as encounter details.")]
@@ -19,7 +19,7 @@ namespace PokemonGame.Pokemons.UI
         /// Binds trainer-related data from the Pokémon instance to UI elements.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance providing trainer info.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Nature?.Definition == null)
             {

@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7b3c62737bd2940a7d695867a25ac0, type: 3}
+  m_Name: Bulbasaur_Pokemon
+  m_EditorClassIdentifier: 
+  displayName: Bulbasaur
+  pokemonID: 1
+  types:
+    firstType: {fileID: 11400000, guid: dce2d6a87187447458f416b8ca1fd749, type: 2}
+    hasSecondType: 1
+    secondType: {fileID: 11400000, guid: 7d3ababfd487d5d4b8f56b126fd68e66, type: 2}
+  genderRatio:
+    maleRatio: 87.5
+  baseStats:
+    healthPoint: 45
+    attack: 49
+    defense: 49
+    specialAttack: 65
+    specialDefense: 65
+    speed: 45
+  possibleAbilities:
+  - {fileID: 11400000, guid: 1290cc294ee1cd7419471f292492dda3, type: 2}
+  possibleNatures:
+  - {fileID: 0}
+  levelUpMoves: []
+  cryClip: {fileID: 0}
+  sprites:
+    frontSprite: {fileID: 0}
+    backSprite: {fileID: 0}
+    menuSprite: {fileID: 0}
+  menuSpriteOverrider: {fileID: 0}

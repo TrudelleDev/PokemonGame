@@ -41,7 +41,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// Raised when the player selects a Pokémon from the menu.
         /// </summary>
-        public event Action<Pokemon> OnPokemonSelected;
+        public event Action<PokemonInstance> OnPokemonSelected;
 
         private void OnEnable()
         {

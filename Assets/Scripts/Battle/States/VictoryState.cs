@@ -18,8 +18,8 @@ namespace PokemonGame.Battle.States
 
         private bool levelUpOccured;
 
-        private Pokemon playerPokemon;
-        private Pokemon opponentPokemon;
+        private PokemonInstance playerPokemon;
+        private PokemonInstance opponentPokemon;
 
         public VictoryState(BattleStateMachine machine)
         {

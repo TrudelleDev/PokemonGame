@@ -35,7 +35,7 @@ namespace PokemonGame.Summary
         /// If the Pokémon or its core data is null, all sections are cleared instead.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display in the summary screen.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {

@@ -13,7 +13,7 @@ namespace PokemonGame.Pokemons.UI
 
         private TextMeshProUGUI genderText;
 
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon == null)
             {

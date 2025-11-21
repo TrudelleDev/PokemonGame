@@ -1,5 +1,4 @@
-﻿using PokemonGame.Moves;
-using PokemonGame.Views;
+﻿using PokemonGame.Move;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -26,7 +25,7 @@ namespace PokemonGame.Battle.UI
         /// Binds the given move data to the detail panel, updating its PP and type visuals.
         /// </summary>
         /// <param name="move">The move to display information for.</param>
-        public void Bind(Move move)
+        public void Bind(MoveInstance move)
         {
             if (move?.Definition == null)
             {
@@ -34,8 +33,8 @@ namespace PokemonGame.Battle.UI
                 return;
             }
 
-            powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.PowerPoint}";
-            typeImage.sprite = move.Definition.Type.Sprite;
+            powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
+            typeImage.sprite = move.Definition.Classification.TypeDefinition.Sprite;
         }
 
         /// <summary>

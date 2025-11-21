@@ -1,4 +1,4 @@
-using PokemonGame.Abilities.UI;
+using PokemonGame.Ability;
 using PokemonGame.Pokemons;
 using PokemonGame.Pokemons.UI;
 using PokemonGame.Pokemons.UI.Experience;
@@ -30,7 +30,7 @@ namespace PokemonGame.Summary
         /// Clears the UI if the Pokémon or its ability data is missing or invalid.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null || pokemon?.Ability?.Definition == null)
             {

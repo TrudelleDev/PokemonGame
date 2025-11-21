@@ -1,4 +1,4 @@
-using PokemonGame.Moves.UI;
+using PokemonGame.Move.UI;
 using PokemonGame.Pokemons;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -39,7 +39,7 @@ namespace PokemonGame.Summary
         /// Clears the UI if the Pokémon instance or its core data is null.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             // always reset state first
             Unbind();

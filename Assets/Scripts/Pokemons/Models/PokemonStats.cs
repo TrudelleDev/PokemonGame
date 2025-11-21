@@ -1,79 +1,42 @@
 ﻿using System;
+using PokemonGame.Pokemons.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine;
+
 
 namespace PokemonGame.Pokemons.Models
 {
     /// <summary>
-    /// Contains a Pokémon's set of stats: HP, Attack, Defense, Special Attack, Special Defense, and Speed.
+    /// Represents a Pokémon's core stats: Hit Points (HP), Attack, Defense,
+    /// Special Attack, Special Defense, and Speed. 
+    /// Provides read-only access to individual stats and allows modification.
     /// </summary>
     [Serializable]
     public struct PokemonStats
     {
         [SerializeField, Tooltip("Hit Points (HP) stat value.")]
         private int healthPoint;
-
         [SerializeField, Tooltip("Attack stat value.")]
         private int attack;
-
         [SerializeField, Tooltip("Defense stat value.")]
         private int defense;
-
         [SerializeField, Tooltip("Special Attack stat value.")]
         private int specialAttack;
-
         [SerializeField, Tooltip("Special Defense stat value.")]
         private int specialDefense;
-
         [SerializeField, Tooltip("Speed stat value.")]
         private int speed;
 
-        /// <summary>
-        /// The sum of all stat values.
-        /// </summary>
-        [ShowInInspector, ReadOnly]
-        [Tooltip("Sum of all stat values.")]
+        [ShowInInspector, ReadOnly, Tooltip("Sum of all stat values.")]
         public readonly int Total => healthPoint + attack + defense + specialAttack + specialDefense + speed;
 
-        /// <summary>
-        /// The Hit Points (HP) stat value.
-        /// </summary>
         public readonly int HealthPoint => healthPoint;
-
-        /// <summary>
-        /// The Attack stat value.
-        /// </summary>
         public readonly int Attack => attack;
-
-        /// <summary>
-        /// The Defense stat value.
-        /// </summary>
         public readonly int Defense => defense;
-
-        /// <summary>
-        /// The Special Attack stat value.
-        /// </summary>
         public readonly int SpecialAttack => specialAttack;
-
-        /// <summary>
-        /// The Special Defense stat value.
-        /// </summary>
         public readonly int SpecialDefense => specialDefense;
-
-        /// <summary>
-        /// The Speed stat value.
-        /// </summary>
         public readonly int Speed => speed;
 
-        /// <summary>
-        /// Initializes a new instance of PokemonStats with specified stat values.
-        /// </summary>
-        /// <param name="healthPoint">HP stat value.</param>
-        /// <param name="attack">Attack stat value.</param>
-        /// <param name="defense">Defense stat value.</param>
-        /// <param name="specialAttack">Special Attack stat value.</param>
-        /// <param name="specialDefense">Special Defense stat value.</param>
-        /// <param name="speed">Speed stat value.</param>
         public PokemonStats(int healthPoint, int attack, int defense, int specialAttack, int specialDefense, int speed)
         {
             this.healthPoint = healthPoint;
@@ -82,6 +45,39 @@ namespace PokemonGame.Pokemons.Models
             this.specialAttack = specialAttack;
             this.specialDefense = specialDefense;
             this.speed = speed;
+        }
+
+        /// <summary>
+        /// Accesses a stat by its PokemonStat enum.
+        /// Allows internal modification through the setter.
+        /// </summary>
+        /// <param name="stat">The stat to get or set.</param>
+        /// <returns>The value of the specified stat.</returns>
+        public int this[PokemonStat stat]
+        {
+            readonly get => stat switch
+            {
+                PokemonStat.HealthPoint => healthPoint,
+                PokemonStat.Attack => attack,
+                PokemonStat.Defense => defense,
+                PokemonStat.SpecialAttack => specialAttack,
+                PokemonStat.SpecialDefense => specialDefense,
+                PokemonStat.Speed => speed,
+                _ => throw new ArgumentOutOfRangeException(nameof(stat), stat, null)
+            };
+            set
+            {
+                switch (stat)
+                {
+                    case PokemonStat.HealthPoint: healthPoint = value; break;
+                    case PokemonStat.Attack: attack = value; break;
+                    case PokemonStat.Defense: defense = value; break;
+                    case PokemonStat.SpecialAttack: specialAttack = value; break;
+                    case PokemonStat.SpecialDefense: specialDefense = value; break;
+                    case PokemonStat.Speed: speed = value; break;
+                    default: throw new ArgumentOutOfRangeException(nameof(stat), stat, null);
+                }
+            }
         }
     }
 }

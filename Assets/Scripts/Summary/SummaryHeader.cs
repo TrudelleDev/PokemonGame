@@ -36,7 +36,7 @@ namespace PokemonGame.Summary
         /// Clears the UI if <paramref name="pokemon"/> is null or missing required data.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display, or null to clear the UI.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {

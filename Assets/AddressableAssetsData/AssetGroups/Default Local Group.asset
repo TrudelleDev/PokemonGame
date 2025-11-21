@@ -23,18 +23,6 @@ MonoBehaviour:
     m_SerializedLabels:
     - pokemon-definition
     FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 1fa1d44aad106b3459faa41ffae5a9d0
-    m_Address: Assets/ScriptableObjects/Moves/Tackle.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - move-definition
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: 3bce7b1ad9dc3294ea0066ed703e5f37
-    m_Address: Assets/ScriptableObjects/Abilities/StaticData.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - ability-definition
-    FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: 87b5113ad6a24ba4bb132d4f0cebad25
     m_Address: Assets/ScriptableObjects/Items/Antidote.asset
     m_ReadOnly: 0
@@ -52,12 +40,6 @@ MonoBehaviour:
     m_ReadOnly: 0
     m_SerializedLabels:
     - item-definition
-    FlaggedDuringContentUpdateRestriction: 0
-  - m_GUID: d95b7794d67330e4ea9feaa7a52d160f
-    m_Address: Assets/ScriptableObjects/Natures/Adamant.asset
-    m_ReadOnly: 0
-    m_SerializedLabels:
-    - nature-definition
     FlaggedDuringContentUpdateRestriction: 0
   - m_GUID: e6412b5f74dddbc43a15ea71e2509bb2
     m_Address: Assets/ScriptableObjects/Pokemons/CharmanderDefinition.asset

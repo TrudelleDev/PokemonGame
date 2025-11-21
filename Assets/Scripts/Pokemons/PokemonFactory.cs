@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Abilities.Definition;
-using PokemonGame.Moves;
-using PokemonGame.Moves.Definition;
+using PokemonGame.Ability;
+using PokemonGame.Move;
+using PokemonGame.Move.Models;
+using PokemonGame.Nature;
 using PokemonGame.Pokemons.Definition;
-using PokemonGame.Pokemons.Natures;
 using PokemonGame.Utilities;
 using UnityEngine;
 
@@ -24,8 +24,8 @@ namespace PokemonGame.Pokemons
         /// </summary>
         /// <param name="level">The level to assign to the new Pokémon.</param>
         /// <param name="pokemonDefinition">The species definition used to create the Pokémon.</param>
-        /// <returns>A new <see cref="Pokemon"/> instance, or null if <paramref name="pokemonDefinition"/> is null.</returns>
-        public static Pokemon CreateWildPokemon(int level, PokemonDefinition pokemonDefinition)
+        /// <returns>A new <see cref="PokemonInstance"/> instance, or null if <paramref name="pokemonDefinition"/> is null.</returns>
+        public static PokemonInstance CreatePokemon(int level, PokemonDefinition pokemonDefinition)
         {
             if (pokemonDefinition == null)
             {
@@ -33,11 +33,13 @@ namespace PokemonGame.Pokemons
                 return null;
             }
 
-            NatureDefinition natureDefinition = pokemonDefinition.PossibleNatures[UnityEngine.Random.Range(0, pokemonDefinition.PossibleNatures.Length)];
-            AbilityDefinition abilityDefinition = pokemonDefinition.PossibleAbilities[UnityEngine.Random.Range(0, pokemonDefinition.PossibleAbilities.Length)];
+            int abilityCount = pokemonDefinition.PossibleAbilities.Length;
+
+            NatureDefinition natureDefinition = pokemonDefinition.PossibleNatures.GetRandomNature();
+            AbilityDefinition abilityDefinition = pokemonDefinition.PossibleAbilities[UnityEngine.Random.Range(0, abilityCount)];
             MoveDefinition[] moveDefinitions = GetNewestLevelUpMoves(pokemonDefinition.LevelUpMoves);
 
-            return new Pokemon(level, pokemonDefinition, natureDefinition, abilityDefinition, moveDefinitions);
+            return new PokemonInstance(level, pokemonDefinition, natureDefinition, abilityDefinition, moveDefinitions);
         }
 
         private static MoveDefinition[] GetNewestLevelUpMoves(LevelUpMove[] levelUpMoves)
@@ -46,7 +48,7 @@ namespace PokemonGame.Pokemons
             {
                 return Array.Empty<MoveDefinition>();
             }
-              
+
             // Sort the array in-place by level ascending
             Array.Sort(levelUpMoves, (a, b) => a.Level.CompareTo(b.Level));
 
@@ -56,7 +58,7 @@ namespace PokemonGame.Pokemons
             // Copy the last 'takeCount' moves directly
             for (int i = 0; i < takeCount; i++)
             {
-                newestMoves[i] = levelUpMoves[levelUpMoves.Length - takeCount + i].Definition;
+                newestMoves[i] = levelUpMoves[levelUpMoves.Length - takeCount + i].MoveDefinition;
             }
 
             return newestMoves;

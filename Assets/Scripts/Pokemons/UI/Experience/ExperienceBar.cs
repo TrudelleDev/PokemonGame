@@ -20,7 +20,7 @@ namespace PokemonGame.Pokemons.UI.Experience
         private float tickDelay = 0.01f;
 
         private Slider slider;
-        private Pokemon boundPokemon;
+        private PokemonInstance boundPokemon;
         private Coroutine animateExpCoroutine;
 
         public event Action OnExpAnimationFinished;
@@ -39,7 +39,7 @@ namespace PokemonGame.Pokemons.UI.Experience
         /// <summary>
         /// Binds this EXP bar to the given Pokémon and subscribes to EXP changes.
         /// </summary>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon == null)
             {

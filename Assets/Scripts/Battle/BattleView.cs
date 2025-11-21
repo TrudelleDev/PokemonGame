@@ -103,12 +103,12 @@ namespace PokemonGame.Battle
         /// <summary>
         /// The player's active Pokémon in the current battle.
         /// </summary>
-        public Pokemon PlayerPokemon { get; private set; }
+        public PokemonInstance PlayerPokemon { get; private set; }
 
         /// <summary>
         /// The opponent's active Pokémon in the current battle.
         /// </summary>
-        public Pokemon OpponentPokemon { get; private set; }
+        public PokemonInstance OpponentPokemon { get; private set; }
 
         /// <summary>
         /// Event triggered when the battle view is closed (e.g., after a successful escape or faint).
@@ -123,7 +123,7 @@ namespace PokemonGame.Battle
         /// </summary>
         /// <param name="playerPokemon">The player's active Pokémon.</param>
         /// <param name="opponentPokemon">The opponent's active Pokémon.</param>
-        public void Initialize(Pokemon playerPokemon, Pokemon opponentPokemon)
+        public void Initialize(PokemonInstance playerPokemon, PokemonInstance opponentPokemon)
         {
             PlayerPokemon = playerPokemon;
             OpponentPokemon = opponentPokemon;

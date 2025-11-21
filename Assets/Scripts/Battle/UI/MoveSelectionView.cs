@@ -1,5 +1,5 @@
 ﻿using PokemonGame.Battle.States;
-using PokemonGame.Moves;
+using PokemonGame.Move;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -29,10 +29,10 @@ namespace PokemonGame.Battle.UI
         /// </summary>
         /// <param name="stateMachine">The active battle state machine controlling the battle flow.</param>
         /// <param name="moves">The list of moves available to the player.</param>
-        public void Initialize(BattleStateMachine stateMachine, Move[] moves)
+        public void Initialize(BattleStateMachine stateMachine, MoveInstance[] moves)
         {
             this.stateMachine = stateMachine;
-            moveSelectionPanel.Bind(moves);  
+            moveSelectionPanel.Bind(moves);
         }
 
         private void OnEnable()
@@ -55,12 +55,12 @@ namespace PokemonGame.Battle.UI
             stateMachine.SetState(new PlayerActionState(stateMachine));
         }
 
-        private void OnMoveSelected(Move move)
+        private void OnMoveSelected(MoveInstance move)
         {
             moveSelectionDetail.Bind(move);
         }
 
-        private void OnMoveConfirmed(Move move)
+        private void OnMoveConfirmed(MoveInstance move)
         {
             if (move == null || stateMachine == null)
             {

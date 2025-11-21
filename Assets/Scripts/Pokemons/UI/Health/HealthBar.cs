@@ -12,7 +12,7 @@ namespace PokemonGame.Pokemons.UI.Health
     /// Smoothly animates when the health changes.
     /// </summary>
     [RequireComponent(typeof(Slider))]
-    public class HealthBar : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class HealthBar : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         private const float HighHealthThreshold = 0.5f;
         private const float MidHealthThreshold = 0.25f;
@@ -30,7 +30,7 @@ namespace PokemonGame.Pokemons.UI.Health
         private Image fillImage;
 
         private Slider slider;
-        private Pokemon boundPokemon;
+        private PokemonInstance boundPokemon;
         private Coroutine animateHealthCoroutine;
 
         public event Action OnHealthAnimationFinished;
@@ -49,7 +49,7 @@ namespace PokemonGame.Pokemons.UI.Health
         /// <summary>
         /// Binds this health bar to the given Pokémon and subscribes to health changes.
         /// </summary>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon == null)
             {

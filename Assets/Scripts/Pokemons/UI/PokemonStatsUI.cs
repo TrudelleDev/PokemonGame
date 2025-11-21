@@ -9,7 +9,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays a Pokémon's base stats including HP, Attack, Defense, Special stats, and Speed.
     /// </summary>
-    public class PokemonStatsUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class PokemonStatsUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         private HealthBar healthBar;
@@ -42,7 +42,7 @@ namespace PokemonGame.Pokemons.UI
         /// Binds the Pokémon's core stats to the corresponding UI elements.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to bind.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             healthBar.Bind(pokemon);
 

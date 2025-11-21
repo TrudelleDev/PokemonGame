@@ -72,6 +72,6 @@ namespace PokemonGame.Items.Definition
         /// </summary>
         public ItemCategory Category => category;
 
-        public abstract ItemUseResult Use(Pokemon target);
+        public abstract ItemUseResult Use(PokemonInstance target);
     }
 }

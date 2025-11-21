@@ -51,7 +51,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// The Pokémon currently bound to this slot, or null if none.
         /// </summary>
-        public Pokemon BoundPokemon { get; private set; }
+        public PokemonInstance BoundPokemon { get; private set; }
 
         private MenuButton menuButton;
 
@@ -64,7 +64,7 @@ namespace PokemonGame.Party
         /// Binds a Pokémon to the slot and displays its data. Clears the slot if null or invalid.
         /// </summary>
         /// <param name="pokemon">The Pokémon to bind, or null to clear the slot.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {
@@ -110,7 +110,7 @@ namespace PokemonGame.Party
         /// Updates all UI elements with the given Pokémon's data.
         /// </summary>
         /// <param name="pokemon">The Pokémon whose data is displayed.</param>
-        private void UpdateDisplay(Pokemon pokemon)
+        private void UpdateDisplay(PokemonInstance pokemon)
         {
             nameText.text = pokemon.Definition.DisplayName;
             levelText.text = pokemon.Level.ToString();

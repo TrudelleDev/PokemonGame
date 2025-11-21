@@ -27,7 +27,7 @@ namespace PokemonGame.Items.Definition
         /// An <see cref="ItemUseResult"/> indicating whether the item was consumed 
         /// and the message(s) to display.
         /// </returns>
-        public override ItemUseResult Use(Pokemon target)
+        public override ItemUseResult Use(PokemonInstance target)
         {
             if (target == null)
             {

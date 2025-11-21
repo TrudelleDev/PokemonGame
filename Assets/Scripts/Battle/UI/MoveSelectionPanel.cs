@@ -1,7 +1,6 @@
 ﻿using System;
 using PokemonGame.Menu;
-using PokemonGame.Moves;
-using PokemonGame.Views;
+using PokemonGame.Move;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -35,19 +34,19 @@ namespace PokemonGame.Battle.UI
         /// <summary>
         /// Invoked when a move is confirmed (clicked or accepted).
         /// </summary>
-        public event Action<Move> OnMoveClick;
+        public event Action<MoveInstance> OnMoveClick;
 
         /// <summary>
         /// Invoked when a move is highlighted (hovered or navigated to).
         /// </summary>
-        public event Action<Move> OnMoveSelect;
+        public event Action<MoveInstance> OnMoveSelect;
 
         /// <summary>
         /// Binds the player's available moves to the corresponding buttons.
         /// Enables interactivity and registers event handlers for click and selection.
         /// </summary>
         /// <param name="moves">The list of moves to display.</param>
-        public void Bind(Move[] moves)
+        public void Bind(MoveInstance[] moves)
         {
             buttons = new[] { moveButton1, moveButton2, moveButton3, moveButton4 };
 
@@ -59,7 +58,7 @@ namespace PokemonGame.Battle.UI
 
                 if (i < moves.Length && moves[i] != null)
                 {
-                    Move move = moves[i];
+                    MoveInstance move = moves[i];
                     button.SetLabel(move.Definition.DisplayName);
                     button.SetInteractable(true);
 
@@ -103,13 +102,13 @@ namespace PokemonGame.Battle.UI
             }
         }
 
-        private void OnMoveClicked(Move move)
+        private void OnMoveClicked(MoveInstance move)
         {
             if (move != null)
                 OnMoveClick?.Invoke(move);
         }
 
-        private void OnMoveSelected(Move move)
+        private void OnMoveSelected(MoveInstance move)
         {
             if (move != null)
                 OnMoveSelect?.Invoke(move);

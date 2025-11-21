@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays general Pokémon information including Pokédex number, name, types, trainer, and held item.
     /// </summary>
-    public class PokemonOverviewUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class PokemonOverviewUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's Pokédex number.")]
@@ -42,9 +42,9 @@ namespace PokemonGame.Pokemons.UI
         /// Binds the Pokémon data to the UI fields.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
-            pokedexNumberText.text = pokemon.Definition.PokedexNumber;
+            pokedexNumberText.text = pokemon.Definition.PokedexNumber.ToString();
             nameText.text = pokemon.Definition.DisplayName;
             idText.text = pokemon.ID;
             originalTrainerText.text = pokemon.OwnerName;

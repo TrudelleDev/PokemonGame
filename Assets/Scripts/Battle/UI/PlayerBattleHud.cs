@@ -40,13 +40,13 @@ namespace PokemonGame.Battle.UI
         public HealthBar HealthBar => healthBar;
         public ExperienceBar ExperienceBar => experienceBar;
 
-        private Pokemon pokemon;
+        private PokemonInstance pokemon;
 
         /// <summary>
         /// Initializes the HUD with the given Pokémon data.
         /// </summary>
         /// <param name="pokemon">The player's active Pokémon to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {

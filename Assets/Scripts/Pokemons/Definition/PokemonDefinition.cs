@@ -1,10 +1,9 @@
-using System.Collections.Generic;
-using PokemonGame.Abilities;
-using PokemonGame.Abilities.Definition;
-using PokemonGame.Moves;
+using PokemonGame.Ability;
+using PokemonGame.Move;
+using PokemonGame.Move.Models;
+using PokemonGame.Nature;
 using PokemonGame.Pokemons.Enums;
 using PokemonGame.Pokemons.Models;
-using PokemonGame.Pokemons.Natures;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -23,10 +22,8 @@ namespace PokemonGame.Pokemons.Definition
         [SerializeField, Required]
         private string displayName;
 
-        [BoxGroup("Identity")]
-        [Tooltip("Stable unique identifier for this Pokémon.")]
         [SerializeField, Required]
-        private PokemonId pokemonID;
+        private int pokedexNumber;
 
         // ------------- Attributes -------------
 
@@ -60,7 +57,7 @@ namespace PokemonGame.Pokemons.Definition
         [BoxGroup("Natures")]
         [SerializeField, Required]
         [Tooltip("All possible natures this Pokémon can have.")]
-        private NatureDefinition[] possibleNatures;
+        private NatureDatabase possibleNatures;
 
         // -------------- Moves --------------
 
@@ -94,22 +91,14 @@ namespace PokemonGame.Pokemons.Definition
 
         // ------------- Public Accessors ------------
 
-        /// <summary>
-        /// Three-digit string version of the Pokémon ID.
-        /// </summary>
-        [BoxGroup("Identity")]
-        [ShowInInspector, ReadOnly]
-        public string PokedexNumber => ((int)pokemonID).ToString("D3");
+
+        public int PokedexNumber => pokedexNumber;
 
         /// <summary>
         /// Display name shown in UI.
         /// </summary>
         public string DisplayName => displayName;
 
-        /// <summary>
-        /// Unique identifier for this Pokémon.
-        /// </summary>
-        public PokemonId PokemonID => pokemonID;
 
         /// <summary>
         /// Primary and optional secondary types.
@@ -134,7 +123,7 @@ namespace PokemonGame.Pokemons.Definition
         /// <summary>
         /// Gets all possible natures this Pokémon can have.
         /// </summary>
-        public NatureDefinition[] PossibleNatures => possibleNatures;
+        public NatureDatabase PossibleNatures => possibleNatures;
 
         /// <summary>
         /// Gets all moves this Pokémon can learn when leveling up.

@@ -12,11 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8faac129f641cdb4a8297f0e296fc9a4, type: 3}
   m_Name: Tackle
   m_EditorClassIdentifier: 
-  moveID: 1
   displayName: Tackle
-  power: 40
-  accuracy: 100
-  powerPoint: 35
+  moveInfo:
+    power: 40
+    accuracy: 100
+    powerPoint: 35
+  classification:
+    typeDefinition: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
+    category: 0
   effect: A physical attack in which the user charges, full body, into the foe.
-  type: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
-  category: 0

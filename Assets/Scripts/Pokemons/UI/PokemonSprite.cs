@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemons.UI
     /// Hides the image if no valid sprite is available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public partial class PokemonSprite : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public partial class PokemonSprite : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Determines which sprite variant to display (Menu, Front, or Back).")]
@@ -24,7 +24,7 @@ namespace PokemonGame.Pokemons.UI
         /// If the sprite is missing, the image is hidden.
         /// </summary>
         /// <param name="pokemon">The Pokémon to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             EnsureImage();
 
@@ -48,7 +48,7 @@ namespace PokemonGame.Pokemons.UI
             image.enabled = false;
         }
 
-        private Sprite GetSprite(Pokemon pokemon)
+        private Sprite GetSprite(PokemonInstance pokemon)
         {
             var sprites = pokemon.Definition.Sprites;
 

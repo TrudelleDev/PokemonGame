@@ -85,7 +85,7 @@ namespace PokemonGame.Inventory
         /// Called when the player selects a Pokémon from the party menu.
         /// Attempts to use the selected item on that Pokémon and shows any resulting dialogue.
         /// </summary>
-        private void OnPokemonSelected(Pokemon pokemon)
+        private void OnPokemonSelected(PokemonInstance pokemon)
         {
             partyMenu.OnPokemonSelected -= OnPokemonSelected;
 

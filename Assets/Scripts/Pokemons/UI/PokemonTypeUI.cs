@@ -7,7 +7,7 @@ namespace PokemonGame.Pokemons.UI
     /// <summary>
     /// Displays the Pokémon's primary and secondary type icons.
     /// </summary>
-    public class PokemonTypeUI : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class PokemonTypeUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's primary type icon.")]
@@ -21,7 +21,7 @@ namespace PokemonGame.Pokemons.UI
         /// Binds the Pokémon's type data to the type icons.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to bind.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             primaryTypeSprite.Bind(pokemon);
 

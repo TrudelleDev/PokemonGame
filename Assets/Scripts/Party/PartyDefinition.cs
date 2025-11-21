@@ -14,11 +14,11 @@ namespace PokemonGame.Party
     {
         [SerializeField, Required]
         [Tooltip("Pokémon in this party, listed in order.")]
-        private List<Pokemon> members = new();
+        private List<PokemonInstance> members = new();
 
         /// <summary>
         /// All Pokémon in this party, in fixed order.
         /// </summary>
-        public IReadOnlyList<Pokemon> Members => members;
+        public IReadOnlyList<PokemonInstance> Members => members;
     }
 }

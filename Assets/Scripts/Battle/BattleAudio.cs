@@ -37,7 +37,7 @@ namespace PokemonGame.Battle
         public void PlayGainExperienceSfx() => AudioManager.Instance.PlaySFXStoppable(gainExperienceSfx);
         public void PlayOpenPokeballSfx() => AudioManager.Instance.PlaySFX(openPokeballSfx);
 
-        public void PlayPokemonCry(Pokemon pokemon)
+        public void PlayPokemonCry(PokemonInstance pokemon)
         {
             AudioManager.Instance.PlaySFX(pokemon.Definition.CryClip);
         }

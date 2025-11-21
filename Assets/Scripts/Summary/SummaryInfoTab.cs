@@ -27,7 +27,7 @@ namespace PokemonGame.Summary
         /// Clears the UI if the Pokémon or its core data is null.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {

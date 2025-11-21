@@ -10,7 +10,7 @@ namespace PokemonGame.Pokemons.UI
     /// Hides the icon if the type is not available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public class PokemonTypeIcon : MonoBehaviour, IBindable<Pokemon>, IUnbind
+    public class PokemonTypeIcon : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Select whether to show the Pokémon's primary or secondary type icon.")]
@@ -21,7 +21,7 @@ namespace PokemonGame.Pokemons.UI
         /// <summary>
         /// Shows the Pokémon's type icon if available, otherwise hides it.
         /// </summary>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             EnsureImage();
 
@@ -53,7 +53,7 @@ namespace PokemonGame.Pokemons.UI
             typeImage.enabled = false;
         }
 
-        private Sprite GetTypeSprite(Pokemon pokemon)
+        private Sprite GetTypeSprite(PokemonInstance pokemon)
         {
             return slot switch
             {

@@ -35,7 +35,7 @@ namespace PokemonGame.Battle.UI
         /// Initializes the opponent battle HUD with the given Pokémon data.
         /// </summary>
         /// <param name="pokemon">The opponent Pokémon to display.</param>
-        public void Bind(Pokemon pokemon)
+        public void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {

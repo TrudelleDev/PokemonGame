@@ -1,0 +1,41 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de7b3c62737bd2940a7d695867a25ac0, type: 3}
+  m_Name: Pikachu_Pokemon
+  m_EditorClassIdentifier: 
+  displayName: Pikachu
+  pokemonID: 25
+  types:
+    firstType: {fileID: 11400000, guid: ef179e92ffacf434f800fcb5bdda53e2, type: 2}
+    hasSecondType: 0
+    secondType: {fileID: 0}
+  genderRatio:
+    maleRatio: 50
+  baseStats:
+    healthPoint: 35
+    attack: 55
+    defense: 40
+    specialAttack: 50
+    specialDefense: 50
+    speed: 90
+  possibleAbilities:
+  - {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
+  possibleNatures:
+  - {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
+  levelUpMoves:
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: 98edf6d637916eb428373e3d4adfe153, type: 2}
+  sprites:
+    frontSprite: {fileID: 21300000, guid: 8f859a82c9f2bf547af9580ebbe1b813, type: 3}
+    backSprite: {fileID: 21300000, guid: 5e60a44a19ca095469b65a4bf9e0f69b, type: 3}
+    menuSprite: {fileID: -1717675739, guid: 0a91a631dc900494ba0858d000706b18, type: 3}
+  menuSpriteOverrider: {fileID: 22100000, guid: bf93d10ba80a1be449107a9532c87d76, type: 2}
