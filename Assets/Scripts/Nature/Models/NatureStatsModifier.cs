@@ -1,6 +1,6 @@
 ﻿using System;
-using PokemonGame.Pokemons.Enums;
-using PokemonGame.Pokemons.Models;
+using PokemonGame.Pokemon.Enums;
+using PokemonGame.Pokemon.Models;
 using UnityEngine;
 
 namespace PokemonGame.Nature.Models

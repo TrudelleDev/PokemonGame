@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI
+namespace PokemonGame.Pokemon.UI
 {
     /// <summary>
     /// Displays the Pokémon's primary and secondary type icons.

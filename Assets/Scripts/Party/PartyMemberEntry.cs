@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemon;
 using UnityEngine;
 
 namespace PokemonGame.Party

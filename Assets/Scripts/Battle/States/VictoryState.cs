@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using PokemonGame.Audio;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -33,13 +33,13 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator PlayVictorySequence()
         {
-             playerPokemon = Battle.PlayerPokemon;
-             opponentPokemon = Battle.OpponentPokemon;
+            playerPokemon = Battle.PlayerPokemon;
+            opponentPokemon = Battle.OpponentPokemon;
 
             Battle.BattleAudio.PlayVictory();
 
             int expGained = playerPokemon.CalculateExpGain(opponentPokemon);
-     
+
             Battle.DialogueBox.ShowDialogue($"{playerPokemon.Definition.DisplayName} gained{Environment.NewLine}{expGained} Exp. Points.", manualArrowControl: true);
 
             yield return WaitForDialogueCompleted();
@@ -61,7 +61,7 @@ namespace PokemonGame.Battle.States
                 Battle.DialogueBox.Clear();
             }
 
-            
+
 
             yield return new WaitForSecondsRealtime(0.5f);
 

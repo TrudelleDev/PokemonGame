@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.Enums
+﻿namespace PokemonGame.Pokemon.Enums
 {
     /// <summary>
     /// Elemental typing for a Pokémon or move.

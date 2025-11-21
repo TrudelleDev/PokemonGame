@@ -1,10 +1,9 @@
-﻿using PokemonGame.Pokemons.UI.Health;
-using PokemonGame.Shared.Interfaces;
+﻿using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI
+namespace PokemonGame.Pokemon.UI
 {
     /// <summary>
     /// Displays a Pokémon's base stats including HP, Attack, Defense, Special stats, and Speed.

@@ -3,11 +3,11 @@ using PokemonGame.Ability;
 using PokemonGame.Move;
 using PokemonGame.Move.Models;
 using PokemonGame.Nature;
-using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemon;
 using PokemonGame.Utilities;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons
+namespace PokemonGame.Pokemon
 {
     /// <summary>
     /// Factory class responsible for creating Pokémon instances at runtime.

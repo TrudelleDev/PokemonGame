@@ -1,8 +1,8 @@
-﻿using PokemonGame.Pokemons.Definition;
-using PokemonGame.Pokemons.Models;
+﻿using PokemonGame.Pokemon;
+using PokemonGame.Pokemon.Models;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons
+namespace PokemonGame.Pokemon
 {
     public static class StatsCalculator
     {

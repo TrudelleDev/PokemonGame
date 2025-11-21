@@ -3,7 +3,7 @@ using System.Collections;
 using PokemonGame.Battle.States;
 using PokemonGame.Battle.UI;
 using PokemonGame.Dialogue;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;

@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Pokemons.Definition;
+using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons
+namespace PokemonGame.Pokemon
 {
     /// <summary>
     /// Represents a wild Pokémon that can appear in a specific area,

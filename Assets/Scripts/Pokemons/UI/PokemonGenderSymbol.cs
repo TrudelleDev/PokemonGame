@@ -1,9 +1,8 @@
-using PokemonGame.Pokemons.Enums;
-using Sirenix.OdinInspector;
+using PokemonGame.Pokemon.Enums;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI
+namespace PokemonGame.Pokemon.UI
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     public class PokemonGenderSymbol : MonoBehaviour

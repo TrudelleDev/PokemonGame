@@ -1,7 +1,6 @@
 using PokemonGame.Ability;
-using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.UI;
-using PokemonGame.Pokemons.UI.Experience;
+using PokemonGame.Pokemon;
+using PokemonGame.Pokemon.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

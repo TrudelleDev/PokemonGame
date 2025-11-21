@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

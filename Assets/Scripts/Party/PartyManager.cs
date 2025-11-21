@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using UnityEngine;
 
 namespace PokemonGame.Party

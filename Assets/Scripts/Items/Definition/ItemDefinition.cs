@@ -1,5 +1,5 @@
 using PokemonGame.Items.Enums;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;

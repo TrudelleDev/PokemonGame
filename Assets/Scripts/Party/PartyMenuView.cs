@@ -1,7 +1,7 @@
 using System;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -36,7 +36,7 @@ namespace PokemonGame.Party
         [Tooltip("Controls navigation between party slots.")]
         private VerticalMenuController partySlotController;
 
-        public bool OppenedFromInventory {  get; set; }
+        public bool OppenedFromInventory { get; set; }
 
         /// <summary>
         /// Raised when the player selects a Pokémon from the menu.
@@ -107,7 +107,7 @@ namespace PokemonGame.Party
 
         private void OnCancelButtonClick()
         {
-            
+
             ViewManager.Instance.CloseTopView();
         }
     }

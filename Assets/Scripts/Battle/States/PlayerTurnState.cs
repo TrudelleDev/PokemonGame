@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 using PokemonGame.Move;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States

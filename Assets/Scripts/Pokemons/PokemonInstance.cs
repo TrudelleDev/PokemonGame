@@ -3,13 +3,13 @@ using PokemonGame.Ability;
 using PokemonGame.Move;
 using PokemonGame.Move.Enums;
 using PokemonGame.Nature;
-using PokemonGame.Pokemons.Definition;
-using PokemonGame.Pokemons.Enums;
-using PokemonGame.Pokemons.Models;
+using PokemonGame.Pokemon;
+using PokemonGame.Pokemon.Enums;
+using PokemonGame.Pokemon.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons
+namespace PokemonGame.Pokemon
 {
     /// <summary>
     /// Runtime Pokémon instance built from static definitions (species, nature, ability, moves).

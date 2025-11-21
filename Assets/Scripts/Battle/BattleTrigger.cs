@@ -1,8 +1,7 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using PokemonGame.Audio;
 using PokemonGame.Party;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Tile;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -61,7 +60,7 @@ namespace PokemonGame.Battle
             {
                 totalRate += entry.EncounterRate;
             }
-               
+
             int roll = Random.Range(0, totalRate);
             int cumulative = 0;
 
@@ -72,7 +71,7 @@ namespace PokemonGame.Battle
                 if (roll < cumulative)
                 {
                     return entry;
-                }            
+                }
             }
 
             return null;

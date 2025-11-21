@@ -1,5 +1,5 @@
-﻿using PokemonGame.Pokemons;
-using PokemonGame.Pokemons.UI.Health;
+﻿using PokemonGame.Pokemon;
+using PokemonGame.Pokemon.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

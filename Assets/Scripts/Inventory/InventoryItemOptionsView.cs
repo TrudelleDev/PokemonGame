@@ -3,7 +3,7 @@ using PokemonGame.Items;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Party;
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;

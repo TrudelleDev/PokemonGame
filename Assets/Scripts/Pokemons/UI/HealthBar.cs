@@ -1,11 +1,13 @@
 using System;
 using System.Collections;
+using PokemonGame.Pokemon.Enums;
+using PokemonGame.Pokemon.Models;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemons.UI.Health
+namespace PokemonGame.Pokemon.UI
 {
     /// <summary>
     /// Displays a health bar with a fill sprite that changes based on the Pokémon's current health.
@@ -42,7 +44,7 @@ namespace PokemonGame.Pokemons.UI.Health
 
         private void EnsureSlider()
         {
-            if(slider == null)
+            if (slider == null)
                 slider = GetComponent<Slider>();
         }
 

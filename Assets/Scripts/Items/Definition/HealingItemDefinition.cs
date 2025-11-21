@@ -1,4 +1,4 @@
-using PokemonGame.Pokemons;
+using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -44,7 +44,7 @@ namespace PokemonGame.Items.Definition
                 });
             }
 
-            return new ItemUseResult(false, new[] {NoEffectMessage });
+            return new ItemUseResult(false, new[] { NoEffectMessage });
         }
     }
 }

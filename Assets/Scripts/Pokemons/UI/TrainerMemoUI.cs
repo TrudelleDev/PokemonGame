@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI
+namespace PokemonGame.Pokemon.UI
 {
     /// <summary>
     /// Displays a Pokémon's trainer-related memo, including nature and encounter location.

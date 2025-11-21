@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemons.UI.Experience
+namespace PokemonGame.Pokemon.UI
 {
     public class ExperienceUI : MonoBehaviour
     {
@@ -25,7 +25,7 @@ namespace PokemonGame.Pokemons.UI.Experience
 
             experienceBar.Bind(pokemon);
             totalExperiencePointText.text = pokemon.CurrentExp.ToString();
-            nextLevelExperiencePointText.text = (pokemon.GetExpForNextLevel()- pokemon.CurrentExp).ToString();
+            nextLevelExperiencePointText.text = (pokemon.GetExpForNextLevel() - pokemon.CurrentExp).ToString();
 
         }
 

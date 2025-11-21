@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.Enums
+﻿namespace PokemonGame.Pokemon.Enums
 {
     /// <summary>
     /// Long-lasting status conditions that can affect a Pokémon in battle.

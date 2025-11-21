@@ -1,6 +1,4 @@
-﻿using PokemonGame.Items.Definition;
-using PokemonGame.Pokemons.Definition;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
 #if UNITY_EDITOR

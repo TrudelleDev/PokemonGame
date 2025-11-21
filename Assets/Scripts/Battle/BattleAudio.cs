@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using PokemonGame.Audio;
-using PokemonGame.Pokemons;
+﻿using PokemonGame.Audio;
+using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -29,7 +28,7 @@ namespace PokemonGame.Battle
         [SerializeField, Required]
         private AudioClip openPokeballSfx;
 
-        public void PlayDoDamageNomral()=> AudioManager.Instance.PlaySFX(doDamageNormalSfx);
+        public void PlayDoDamageNomral() => AudioManager.Instance.PlaySFX(doDamageNormalSfx);
         public void PlayVictory() => AudioManager.Instance.PlayBGM(victorySfx);
         public void PlayRunAwaySfx() => AudioManager.Instance.PlaySFX(runAwaySfx);
         public void PlayLevelUpSfx() => AudioManager.Instance.PlaySFX(levelUpSfx);

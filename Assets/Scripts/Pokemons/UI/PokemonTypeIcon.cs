@@ -1,9 +1,10 @@
+using PokemonGame.Pokemon.Enums;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemons.UI
+namespace PokemonGame.Pokemon.UI
 {
     /// <summary>
     /// Displays the Pokémon type icon (Primary or Secondary) in a UI Image.
@@ -57,8 +58,8 @@ namespace PokemonGame.Pokemons.UI
         {
             return slot switch
             {
-                PokemonTypeSlot.Primary => pokemon.Definition?.Types?.FirstType?.Sprite,
-                PokemonTypeSlot.Secondary => pokemon.Definition?.Types?.SecondType?.Sprite,
+                PokemonTypeSlot.Primary => pokemon.Definition?.Types.FirstType?.Sprite,
+                PokemonTypeSlot.Secondary => pokemon.Definition?.Types.SecondType?.Sprite,
                 _ => null
             };
         }

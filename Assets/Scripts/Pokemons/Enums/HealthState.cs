@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemons.UI.Health
+﻿namespace PokemonGame.Pokemon.Enums
 {
     /// <summary>
     /// Represents the health state of a Pokémon relative to its remaining HP.
