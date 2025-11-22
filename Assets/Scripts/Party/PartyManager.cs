@@ -17,7 +17,7 @@ namespace PokemonGame.Party
         public const int MaxPartySize = 6;
 
         [SerializeField, Tooltip("Predefined party used to initialize this manager.")]
-        private List<PartyMemberEntry> initialMembers;
+        private PartyDefinition partyDefinition;
 
         private readonly List<PokemonInstance> members = new();
 
@@ -52,7 +52,7 @@ namespace PokemonGame.Party
         /// </summary>
         private void InitializeParty()
         {
-            if (initialMembers == null || initialMembers.Count == 0)
+            if (partyDefinition == null || partyDefinition.Members.Count == 0)
             {
                 Debug.LogWarning("PartyManager: No initial members defined.");
                 return;
@@ -60,7 +60,7 @@ namespace PokemonGame.Party
 
             members.Clear();
 
-            foreach (var entry in initialMembers)
+            foreach (var entry in partyDefinition.Members)
             {
                 if (entry.PokemonDefinition == null) continue;
 

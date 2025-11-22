@@ -52,15 +52,15 @@ namespace PokemonGame.Pokemon.UI
             Unbind();
             boundPokemon = pokemon;
 
-            int minExp = pokemon.GetExpForCurrentLevel();
-            int maxExp = pokemon.GetExpForNextLevel();
+            int minExp = pokemon.Experience.GetExpForCurrentLevel();
+            int maxExp = pokemon.Experience.GetExpForNextLevel();
 
             slider.minValue = minExp;
             slider.maxValue = maxExp;
-            slider.value = pokemon.CurrentExp;
+            slider.value = pokemon.Experience.CurrentExp;
 
-            pokemon.OnExperienceChange += OnPokemonExpChange;
-            pokemon.OnLevelChange += OnPokemonLevelChange;
+            pokemon.Experience.OnExperienceChange += OnPokemonExpChange;
+            pokemon.Experience.OnLevelChange += OnPokemonLevelChange;
         }
 
         /// <summary>
@@ -70,8 +70,8 @@ namespace PokemonGame.Pokemon.UI
         {
             if (boundPokemon != null)
             {
-                boundPokemon.OnExperienceChange -= OnPokemonExpChange;
-                boundPokemon.OnLevelChange -= OnPokemonLevelChange;
+                boundPokemon.Experience.OnExperienceChange -= OnPokemonExpChange;
+                boundPokemon.Experience.OnLevelChange -= OnPokemonLevelChange;
                 boundPokemon = null;
             }
 
@@ -87,12 +87,12 @@ namespace PokemonGame.Pokemon.UI
 
         private void OnPokemonLevelChange(int newLevel)
         {
-            int minExp = boundPokemon.GetExpForCurrentLevel();
-            int maxExp = boundPokemon.GetExpForNextLevel();
+            int minExp = boundPokemon.Experience.GetExpForCurrentLevel();
+            int maxExp = boundPokemon.Experience.GetExpForNextLevel();
 
             slider.minValue = minExp;
             slider.maxValue = maxExp;
-            slider.value = boundPokemon.CurrentExp;
+            slider.value = boundPokemon.Experience.CurrentExp;
         }
 
         /// <summary>

@@ -46,8 +46,8 @@ namespace PokemonGame.Pokemon.UI
         {
             pokedexNumberText.text = pokemon.Definition.PokedexNumber.ToString();
             nameText.text = pokemon.Definition.DisplayName;
-            idText.text = pokemon.ID;
-            originalTrainerText.text = pokemon.OwnerName;
+            idText.text = pokemon.Meta.ID;
+            originalTrainerText.text = pokemon.Meta.OwnerName;
 
             primaryTypeSprite.Bind(pokemon);
             secondaryTypeSprite.Bind(pokemon);

@@ -133,7 +133,7 @@ namespace PokemonGame.Battle
 
             stateMachine = new BattleStateMachine(this);
 
-            moveSelectionController.Initialize(stateMachine, playerPokemon.Moves);
+            moveSelectionController.Initialize(stateMachine, playerPokemon.Moves.Moves);
             BattleAnimation.ResetIntro();
             isBattleInitialized = true;
         }

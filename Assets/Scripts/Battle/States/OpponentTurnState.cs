@@ -41,7 +41,7 @@ namespace PokemonGame.Battle.States
             PokemonInstance player = Battle.PlayerPokemon;
 
             // TODO: replace with AI move selection later
-            MoveInstance move = opponent.Moves[0];
+            MoveInstance move = opponent.Moves.Moves[0];
 
             Battle.DialogueBox.ShowDialogue($"{opponent.Definition.DisplayName} used {move.Definition.DisplayName}!");
 
@@ -50,13 +50,13 @@ namespace PokemonGame.Battle.States
             Battle.BattleAudio.PlayDoDamageNomral();
             yield return Battle.BattleAnimation.PlayPlayerTakeDamage();
 
-            int damage = opponent.Attack(move, player);
-            player.TakeDamage(damage);
+            int damage = opponent.Stats.Attack(move, player);
+            player.Health.TakeDamage(damage);
 
             yield return WaitForHealthAnimationComplete();
 
             // Check if the player's Pokémon fainted
-            if (player.HealthRemaining <= 0)
+            if (player.Stats.HealthRemaining <= 0)
             {
                 yield return new WaitForSecondsRealtime(TurnPause);
                 Battle.DialogueBox.ShowDialogue($"{player.Definition.DisplayName} fainted!");

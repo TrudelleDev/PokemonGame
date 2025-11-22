@@ -45,7 +45,7 @@ namespace PokemonGame.Summary
             }
 
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = $"Lv{pokemon.Level}";
+            levelText.text = $"Lv{pokemon.Experience.Level}";
             genderIcon.Bind(pokemon);
             frontSprite.Bind(pokemon);
         }

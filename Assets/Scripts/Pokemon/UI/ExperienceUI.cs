@@ -21,11 +21,11 @@ namespace PokemonGame.Pokemon.UI
                 return;
             }
 
-            pokemon.OnExperienceChange += Pokemon_OnExperienceChange;
+            pokemon.Experience.OnExperienceChange += Pokemon_OnExperienceChange;
 
             experienceBar.Bind(pokemon);
-            totalExperiencePointText.text = pokemon.CurrentExp.ToString();
-            nextLevelExperiencePointText.text = (pokemon.GetExpForNextLevel() - pokemon.CurrentExp).ToString();
+            totalExperiencePointText.text = pokemon.Experience.CurrentExp.ToString();
+            nextLevelExperiencePointText.text = (pokemon.Experience.GetExpForNextLevel() - pokemon.Experience.CurrentExp).ToString();
 
         }
 

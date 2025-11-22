@@ -50,8 +50,8 @@ namespace PokemonGame.Battle.UI
             if (pokemon?.Definition == null)
             {
                 Unbind();
-                pokemon.OnLevelChange -= OnPokemonLevelChange;
-                pokemon.OnHealthChange -= OnPokemonHealthChange;
+                pokemon.Experience.OnLevelChange -= OnPokemonLevelChange;
+                pokemon.Stats.OnHealthChange -= OnPokemonHealthChange;
 
                 return;
             }
@@ -59,25 +59,25 @@ namespace PokemonGame.Battle.UI
             this.pokemon = pokemon;
 
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = pokemon.Level.ToString();
-            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
+            levelText.text = pokemon.Experience.Level.ToString();
+            healthText.text = $"{pokemon.Stats.HealthRemaining}/{pokemon.Stats.MaxHealth}";
             healthBar.Bind(pokemon);
             experienceBar.Bind(pokemon);
             backSprite.sprite = pokemon.Definition.Sprites.BackSprite;
 
-            pokemon.OnLevelChange += OnPokemonLevelChange;
-            pokemon.OnHealthChange += OnPokemonHealthChange;
+            pokemon.Experience.OnLevelChange += OnPokemonLevelChange;
+            pokemon.Stats.OnHealthChange += OnPokemonHealthChange;
         }
 
         private void OnPokemonHealthChange(int oldHp, int newHp)
         {
-            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
+            healthText.text = $"{pokemon.Stats.HealthRemaining}/{pokemon.Stats.MaxHealth}";
         }
 
         private void OnPokemonLevelChange(int newLevel)
         {
-            levelText.text = pokemon.Level.ToString();
-            healthText.text = $"{pokemon.HealthRemaining}/{pokemon.MaxHealth}";
+            levelText.text = pokemon.Experience.Level.ToString();
+            healthText.text = $"{pokemon.Stats.HealthRemaining}/{pokemon.Stats.MaxHealth}";
             //healthBar.Bind(pokemon);
         }
 

@@ -13,15 +13,5 @@ MonoBehaviour:
   m_Name: Player_PartyDefinition
   m_EditorClassIdentifier: 
   members:
-  - level: 5
-    pokemonDefinition: {fileID: 11400000, guid: e6412b5f74dddbc43a15ea71e2509bb2, type: 2}
-    natureDefinition: {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
-    abilityDefinition: {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
-    moveDefinitions:
-    - {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
-  - level: 4
-    pokemonDefinition: {fileID: 11400000, guid: cb68ac9dfb0069640973c6cd50f9da9a, type: 2}
-    natureDefinition: {fileID: 11400000, guid: d95b7794d67330e4ea9feaa7a52d160f, type: 2}
-    abilityDefinition: {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
-    moveDefinitions:
-    - {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+  - pokemonDefinition: {fileID: 11400000, guid: e6412b5f74dddbc43a15ea71e2509bb2, type: 2}
+    level: 5

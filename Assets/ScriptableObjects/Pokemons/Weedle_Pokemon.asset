@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Weedle_Pokemon
   m_EditorClassIdentifier: 
   displayName: Weedle
-  pokemonID: 13
+  pokedexNumber: 0
   types:
     firstType: {fileID: 11400000, guid: f7535478357dcc6459a3d1581479bd8a, type: 2}
     hasSecondType: 0
@@ -27,12 +27,12 @@ MonoBehaviour:
     specialAttack: 20
     specialDefense: 20
     speed: 50
+  possibleNatures: {fileID: 11400000, guid: 7d9e871d70f92ed48925b4ab36398143, type: 2}
   possibleAbilities:
   - {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
-  possibleNatures: {fileID: 11400000, guid: 7d9e871d70f92ed48925b4ab36398143, type: 2}
   levelUpMoves:
   - level: 1
-    definition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+    moveDefinition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
   cryClip: {fileID: 8300000, guid: c8826cb482d2c5e48b76751113965962, type: 3}
   sprites:
     frontSprite: {fileID: 21300000, guid: f7b00b1e3ca585f4f891745ac2919f4f, type: 3}

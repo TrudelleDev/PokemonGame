@@ -3,7 +3,6 @@ using PokemonGame.Ability;
 using PokemonGame.Move;
 using PokemonGame.Move.Models;
 using PokemonGame.Nature;
-using PokemonGame.Pokemon;
 using PokemonGame.Utilities;
 using UnityEngine;
 

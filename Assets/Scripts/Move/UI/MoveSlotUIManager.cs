@@ -22,7 +22,7 @@ namespace PokemonGame.Move.UI
                 return;
             }
 
-            BindMoves(pokemon.Moves);
+            BindMoves(pokemon.Moves.Moves);
         }
 
         /// <summary>

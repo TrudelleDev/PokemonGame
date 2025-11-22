@@ -44,7 +44,7 @@ namespace PokemonGame.Battle.UI
             }
 
             nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = pokemon.Level.ToString();
+            levelText.text = pokemon.Experience.Level.ToString();
             healthBar.Bind(pokemon);
             frontSprite.sprite = pokemon.Definition.Sprites.FrontSprite;
         }

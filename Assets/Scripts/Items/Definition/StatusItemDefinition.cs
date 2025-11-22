@@ -34,7 +34,7 @@ namespace PokemonGame.Items.Definition
                 return new ItemUseResult(false, new[] { FailMessage });
             }
 
-            bool statusCured = target.TryCureStatus(statusCondition);
+            bool statusCured = target.Health.TryCureStatus(statusCondition);
 
             if (statusCured)
             {

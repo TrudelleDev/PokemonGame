@@ -34,7 +34,7 @@ namespace PokemonGame.Items.Definition
                 return new ItemUseResult(false, new[] { FailMessage });
             }
 
-            int restored = target.RestoreHP(healingAmount);
+            int restored = target.Health.Heal(healingAmount);
 
             if (restored > 0)
             {

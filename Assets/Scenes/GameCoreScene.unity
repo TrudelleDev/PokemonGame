@@ -13149,10 +13149,10 @@ Camera:
   m_LensShift: {x: 0, y: 0}
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: -0.1875
-    y: -0.16666667
-    width: 0.375
-    height: 0.33333334
+    x: 0.23359375
+    y: 0.052083336
+    width: 0.09375
+    height: 0.11111111
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60
@@ -19323,7 +19323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7868a72113d39d4c8c3d2f2df2c4e9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialPartyDefinition: {fileID: 11400000, guid: 92c1c7b411c8ae64ca059b0e15a1da80, type: 2}
+  partyDefinition: {fileID: 11400000, guid: 92c1c7b411c8ae64ca059b0e15a1da80, type: 2}
 --- !u!114 &9200808988402430976
 MonoBehaviour:
   m_ObjectHideFlags: 0

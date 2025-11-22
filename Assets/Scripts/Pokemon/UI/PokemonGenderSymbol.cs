@@ -22,7 +22,7 @@ namespace PokemonGame.Pokemon.UI
 
             EnsureText();
 
-            string symbol = GetGenderSprite(pokemon.Gender);
+            string symbol = GetGenderSprite(pokemon.Gender.Gender);
             genderText.text = symbol;
         }
 
