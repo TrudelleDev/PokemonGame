@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
   m_Name: Overgrow_Ability
   m_EditorClassIdentifier: 
-  id: 2
   displayName: Overgrow
-  description: "Powers up Grass-type moves when the Pok\xE9mon's HP is low."
+  description: Ups Grass moves in a pinch.

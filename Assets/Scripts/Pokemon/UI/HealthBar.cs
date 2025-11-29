@@ -65,11 +65,11 @@ namespace PokemonGame.Pokemon.UI
             boundPokemon = pokemon;
 
             slider.maxValue = pokemon.Stats.Core.HealthPoint;
-            slider.value = pokemon.Stats.HealthRemaining;
+            slider.value = pokemon.Health.CurrentHealth;
 
-            UpdateFillImage(pokemon.Stats.HealthRemaining);
+            UpdateFillImage(pokemon.Health.CurrentHealth);
 
-            pokemon.Stats.OnHealthChange += OnPokemonHealthChange;
+            pokemon.Health.OnHealthChange += OnPokemonHealthChange;
         }
 
         /// <summary>
@@ -79,7 +79,7 @@ namespace PokemonGame.Pokemon.UI
         {
             if (boundPokemon != null)
             {
-                boundPokemon.Stats.OnHealthChange -= OnPokemonHealthChange;
+                boundPokemon.Health.OnHealthChange -= OnPokemonHealthChange;
                 boundPokemon = null;
             }
 
@@ -201,6 +201,19 @@ namespace PokemonGame.Pokemon.UI
             }
 
             return HealthState.Low;
+        }
+
+        public IEnumerator WaitForHealthAnimationComplete()
+        {
+            bool done = false;
+            void OnComplete()
+            {
+                done = true;
+                OnHealthAnimationFinished -= OnComplete;
+            }
+
+            OnHealthAnimationFinished += OnComplete;
+            yield return new WaitUntil(() => done);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using PokemonGame.Move;
+using PokemonGame.Move.Models;
 using PokemonGame.Pokemon;
 using UnityEngine;
 
@@ -10,30 +11,20 @@ namespace PokemonGame.Battle.States
     /// Executes the move, waits for animations,
     /// and transitions to the next state.
     /// </summary>
-    public class PlayerTurnState : IBattleState
+    public sealed class PlayerTurnState : IBattleState
     {
-        private const float TurnDelay = 1f;
-
+        private const float TurnDelay = 0.5f;
         private readonly BattleStateMachine machine;
         private readonly MoveInstance move;
 
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="PlayerTurnState"/> class.
-        /// </summary>
-        /// <param name="machine">The active <see cref="BattleStateMachine"/> managing the battle flow.</param>
-        /// <param name="move">The move selected by the player to execute.</param>
         public PlayerTurnState(BattleStateMachine machine, MoveInstance move)
         {
             this.machine = machine;
             this.move = move;
         }
 
-        /// <summary>
-        /// Called when the state is entered.
-        /// Begins executing the player's attack turn.
-        /// </summary>
         public void Enter()
         {
             Battle.StartCoroutine(ExecuteTurn());
@@ -41,84 +32,30 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator ExecuteTurn()
         {
-            PokemonInstance player = Battle.PlayerPokemon;
-            PokemonInstance opponent = Battle.OpponentPokemon;
+            PokemonInstance user = Battle.PlayerPokemon;
+            PokemonInstance target = Battle.OpponentPokemon;
+            MoveContext context = new MoveContext(Battle, user, target, move);
 
-            Battle.DialogueBox.ShowDialogue($"{player.Definition.DisplayName} used {move.Definition.DisplayName}!");
-
-            yield return WaitForLineTypingComplete();
-
-            Battle.BattleAudio.PlayDoDamageNomral();
-            yield return Battle.BattleAnimation.PlayOpponentTakeDamage();
-
-            int damage = player.Stats.Attack(move, opponent);
-            opponent.Health.TakeDamage(damage);
-
-
-            yield return WaitForHealthAnimationComplete();
-
-            // Check if opponent fainted
-            if (opponent.Stats.HealthRemaining <= 0)
+            yield return Battle.DialogueBox.ShowDialogueAndWait($"{user.Definition.DisplayName} used {move.Definition.DisplayName}!");
+            yield return move.Definition.MoveEffect.PerformMoveSequence(context);
+  
+            // 6. Check for opponent fainted state
+            if (target.Health.CurrentHealth <= 0)
             {
                 yield return Battle.BattleAnimation.PlayOpponentDeath();
-                Battle.DialogueBox.ShowDialogue($"Wild {opponent.Definition.DisplayName} fainted!", manualArrowControl: true);
-                yield return WaitDialogueComplete();
+                yield return Battle.DialogueBox.ShowDialogueAndWait($"Wild {target.Definition.DisplayName} fainted!", manualArrowControl: true);
+                yield return Battle.DialogueBox.WaitForPlayerAdvance();
 
                 machine.SetState(new VictoryState(machine));
-                yield break;
+                yield break; // End the coroutine
             }
 
-            // Delay before next turn
             yield return new WaitForSecondsRealtime(TurnDelay);
             machine.SetState(new OpponentTurnState(machine));
         }
 
-        private IEnumerator WaitForLineTypingComplete()
-        {
-            bool done = false;
-
-            void OnComplete()
-            {
-                done = true;
-                Battle.DialogueBox.OnLineTypingComplete -= OnComplete;
-            }
-
-            Battle.DialogueBox.OnLineTypingComplete += OnComplete;
-            yield return new WaitUntil(() => done);
-        }
-
-        private IEnumerator WaitDialogueComplete()
-        {
-            bool done = false;
-
-            void OnComplete()
-            {
-                done = true;
-                Battle.DialogueBox.OnDialogueFinished -= OnComplete;
-            }
-
-            Battle.DialogueBox.OnDialogueFinished += OnComplete;
-            yield return new WaitUntil(() => done);
-        }
-
-        private IEnumerator WaitForHealthAnimationComplete()
-        {
-            bool done = false;
-
-            void OnComplete()
-            {
-                done = true;
-                Battle.OpponentBattleHud.HealthBar.OnHealthAnimationFinished -= OnComplete;
-            }
-
-            Battle.OpponentBattleHud.HealthBar.OnHealthAnimationFinished += OnComplete;
-            yield return new WaitUntil(() => done);
-        }
-
-
-
+        // IBattleState members required but not used in this state's flow
         public void Update() { }
-
         public void Exit() { }
     }
 }

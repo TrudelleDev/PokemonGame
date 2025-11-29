@@ -44,6 +44,9 @@ namespace PokemonGame.Battle
         [SerializeField, Required, Tooltip("Animator controlling the opponent's HUD display.")]
         private Animator opponentHudAnimator;
 
+    //    [SerializeField, Required]
+        public CoverOffsetAnimator coverOffsetAnimator;
+
         /// <summary>
         /// Flag used by the Pokéball throw sequence to signal when to start the animation.
         /// Set externally via <see cref="AnimationEventRelay"/>.
@@ -53,6 +56,11 @@ namespace PokemonGame.Battle
         // ─────────────────────────────
         //   Opponent Animations
         // ─────────────────────────────
+
+        public IEnumerator PlayStatusEffect()
+        {
+            yield return coverOffsetAnimator.AnimateOffsetCoroutine(new Vector2(0f, 0f), new Vector2(0f, 01f), 1f);
+        }
 
         /// <summary>
         /// Plays the opponent's platform enter animation.
@@ -110,7 +118,7 @@ namespace PokemonGame.Battle
         {
             yield return new WaitUntil(() => ThrowPokeball);
             throwBallAnimator.Play(ThrowState);
-            yield return AnimationUtility.WaitForAnimation(throwBallAnimator, ThrowState);
+            yield return AnimationUtility.WaitForAnimationSafe(throwBallAnimator, ThrowState);
             ThrowPokeball = false;
         }
 
@@ -151,13 +159,9 @@ namespace PokemonGame.Battle
         /// </summary>
         private IEnumerator PlayAnimation(Animator animator, int state)
         {
-            if (animator == null)
-            {
-                yield break;
-            }
-
-            animator.Play(state);
-            yield return AnimationUtility.WaitForAnimation(animator, state);
+            animator.Play(state, 0, 0f);
+            yield return null; // WAIT 1 FRAME or Animator won't update state
+            yield return AnimationUtility.WaitForAnimationSafe(animator, state);
         }
     }
 }

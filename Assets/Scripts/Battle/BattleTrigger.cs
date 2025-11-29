@@ -2,6 +2,7 @@
 using PokemonGame.Audio;
 using PokemonGame.Party;
 using PokemonGame.Pokemon;
+using PokemonGame.Pokemon.Models;
 using PokemonGame.Tile;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -74,7 +75,7 @@ namespace PokemonGame.Battle
                 }
             }
 
-            return null;
+            return pokemonEntries[0];
         }
     }
 }

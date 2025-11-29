@@ -152,6 +152,31 @@ namespace PokemonGame.Dialogue
             RestartCoroutine(ref dialogueCoroutine, RunDialogueSequence(manualArrowControl));
         }
 
+        public IEnumerator ShowDialogueAndWait(string text, bool instant = false, bool manualArrowControl = false)
+        {
+            ShowDialogue(text, instant, manualArrowControl);
+            yield return WaitForTyping();
+        }
+
+        /// <summary>
+        /// Waits until the current line of dialogue has finished typing out.
+        /// </summary>
+        private IEnumerator WaitForTyping()
+        {
+            bool done = false;
+
+            // Local function to handle the event
+            void OnComplete()
+            {
+                done = true;
+                OnLineTypingComplete -= OnComplete;
+            }
+
+            OnLineTypingComplete += OnComplete;
+            yield return new WaitUntil(() => done);
+        }
+
+
         /// <summary>
         /// Handles dialogue flow manually controlled by external logic.
         /// Displays an arrow when waiting for player input between lines.
@@ -207,6 +232,13 @@ namespace PokemonGame.Dialogue
                 dialogueText.text += letter;
                 yield return delay;
             }
+        }
+
+
+        public IEnumerator WaitForPlayerAdvance()
+        {
+            // Then wait for key press
+            yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
         }
 
         /// <summary>

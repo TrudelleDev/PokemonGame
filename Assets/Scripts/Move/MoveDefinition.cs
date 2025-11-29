@@ -1,3 +1,4 @@
+using PokemonGame.Move.Effects;
 using PokemonGame.Move.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -19,6 +20,9 @@ namespace PokemonGame.Move
         [SerializeField, Tooltip("Classification of the move: type and category.")]
         private MoveClassification classification;
 
+        [SerializeField]
+        private MoveEffect moveEffect;
+
         [SerializeField, Required, TextArea(5, 10)]
         [Tooltip("Description or effect text shown to the player.")]
         private string effect;
@@ -26,6 +30,8 @@ namespace PokemonGame.Move
         public string DisplayName => displayName;
         public MoveInfo MoveInfo => moveInfo;
         public MoveClassification Classification => classification;
+
+        public MoveEffect MoveEffect => moveEffect;
         public string Effect => effect;
     }
 }

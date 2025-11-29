@@ -72,7 +72,7 @@ namespace PokemonGame.Party
             }
 
             BoundPokemon = pokemon;
-            pokemon.Stats.OnHealthChange += OnPokemonHealthChange;
+            pokemon.Health.OnHealthChange += OnPokemonHealthChange;
             SetSlotVisibility(true);
             UpdateDisplay(pokemon);
         }
@@ -113,8 +113,8 @@ namespace PokemonGame.Party
         {
             nameText.text = pokemon.Definition.DisplayName;
             levelText.text = pokemon.Experience.Level.ToString();
-            healthRemaining.text = pokemon.Stats.HealthRemaining.ToString();
-            healthTotal.text = pokemon.Stats.MaxHealth.ToString();
+            healthRemaining.text = pokemon.Health.CurrentHealth.ToString();
+            healthTotal.text = pokemon.Health.MaxHealth.ToString();
 
             genderSymbol.Bind(pokemon);
             healthBar.Bind(pokemon);

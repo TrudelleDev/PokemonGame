@@ -11,7 +11,7 @@ namespace PokemonGame.Move.Models
     [Serializable]
     public struct LevelUpMove
     {
-        [SerializeField, Required, Range(1, 100)]
+        [SerializeField, Range(1, 100)]
         [Tooltip("The level at which the Pokémon learns this move.")]
         private int level;
 

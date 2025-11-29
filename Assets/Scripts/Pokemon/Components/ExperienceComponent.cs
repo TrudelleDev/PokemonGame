@@ -16,7 +16,6 @@ namespace PokemonGame.Pokemon.Components
             Level = level;
             CurrentExp = GetExpForCurrentLevel();
         }
-
        
         public void AddExperience(int amount)
         {

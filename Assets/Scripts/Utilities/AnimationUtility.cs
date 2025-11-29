@@ -5,19 +5,25 @@ namespace PokemonGame.Utilities
 {
     public static class AnimationUtility
     {
-        public static IEnumerator WaitForAnimation(Animator animator, int stateHash)
+        public static IEnumerator WaitForAnimationSafe(Animator animator, int stateHash, float fallback = 3f)
         {
-            // Wait until animator enters the target state
-            while (!animator.GetCurrentAnimatorStateInfo(0).shortNameHash.Equals(stateHash))
+            if (animator == null) yield break;
+
+            float timer = 0f;
+
+            // Wait until animator enters the state OR timeout
+            while (animator.GetCurrentAnimatorStateInfo(0).shortNameHash != stateHash && timer < fallback)
             {
+                timer += Time.unscaledDeltaTime;
                 yield return null;
             }
 
-            // Wait until the animation finishes
+            // Wait until animation finishes OR timeout
+            timer = 0f;
             AnimatorStateInfo info = animator.GetCurrentAnimatorStateInfo(0);
-
-            while (info.shortNameHash == stateHash && info.normalizedTime < 1f)
+            while (info.shortNameHash == stateHash && info.normalizedTime < 1f && timer < fallback)
             {
+                timer += Time.unscaledDeltaTime;
                 yield return null;
                 info = animator.GetCurrentAnimatorStateInfo(0);
             }

@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
   m_Name: Static_Ability
   m_EditorClassIdentifier: 
-  id: 1
   displayName: Static
-  description: "Contact with the Pok\xE9mon may cause paralysis."
+  description: Paralyzes on contact.

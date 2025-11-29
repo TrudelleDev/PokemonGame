@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Charmander_Pokemon
   m_EditorClassIdentifier: 
   displayName: Charmander
-  pokedexNumber: 0
+  pokedexNumber: 3
   types:
     firstType: {fileID: 11400000, guid: e9d851052d965b048912a5a2289d1133, type: 2}
     hasSecondType: 0
@@ -32,7 +32,11 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3bce7b1ad9dc3294ea0066ed703e5f37, type: 2}
   levelUpMoves:
   - level: 1
-    moveDefinition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+    moveDefinition: {fileID: 11400000, guid: da335cd41c2a2174283be503b9f2e863, type: 2}
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: f89585e4863edbd4fba3a99dec26aca9, type: 2}
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: dd61d50a498206a489ed12d0f8c94188, type: 2}
   cryClip: {fileID: 8300000, guid: bf8422bc3731b9f4e9537937537cedf2, type: 3}
   sprites:
     frontSprite: {fileID: 21300000, guid: b4010f8690d729a4a9ad516a1ac9d144, type: 3}

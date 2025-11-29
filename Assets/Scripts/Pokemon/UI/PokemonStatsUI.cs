@@ -45,7 +45,7 @@ namespace PokemonGame.Pokemon.UI
         {
             healthBar.Bind(pokemon);
 
-            healthText.text = $"{pokemon.Stats.HealthRemaining}/{pokemon.Stats.Core.HealthPoint}";
+            healthText.text = $"{pokemon.Health.CurrentHealth}/{pokemon.Health.MaxHealth}";
             attackText.text = pokemon.Stats.Core.Attack.ToString();
             defenseText.text = pokemon.Stats.Core.Defense.ToString();
             specialAttackText.text = pokemon.Stats.Core.SpecialAttack.ToString();

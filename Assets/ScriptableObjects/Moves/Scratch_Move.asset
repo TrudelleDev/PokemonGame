@@ -10,14 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8faac129f641cdb4a8297f0e296fc9a4, type: 3}
-  m_Name: Thunderbolt
+  m_Name: Scratch_Move
   m_EditorClassIdentifier: 
-  displayName: Thunderbolt
+  displayName: Scratch
   moveInfo:
-    power: 90
+    power: 40
     accuracy: 100
-    powerPoint: 15
+    powerPoint: 35
   classification:
-    typeDefinition: {fileID: 11400000, guid: ef179e92ffacf434f800fcb5bdda53e2, type: 2}
-    category: 1
-  effect: A strong electrical attack that may also leave the foe paralyzed.
+    typeDefinition: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
+    category: 0
+  moveEffect: {fileID: 11400000, guid: fab21e12a6fc2224396406094f0f9bc3, type: 2}
+  effect: Hard, pointed, and sharp claws rake the foe.

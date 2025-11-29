@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
   m_Name: Blaze_Ability
   m_EditorClassIdentifier: 
-  id: 3
   displayName: Blaze
-  description: "Powers up Fire-type moves when the Pok\xE9mon\u2019s HP is low."
+  description: Ups Fire moves in a pinch.

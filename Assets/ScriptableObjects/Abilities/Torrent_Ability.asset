@@ -12,6 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 502365a8194144a468d93a72783a54c5, type: 3}
   m_Name: Torrent_Ability
   m_EditorClassIdentifier: 
-  id: 4
   displayName: Torrent
-  description: "Powers up Water-type moves when the Pok\xE9mon's HP is low."
+  description: Ups Water moves in a pinch.

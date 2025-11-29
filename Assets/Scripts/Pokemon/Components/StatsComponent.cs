@@ -6,8 +6,8 @@ using UnityEngine;
 namespace PokemonGame.Pokemon.Components
 {
     /// <summary>
-    /// Manages all calculated statistics for a Pokémon, including IVs, EVs, 
-    /// and derived combat stats.
+    /// Manages a Pokémon's calculated statistics (IVs, EVs, core stats) and
+    /// temporary stat stage modifications for battle.
     /// </summary>
     public class StatsComponent
     {
@@ -17,6 +17,7 @@ namespace PokemonGame.Pokemon.Components
         public PokemonStats IV { get; private set; }
         public PokemonStats EV { get; private set; }
         public PokemonStats Core { get; private set; }
+        public StatStageComponent StatStage { get; private set; }
 
         public StatsComponent(int level, PokemonDefinition definition)
         {
@@ -26,28 +27,34 @@ namespace PokemonGame.Pokemon.Components
             IV = StatsCalculator.GenerateIndividualValues();
             EV = new PokemonStats(0, 0, 0, 0, 0, 0);
             Core = StatsCalculator.CalculateCoreStats(definition, IV, EV, level);
+
+            StatStage = new StatStageComponent(Core);
+            StatStage.ResetStages();
         }
 
-        public void UpdateStats()
-        {
-            Core = StatsCalculator.CalculateCoreStats(definition, IV, EV, level);
-        }
-
-        /// <summary>
-        /// Calculates the raw damage a move would deal before applying health reduction.
-        /// </summary>
-        /// <param name="move">The move being used.</param>
-        /// <param name="target">The target Pokémon instance.</param>
-        /// <returns>The pre–health-application damage value.</returns>
-        public int Attack(MoveInstance move, PokemonInstance target)
+        public int CalculateDamage(PokemonInstance user, PokemonInstance target, MoveInstance move)
         {
             bool isPhysical = move.Definition.Classification.Category == MoveCategory.Physical;
 
-            int atk = isPhysical ? Core.Attack : Core.SpecialAttack;
-            int def = isPhysical ? target.Stats.Core.Defense : target.Stats.Core.SpecialDefense;
+            int attackStat = isPhysical ? user.Stats.StatStage.Modified.Attack : user.Stats.StatStage.Modified.SpecialAttack;
+            int defenseStat = isPhysical ? target.Stats.StatStage.Modified.Defense : target.Stats.StatStage.Modified.SpecialDefense;
 
-            float baseDamage = move.Definition.MoveInfo.Power * ((float)atk / def);
-            return Mathf.Max(1, Mathf.RoundToInt(baseDamage)) / 10;
+            float baseDamage = (((2f * user.Experience.Level + 10f) / 250f)
+                                * ((float)attackStat / defenseStat) * move.Definition.MoveInfo.Power + 2f);
+
+            float finalDamage = baseDamage * UnityEngine.Random.Range(0.85f, 1f);
+
+            return Mathf.Max(1, Mathf.RoundToInt(finalDamage));
+        }
+
+
+        /// <summary>
+        /// Recalculate core stats (e.g., after level up) and updates modified stats.
+        /// </summary>
+        public void UpdateCoreStats()
+        {
+            Core = StatsCalculator.CalculateCoreStats(definition, IV, EV, level);
+            StatStage.UpdateModifiedStats();
         }
     }
 }

@@ -131,6 +131,7 @@ namespace PokemonGame.Battle
             playerBattleHud.Bind(playerPokemon);
             opponentBattleHud.Bind(opponentPokemon);
 
+
             stateMachine = new BattleStateMachine(this);
 
             moveSelectionController.Initialize(stateMachine, playerPokemon.Moves.Moves);

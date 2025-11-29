@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 170287bc9c5e6b343a557bf8d1ea1c38, type: 3}
-  m_Name: Fire_Definition
+  m_Script: {fileID: 11500000, guid: 62c8d0e4435def942aff5e69d550a17d, type: 3}
+  m_Name: DefenseDrop_Effect
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1960296770, guid: d74433f63ac29cd47ab4759cab224051, type: 3}
+  effectSound: {fileID: 8300000, guid: 9051c644c4fc7464c92d8f8e955393eb, type: 3}
+  targetStat: 4
+  stages: -1
+  affected: 1
