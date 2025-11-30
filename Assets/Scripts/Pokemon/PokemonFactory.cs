@@ -1,5 +1,4 @@
 ﻿using System;
-using PokemonGame.Ability;
 using PokemonGame.Move;
 using PokemonGame.Move.Models;
 using PokemonGame.Nature;
@@ -32,13 +31,10 @@ namespace PokemonGame.Pokemon
                 return null;
             }
 
-            int abilityCount = pokemonDefinition.PossibleAbilities.Length;
-
             NatureDefinition natureDefinition = pokemonDefinition.PossibleNatures.GetRandomNature();
-            AbilityDefinition abilityDefinition = pokemonDefinition.PossibleAbilities[UnityEngine.Random.Range(0, abilityCount)];
             MoveDefinition[] moveDefinitions = GetNewestLevelUpMoves(pokemonDefinition.LevelUpMoves);
 
-            return new PokemonInstance(level, pokemonDefinition, natureDefinition, abilityDefinition, moveDefinitions);
+            return new PokemonInstance(level, pokemonDefinition, natureDefinition, moveDefinitions);
         }
 
         private static MoveDefinition[] GetNewestLevelUpMoves(LevelUpMove[] levelUpMoves)

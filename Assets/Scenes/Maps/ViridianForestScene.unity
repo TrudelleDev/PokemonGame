@@ -9806,7 +9806,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!61 &918419005
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -9884,7 +9884,7 @@ MonoBehaviour:
   spawnLocationId: 5
   sceneTransition: 1
   transitionSfx: {fileID: 8300000, guid: 5b7c48ba6743c404e9510f369cc6d653, type: 3}
-  targetSceneName: GateHouseScene
+  targetSceneName: 
 --- !u!1 &961395896
 GameObject:
   m_ObjectHideFlags: 0

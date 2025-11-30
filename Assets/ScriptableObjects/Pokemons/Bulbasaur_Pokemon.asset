@@ -35,6 +35,8 @@ MonoBehaviour:
     moveDefinition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
   - level: 1
     moveDefinition: {fileID: 11400000, guid: f89585e4863edbd4fba3a99dec26aca9, type: 2}
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: d8d1806eb21039a4cb95c4efe541840f, type: 2}
   cryClip: {fileID: 0}
   sprites:
     frontSprite: {fileID: 21300000, guid: 3b471332e2464c942a6d82165b3e3c3a, type: 3}

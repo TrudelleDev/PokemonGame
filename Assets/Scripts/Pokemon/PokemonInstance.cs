@@ -1,4 +1,3 @@
-using PokemonGame.Ability;
 using PokemonGame.Move;
 using PokemonGame.Nature;
 using PokemonGame.Pokemon.Components;
@@ -19,9 +18,8 @@ namespace PokemonGame.Pokemon
         public GenderComponent Gender { get; }
         public PokemonDefinition Definition { get; }
         public NatureInstance Nature { get; }
-        public AbilityInstance Ability { get; }
 
-        public PokemonInstance(int level, PokemonDefinition definition, NatureDefinition natureDefinition, AbilityDefinition abilityDefinition, MoveDefinition[] moveDefinitions)
+        public PokemonInstance(int level, PokemonDefinition definition, NatureDefinition natureDefinition, MoveDefinition[] moveDefinitions)
         {
             Definition = definition;
 
@@ -31,7 +29,6 @@ namespace PokemonGame.Pokemon
             Gender = new GenderComponent(level);
             Health = new HealthComponent(Stats.Core.HealthPoint);
             Experience = new ExperienceComponent(level);
-            Ability = new AbilityInstance(abilityDefinition);
             Nature = new NatureInstance(natureDefinition);
         }
     }

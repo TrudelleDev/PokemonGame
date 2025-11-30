@@ -1,4 +1,3 @@
-using PokemonGame.Ability;
 using PokemonGame.Pokemon;
 using PokemonGame.Pokemon.UI;
 using Sirenix.OdinInspector;
@@ -8,7 +7,7 @@ namespace PokemonGame.Summary
 {
     /// <summary>
     /// Displays detailed Pokémon stats and ability information in the summary screen.
-    /// Supports dynamic data binding and clears the UI when the Pokémon or its ability data is missing or invalid.
+    /// Supports dynamic data binding and clears the UI when the Pokémon data is missing or invalid.
     /// </summary>
     public class SummarySkillTab : MonoBehaviour
     {
@@ -19,19 +18,14 @@ namespace PokemonGame.Summary
         [SerializeField]
         private ExperienceUI experienceUI;
 
-
-        [SerializeField, Required]
-        [Tooltip("Group containing the Pokémon's ability name and effect description.")]
-        private AbilityUI abilityUI;
-
         /// <summary>
         /// Binds the specified Pokémon data to the stat and ability UI groups.
-        /// Clears the UI if the Pokémon or its ability data is missing or invalid.
+        /// Clears the UI if the Pokémon data is missing or invalid.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
         public void Bind(PokemonInstance pokemon)
         {
-            if (pokemon?.Definition == null || pokemon?.Ability?.Definition == null)
+            if (pokemon?.Definition == null)
             {
                 Unbind();
                 return;
@@ -39,7 +33,6 @@ namespace PokemonGame.Summary
 
             statsUI.Bind(pokemon);
             experienceUI.Bind(pokemon);
-            abilityUI.Bind(pokemon.Ability);
         }
 
         /// <summary>
@@ -49,7 +42,6 @@ namespace PokemonGame.Summary
         {
             statsUI.Unbind();
             experienceUI?.Unbind();
-            abilityUI.Unbind();
         }
     }
 }

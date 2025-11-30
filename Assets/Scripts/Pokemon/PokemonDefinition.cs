@@ -1,4 +1,3 @@
-using PokemonGame.Ability;
 using PokemonGame.Move.Models;
 using PokemonGame.Nature;
 using PokemonGame.Pokemon.Models;
@@ -41,11 +40,6 @@ namespace PokemonGame.Pokemon
         [SerializeField, Required, Tooltip("All possible natures this Pokémon can have.")]
         private NatureDatabase possibleNatures;
 
-        // ------------- Abilities -------------
-        [BoxGroup("Abilities")]
-        [SerializeField, Required, Tooltip("All abilities this Pokémon can possibly have.")]
-        private AbilityDefinition[] possibleAbilities;
-
         // ------------- Moves -------------
         [BoxGroup("Moves")]
         [SerializeField, Tooltip("All moves this Pokémon can learn when leveling up.")]
@@ -71,7 +65,6 @@ namespace PokemonGame.Pokemon
         public PokemonType Types => types;
         public PokemonGenderRatio GenderRatio => genderRatio;
         public PokemonStats BaseStats => baseStats;
-        public AbilityDefinition[] PossibleAbilities => possibleAbilities;
         public NatureDatabase PossibleNatures => possibleNatures;
         public LevelUpMove[] LevelUpMoves => levelUpMoves;
         public AudioClip CryClip => cryClip;
