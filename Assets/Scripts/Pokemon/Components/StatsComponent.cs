@@ -1,6 +1,8 @@
-﻿using PokemonGame.Move;
+﻿using System.Linq;
+using PokemonGame.Move;
 using PokemonGame.Move.Enums;
 using PokemonGame.Pokemon.Models;
+using PokemonGame.Type;
 using UnityEngine;
 
 namespace PokemonGame.Pokemon.Components
@@ -32,22 +34,7 @@ namespace PokemonGame.Pokemon.Components
             StatStage.ResetStages();
         }
 
-        public int CalculateDamage(PokemonInstance user, PokemonInstance target, MoveInstance move)
-        {
-            bool isPhysical = move.Definition.Classification.Category == MoveCategory.Physical;
-
-            int attackStat = isPhysical ? user.Stats.StatStage.Modified.Attack : user.Stats.StatStage.Modified.SpecialAttack;
-            int defenseStat = isPhysical ? target.Stats.StatStage.Modified.Defense : target.Stats.StatStage.Modified.SpecialDefense;
-
-            float baseDamage = (((2f * user.Experience.Level + 10f) / 250f)
-                                * ((float)attackStat / defenseStat) * move.Definition.MoveInfo.Power + 2f);
-
-            float finalDamage = baseDamage * UnityEngine.Random.Range(0.85f, 1f);
-
-            return Mathf.Max(1, Mathf.RoundToInt(finalDamage));
-        }
-
-
+      
         /// <summary>
         /// Recalculate core stats (e.g., after level up) and updates modified stats.
         /// </summary>

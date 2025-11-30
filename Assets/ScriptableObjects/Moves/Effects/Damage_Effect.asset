@@ -12,4 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c6623f8a0883404ca80cb65221da67e, type: 3}
   m_Name: Damage_Effect
   m_EditorClassIdentifier: 
-  isPhysical: 1
+  normalSound: {fileID: 8300000, guid: a5e2d8c2054d39c4ab96f153d0315178, type: 3}
+  superEffectiveSound: {fileID: 8300000, guid: f9cf4cdcda60a5e41a40470036b59d54, type: 3}
+  notVeryEffectiveSound: {fileID: 8300000, guid: 8f8696651f8b9ef46b5018218ba22b91, type: 3}
+  PreHitDelay: 0.5

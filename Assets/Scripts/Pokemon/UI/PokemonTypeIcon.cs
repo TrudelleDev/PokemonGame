@@ -58,8 +58,8 @@ namespace PokemonGame.Pokemon.UI
         {
             return slot switch
             {
-                PokemonTypeSlot.Primary => pokemon.Definition?.Types.FirstType?.Sprite,
-                PokemonTypeSlot.Secondary => pokemon.Definition?.Types.SecondType?.Sprite,
+                PokemonTypeSlot.Primary => pokemon.Definition?.Types.FirstType?.Icon,
+                PokemonTypeSlot.Secondary => pokemon.Definition?.Types.SecondType?.Icon,
                 _ => null
             };
         }

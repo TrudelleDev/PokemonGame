@@ -4,29 +4,45 @@ using PokemonGame.Move.Enums;
 using PokemonGame.Move.Models;
 using PokemonGame.Pokemon.Components;
 using PokemonGame.Pokemon.Enums;
+using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Move.Effects
 {
+    /// <summary>
+    /// Applies a stat stage increase or decrease to either the user or the target,
+    /// and handles playing the associated animation, sound, and dialogue.
+    /// </summary>
     [CreateAssetMenu(menuName = "PokemonGame/Move/Effects/Stat Change Effect")]
     public class StatChangeEffect : MoveEffect
     {
-        [SerializeField, Tooltip("Which stat to modify")]
+        [SerializeField, Required, Tooltip("Sound to play when the stat change occurs.")]
+        protected AudioClip effectSound;
+
+        [SerializeField, Tooltip("Which stat to modify.")]
         private PokemonStat targetStat;
 
-        [SerializeField, Range(StatStageComponent.MinStage, StatStageComponent.MaxStage)]
-        [Tooltip("Positive = boost, Negative = drop")]
-        private int stages;
-
-        [SerializeField, Tooltip("Whether the stat change affects the user or the target")]
+        [SerializeField, Tooltip("Whether the stat change affects the user or the target.")]
         private StatChangeTarget affected;
 
-        protected override void ApplyDamage(MoveContext context)
+        [SerializeField, Range(StatStageComponent.MinStage, StatStageComponent.MaxStage)]
+        [Tooltip("Positive = boost, Negative = drop.")]
+        private int stages;
+
+        /// <summary>
+        /// Applies the actual stat stage change to the correct Pokémon.
+        /// </summary>
+        /// <param name="context">Current move execution context.</param>
+        protected override void ApplyEffect(MoveContext context)
         {
             var pokemon = affected == StatChangeTarget.User ? context.User : context.Target;
             pokemon.Stats.StatStage.ModifyStat(targetStat, stages);
         }
 
+        /// <summary>
+        /// Returns the text describing the stat change for the battle dialogue.
+        /// </summary>
+        /// <param name="context">Current move execution context.</param>
         protected override string GetEffectText(MoveContext context)
         {
             var pokemon = affected == StatChangeTarget.User ? context.User : context.Target;
@@ -34,17 +50,28 @@ namespace PokemonGame.Move.Effects
             return $"{pokemon.Definition.DisplayName}'s {targetStat} {action}!";
         }
 
-        protected override IEnumerator PlayHitAnimation(MoveContext context)
+        /// <summary>
+        /// Plays the status-effect animation used for stat changes.
+        /// </summary>
+        /// <param name="context">Current move execution context.</param>
+        protected override IEnumerator PlayEffectAnimation(MoveContext context)
         {
             yield return context.Battle.BattleAnimation.PlayStatusEffect();
         }
 
+        /// <summary>
+        /// Executes the full sequence for a stat change move, including sound,
+        /// animation, applying the effect, waiting for required animations,
+        /// and showing the resulting battle dialogue.
+        /// </summary>
+        /// <param name="context">Current move execution context.</param>
         public override IEnumerator PerformMoveSequence(MoveContext context)
         {
             AudioManager.Instance.PlaySFX(effectSound);
-            yield return PlayHitAnimation(context);
-            
-            ApplyDamage(context);
+
+            yield return PlayEffectAnimation(context);
+            ApplyEffect(context);
+
             yield return WaitForHealthAnimation(context);
 
             string battleText = GetEffectText(context);

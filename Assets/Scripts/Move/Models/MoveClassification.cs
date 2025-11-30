@@ -1,5 +1,6 @@
 ﻿using System;
 using PokemonGame.Move.Enums;
+using PokemonGame.Type;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

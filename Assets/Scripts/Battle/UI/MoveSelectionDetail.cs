@@ -34,7 +34,7 @@ namespace PokemonGame.Battle.UI
             }
 
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
-            typeImage.sprite = move.Definition.Classification.TypeDefinition.Sprite;
+            typeImage.sprite = move.Definition.Classification.TypeDefinition.Icon;
         }
 
         /// <summary>

@@ -11,9 +11,6 @@ namespace PokemonGame.Move.Effects
     /// </summary>
     public abstract class MoveEffect : ScriptableObject
     {
-        [SerializeField, Required]
-        protected AudioClip effectSound;
-
         /// <summary>
         /// Waits for the target's health bar animation to complete before proceeding.
         /// Overridable to allow specific effects to skip the wait.
@@ -34,13 +31,13 @@ namespace PokemonGame.Move.Effects
         /// Defines the logic for applying damage, stat changes, or other primary effects.
         /// </summary>
         /// <param name="context">The context containing the user, target, and move data.</param>
-        protected abstract void ApplyDamage(MoveContext context);
+        protected abstract void ApplyEffect(MoveContext context);
 
         /// <summary>
         /// Plays the visual and audio feedback when the move connects.
         /// </summary>
         /// <param name="context">The context containing the user, target, and move data.</param>
-        protected abstract IEnumerator PlayHitAnimation(MoveContext context);
+        protected abstract IEnumerator PlayEffectAnimation(MoveContext context);
 
         /// <summary>
         /// The main coroutine that orchestrates the entire sequence of the move's effect.

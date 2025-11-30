@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Bulbasaur_Pokemon
   m_EditorClassIdentifier: 
   displayName: Bulbasaur
-  pokemonID: 1
+  pokedexNumber: 0
   types:
     firstType: {fileID: 11400000, guid: dce2d6a87187447458f416b8ca1fd749, type: 2}
     hasSecondType: 1
@@ -27,14 +27,17 @@ MonoBehaviour:
     specialAttack: 65
     specialDefense: 65
     speed: 45
+  possibleNatures: {fileID: 11400000, guid: 7d9e871d70f92ed48925b4ab36398143, type: 2}
   possibleAbilities:
   - {fileID: 11400000, guid: 1290cc294ee1cd7419471f292492dda3, type: 2}
-  possibleNatures:
-  - {fileID: 0}
-  levelUpMoves: []
+  levelUpMoves:
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: 1fa1d44aad106b3459faa41ffae5a9d0, type: 2}
+  - level: 1
+    moveDefinition: {fileID: 11400000, guid: f89585e4863edbd4fba3a99dec26aca9, type: 2}
   cryClip: {fileID: 0}
   sprites:
-    frontSprite: {fileID: 0}
-    backSprite: {fileID: 0}
-    menuSprite: {fileID: 0}
-  menuSpriteOverrider: {fileID: 0}
+    frontSprite: {fileID: 21300000, guid: 3b471332e2464c942a6d82165b3e3c3a, type: 3}
+    backSprite: {fileID: 21300000, guid: cdbcb3585c848cd44ae4326439c96c63, type: 3}
+    menuSprite: {fileID: 918225614, guid: f46eb03f52dcc894980e3e7ff42bff71, type: 3}
+  menuSpriteOverrider: {fileID: 22100000, guid: c5cf2d8e915bcf9468d985f7cc3f6060, type: 2}

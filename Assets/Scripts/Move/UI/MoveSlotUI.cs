@@ -41,7 +41,7 @@ namespace PokemonGame.Move.UI
             nameText.text = move.Definition.DisplayName;
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
             powerPointText.alignment = TextAlignmentOptions.Right;
-            typeImage.sprite = move.Definition.Classification.TypeDefinition.Sprite;
+            typeImage.sprite = move.Definition.Classification.TypeDefinition.Icon;
             typeImage.enabled = true;
         }
 
