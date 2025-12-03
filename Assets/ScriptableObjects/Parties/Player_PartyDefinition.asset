@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: Player_PartyDefinition
   m_EditorClassIdentifier: 
   members:
-  - pokemonDefinition: {fileID: 11400000, guid: 4d50b2757f173ba42b4e3100b0273db7, type: 2}
-    level: 3
+  - pokemonDefinition: {fileID: 11400000, guid: ac555bb946d60034291dd1b655cee461, type: 2}
+    level: 47
+  - pokemonDefinition: {fileID: 11400000, guid: 96e1567f079a30c4e80295bf0e0571c5, type: 2}
+    level: 50

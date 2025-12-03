@@ -19,5 +19,6 @@ MonoBehaviour:
     powerPoint: 15
   classification:
     typeDefinition: {fileID: 11400000, guid: ef179e92ffacf434f800fcb5bdda53e2, type: 2}
-    category: 1
+    categoryDefinition: {fileID: 11400000, guid: 8b7beadc6f1f84d4b9689ba677608639, type: 2}
+  moveEffect: {fileID: 11400000, guid: fab21e12a6fc2224396406094f0f9bc3, type: 2}
   effect: A strong electrical attack that may also leave the foe paralyzed.

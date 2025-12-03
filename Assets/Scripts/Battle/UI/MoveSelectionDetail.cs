@@ -8,7 +8,8 @@ namespace PokemonGame.Battle.UI
 {
     /// <summary>
     /// Displays detailed information about the currently selected move,
-    /// including its remaining Power Points (PP) and elemental type icon.
+    /// including its remaining Power Points (PP), elemental type icon,
+    /// and damage category icon (Physical, Special, or Status).
     /// </summary>
     [DisallowMultipleComponent]
     public class MoveSelectionDetail : MonoBehaviour
@@ -21,8 +22,13 @@ namespace PokemonGame.Battle.UI
         [Tooltip("Image showing the move's elemental type (e.g., Fire, Water, Grass).")]
         private Image typeImage;
 
+        [SerializeField, Required]
+        [Tooltip("Image showing the move's damage category icon (Physical, Special, or Status).")]
+        private Image categoryImage;
+
         /// <summary>
-        /// Binds the given move data to the detail panel, updating its PP and type visuals.
+        /// Binds the given move data to the detail panel, updating PP, type icon, 
+        /// and damage category icon.
         /// </summary>
         /// <param name="move">The move to display information for.</param>
         public void Bind(MoveInstance move)
@@ -35,15 +41,17 @@ namespace PokemonGame.Battle.UI
 
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
             typeImage.sprite = move.Definition.Classification.TypeDefinition.Icon;
+            categoryImage.sprite = move.Definition.Classification.CategoryDefinition.Icon;
         }
 
         /// <summary>
-        /// Clears the panel, removing all displayed move data.
+        /// Clears the panel, removing all displayed move information.
         /// </summary>
         public void Unbind()
         {
             powerPointText.text = string.Empty;
             typeImage.sprite = null;
+            categoryImage.sprite = null;
         }
     }
 }

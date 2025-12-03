@@ -330,8 +330,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -62, y: 2}
-  m_SizeDelta: {x: 26, y: 26}
+  m_AnchoredPosition: {x: -61.7, y: 5}
+  m_SizeDelta: {x: 32, y: 32}
   m_Pivot: {x: 0.49999982, y: 0.4999998}
 --- !u!222 &1893231397257888319
 CanvasRenderer:
@@ -361,7 +361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: -1717675739, guid: 0a91a631dc900494ba0858d000706b18, type: 3}
+  m_Sprite: {fileID: 709742653, guid: 768372d047762d24cb8138b18a356171, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -931,7 +931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbaba07de1e876a4f80de7a94cd7b246, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  genderText: {fileID: 1754557111849470586}
 --- !u!1 &5797828923575825842
 GameObject:
   m_ObjectHideFlags: 0
@@ -1041,7 +1040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23.446, y: 2.8773}
+  m_AnchoredPosition: {x: -23.31, y: 4.5873}
   m_SizeDelta: {x: 51.107, y: 8}
   m_Pivot: {x: 0.5, y: 0.609658}
 --- !u!222 &6107698116173094435
@@ -1072,7 +1071,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Pikachu
+  m_text: Rgydon
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aea8419f4cec01d4e8ce242f5cdc851d, type: 2}
   m_sharedMaterial: {fileID: -1632069722459322501, guid: aea8419f4cec01d4e8ce242f5cdc851d, type: 2}

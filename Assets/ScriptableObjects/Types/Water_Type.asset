@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170287bc9c5e6b343a557bf8d1ea1c38, type: 3}
   m_Name: Water_Type
   m_EditorClassIdentifier: 
-  sprite: {fileID: 1531899668, guid: d74433f63ac29cd47ab4759cab224051, type: 3}
+  icon: {fileID: 1531899668, guid: d74433f63ac29cd47ab4759cab224051, type: 3}
+  effectivenessGroups:
+    superEffectiveAgainst: []
+    notEffectiveAgainst: []
+    immuneAgainst: []
