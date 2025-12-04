@@ -26,6 +26,8 @@ namespace PokemonGame.Party
         /// </summary>
         public PokemonInstance SelectedPokemon { get; private set; }
 
+        public int SelectedIndex => SelectedPokemon != null ? members.IndexOf(SelectedPokemon) : -1;
+
         /// <summary>
         /// All Pokémon currently in the party.
         /// </summary>
@@ -72,6 +74,19 @@ namespace PokemonGame.Party
             {
                 SelectPokemon(Members[0]);
             }
+        }
+
+        /// <summary>
+        /// Swap two Pokémon in the party by index.
+        /// </summary>
+        public void Swap(int indexA, int indexB)
+        {
+            if (indexA < 0 || indexA >= members.Count || indexB < 0 || indexB >= members.Count)
+                return;
+
+            (members[indexB], members[indexA]) = (members[indexA], members[indexB]);
+
+            OnPartyChanged?.Invoke();
         }
 
         /// <summary>

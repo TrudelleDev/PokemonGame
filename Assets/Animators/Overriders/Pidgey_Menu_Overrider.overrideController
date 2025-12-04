@@ -1,0 +1,13 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Pidgey_Menu_Overrider
+  m_Controller: {fileID: 9100000, guid: fea92ffe2ed79a3448be3ad78b4d2609, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 85910842778cbc444b0cd9974d997d28, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 4510707a440bc4040acd60e55ae8f4b3, type: 2}

@@ -52,6 +52,8 @@ namespace PokemonGame.Party
         /// </summary>
         public PokemonInstance BoundPokemon { get; private set; }
 
+        public int SlotIndex { get; private set; }
+
         private MenuButton menuButton;
 
         private void Awake()
@@ -124,6 +126,14 @@ namespace PokemonGame.Party
                 menuSpriteAnimator.runtimeAnimatorController = pokemon.Definition.MenuSpriteOverrider;
                 menuSpriteAnimator.Play(IdleHash);
             }
+        }
+
+        /// <summary>
+        /// Sets the slot index. Should be called when initializing the party menu.
+        /// </summary>
+        public void SetSlotIndex(int index)
+        {
+            SlotIndex = index;
         }
 
         /// <summary>

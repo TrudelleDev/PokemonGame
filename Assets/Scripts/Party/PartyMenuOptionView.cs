@@ -20,6 +20,9 @@ namespace PokemonGame.Party
         private MenuButton summaryButton;
 
         [SerializeField, Required]
+        private MenuButton switchButton;
+
+        [SerializeField, Required]
         [Tooltip("Button to close the option menu and return to the party menu.")]
         private MenuButton cancelButton;
 
@@ -29,6 +32,7 @@ namespace PokemonGame.Party
         private void Awake()
         {
             summaryButton.OnClick += OnSummaryClick;
+            switchButton.OnClick += OnSwitchClick;
             cancelButton.OnClick += OnCancelClick;
 
             controller =  GetComponent<VerticalMenuController>();
@@ -37,6 +41,7 @@ namespace PokemonGame.Party
         private void OnDestroy()
         {
             summaryButton.OnClick -= OnSummaryClick;
+            switchButton.OnClick -= OnSwitchClick;
             cancelButton.OnClick -= OnCancelClick;
         }
 
@@ -58,6 +63,17 @@ namespace PokemonGame.Party
         private void OnSummaryClick()
         {
             ViewManager.Instance.Show<SummaryView>();
+        }
+
+        private void OnSwitchClick()
+        {
+            PartyMenuView partyView = ViewManager.Instance.Get<PartyMenuView>();
+
+            if (partyView == null) 
+                return;
+
+            partyView.StartSwapMode();
+            ViewManager.Instance.CloseTopView();
         }
 
         private void OnCancelClick()

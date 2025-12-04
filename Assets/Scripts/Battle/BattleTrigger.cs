@@ -50,7 +50,7 @@ namespace PokemonGame.Battle
 
             PokemonInstance pokemon = PokemonFactory.CreatePokemon(level, wildPokemon.Pokemon);
 
-            battle.Initialize(partyManager.SelectedPokemon, pokemon);
+            battle.Initialize(partyManager.Members[0], pokemon);
         }
 
         private WildPokemonEntry ChooseWildPokemon()

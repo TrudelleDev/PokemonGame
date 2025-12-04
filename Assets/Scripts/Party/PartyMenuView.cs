@@ -11,42 +11,43 @@ namespace PokemonGame.Party
 {
     /// <summary>
     /// Displays the party menu where the player can select a Pokémon and choose actions.
-    /// Handles slot navigation, option selection, and cancel input.
+    /// Handles slot navigation, option selection, swapping, and cancel input.
     /// </summary>
     public class PartyMenuView : View
     {
         private const string ChoosePokemonMessage = "Choose a Pokémon.";
         private const string ActionMessage = "What will you do?";
+        private const string SwapStartMessage = "Move to where?";
 
         [Title("References")]
-        [SerializeField, Required]
-        [Tooltip("Reference to the current player party.")]
+        [SerializeField, Required, Tooltip("Reference to the current player party.")]
         private PartyManager party;
 
-        [SerializeField, Required]
-        [Tooltip("Button used to close the party menu.")]
+        [SerializeField]
+        private PartyMenuSlotManager slotManager;
+
+        [SerializeField, Required, Tooltip("Button used to close the party menu.")]
         private MenuButton cancelButton;
 
-        [SerializeField, Required]
-        [Tooltip("Text box displaying contextual instructions.")]
+        [SerializeField, Required, Tooltip("Text box displaying contextual instructions.")]
         private TextMeshProUGUI dialogueText;
 
         [Title("Menu Controllers")]
-        [SerializeField, Required]
-        [Tooltip("Controls navigation between party slots.")]
+        [SerializeField, Required, Tooltip("Controls navigation between party slots.")]
         private VerticalMenuController partySlotController;
+
+        private bool isSwapping;
+        private int swapIndexA = -1;
+        private MenuButton lockSwapButton;
 
         public bool OppenedFromInventory { get; set; }
 
-        /// <summary>
-        /// Raised when the player selects a Pokémon from the menu.
-        /// </summary>
         public event Action<PokemonInstance> OnPokemonSelected;
 
         private void OnEnable()
         {
             partySlotController.OnClick += OnPartySlotClick;
-            cancelButton.OnClick += OnCancelButtonClick;
+            cancelButton.OnClick += CancelButtonClick;
 
             partySlotController.SelectFirst();
             dialogueText.text = ChoosePokemonMessage;
@@ -55,13 +56,15 @@ namespace PokemonGame.Party
         private void OnDisable()
         {
             partySlotController.OnClick -= OnPartySlotClick;
-            cancelButton.OnClick -= OnCancelButtonClick;
+            cancelButton.OnClick -= CancelButtonClick;
+
+            // Ensure swap state is reset if view is closed while swapping
+            if (isSwapping)
+            {
+                ResetSwapState();
+            }
         }
 
-        /// <summary>
-        /// Freezes the view, disabling party slot navigation
-        /// and showing the option message instead.
-        /// </summary>
         public override void Freeze()
         {
             partySlotController.enabled = false;
@@ -69,44 +72,80 @@ namespace PokemonGame.Party
             base.Freeze();
         }
 
-        /// <summary>
-        /// Unfreezes the view, re-enabling party slot navigation
-        /// and showing the default choose message.
-        /// </summary>
         public override void Unfreeze()
         {
             partySlotController.enabled = true;
-            dialogueText.text = ChoosePokemonMessage;
+
+            if (!isSwapping)
+                dialogueText.text = ChoosePokemonMessage;
+
             base.Unfreeze();
         }
 
-        /// <summary>
-        /// Handles clicks on a party slot and raises <see cref="OnPokemonSelected"/>
-        /// if the slot contains a valid Pokémon.
-        /// </summary>
-        /// <param name="menuButton">The clicked menu button.</param>
+        public void StartSwapMode()
+        {
+            isSwapping = true;
+            swapIndexA = party.SelectedIndex;
+
+            lockSwapButton = partySlotController.CurrentButton;
+            if (lockSwapButton != null)
+                lockSwapButton.LockSelectSprite = true;
+
+            dialogueText.text = SwapStartMessage;
+        }
+
+        private void HandleSwapSelection(int clickedIndex)
+        {
+            if (swapIndexA == clickedIndex)
+                return;
+
+            party.Swap(swapIndexA, clickedIndex);
+            slotManager.RefreshSlots();
+
+            ResetSwapState();
+        }
+
+        private void ResetSwapState()
+        {
+            isSwapping = false;
+            swapIndexA = -1;
+
+            if (lockSwapButton != null)
+            {
+                lockSwapButton.LockSelectSprite = false;
+                lockSwapButton = null;
+            }
+
+            dialogueText.text = ChoosePokemonMessage;
+        }
+
         private void OnPartySlotClick(MenuButton menuButton)
         {
-            PartyMenuSlot menuSlot = menuButton.GetComponent<PartyMenuSlot>();
+            if (menuButton.GetComponent<PartyMenuSlot>() is not { BoundPokemon: { } boundPokemon } menuSlot)
+                return;
 
-            if (menuSlot == null || menuSlot.BoundPokemon == null)
+            int clickedIndex = menuSlot.SlotIndex;
+
+            if (isSwapping)
             {
+                HandleSwapSelection(clickedIndex);
                 return;
             }
 
-            party.SelectPokemon(menuSlot.BoundPokemon);
-
-            // Notify listeners about the selected Pokémon
-            OnPokemonSelected?.Invoke(menuSlot.BoundPokemon);
+            party.SelectPokemon(boundPokemon);
+            OnPokemonSelected?.Invoke(boundPokemon);
 
             if (!OppenedFromInventory)
-            {
                 ViewManager.Instance.Show<PartyMenuOptionView>();
-            }
         }
 
-        private void OnCancelButtonClick()
+        private void CancelButtonClick()
         {
+            // Reset swap if active when canceling
+            if (isSwapping)
+            {
+                ResetSwapState();
+            }
 
             ViewManager.Instance.CloseTopView();
         }

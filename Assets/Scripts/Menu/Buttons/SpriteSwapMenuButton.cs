@@ -27,22 +27,31 @@ namespace PokemonGame.Menu
         [Tooltip("Sprite displayed when the button is disabled (not interactable).")]
         private Sprite disabledSprite;
 
+
         /// <summary>
         /// Updates the target image sprite based on the current
         /// interactable and selection state of the button.
         /// </summary>
         protected override void RefreshVisual()
         {
+            // Disabled state
             if (!IsInteractable)
             {
                 if (disabledSprite != null)
                 {
                     targetImage.sprite = disabledSprite;
                 }
-
                 return;
             }
 
+            // Locked selection sprite (only if the button is selected)
+            if (LockSelectSprite)
+            {
+                targetImage.sprite = selectedSprite;
+                return;
+            }
+
+            // Normal behavior
             targetImage.sprite = IsSelected ? selectedSprite : normalSprite;
         }
     }

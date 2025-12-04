@@ -29,6 +29,15 @@ namespace PokemonGame.Party
         }
 
         /// <summary>
+        /// Re-binds all slots to the current party data.
+        /// Call this after swapping Pokémon to refresh the UI.
+        /// </summary>
+        public void RefreshSlots()
+        {
+            BindSlots();
+        }
+
+        /// <summary>
         /// Binds each slot to a corresponding Pokémon in the party.
         /// Extra slots are cleared.
         /// </summary>
@@ -41,6 +50,7 @@ namespace PokemonGame.Party
                 if (i < party.Members.Count)
                 {
                     slots[i].Bind(party.Members[i]);
+                    slots[i].SetSlotIndex(i);
                 }
                 else
                 {

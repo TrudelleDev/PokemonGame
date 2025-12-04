@@ -361,7 +361,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 709742653, guid: 768372d047762d24cb8138b18a356171, type: 3}
+  m_Sprite: {fileID: 1880473153, guid: a0b6c860ade1d3445a0abf7f65d5d0bb, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -394,7 +394,7 @@ Animator:
   m_GameObject: {fileID: 905282093239768446}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 22100000, guid: bf93d10ba80a1be449107a9532c87d76, type: 2}
+  m_Controller: {fileID: 9100000, guid: fea92ffe2ed79a3448be3ad78b4d2609, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 2
   m_ApplyRootMotion: 0
@@ -1040,7 +1040,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -23.31, y: 4.5873}
+  m_AnchoredPosition: {x: -20.146, y: 5}
   m_SizeDelta: {x: 51.107, y: 8}
   m_Pivot: {x: 0.5, y: 0.609658}
 --- !u!222 &6107698116173094435
@@ -1071,7 +1071,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Rgydon
+  m_text: Charmander
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: aea8419f4cec01d4e8ce242f5cdc851d, type: 2}
   m_sharedMaterial: {fileID: -1632069722459322501, guid: aea8419f4cec01d4e8ce242f5cdc851d, type: 2}

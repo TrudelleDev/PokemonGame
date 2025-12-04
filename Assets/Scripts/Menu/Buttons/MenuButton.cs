@@ -7,8 +7,8 @@ namespace PokemonGame.Menu
 {
     /// <summary>
     /// Base class for all menu buttons.
-    /// Manages interactable and selection state.
-    /// Subclasses implement <see cref="RefreshVisual"/> to handle visuals.
+    /// Provides selection, interaction, click events, and visual refresh handling.
+    /// Subclasses implement <see cref="RefreshVisual"/> to define how visuals update.
     /// </summary>
     public abstract class MenuButton : MonoBehaviour
     {
@@ -19,8 +19,16 @@ namespace PokemonGame.Menu
         [SerializeField, Required]
         private TextMeshProUGUI label;
 
+        private bool lockSelectSprite;
 
+        /// <summary>
+        /// Invoked when the button is clicked while interactable.
+        /// </summary>
         public event Action OnClick;
+
+        /// <summary>
+        /// Invoked when the button is selected.
+        /// </summary>
         public event Action OnSelect;
 
         /// <summary>
@@ -29,11 +37,24 @@ namespace PokemonGame.Menu
         public bool IsInteractable => interactable;
 
         /// <summary>
+        /// Gets or sets whether the selected sprite should be locked.
+        /// When changed, visuals will automatically refresh.
+        /// </summary>
+        public bool LockSelectSprite
+        {
+            get => lockSelectSprite;
+            set => SetLockSelectSprite(value);
+        }
+
+        /// <summary>
         /// Gets whether the button is currently selected.
         /// </summary>
         public bool IsSelected { get; private set; }
 
 
+        /// <summary>
+        /// Sets the visible text label of the button.
+        /// </summary>
         public void SetLabel(string text)
         {
             label.text = text;
@@ -42,7 +63,6 @@ namespace PokemonGame.Menu
         /// <summary>
         /// Sets the selected state of the button and refreshes visuals.
         /// </summary>
-        /// <param name="active">True if selected, false if deselected.</param>
         public void SetSelected(bool active)
         {
             if (IsSelected == active)
@@ -56,16 +76,15 @@ namespace PokemonGame.Menu
             if (active)
             {
                 OnSelect?.Invoke();
-            }           
+            }
         }
 
         /// <summary>
         /// Sets whether the button is interactable and refreshes visuals.
         /// </summary>
-        /// <param name="value">True if interactable, false otherwise.</param>
         public void SetInteractable(bool value)
         {
-            if (IsInteractable == value)
+            if (interactable == value)
             {
                 return;
             }
@@ -75,7 +94,21 @@ namespace PokemonGame.Menu
         }
 
         /// <summary>
-        /// Invokes onClick event if the button is interactable.
+        /// Sets whether the select sprite is locked and refreshes visuals.
+        /// </summary>
+        public void SetLockSelectSprite(bool value)
+        {
+            if (lockSelectSprite == value)
+            {
+                return;
+            }
+
+            lockSelectSprite = value;
+            RefreshVisual();
+        }
+
+        /// <summary>
+        /// Invokes the click event if the button is interactable.
         /// </summary>
         public void Click()
         {
@@ -86,7 +119,8 @@ namespace PokemonGame.Menu
         }
 
         /// <summary>
-        /// Updates the visual state of the button to match
+        /// Subclasses update their visuals (sprites, colors, backgrounds, etc.) here.
+        /// Called whenever state changes.
         /// </summary>
         protected abstract void RefreshVisual();
     }
