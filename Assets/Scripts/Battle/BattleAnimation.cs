@@ -1,158 +1,142 @@
 ﻿using System.Collections;
+using PokemonGame.Battle.Models;
 using PokemonGame.Utilities;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Battle
 {
     /// <summary>
-    /// Handles all visual battle animations for both player and opponent sides.
-    /// Controls platform, HUD, Pokémon, and Pokéball animations using Animator components.
+    /// Centralized manager responsible for coordinating all visual battle animations
+    /// for both player and opponent sides.
     /// </summary>
     [DisallowMultipleComponent]
-    public class BattleAnimation : MonoBehaviour
+    public sealed class BattleAnimation : MonoBehaviour
     {
-        private static readonly int EnterState = Animator.StringToHash("Enter");
-        private static readonly int ExitState = Animator.StringToHash("Exit");
-        private static readonly int ThrowState = Animator.StringToHash("Throw");
-        private static readonly int TakeDamageState = Animator.StringToHash("TakeDamage");
-        private static readonly int DeathState = Animator.StringToHash("Death");
+        [SerializeField, Tooltip("Data container holding all Animators for the player's battle elements.")]
+        private PlayerAnimations playerAnimations;
 
-        [Title("Player Animators")]
-        [SerializeField, Required, Tooltip("Animator controlling the player's battle platform.")]
-        private Animator playerPlatformAnimator;
+        [SerializeField, Tooltip("Data container holding all Animators for the opponent's battle elements.")]
+        private OpponentAnimations opponentAnimations;
 
-        [SerializeField, Required, Tooltip("Animator controlling the player's trainer sprite.")]
-        private Animator playerSpriteAnimator;
-
-        [SerializeField, Required, Tooltip("Animator controlling the player's active Pokémon sprite.")]
-        private Animator playerPokemonAnimator;
-
-        [SerializeField, Required, Tooltip("Animator controlling the player's HUD display.")]
-        private Animator playerHudAnimator;
-
-        [SerializeField, Required, Tooltip("Animator used for the Pokéball throw animation.")]
-        private Animator throwBallAnimator;
-
-        [Title("Opponent Animators")]
-        [SerializeField, Required, Tooltip("Animator controlling the opponent's battle platform.")]
-        private Animator opponentPlatformAnimator;
-
-        [SerializeField, Required, Tooltip("Animator controlling the opponent's Pokémon sprite.")]
-        private Animator opponentSpriteAnimator;
-
-        [SerializeField, Required, Tooltip("Animator controlling the opponent's HUD display.")]
-        private Animator opponentHudAnimator;
-
-    //    [SerializeField, Required]
-        public CoverOffsetAnimator coverOffsetAnimator;
+        [SerializeField, Tooltip("Shader-based overlay animator used for status or screen effects.")]
+        private CoverOffsetAnimator coverOffsetAnimator;
 
         /// <summary>
-        /// Flag used by the Pokéball throw sequence to signal when to start the animation.
-        /// Set externally via <see cref="AnimationEventRelay"/>.
+        /// Flag set by animation events to signal when the Pokéball should be thrown.
         /// </summary>
         public bool ThrowPokeball { get; set; }
 
         // ─────────────────────────────
-        //   Opponent Animations
+        //    Opponent Animations
         // ─────────────────────────────
 
+        /// <summary>
+        /// Plays a non-blocking visual status effect (e.g., burn, poison).
+        /// </summary>
         public IEnumerator PlayStatusEffect()
         {
-            yield return coverOffsetAnimator.AnimateOffsetCoroutine(new Vector2(0f, 0f), new Vector2(0f, 01f), 1f);
+            yield return coverOffsetAnimator.AnimateOffsetCoroutine(Vector2.zero, new Vector2(0f, 1f), 1f);
         }
 
-        /// <summary>
-        /// Plays the opponent's platform enter animation.
-        /// </summary>
-        public IEnumerator PlayOpponentPlatformEnter() => PlayAnimation(opponentPlatformAnimator, EnterState);
+        public IEnumerator PlayOpponentPlatformEnter() =>
+            PlayAnimation(opponentAnimations.PlatformAnimator, BattleAnimationState.Enter);
 
-        /// <summary>
-        /// Plays the opponent's HUD enter animation.
-        /// </summary>
-        public IEnumerator PlayOpponentHudEnter() => PlayAnimation(opponentHudAnimator, EnterState);
+        public IEnumerator PlayOpponentHudEnter() =>
+            PlayAnimation(opponentAnimations.HudAnimator, BattleAnimationState.Enter);
 
-        /// <summary>
-        /// Plays the opponent's damage animation.
-        /// </summary>
-        public IEnumerator PlayOpponentTakeDamage() => PlayAnimation(opponentSpriteAnimator, TakeDamageState);
+        public IEnumerator PlayOpponentTakeDamage() =>
+            PlayAnimation(opponentAnimations.PokemonAnimator, BattleAnimationState.TakeDamage);
 
-        /// <summary>
-        /// Plays the opponent's faint (death) animation.
-        /// </summary>
-        public IEnumerator PlayOpponentDeath() => PlayAnimation(opponentSpriteAnimator, DeathState);
+        public IEnumerator PlayOpponentDeath() =>
+            PlayAnimation(opponentAnimations.PokemonAnimator, BattleAnimationState.Death);
+
+        public IEnumerator PlayOpponentHudExit() => PlayAnimation(opponentAnimations.HudAnimator, BattleAnimationState.Exit);
 
         // ─────────────────────────────
-        //   Player Animations
+        //    Player Animations
         // ─────────────────────────────
 
-        /// <summary>
-        /// Plays the player's trainer exit animation.
-        /// </summary>
-        public void PlayPlayerExit() => playerSpriteAnimator.Play(ExitState);
+        public void PlayPlayerTrainerExit() =>
+            playerAnimations.TrainerSpriteAnimator.Play(BattleAnimationState.Exit);
+
+        public IEnumerator PlayPlayerHudEnter() =>
+            PlayAnimation(playerAnimations.HudAnimator, BattleAnimationState.Enter);
+
+        public IEnumerator PlayPlayerSendPokemonEnter() =>
+            PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.Enter);
+
+        public IEnumerator PlayPlayerTakeDamage() =>
+            PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.TakeDamage);
+
+        public IEnumerator PlayPlayerDeath() =>
+            PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.Death);
+
+        public void PlayPlayerPokemonIdle() =>
+            playerAnimations.PokemonAnimator.Play(BattleAnimationState.Idle);
+
+        public void PlayPlayerHUDIdle() =>
+            playerAnimations.HudAnimator.Play(BattleAnimationState.Idle);
+
+        public void PlayPlayerPokemonDefault() =>
+            playerAnimations.PokemonAnimator.Play(BattleAnimationState.IdleStatic);
+
+        public void PlayPlayerHUDDefault() =>
+            playerAnimations.HudAnimator.Play(BattleAnimationState.IdleStatic);
 
         /// <summary>
-        /// Plays the player's HUD enter animation.
+        /// Plays the trainer's throw animation, waits for the Pokéball to be released,
+        /// then plays the Pokéball animation and waits for it to complete.
         /// </summary>
-        public IEnumerator PlayPlayerHudEnter() => PlayAnimation(playerHudAnimator, EnterState);
-
-        /// <summary>
-        /// Plays the player's Pokémon send-out animation.
-        /// </summary>
-        public IEnumerator PlayPlayerSendPokemonEnter() => PlayAnimation(playerPokemonAnimator, EnterState);
-
-        /// <summary>
-        /// Plays the player's Pokémon damage animation.
-        /// </summary>
-        public IEnumerator PlayPlayerTakeDamage() => PlayAnimation(playerPokemonAnimator, TakeDamageState);
-
-        /// <summary>
-        /// Plays the player's Pokémon faint (death) animation.
-        /// </summary>
-        public IEnumerator PlayPlayerDeath() => PlayAnimation(playerPokemonAnimator, DeathState);
-
-        /// <summary>
-        /// Waits for a flag trigger before playing the Pokéball throw animation.
-        /// </summary>
-        public IEnumerator PlayPlayerThrowBall()
+        public IEnumerator PlayPlayerThrowBallSequence()
         {
             yield return new WaitUntil(() => ThrowPokeball);
-            throwBallAnimator.Play(ThrowState);
-            yield return AnimationUtility.WaitForAnimationSafe(throwBallAnimator, ThrowState);
+            yield return PlayAnimation(playerAnimations.ThrowBallAnimator, BattleAnimationState.Throw);
             ThrowPokeball = false;
         }
 
+        public IEnumerator PlayPlayerWithdrawPokemon() =>
+            PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.Withdraw);
+
+        public IEnumerator PlayPlayerBattleHudExit() =>
+            PlayAnimation(playerAnimations.HudAnimator, BattleAnimationState.Exit);
+
         // ─────────────────────────────
-        //   Global Animations
+        //    Global Animations
         // ─────────────────────────────
 
         /// <summary>
-        /// Plays the intro animations for both player and opponent.
+        /// Plays the initial, non-blocking introduction animations (platforms and trainers/Pokémon).
         /// </summary>
         public void PlayIntro()
         {
-            playerPlatformAnimator.Play(EnterState);
-            playerSpriteAnimator.Play(EnterState);
-            opponentPlatformAnimator.Play(EnterState);
-            opponentSpriteAnimator.Play(EnterState);
+            playerAnimations.PlatformAnimator.Play(BattleAnimationState.Enter);
+            playerAnimations.TrainerSpriteAnimator.Play(BattleAnimationState.Enter);
+
+            opponentAnimations.PlatformAnimator.Play(BattleAnimationState.Enter);
+            opponentAnimations.PokemonAnimator.Play(BattleAnimationState.Enter);
         }
 
         /// <summary>
-        /// Resets all Animator components to their default bind pose.
-        /// Useful before replaying the intro sequence.
+        /// Resets all Animator components to their default bind pose and state.
+        /// Essential cleanup before starting a new battle sequence.
         /// </summary>
         public void ResetIntro()
         {
-            playerHudAnimator.Rebind();
-            playerPlatformAnimator.Rebind();
-            playerPokemonAnimator.Rebind();
-            playerSpriteAnimator.Rebind();
-            throwBallAnimator.Rebind();
-
-            opponentHudAnimator.Rebind();
-            opponentPlatformAnimator.Rebind();
-            opponentSpriteAnimator.Rebind();
+            RebindAll(
+                playerAnimations.HudAnimator,
+                playerAnimations.PlatformAnimator,
+                playerAnimations.PokemonAnimator,
+                playerAnimations.TrainerSpriteAnimator,
+                playerAnimations.ThrowBallAnimator,
+                opponentAnimations.HudAnimator,
+                opponentAnimations.PlatformAnimator,
+                opponentAnimations.PokemonAnimator
+            );
         }
+
+        // ─────────────────────────────
+        //    Private Helpers
+        // ─────────────────────────────
 
         /// <summary>
         /// Plays the specified animation state on the given Animator and waits until it finishes.
@@ -160,8 +144,22 @@ namespace PokemonGame.Battle
         private IEnumerator PlayAnimation(Animator animator, int state)
         {
             animator.Play(state, 0, 0f);
-            yield return null; // WAIT 1 FRAME or Animator won't update state
+
+            // Ensure animator transitions before querying state info.
+            yield return null;
+
             yield return AnimationUtility.WaitForAnimationSafe(animator, state);
+        }
+
+        /// <summary>
+        /// Rebinds multiple animators in a single call.
+        /// </summary>
+        private static void RebindAll(params Animator[] animators)
+        {
+            foreach (Animator animator in animators)
+            {
+                animator.Rebind();
+            }
         }
     }
 }

@@ -2,6 +2,7 @@ using System;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Pokemon;
+using PokemonGame.Summary;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -10,8 +11,9 @@ using UnityEngine;
 namespace PokemonGame.Party
 {
     /// <summary>
-    /// Displays the party menu where the player can select a Pokémon and choose actions.
-    /// Handles slot navigation, option selection, swapping, and cancel input.
+    /// Displays the party menu where the player can select a Pokémon
+    /// and choose actions. This view only raises intent events;
+    /// higher-level systems decide what those actions mean.
     /// </summary>
     public class PartyMenuView : View
     {
@@ -20,21 +22,11 @@ namespace PokemonGame.Party
         private const string SwapStartMessage = "Move to where?";
 
         [Title("References")]
-        [SerializeField, Required, Tooltip("Reference to the current player party.")]
-        private PartyManager party;
-
-        [SerializeField]
-        private PartyMenuSlotManager slotManager;
-
-        [SerializeField, Required, Tooltip("Button used to close the party menu.")]
-        private MenuButton cancelButton;
-
-        [SerializeField, Required, Tooltip("Text box displaying contextual instructions.")]
-        private TextMeshProUGUI dialogueText;
-
-        [Title("Menu Controllers")]
-        [SerializeField, Required, Tooltip("Controls navigation between party slots.")]
-        private VerticalMenuController partySlotController;
+        [SerializeField, Required] private PartyManager party;
+        [SerializeField] private PartyMenuSlotManager slotManager;
+        [SerializeField, Required] private MenuButton cancelButton;
+        [SerializeField, Required] private TextMeshProUGUI dialogueText;
+        [SerializeField, Required] private VerticalMenuController partySlotController;
 
         private bool isSwapping;
         private int swapIndexA = -1;
@@ -43,12 +35,17 @@ namespace PokemonGame.Party
         public bool OppenedFromInventory { get; set; }
 
         public event Action<PokemonInstance> OnPokemonSelected;
+        public event Action OnCloseButtonPress;
+
+        public PartyManager Party => party;
 
         private void OnEnable()
         {
             partySlotController.OnClick += OnPartySlotClick;
-            cancelButton.OnClick += CancelButtonClick;
+            cancelButton.OnClick += OnCancelPressed;
+            OnCloseKeyPress += OnCancelPressed;
 
+            RefreshSlots();
             partySlotController.SelectFirst();
             dialogueText.text = ChoosePokemonMessage;
         }
@@ -56,13 +53,8 @@ namespace PokemonGame.Party
         private void OnDisable()
         {
             partySlotController.OnClick -= OnPartySlotClick;
-            cancelButton.OnClick -= CancelButtonClick;
-
-            // Ensure swap state is reset if view is closed while swapping
-            if (isSwapping)
-            {
-                ResetSwapState();
-            }
+            cancelButton.OnClick -= OnCancelPressed;
+            OnCloseKeyPress -= OnCancelPressed;
         }
 
         public override void Freeze()
@@ -77,7 +69,9 @@ namespace PokemonGame.Party
             partySlotController.enabled = true;
 
             if (!isSwapping)
+            {
                 dialogueText.text = ChoosePokemonMessage;
+            }
 
             base.Unfreeze();
         }
@@ -89,7 +83,9 @@ namespace PokemonGame.Party
 
             lockSwapButton = partySlotController.CurrentButton;
             if (lockSwapButton != null)
+            {
                 lockSwapButton.LockSelectSprite = true;
+            }
 
             dialogueText.text = SwapStartMessage;
         }
@@ -97,11 +93,12 @@ namespace PokemonGame.Party
         private void HandleSwapSelection(int clickedIndex)
         {
             if (swapIndexA == clickedIndex)
+            {
                 return;
+            }
 
             party.Swap(swapIndexA, clickedIndex);
-            slotManager.RefreshSlots();
-
+            RefreshSlots();
             ResetSwapState();
         }
 
@@ -119,12 +116,19 @@ namespace PokemonGame.Party
             dialogueText.text = ChoosePokemonMessage;
         }
 
+        private void RefreshSlots()
+        {
+            slotManager.RefreshSlots();
+        }
+
         private void OnPartySlotClick(MenuButton menuButton)
         {
-            if (menuButton.GetComponent<PartyMenuSlot>() is not { BoundPokemon: { } boundPokemon } menuSlot)
+            if (menuButton.GetComponent<PartyMenuSlot>() is not { BoundPokemon: { } boundPokemon })
+            {
                 return;
+            }
 
-            int clickedIndex = menuSlot.SlotIndex;
+            int clickedIndex = menuButton.GetComponent<PartyMenuSlot>().SlotIndex;
 
             if (isSwapping)
             {
@@ -135,19 +139,48 @@ namespace PokemonGame.Party
             party.SelectPokemon(boundPokemon);
             OnPokemonSelected?.Invoke(boundPokemon);
 
-            if (!OppenedFromInventory)
-                ViewManager.Instance.Show<PartyMenuOptionView>();
+            if (OppenedFromInventory)
+            {
+                return;
+            }
+
+            var optionView = ViewManager.Instance.Show<PartyMenuOptionView>();
+
+            optionView.OnSwitchSelected -= OnOptionSwitchSelected;
+            optionView.OnSummarySelected -= OnOptionSummarySelected;
+            optionView.OnCancelSelected -= OnOptionCancelSelected;
+
+            optionView.OnSwitchSelected += OnOptionSwitchSelected;
+            optionView.OnSummarySelected += OnOptionSummarySelected;
+            optionView.OnCancelSelected += OnOptionCancelSelected;
         }
 
-        private void CancelButtonClick()
+        private void OnOptionSwitchSelected()
         {
-            // Reset swap if active when canceling
+            StartSwapMode();
+            RefreshSlots();
+            ViewManager.Instance.CloseTopView();
+        }
+
+        private void OnOptionSummarySelected()
+        {
+            ViewManager.Instance.Show<SummaryView>();
+        }
+
+        private void OnOptionCancelSelected()
+        {
+            ViewManager.Instance.CloseTopView();
+        }
+
+        private void OnCancelPressed()
+        {
             if (isSwapping)
             {
                 ResetSwapState();
+                return;
             }
 
-            ViewManager.Instance.CloseTopView();
+            OnCloseButtonPress?.Invoke();
         }
     }
 }

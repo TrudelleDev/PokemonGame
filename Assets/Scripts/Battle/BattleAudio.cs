@@ -1,45 +1,88 @@
-﻿using PokemonGame.Audio;
+﻿using System.Collections;
+using PokemonGame.Audio;
 using PokemonGame.Pokemon;
+using PokemonGame.Type;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Battle
 {
+    /// <summary>
+    /// Centralized manager for playing all battle-related audio, including
+    /// sound effects, background music, and Pokémon cries.
+    /// </summary>
     public class BattleAudio : MonoBehaviour
     {
-        [SerializeField, Required]
-        private AudioClip victorySfx;
+        [SerializeField, Required, Tooltip("Clip played when the player wins a battle.")]
+        private AudioClip victoryClip;
 
-        [SerializeField, Required]
-        private AudioClip runAwaySfx;
+        [SerializeField, Required, Tooltip("Clip played when the player runs away from battle.")]
+        private AudioClip runAwayClip;
 
-        [SerializeField, Required]
-        private AudioClip levelUpSfx;
+        [SerializeField, Required, Tooltip("Clip played when a Pokémon levels up.")]
+        private AudioClip levelUpClip;
 
-        [SerializeField, Required]
-        private AudioClip lowHealthSfx;
+        [SerializeField, Required, Tooltip("Clip played when a Pokémon has low health.")]
+        private AudioClip lowHealthClip;
 
-        [SerializeField, Required]
-        private AudioClip doDamageNormalSfx;
+        [SerializeField, Required, Tooltip("Clip played when gaining experience.")]
+        private AudioClip gainExperienceClip;
 
-        [SerializeField, Required]
-        private AudioClip gainExperienceSfx;
+        [SerializeField, Required, Tooltip("Clip played when opening a Pokéball.")]
+        private AudioClip openPokeballClip;
 
-        [SerializeField, Required]
-        private AudioClip openPokeballSfx;
+        [SerializeField, Required, Tooltip("Sounds to play based on move type effectiveness.")]
+        private TypeEffectivenessSounds effectivenessSounds;
 
-        public void PlayDoDamageNomral() => AudioManager.Instance.PlaySFX(doDamageNormalSfx);
-        public void PlayVictory() => AudioManager.Instance.PlayBGM(victorySfx);
-        public void PlayRunAwaySfx() => AudioManager.Instance.PlaySFX(runAwaySfx);
-        public void PlayLevelUpSfx() => AudioManager.Instance.PlaySFX(levelUpSfx);
-        public void PlayLowHealthSfx() => AudioManager.Instance.PlaySFX(lowHealthSfx);
-        public void PlayGainExperienceSfx() => AudioManager.Instance.PlaySFXStoppable(gainExperienceSfx);
-        public void PlayOpenPokeballSfx() => AudioManager.Instance.PlaySFX(openPokeballSfx);
+        /// <summary>
+        /// Plays the victory background music.
+        /// </summary>
+        public void PlayVictory() => AudioManager.Instance.PlayBGM(victoryClip);
 
-        public void PlayPokemonCry(PokemonInstance pokemon)
+        /// <summary>
+        /// Plays the run-away sound effect.
+        /// </summary>
+        public void PlayRunAway() => AudioManager.Instance.PlaySFX(runAwayClip);
+
+        /// <summary>
+        /// Plays the level-up sound effect.
+        /// </summary>
+        public void PlayLevelUp() => AudioManager.Instance.PlaySFX(levelUpClip);
+
+        /// <summary>
+        /// Plays the low-health warning sound effect.
+        /// </summary>
+        public void PlayLowHealth() => AudioManager.Instance.PlaySFX(lowHealthClip);
+
+        /// <summary>
+        /// Plays the experience gain sound effect (stoppable).
+        /// </summary>
+        public void PlayGainExperience() => AudioManager.Instance.PlaySFXStoppable(gainExperienceClip);
+
+        /// <summary>
+        /// Plays the Pokéball opening sound effect, then waits briefly.
+        /// </summary>
+        public IEnumerator PlayOpenPokeball()
         {
-            AudioManager.Instance.PlaySFX(pokemon.Definition.CryClip);
+            const float delay = 0.1f;
+            AudioManager.Instance.PlaySFX(openPokeballClip);
+            yield return new WaitForSecondsRealtime(delay);
         }
 
+        /// <summary>
+        /// Plays the cry of the specified Pokémon.
+        /// </summary>
+        /// <param name="pokemon">The Pokémon whose cry to play.</param>
+        public void PlayPokemonCry(PokemonInstance pokemon) =>
+            AudioManager.Instance.PlaySFX(pokemon.Definition.CryClip);
+
+        /// <summary>
+        /// Plays the sound corresponding to the type effectiveness of a move.
+        /// </summary>
+        /// <param name="effectiveness">The effectiveness of the move.</param>
+        public void PlayEffectivenessSound(TypeEffectiveness effectiveness)
+        {
+            AudioManager.Instance.PlaySFX(effectivenessSounds.GetEffectivenessSound(effectiveness));
+        }
     }
 }

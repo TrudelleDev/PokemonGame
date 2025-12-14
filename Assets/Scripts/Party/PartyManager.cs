@@ -43,6 +43,9 @@ namespace PokemonGame.Party
         /// </summary>
         public event Action OnPartyChanged;
 
+        // Store the original order before battle
+        private List<PokemonInstance> originalPartyOrder;
+
         private void Awake()
         {
             InitializeParty();
@@ -76,17 +79,39 @@ namespace PokemonGame.Party
             }
         }
 
+        // Call before battle starts
+        public void SaveOriginalPartyOrder()
+        {
+            originalPartyOrder = new List<PokemonInstance>(members);
+        }
+
+        // Call after battle ends
+        public void RestorePartyOrder()
+        {
+            if (originalPartyOrder == null) return;
+
+            for (int i = 0; i < originalPartyOrder.Count; i++)
+            {
+                members[i] = originalPartyOrder[i];
+            }
+
+            OnPartyChanged?.Invoke();
+        }
+
         /// <summary>
         /// Swap two Pokémon in the party by index.
         /// </summary>
-        public void Swap(int indexA, int indexB)
+        public bool Swap(int indexA, int indexB)
         {
             if (indexA < 0 || indexA >= members.Count || indexB < 0 || indexB >= members.Count)
-                return;
+                return false;
+
+            if(indexA ==  indexB) return false;
 
             (members[indexB], members[indexA]) = (members[indexA], members[indexB]);
-
+         
             OnPartyChanged?.Invoke();
+            return true;
         }
 
         /// <summary>

@@ -131,5 +131,19 @@ namespace PokemonGame.Pokemon.UI
             animateExpCoroutine = null;
             OnExpAnimationFinished?.Invoke();
         }
+
+        public IEnumerator WaitForAnimationComplete()
+        {
+            bool done = false;
+
+            void OnComplete()
+            {
+                done = true;
+                OnExpAnimationFinished -= OnComplete;
+            }
+
+            OnExpAnimationFinished += OnComplete;
+            yield return new WaitUntil(() => done);
+        }
     }
 }

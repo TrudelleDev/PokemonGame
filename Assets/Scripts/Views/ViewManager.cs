@@ -93,6 +93,55 @@ namespace PokemonGame.Views
             return null;
         }
 
+        public void Close<T>() where T : View
+        {
+            if (IsTransitioning)
+                return;
+
+            // Find the instance in active views
+            View target = activeViews.FirstOrDefault(v => v is T);
+            if (target == null)
+                return;
+
+            StartCoroutine(CloseSpecificViewCoroutine(target));
+        }
+
+        private IEnumerator CloseSpecificViewCoroutine(View target)
+        {
+            IsTransitioning = true;
+            UpdatePauseState();
+
+            Transition transition = TransitionLibrary.Instance.Resolve(target.CloseTransition);
+
+            // Run close transition
+            if (transition != null)
+            {
+                yield return transition.FadeInCoroutine();
+                target.Hide();
+
+                if (blackScreenHoldDuration > 0f)
+                    yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
+
+                yield return transition.FadeOutCoroutine();
+            }
+            else
+            {
+                target.Hide();
+            }
+
+            activeViews.Remove(target);
+
+            // Unfreeze the new top
+            if (CurrentView != null)
+            {
+                CurrentView.Unfreeze();
+            }
+
+            IsTransitioning = false;
+            UpdatePauseState();
+            DebugHistory();
+        }
+
         private IEnumerator ShowAsOverlay(View target)
         {
             IsTransitioning = true;
@@ -170,6 +219,7 @@ namespace PokemonGame.Views
             {
                 CurrentView.Unfreeze();
             }
+
             
             IsTransitioning = false;
             UpdatePauseState();
@@ -180,6 +230,29 @@ namespace PokemonGame.Views
         {
             bool shouldPause = HasActiveView || IsTransitioning;
             PauseManager.SetPaused(shouldPause);
+        }
+
+        public void CloseAll(params System.Type[] types)
+        {
+            foreach (var type in types)
+            {
+                // Find the view in the active stack
+                View target = activeViews.FirstOrDefault(v => v.GetType() == type);
+                if (target != null)
+                {
+                    target.Hide();
+                    target.Unfreeze();// immediately hide
+                    activeViews.Remove(target);
+                }
+            }
+
+            // Unfreeze the new top view if any
+            if (CurrentView != null)
+            {
+                CurrentView.Unfreeze();
+            }
+
+            UpdatePauseState();
         }
 
         private void DebugHistory()

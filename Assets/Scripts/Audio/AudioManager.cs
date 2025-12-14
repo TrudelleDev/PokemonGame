@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using System.Collections;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -60,6 +61,25 @@ namespace PokemonGame.Audio
                 return;
 
             sfxSource.PlayOneShot(clip);
+        }
+
+        /// <summary>
+        /// Plays a stoppable SFX and waits until it finishes.
+        /// Usage: yield return AudioManager.Instance.PlaySFXAndWait(clip);
+        /// </summary>
+        public IEnumerator PlaySFXAndWait(AudioClip clip)
+        {
+            if (clip == null)
+                yield break;
+
+            if (sfxStoppableSource.isPlaying)
+                sfxStoppableSource.Stop();
+
+            sfxStoppableSource.clip = clip;
+            sfxStoppableSource.Play();
+
+            // Wait until the clip finishes
+            yield return new WaitUntil(() => !sfxStoppableSource.isPlaying);
         }
 
         /// <summary>

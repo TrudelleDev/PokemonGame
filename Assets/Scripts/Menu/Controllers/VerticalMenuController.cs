@@ -105,7 +105,7 @@ namespace PokemonGame.Menu.Controllers
         /// or explicit selection methods to restore or set a button.
         /// </summary>
         public void RebuildButtons()
-        {        
+        {
             buttons.Clear();
 
             foreach (Transform source in buttonSources)

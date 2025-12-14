@@ -19,7 +19,7 @@ namespace PokemonGame.Party
         private void Awake()
         {
             // Cache all PartyMenuSlot components in children
-            slots = new List<PartyMenuSlot>(GetComponentsInChildren<PartyMenuSlot>());
+            //slots = new List<PartyMenuSlot>(GetComponentsInChildren<PartyMenuSlot>());
 
         }
 
@@ -43,6 +43,11 @@ namespace PokemonGame.Party
         /// </summary>
         private void BindSlots()
         {
+            if (slots == null)
+            {
+                slots = new List<PartyMenuSlot>(GetComponentsInChildren<PartyMenuSlot>());
+            }
+
             UnbindSlots();
 
             for (int i = 0; i < slots.Count; i++)

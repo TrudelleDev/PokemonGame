@@ -158,6 +158,13 @@ namespace PokemonGame.Dialogue
             yield return WaitForTyping();
         }
 
+        public IEnumerator ShowDialogueAndWaitForPlayerAdvance(string text, bool instant = false, bool manualArrowControl = false)
+        {
+            ShowDialogue(text, instant, manualArrowControl);
+            yield return WaitForTyping();
+            yield return WaitForPlayerAdvance();
+        }
+
         /// <summary>
         /// Waits until the current line of dialogue has finished typing out.
         /// </summary>

@@ -37,9 +37,9 @@ namespace PokemonGame.Pokemon.UI
 
         public event Action OnHealthAnimationFinished;
 
-        private void Awake()
+        private void OnEnable()
         {
-            slider = GetComponent<Slider>();
+            EnsureSlider();
         }
 
         private void EnsureSlider()
@@ -53,14 +53,13 @@ namespace PokemonGame.Pokemon.UI
         /// </summary>
         public void Bind(PokemonInstance pokemon)
         {
+            EnsureSlider(); // Good, makes sure slider is not null
+            Unbind();       // Safe now because we will EnsureSlider() inside Unbind too
+
             if (pokemon == null)
             {
-                Unbind();
                 return;
             }
-
-            EnsureSlider();
-            Unbind();
 
             boundPokemon = pokemon;
 
@@ -77,6 +76,8 @@ namespace PokemonGame.Pokemon.UI
         /// </summary>
         public void Unbind()
         {
+            EnsureSlider();
+
             if (boundPokemon != null)
             {
                 boundPokemon.Health.OnHealthChange -= OnPokemonHealthChange;

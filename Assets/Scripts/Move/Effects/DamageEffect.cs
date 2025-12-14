@@ -15,9 +15,6 @@ namespace PokemonGame.Move.Effects
     [CreateAssetMenu(menuName = "PokemonGame/Move/Effects/Damage Effect")]
     public class DamageEffect : MoveEffect
     {
-        [SerializeField, Required, Tooltip("Sounds to play based on the move's type effectiveness.")]
-        private TypeEffectivenessSounds effectivenessSounds;
-
         [SerializeField, Tooltip("Optional delay before the hit animation starts.")]
         private float preHitDelay = 0.5f;
 
@@ -48,8 +45,8 @@ namespace PokemonGame.Move.Effects
         protected override IEnumerator WaitForHealthAnimation(MoveContext context)
         {
             var healthBar = IsTargetUser(context)
-                ? context.Battle.PlayerBattleHud.HealthBar
-                : context.Battle.OpponentBattleHud.HealthBar;
+                ? context.Battle.BattleHUDs.Player.HealthBar
+                : context.Battle.BattleHUDs.Opponent.HealthBar;
 
             yield return healthBar.WaitForHealthAnimationComplete();
         }
@@ -61,8 +58,8 @@ namespace PokemonGame.Move.Effects
         protected override IEnumerator PlayEffectAnimation(MoveContext context)
         {
             var animationCoroutine = IsTargetUser(context)
-                ? context.Battle.BattleAnimation.PlayPlayerTakeDamage()
-                : context.Battle.BattleAnimation.PlayOpponentTakeDamage();
+                ? context.Battle.Components.Animation.PlayPlayerTakeDamage()
+                : context.Battle.Components.Animation.PlayOpponentTakeDamage();
 
             yield return animationCoroutine;
         }
@@ -83,7 +80,7 @@ namespace PokemonGame.Move.Effects
             TypeDefinition targetType = context.Target.Definition.Types.FirstType;
             TypeEffectiveness moveEffectiveness = moveType.EffectivenessGroups.GetEffectiveness(targetType);
 
-            AudioManager.Instance.PlaySFX(effectivenessSounds.GetEffectivenessSound(moveEffectiveness));
+            context.Battle.Components.Audio.PlayEffectivenessSound(moveEffectiveness);
 
             yield return PlayEffectAnimation(context);
             ApplyEffect(context);

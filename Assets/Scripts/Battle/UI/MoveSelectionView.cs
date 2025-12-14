@@ -1,4 +1,4 @@
-﻿using PokemonGame.Battle.States;
+﻿using System;
 using PokemonGame.Move;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -7,68 +7,71 @@ using UnityEngine;
 namespace PokemonGame.Battle.UI
 {
     /// <summary>
-    /// Controls the logic and interaction between the <see cref="MoveSelectionPanel"/> and <see cref="MoveSelectionDetail"/>.
-    /// Handles move selection and confirmation, and transitions the battle to the player’s turn.
+    /// Composite view for move selection. Mediates user input from the panel 
+    /// and displays details, raising a single event for the state machine.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class MoveSelectionView : View
     {
         [SerializeField, Required]
-        [Tooltip("Panel displaying the player's available moves for selection.")]
+        [Tooltip("The panel that contains the 4 move buttons and handles all user input events.")]
         private MoveSelectionPanel moveSelectionPanel;
 
         [SerializeField, Required]
-        [Tooltip("UI element showing additional details (PP, type) of the selected move.")]
+        [Tooltip("The UI element that displays the type and PP of the currently highlighted move.")]
         private MoveSelectionDetail moveSelectionDetail;
 
-        private BattleStateMachine stateMachine;
-
         /// <summary>
-        /// Initializes the move selection controller with the provided state machine and moves.
-        /// Binds event handlers for selection and confirmation.
+        /// Raised when the player confirms a move selection
         /// </summary>
-        /// <param name="stateMachine">The active battle state machine controlling the battle flow.</param>
-        /// <param name="moves">The list of moves available to the player.</param>
-        public void Initialize(BattleStateMachine stateMachine, MoveInstance[] moves)
-        {
-            this.stateMachine = stateMachine;
-            moveSelectionPanel.Bind(moves);
-        }
+        public event Action<MoveInstance> OnMoveConfirmed;
 
         private void OnEnable()
         {
-            moveSelectionPanel.OnMoveClick += OnMoveConfirmed;
-            moveSelectionPanel.OnMoveSelect += OnMoveSelected;
+            if (moveSelectionPanel == null)
+                return;
+
+            moveSelectionPanel.OnMoveConfirmed += HandleMoveConfirmed;
+            moveSelectionPanel.OnMoveHighlighted += HandleMoveHighlighted;
         }
 
-        public void OnDisable()
+        private void OnDisable()
         {
-            if (moveSelectionPanel != null)
+            if (moveSelectionPanel == null)
+                return;
+
+            moveSelectionPanel.OnMoveConfirmed -= HandleMoveConfirmed;
+            moveSelectionPanel.OnMoveHighlighted -= HandleMoveHighlighted;
+        }
+
+        /// /// <summary>
+        /// Initializes the UI by populating the move buttons with the Pokémon's available moves.
+        /// </summary>
+        /// <param name="moves">The array of 1 to 4 available moves to display.</param>
+        public void BindMoves(MoveInstance[] moves)
+        {
+            moveSelectionPanel.BindMoves(moves);
+
+            // Initialize the detail panel immediately for better user experience (UX)
+            // by highlighting the first available move.
+            if (moves.Length > 0 && moves[0] != null)
             {
-                moveSelectionPanel.OnMoveClick -= OnMoveConfirmed;
-                moveSelectionPanel.OnMoveSelect -= OnMoveSelected;
+                HandleMoveHighlighted(moves[0]);
             }
         }
 
-        public override void Close()
+        private void HandleMoveHighlighted(MoveInstance move)
         {
-            stateMachine.SetState(new PlayerActionState(stateMachine));
-        }
-
-        private void OnMoveSelected(MoveInstance move)
-        {
+            // The view acts as a mediator, propagating the selection to the detail pane.
             moveSelectionDetail.Bind(move);
         }
 
-        private void OnMoveConfirmed(MoveInstance move)
+        private void HandleMoveConfirmed(MoveInstance move)
         {
-            if (move == null || stateMachine == null)
-            {
-                return;
-            }
+            if (move == null) return;
 
-            ViewManager.Instance.CloseTopView();
-            stateMachine.SetState(new PlayerTurnState(stateMachine, move));
+            // This is the primary event raised to notify the outside controller (the state)
+            OnMoveConfirmed?.Invoke(move);
         }
     }
 }

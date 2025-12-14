@@ -1,7 +1,6 @@
 using System;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
-using PokemonGame.Summary;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -9,76 +8,48 @@ using UnityEngine;
 namespace PokemonGame.Party
 {
     /// <summary>
-    /// Displays the option menu when selecting a Pokémon in the party.
-    /// Provides actions such as opening the summary screen or canceling.
+    /// Option menu displayed when a Pokémon is selected in the party.
+    /// Raises events for Switch, Summary, and Cancel actions.
     /// </summary>
     public class PartyMenuOptionView : View
     {
         [Title("Buttons")]
-        [SerializeField, Required]
-        [Tooltip("Button to open the SummaryView.")]
-        private MenuButton summaryButton;
-
-        [SerializeField, Required]
-        private MenuButton switchButton;
-
-        [SerializeField, Required]
-        [Tooltip("Button to close the option menu and return to the party menu.")]
-        private MenuButton cancelButton;
+        [SerializeField, Required] private MenuButton summaryButton;
+        [SerializeField, Required] private MenuButton switchButton;
+        [SerializeField, Required] private MenuButton cancelButton;
 
         private VerticalMenuController controller;
-        public event Action OnClose;
+
+        public event Action OnSwitchSelected;
+        public event Action OnSummarySelected;
+        public event Action OnCancelSelected;
 
         private void Awake()
         {
-            summaryButton.OnClick += OnSummaryClick;
-            switchButton.OnClick += OnSwitchClick;
-            cancelButton.OnClick += OnCancelClick;
-
-            controller =  GetComponent<VerticalMenuController>();
-        }
-
-        private void OnDestroy()
-        {
-            summaryButton.OnClick -= OnSummaryClick;
-            switchButton.OnClick -= OnSwitchClick;
-            cancelButton.OnClick -= OnCancelClick;
+            controller = GetComponent<VerticalMenuController>();
         }
 
         private void OnEnable()
         {
+            summaryButton.OnClick += RaiseSummary;
+            switchButton.OnClick += RaiseSwitch;
+            cancelButton.OnClick += RaiseCancel;
+
             controller.SelectFirst();
         }
 
-        public override void Freeze()
+        private void OnDisable()
         {
-            controller.enabled = false;
+            summaryButton.OnClick -= RaiseSummary;
+            switchButton.OnClick -= RaiseSwitch;
+            cancelButton.OnClick -= RaiseCancel;
         }
 
-        public override void Unfreeze()
-        {
-            controller.enabled = true;
-        }
+        public override void Freeze() => controller.enabled = false;
+        public override void Unfreeze() => controller.enabled = true;
 
-        private void OnSummaryClick()
-        {
-            ViewManager.Instance.Show<SummaryView>();
-        }
-
-        private void OnSwitchClick()
-        {
-            PartyMenuView partyView = ViewManager.Instance.Get<PartyMenuView>();
-
-            if (partyView == null) 
-                return;
-
-            partyView.StartSwapMode();
-            ViewManager.Instance.CloseTopView();
-        }
-
-        private void OnCancelClick()
-        {
-            ViewManager.Instance.CloseTopView();
-        }
+        private void RaiseSummary() => OnSummarySelected?.Invoke();
+        private void RaiseSwitch() => OnSwitchSelected?.Invoke();
+        private void RaiseCancel() => OnCancelSelected?.Invoke();
     }
 }

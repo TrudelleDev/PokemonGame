@@ -50,7 +50,7 @@ Material:
     - _CoverOffsetY: 0
     - _EnableExternalAlpha: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 0.5882353}
+    - _Color: {r: 1, g: 1, b: 1, a: 0.54901963}
     - _CoverColor: {r: 1, g: 1, b: 1, a: 1}
     - _CoverOffset: {r: 0, g: 0, b: 0, a: 0}
     - _CoverTiling: {r: 1, g: 1, b: 0, a: 0}

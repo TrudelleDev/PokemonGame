@@ -29,26 +29,32 @@ namespace PokemonGame.Views
 
         private VerticalMenuController controller;
 
-        /// <summary>
-        /// Sets up button listeners. Called once before the view is shown.
-        /// </summary>
-        public override void Preload()
-        {
-            partyButton.OnClick += OnPartyClick;
-            inventoryButton.OnClick += OnInventoryClick;
-            exitButton.OnClick += OnExitClick;
-        }
+        public override void Preload() { }
 
         private void Awake()
         {
             controller = GetComponent<VerticalMenuController>();
         }
 
-        private void OnDestroy()
+        private void OnEnable()
+        {
+            partyButton.OnClick += OnPartyClick;
+            inventoryButton.OnClick += OnInventoryClick;
+            exitButton.OnClick += OnExitClick;
+            OnCloseKeyPress += GameMenuView_OnCloseKeyPress;
+        }
+
+        private void GameMenuView_OnCloseKeyPress()
+        {
+            ViewManager.Instance.Close<GameMenuView>();
+        }
+
+        private void OnDisable()
         {
             partyButton.OnClick -= OnPartyClick;
             inventoryButton.OnClick -= OnInventoryClick;
             exitButton.OnClick -= OnExitClick;
+            OnCloseKeyPress -= GameMenuView_OnCloseKeyPress;
         }
 
         protected override void Update()
@@ -61,6 +67,7 @@ namespace PokemonGame.Views
                 ViewManager.Instance.CloseTopView();
             }
         }
+
         public override void Freeze()
         {
             controller.enabled = false;
@@ -75,7 +82,22 @@ namespace PokemonGame.Views
 
         private void OnPartyClick()
         {
-            PartyMenuView partyMenu = ViewManager.Instance.Show<PartyMenuView>();
+            var party = ViewManager.Instance.Show<PartyMenuView>();
+
+            party.OnCloseKeyPress -= OnPartyClose;
+            party.OnCloseButtonPress -= OnPartyClose;
+
+            party.OnCloseKeyPress += OnPartyClose;
+            party.OnCloseButtonPress += OnPartyClose;
+        }
+
+        /// <summary>
+        /// Handles party menu close event.
+        /// Unsubscribes immediately to prevent multiple calls.
+        /// </summary>
+        private void OnPartyClose()
+        {
+            ViewManager.Instance.Close<PartyMenuView>();
         }
 
         private void OnInventoryClick()

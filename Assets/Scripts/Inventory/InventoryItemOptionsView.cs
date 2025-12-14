@@ -1,4 +1,5 @@
-﻿using PokemonGame.Dialogue;
+﻿using System;
+using PokemonGame.Dialogue;
 using PokemonGame.Items;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
@@ -38,6 +39,9 @@ namespace PokemonGame.Inventory
 
         private PartyMenuView partyMenu;
         private VerticalMenuController controller;
+
+        private bool itemWasUsed = false;
+        public event Action<bool> OnItemUsed;
 
         private void Awake()
         {
@@ -96,13 +100,17 @@ namespace PokemonGame.Inventory
                 inventory.Remove(SelectedItem);
             }
 
+            itemWasUsed = result.Used;
+
             OverworldDialogueBox.Instance.Dialogue.OnDialogueFinished += OnDialogueFinished;
             OverworldDialogueBox.Instance.Dialogue.ShowDialogue(result.Messages);
         }
 
 
+
         private void OnUseButtonClick()
         {
+            ViewManager.Instance.Close<InventoryItemOptionsView>();
             partyMenu = ViewManager.Instance.Show<PartyMenuView>();
             partyMenu.OppenedFromInventory = true;
             partyMenu.OnPokemonSelected += OnPokemonSelected;
@@ -112,12 +120,25 @@ namespace PokemonGame.Inventory
         {
             OverworldDialogueBox.Instance.Dialogue.OnDialogueFinished -= OnDialogueFinished;
             partyMenu.OppenedFromInventory = false;
-            OnCancelButtonClick();
+
+  
+            if (itemWasUsed)
+            {
+                ViewManager.Instance.CloseAll(
+                    typeof(InventoryView)
+                );
+            }
+            
+
+             OnCancelButtonClick();
+
+            OnItemUsed?.Invoke(itemWasUsed);
         }
 
         private void OnCancelButtonClick()
         {
             ViewManager.Instance.CloseTopView();
+
         }
     }
 }

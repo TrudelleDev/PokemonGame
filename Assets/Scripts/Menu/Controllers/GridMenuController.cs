@@ -77,6 +77,7 @@ namespace PokemonGame.Menu.Controllers
 
         private IEnumerator DelayedSelect()
         {
+            // Wait one frame so that dynamic UI has finished populating
             yield return null;
 
             if (currentButton != null && buttons.Contains(currentButton) && currentButton.IsInteractable)

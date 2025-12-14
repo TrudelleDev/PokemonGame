@@ -1,9 +1,6 @@
-﻿using PokemonGame.Battle.States;
-using PokemonGame.Dialogue;
-using PokemonGame.Inventory;
+﻿using System;
 using PokemonGame.Menu;
 using PokemonGame.Menu.Controllers;
-using PokemonGame.Party;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -11,90 +8,82 @@ using UnityEngine;
 namespace PokemonGame.Battle.UI
 {
     /// <summary>
-    /// Handles the player's available battle actions: Fight, Bag, Pokémon, and Run.
-    /// Acts as a local UI panel within the <see cref="BattleView"/>, managing transitions
-    /// to other views (move selection, inventory, party, etc.).
+    /// Displays the four main player options (Fight, Bag, Pokémon, Run) during a battle.
+    /// This view captures user input and raises specific events for the controlling state machine.
     /// </summary>
     [DisallowMultipleComponent]
-    public class PlayerActionPanel : View
+    public sealed class PlayerActionPanel : View
     {
-        [SerializeField, Required]
-        [Tooltip("Button that opens the Move Selection Panel.")]
+        [SerializeField, Required, Tooltip("Button to initiate the move selection screen.")]
         private MenuButton fightButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button that opens the player's Inventory view.")]
+        [SerializeField, Required, Tooltip("Button to open the inventory/item selection screen.")]
         private MenuButton bagButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button that opens the Party Menu view.")]
+        [SerializeField, Required, Tooltip("Button to open the party/switch Pokémon screen.")]
         private MenuButton partyButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button that triggers a run attempt from battle.")]
+        [SerializeField, Required, Tooltip("Button to attempt escaping the battle.")]
         private MenuButton runButton;
 
-        private BattleView battle;
-
-        private void Awake()
-        {
-            // Register click event handlers
-            fightButton.OnClick += ShowMovePanel;
-            bagButton.OnClick += ShowInventory;
-            partyButton.OnClick += ShowParty;
-            runButton.OnClick += RunAway;
-        }
-
-        private void Start()
-        {
-            // Cache the BattleView reference
-            battle = ViewManager.Instance.Get<BattleView>();
-        }
-
-        private void OnDestroy()
-        {
-            // Unregister event handlers to prevent memory leaks
-            fightButton.OnClick -= ShowMovePanel;
-            bagButton.OnClick -= ShowInventory;
-            partyButton.OnClick -= ShowParty;
-            runButton.OnClick -= RunAway;
-        }
-
-        private void ShowMovePanel()
-        {
-            if (battle == null)
-                return;
-
-            ViewManager.Instance.CloseTopView();
-            ViewManager.Instance.Show<MoveSelectionView>();
-        }
-
-        private void ShowInventory()
-        {
-            ViewManager.Instance.Show<InventoryView>();
-        }
-
-        private void ShowParty()
-        {
-            ViewManager.Instance.Show<PartyMenuView>();
-        }
-
-        private void RunAway()
-        {
-            ViewManager.Instance.CloseTopView();
-            battle.StateMachine.SetState(new BattleRunState(battle.StateMachine));
-        }
+        /// <summary>
+        /// Raised when the player selects the 'Fight' option.
+        /// </summary>
+        public event Action OnFightSelected;
 
         /// <summary>
-        /// Disables input control for this panel (used during transitions).
+        /// Raised when the player selects the 'Bag' option.
+        /// </summary>
+        public event Action OnBagSelected;
+
+        /// <summary>
+        /// Raised when the player selects the 'Party' option.
+        /// </summary>
+        public event Action OnPartySelected;
+
+        /// <summary>
+        /// Raised when the player selects the 'Run' option.
+        /// </summary>
+        public event Action OnRunSelected;
+
+        private void OnEnable()
+        {
+            // Subscribing to component events is crucial for enabling interaction when the view is active.
+            fightButton.OnClick += HandleFightClicked;
+            bagButton.OnClick += HandleBagClicked;
+            partyButton.OnClick += HandlePartyClicked;
+            runButton.OnClick += HandleRunClicked;
+        }
+
+        private void OnDisable()
+        {
+            // Unsubscribing is essential for cleanup and preventing memory leaks/null reference exceptions
+            // when the view is disabled or destroyed.
+            fightButton.OnClick -= HandleFightClicked;
+            bagButton.OnClick -= HandleBagClicked;
+            partyButton.OnClick -= HandlePartyClicked;
+            runButton.OnClick -= HandleRunClicked;
+        }
+
+        // --- Internal Event Handlers ---
+
+        // Handlers translate the low-level MenuButton click into a high-level public event.
+        private void HandleFightClicked() => OnFightSelected?.Invoke();
+        private void HandleBagClicked() => OnBagSelected?.Invoke();
+        private void HandlePartyClicked() => OnPartySelected?.Invoke();
+        private void HandleRunClicked() => OnRunSelected?.Invoke();
+
+        /// <summary>
+        /// Freezes the UI by disabling the input controller component.
         /// </summary>
         public override void Freeze()
         {
+            // Accessing the controller component is necessary to disable user input without hiding the panel.
             GetComponent<GridMenuController>().enabled = false;
         }
 
         /// <summary>
-        /// Re-enables input control for this panel.
+        /// Unfreezes the UI by enabling the input controller component.
         /// </summary>
         public override void Unfreeze()
         {

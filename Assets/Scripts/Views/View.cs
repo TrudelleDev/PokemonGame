@@ -34,6 +34,8 @@ namespace PokemonGame.Views
 
         private bool isFrozen;
 
+        public event Action OnCloseKeyPress;
+
         /// <summary>
         /// Gets the transition used when this view opens.
         /// </summary>
@@ -84,25 +86,17 @@ namespace PokemonGame.Views
             isFrozen = false; 
         }
 
-        /// <summary>
-        /// Checks for close input (if allowed) and triggers view closure.
-        /// </summary>
+
         protected virtual void Update()
         {
             if (isFrozen)
-            {
                 return;
-            }
 
             if (!allowKeyClose)
-            {
                 return;
-            }
 
             if (ViewManager.Instance == null || ViewManager.Instance.IsTransitioning)
-            {
                 return;
-            }
 
             if (Input.GetKeyDown(KeyBinds.Cancel))
             {
@@ -111,14 +105,8 @@ namespace PokemonGame.Views
                     AudioManager.Instance.PlaySFX(closeSound);
                 }
 
-                ViewManager.Instance.CloseTopView();
-                Close();
+                OnCloseKeyPress?.Invoke();
             }
-        }
-
-        public virtual void Close()
-        {
-
         }
     }
 }

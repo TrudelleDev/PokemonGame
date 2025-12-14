@@ -42,7 +42,7 @@ namespace PokemonGame.Inventory
         private VerticalMenuController menuController;
 
 
-        private MenuButton cancelButton;
+        public MenuButton CancelButton { get; private set; }
 
         /// <summary>
         /// Initializes the inventory view by binding to the inventory manager,
@@ -62,11 +62,11 @@ namespace PokemonGame.Inventory
         /// </summary>
         public void Unbind()
         {
-            if (cancelButton != null)
+            if (CancelButton != null)
             {
-                cancelButton.OnClick -= OnCancelButtonClick;
-                Destroy(cancelButton.gameObject);
-                cancelButton = null;
+                CancelButton.OnClick -= OnCancelButtonClick;
+                Destroy(CancelButton.gameObject);
+                CancelButton = null;
             }
 
             inventory.OnItemsChanged -= OnSectionChanged;
@@ -100,7 +100,7 @@ namespace PokemonGame.Inventory
             {
                 GameObject child = itemsContainer.GetChild(i).gameObject;
 
-                if (cancelButton != null && child == cancelButton.gameObject)
+                if (CancelButton != null && child == CancelButton.gameObject)
                 {
                     continue;
                 }
@@ -123,13 +123,13 @@ namespace PokemonGame.Inventory
                 itemUI.Bind(item);
             }
 
-            if (cancelButton == null)
+            if (CancelButton == null)
             {
-                cancelButton = Instantiate(cancelButtonPrefab, itemsContainer);
-                cancelButton.OnClick += OnCancelButtonClick;
+                CancelButton = Instantiate(cancelButtonPrefab, itemsContainer);
+                CancelButton.OnClick += OnCancelButtonClick;
             }
 
-            cancelButton.transform.SetAsLastSibling();
+            CancelButton.transform.SetAsLastSibling();
         }
 
         /// <summary>
