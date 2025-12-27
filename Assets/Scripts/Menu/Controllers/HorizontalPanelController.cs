@@ -11,7 +11,7 @@ namespace PokemonGame.Menu.Controllers
     /// Activates the newly selected panel, deactivates the previous one,
     /// and optionally plays a navigation sound on change.
     /// </summary>
-    public class HorizontalPanelController : MonoBehaviour
+    internal class HorizontalPanelController : MenuController
     {
         [Title("Audio")]
         [SerializeField, Required]
@@ -44,14 +44,6 @@ namespace PokemonGame.Menu.Controllers
         }
 
         /// <summary>
-        /// Resets selection to the first panel (index 0).
-        /// </summary>
-        public void ResetController()
-        {
-            currentPanelIndex = 0;
-        }
-
-        /// <summary>
         /// Applies the panel change: toggles GameObjects and plays the navigation sound.
         /// </summary>
         private void UpdateSelection()
@@ -68,6 +60,11 @@ namespace PokemonGame.Menu.Controllers
 
                 previousPanelIndex = currentPanelIndex;
             }
+        }
+
+        public override void ResetController()
+        {
+           currentPanelIndex = 0;
         }
     }
 }

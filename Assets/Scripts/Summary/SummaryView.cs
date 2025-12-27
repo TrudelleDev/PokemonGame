@@ -10,7 +10,7 @@ namespace PokemonGame.Summary
     /// Displays detailed information about the selected Pokémon,
     /// including stats, skills, and moves.
     /// </summary>
-    public class SummaryView : View
+    internal class SummaryView : View
     {
         [SerializeField, Required]
         [Tooltip("Tabs for stats, skills, and move details.")]

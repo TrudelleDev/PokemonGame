@@ -15,7 +15,7 @@ namespace PokemonGame.Menu.Controllers
     /// supports keyboard/controller input, and raises selection and click events.
     /// </summary>
     [DisallowMultipleComponent]
-    public class GridMenuController : MonoBehaviour
+    internal class GridMenuController : MenuController
     {
         [Title("Button Sources")]
         [SerializeField, Required, ChildGameObjectsOnly]
@@ -199,6 +199,11 @@ namespace PokemonGame.Menu.Controllers
         private bool IsValidButton(int index)
         {
             return index >= 0 && index < buttons.Count && buttons[index] != null && buttons[index].IsInteractable;
+        }
+
+        public override void ResetController()
+        {
+            SelectFirst();
         }
     }
 }

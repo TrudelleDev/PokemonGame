@@ -12,7 +12,7 @@ namespace PokemonGame.Battle.UI
     /// This view captures user input and raises specific events for the controlling state machine.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class PlayerActionPanel : View
+    internal sealed class PlayerActionPanel : View
     {
         [SerializeField, Required, Tooltip("Button to initiate the move selection screen.")]
         private MenuButton fightButton;
@@ -49,20 +49,20 @@ namespace PokemonGame.Battle.UI
         private void OnEnable()
         {
             // Subscribing to component events is crucial for enabling interaction when the view is active.
-            fightButton.OnClick += HandleFightClicked;
-            bagButton.OnClick += HandleBagClicked;
-            partyButton.OnClick += HandlePartyClicked;
-            runButton.OnClick += HandleRunClicked;
+            fightButton.OnSubmitted += HandleFightClicked;
+            bagButton.OnSubmitted += HandleBagClicked;
+            partyButton.OnSubmitted += HandlePartyClicked;
+            runButton.OnSubmitted += HandleRunClicked;
         }
 
         private void OnDisable()
         {
             // Unsubscribing is essential for cleanup and preventing memory leaks/null reference exceptions
             // when the view is disabled or destroyed.
-            fightButton.OnClick -= HandleFightClicked;
-            bagButton.OnClick -= HandleBagClicked;
-            partyButton.OnClick -= HandlePartyClicked;
-            runButton.OnClick -= HandleRunClicked;
+            fightButton.OnSubmitted -= HandleFightClicked;
+            bagButton.OnSubmitted -= HandleBagClicked;
+            partyButton.OnSubmitted -= HandlePartyClicked;
+            runButton.OnSubmitted -= HandleRunClicked;
         }
 
         // --- Internal Event Handlers ---

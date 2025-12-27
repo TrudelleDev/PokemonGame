@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using PokemonGame.Dialogue;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -14,15 +15,17 @@ namespace PokemonGame.Battle.States
         private const float TurnDelay = 0.5f;
 
         private readonly BattleStateMachine machine;
+        private PokemonInstance pokemon;
         private BattleView BattleView => machine.BattleView;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="SwitchPokemonState"/>.
         /// </summary>
         /// <param name="machine">The <see cref="BattleStateMachine"/> controlling the battle flow.</param>
-        public SwitchPokemonState(BattleStateMachine machine)
+        public SwitchPokemonState(BattleStateMachine machine, PokemonInstance pokemon)
         {
             this.machine = machine;
+            this.pokemon = pokemon;
         }
 
         /// <summary>

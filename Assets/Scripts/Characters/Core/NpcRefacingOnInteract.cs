@@ -11,7 +11,7 @@ namespace PokemonGame.Characters.Core
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterStateController))]
-    public class NpcRefacingOnInteract : MonoBehaviour, IInteractable
+    internal class NpcRefacingOnInteract : MonoBehaviour, IInteractable
     {
         private CharacterStateController npcController;
 

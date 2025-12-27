@@ -1,3 +1,5 @@
+using System;
+using PokemonGame.Menu;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -19,12 +21,30 @@ namespace PokemonGame.Items.UI
         [Tooltip("Text element displaying the item's quantity.")]
         private TextMeshProUGUI countText;
 
-        /// <summary>
-        /// The item currently bound to this UI, or null if unbound.
-        /// </summary>
+        private MenuButton button;
+
+        public event Action<IDisplayable> OnSubmitted;
+        public event Action<IDisplayable> OnHighlighted;
+
         public Item Item { get; private set; }
 
         public IDisplayable Displayable => Item.Definition;
+
+        private void Awake()
+        {
+            button = GetComponent<MenuButton>();
+        }
+        private void OnEnable()
+        {        
+            button.OnSubmitted += HandleClick;
+            button.OnHighlighted += HandleHighlighted;
+        }
+
+        private void OnDisable()
+        {
+            button.OnSubmitted -= HandleClick;
+            button.OnHighlighted -= HandleHighlighted;
+        }
 
         /// <summary>
         ///  Binds the UI to the given item, or clears if invalid.
@@ -51,6 +71,16 @@ namespace PokemonGame.Items.UI
             Item = null;
             nameText.text = string.Empty;
             countText.text = string.Empty;
+        }
+
+        private void HandleClick()
+        {
+            OnSubmitted?.Invoke(Item.Definition);
+        }
+
+        private void HandleHighlighted()
+        {
+            OnHighlighted?.Invoke(Item.Definition);
         }
     }
 }

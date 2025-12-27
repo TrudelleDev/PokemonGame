@@ -14,7 +14,7 @@ namespace PokemonGame.Battle.States
     public sealed class VictoryState : IBattleState
     {
         private readonly BattleStateMachine machine;
-        public BattleView BattleView => machine.BattleView;
+        internal BattleView BattleView => machine.BattleView;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VictoryState"/>.

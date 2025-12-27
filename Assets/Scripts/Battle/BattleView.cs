@@ -2,8 +2,11 @@
 using System.Collections;
 using PokemonGame.Battle.Models;
 using PokemonGame.Battle.States;
+using PokemonGame.Characters.Core;
 using PokemonGame.Dialogue;
+using PokemonGame.Inventory;
 using PokemonGame.Party;
+using PokemonGame.Party.UI;
 using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -15,7 +18,7 @@ namespace PokemonGame.Battle
     /// Manages the battle view, including HUDs, animations, dialogue, and state transitions.
     /// </summary>
     [DisallowMultipleComponent]
-    public class BattleView : View
+    internal class BattleView : View
     {
         [SerializeField, Tooltip("The player's and opponent's HUDs for health, status, etc.")]
         private BattleHUDs battleHuds;
@@ -33,6 +36,10 @@ namespace PokemonGame.Battle
         public PokemonInstance PlayerPokemon { get; private set; }
         public PokemonInstance OpponentPokemon { get; private set; }
 
+        public InventoryManager InventoryManager { get; private set; } 
+        public PartyManager PlayerPartyManager { get; private set; }
+
+
         public BattleHUDs BattleHUDs => battleHuds;
         public BattleComponents Components => battleComponents;
         public DialogueBox DialogueBox => dialogueBox;
@@ -47,9 +54,11 @@ namespace PokemonGame.Battle
         /// <summary>
         /// Initializes the battle with the player's party and opponent Pokémon.
         /// </summary>
-        public void Initialize(PartyManager playerParty, PokemonInstance opponentPokemon)
+        public void Initialize(PartyManager playerParty, InventoryManager inventory, PokemonInstance opponentPokemon)
         {
             this.playerParty = playerParty;
+            InventoryManager = inventory;
+            PlayerPartyManager = playerParty;
 
             // Preserve original party order and set up temporary battle party.
             playerParty.SaveOriginalPartyOrder();
@@ -98,7 +107,7 @@ namespace PokemonGame.Battle
         public void TemporarySwap()
         {
             var partyMenu = ViewManager.Instance.Get<PartyMenuView>();
-            partyMenu.Party.Swap(0, temporaryPlayerParty.SelectedIndex);
+           // partyMenu.Swap(0, temporaryPlayerParty.SelectedIndex);
 
             PlayerPokemon = temporaryPlayerParty.SelectedPokemon;
             battleHuds.Player.Bind(PlayerPokemon);

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using PokemonGame.Pokemon;
+using PokemonGame.Utilities;
 using UnityEngine;
 
 namespace PokemonGame.Party
@@ -9,42 +10,37 @@ namespace PokemonGame.Party
     /// Manages a Pokémon party: initializes from a predefined set of PartyMemberEntry,
     /// maintains the active roster, and handles selection, adding, and removing members.
     /// </summary>
-    public class PartyManager : MonoBehaviour
+    [DisallowMultipleComponent]
+    internal sealed class PartyManager : MonoBehaviour
     {
-        /// <summary>
-        /// Maximum number of Pokémon allowed in a party.
-        /// </summary>
         public const int MaxPartySize = 6;
 
         [SerializeField, Tooltip("Predefined party used to initialize this manager.")]
         private PartyDefinition partyDefinition;
 
         private readonly List<PokemonInstance> members = new();
+        private List<PokemonInstance> originalPartyOrder = new();
 
         /// <summary>
         /// The currently selected Pokémon in the party.
         /// </summary>
-        public PokemonInstance SelectedPokemon { get; private set; }
+        internal PokemonInstance SelectedPokemon { get; private set; }
 
-        public int SelectedIndex => SelectedPokemon != null ? members.IndexOf(SelectedPokemon) : -1;
+        /// <summary>
+        /// Gets the index of the currently selected Pokémon in the party,
+        /// or -1 if no Pokémon is selected.
+        /// </summary>
+        internal int SelectedIndex => SelectedPokemon != null ? members.IndexOf(SelectedPokemon) : -1;
 
         /// <summary>
         /// All Pokémon currently in the party.
         /// </summary>
-        public IReadOnlyList<PokemonInstance> Members => members;
-
-        /// <summary>
-        /// Event triggered when a new Pokémon is selected.
-        /// </summary>
-        public event Action<PokemonInstance> OnSelectPokemon;
+        internal IReadOnlyList<PokemonInstance> Members => members;
 
         /// <summary>
         /// Event triggered when the party changes (add/remove).
         /// </summary>
-        public event Action OnPartyChanged;
-
-        // Store the original order before battle
-        private List<PokemonInstance> originalPartyOrder;
+        internal event Action PartyChanged;
 
         private void Awake()
         {
@@ -59,7 +55,7 @@ namespace PokemonGame.Party
         {
             if (partyDefinition == null || partyDefinition.Members.Count == 0)
             {
-                Debug.LogWarning("PartyManager: No initial members defined.");
+                Log.Warning(nameof(PartyManager), "PartyManager: No initial members defined.");
                 return;
             }
 
@@ -73,98 +69,114 @@ namespace PokemonGame.Party
                 AddPokemon(pokemon);
             }
 
+            // Automatically select the first Pokémon if the party is not empty
             if (Members.Count > 0)
             {
                 SelectPokemon(Members[0]);
             }
         }
 
-        // Call before battle starts
-        public void SaveOriginalPartyOrder()
+        /// <summary>
+        /// Adds a Pokémon to the party if there is space and the Pokémon is not null,
+        /// then triggers the PartyChanged event.
+        /// </summary>
+        /// <param name="pokemon">The Pokémon instance to add to the party.</param>
+        internal void AddPokemon(PokemonInstance pokemon)
+        {
+            if (pokemon == null)
+            {
+                return;
+            }
+
+            if (members.Count >= MaxPartySize)
+            {
+                Log.Warning(nameof(PartyManager), $"PartyManager: Cannot add more than {MaxPartySize} Pokemon.");
+                return;
+            }
+
+            members.Add(pokemon);
+            PartyChanged?.Invoke();
+        }
+
+        /// <summary>
+        /// Saves the current party order, typically before entering a battle.
+        /// </summary>
+        internal void SaveOriginalPartyOrder()
         {
             originalPartyOrder = new List<PokemonInstance>(members);
         }
 
-        // Call after battle ends
-        public void RestorePartyOrder()
+        /// <summary>
+        /// Restores the party order saved before battle and triggers the PartyChanged event.
+        /// </summary>
+        internal void RestorePartyOrder()
         {
-            if (originalPartyOrder == null) return;
+            if (originalPartyOrder == null)
+            {
+                return;
+            }
 
             for (int i = 0; i < originalPartyOrder.Count; i++)
             {
                 members[i] = originalPartyOrder[i];
             }
 
-            OnPartyChanged?.Invoke();
+            PartyChanged?.Invoke();
         }
 
         /// <summary>
-        /// Swap two Pokémon in the party by index.
+        /// Swaps two Pokémon in the party by their indices.
         /// </summary>
-        public bool Swap(int indexA, int indexB)
+        /// <param name="indexA">Index of the first Pokémon.</param>
+        /// <param name="indexB">Index of the second Pokémon.</param>
+        /// <returns>
+        /// True if the swap succeeds; false if the indices are invalid or identical.
+        /// </returns>
+        internal bool Swap(int indexA, int indexB)
         {
-            if (indexA < 0 || indexA >= members.Count || indexB < 0 || indexB >= members.Count)
+            if (indexA < 0 || indexA >= members.Count ||
+                indexB < 0 || indexB >= members.Count)
+            {
                 return false;
+            }
 
-            if(indexA ==  indexB) return false;
+            if (indexA == indexB)
+            {
+                return false;
+            }
 
             (members[indexB], members[indexA]) = (members[indexA], members[indexB]);
-         
-            OnPartyChanged?.Invoke();
+
+            PartyChanged?.Invoke();
             return true;
         }
 
         /// <summary>
-        /// Selects the given Pokémon and triggers OnSelectPokemon.
+        /// Sets the currently selected Pokémon if it exists in the party.
         /// </summary>
         /// <param name="pokemon">The Pokémon to select.</param>
-        public void SelectPokemon(PokemonInstance pokemon)
+        internal void SelectPokemon(PokemonInstance pokemon)
         {
-            if (pokemon == null || !members.Contains(pokemon)) return;
-
-            SelectedPokemon = pokemon;
-            OnSelectPokemon?.Invoke(pokemon);
-        }
-
-        /// <summary>
-        /// Adds a Pokémon to the party.
-        /// </summary>
-        /// <param name="pokemon">The Pokémon to add.</param>
-        public void AddPokemon(PokemonInstance pokemon)
-        {
-            if (pokemon == null) return;
-
-            if (members.Count >= MaxPartySize)
+            if (pokemon == null || !members.Contains(pokemon))
             {
-                Debug.LogWarning("PartyManager: Cannot add more than " + MaxPartySize + " Pokémon.");
                 return;
             }
 
-            members.Add(pokemon);
-            OnPartyChanged?.Invoke();
+            SelectedPokemon = pokemon;
         }
 
         /// <summary>
-        /// Removes a Pokémon from the party.
+        /// Selects a Pokémon in the party by its slot index.
         /// </summary>
-        /// <param name="pokemon">The Pokémon to remove.</param>
-        public void RemovePokemon(PokemonInstance pokemon)
+        /// <param name="index">Index of the Pokémon to select.</param>
+        internal void SelectSlotIndex(int index)
         {
-            if (pokemon == null || !members.Contains(pokemon)) return;
-
-            members.Remove(pokemon);
-            OnPartyChanged?.Invoke();
-
-            // If the removed Pokémon was selected, select the first one in the party
-            if (SelectedPokemon == pokemon && Members.Count > 0)
+            if (index < 0 || index >= members.Count)
             {
-                SelectPokemon(Members[0]);
+                return;
             }
-        }
 
-        /// <summary>
-        /// Checks if the party is full.
-        /// </summary>
-        public bool IsFull() => members.Count >= MaxPartySize;
+            SelectPokemon(members[index]);
+        }
     }
 }

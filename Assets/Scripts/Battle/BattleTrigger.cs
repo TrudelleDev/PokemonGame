@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using PokemonGame.Audio;
+using PokemonGame.Characters.Core;
+using PokemonGame.Inventory;
 using PokemonGame.Party;
 using PokemonGame.Pokemon;
 using PokemonGame.Pokemon.Models;
@@ -27,6 +29,9 @@ namespace PokemonGame.Battle
         private PartyManager partyManager;
 
         [SerializeField, Required]
+        private InventoryManager inventory;
+
+        [SerializeField, Required]
         private List<WildPokemonEntry> pokemonEntries;
 
         private void Start()
@@ -50,7 +55,7 @@ namespace PokemonGame.Battle
 
             PokemonInstance pokemon = PokemonFactory.CreatePokemon(level, wildPokemon.Pokemon);
 
-            battle.Initialize(partyManager, pokemon);
+            battle.Initialize(partyManager,inventory, pokemon);
         }
 
         private WildPokemonEntry ChooseWildPokemon()

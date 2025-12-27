@@ -1,113 +1,78 @@
+﻿using System;
 using PokemonGame.Characters.Inputs;
-using PokemonGame.Inventory;
 using PokemonGame.Menu;
-using PokemonGame.Menu.Controllers;
-using PokemonGame.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Main menu view that provides access to core in-game systems.
+    /// Main game menu view. Raises events when the player requests
+    /// to open the Party menu, open the Inventory, or close the game menu.
     /// </summary>
-    public class GameMenuView : View
+    [DisallowMultipleComponent]
+    internal sealed class GameMenuView : View
     {
-        [Title("Menu Buttons")]
+        [Title("Game Menu Settings")]
 
-        [SerializeField, Required]
-        [Tooltip("Button to open the party menu.")]
+        [SerializeField, Required, Tooltip("Opens the Party menu.")]
         private MenuButton partyButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button to open the inventory.")]
+        [SerializeField, Required, Tooltip("Opens the Inventory.")]
         private MenuButton inventoryButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button to close the menu.")]
+        [SerializeField, Required, Tooltip("Closes the game menu.")]
         private MenuButton exitButton;
 
-        private VerticalMenuController controller;
-
-        public override void Preload() { }
-
-        private void Awake()
-        {
-            controller = GetComponent<VerticalMenuController>();
-        }
+        internal event Action PartyOpenRequested;
+        internal event Action InventoryOpenRequested;
+        internal event Action CloseRequested;
 
         private void OnEnable()
         {
-            partyButton.OnClick += OnPartyClick;
-            inventoryButton.OnClick += OnInventoryClick;
-            exitButton.OnClick += OnExitClick;
-            OnCloseKeyPress += GameMenuView_OnCloseKeyPress;
-        }
+            partyButton.OnSubmitted += OnPartyOpenRequested;
+            inventoryButton.OnSubmitted += OnInventoryOpenRequested;
+            exitButton.OnSubmitted += OnCloseRequested;
 
-        private void GameMenuView_OnCloseKeyPress()
-        {
-            ViewManager.Instance.Close<GameMenuView>();
+            // Base view event
+            CancelKeyPressed += OnCloseRequested;
+
+            ResetMenuController();
         }
 
         private void OnDisable()
         {
-            partyButton.OnClick -= OnPartyClick;
-            inventoryButton.OnClick -= OnInventoryClick;
-            exitButton.OnClick -= OnExitClick;
-            OnCloseKeyPress -= GameMenuView_OnCloseKeyPress;
+            partyButton.OnSubmitted -= OnPartyOpenRequested;
+            inventoryButton.OnSubmitted -= OnInventoryOpenRequested;
+            exitButton.OnSubmitted -= OnCloseRequested;
+
+            // Base view event
+            CancelKeyPressed -= OnCloseRequested;
         }
 
         protected override void Update()
         {
             base.Update();
 
-            // Allow closing the menu with the same key that opens it
             if (Input.GetKeyDown(KeyBinds.Menu))
             {
-                ViewManager.Instance.CloseTopView();
+                CloseRequested?.Invoke();
             }
         }
 
-        public override void Freeze()
+        private void OnPartyOpenRequested()
         {
-            controller.enabled = false;
-            base.Freeze();
+            PartyOpenRequested?.Invoke();
         }
 
-        public override void Unfreeze()
+        private void OnInventoryOpenRequested()
         {
-            controller.enabled = true;
-            base.Unfreeze();
+            InventoryOpenRequested?.Invoke();
         }
 
-        private void OnPartyClick()
+        private void OnCloseRequested()
         {
-            var party = ViewManager.Instance.Show<PartyMenuView>();
-
-            party.OnCloseKeyPress -= OnPartyClose;
-            party.OnCloseButtonPress -= OnPartyClose;
-
-            party.OnCloseKeyPress += OnPartyClose;
-            party.OnCloseButtonPress += OnPartyClose;
-        }
-
-        /// <summary>
-        /// Handles party menu close event.
-        /// Unsubscribes immediately to prevent multiple calls.
-        /// </summary>
-        private void OnPartyClose()
-        {
-            ViewManager.Instance.Close<PartyMenuView>();
-        }
-
-        private void OnInventoryClick()
-        {
-            ViewManager.Instance.Show<InventoryView>();
-        }
-
-        private void OnExitClick()
-        {
-            ViewManager.Instance.CloseTopView();
+            CloseRequested?.Invoke();
         }
     }
 }

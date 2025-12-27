@@ -4,7 +4,6 @@ using PokemonGame.Characters.Interfaces;
 using PokemonGame.Dialogue;
 using PokemonGame.Inventory;
 using PokemonGame.Items.Definition;
-using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -14,7 +13,7 @@ namespace PokemonGame.Items
     /// Interactable item pickup: grants an item stack to the interacting character,
     /// shows a Pokémon-style message, and then destroys itself.
     /// </summary>
-    public class ItemInteractable : MonoBehaviour, IInteractable
+    internal class ItemInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required]
         [Tooltip("The item this pickup grants.")]

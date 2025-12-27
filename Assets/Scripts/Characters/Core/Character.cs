@@ -1,4 +1,6 @@
 using PokemonGame.Characters.States;
+using PokemonGame.Inventory;
+using PokemonGame.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -31,9 +33,15 @@ namespace PokemonGame.Characters.Core
         /// </summary>
         public CharacterStateController StateController { get; private set; }
 
+        internal InventoryManager Inventory { get; private set; }
+
+        internal PartyManager Party { get; private set; }
+
         private void Awake()
         {
             StateController = GetComponent<CharacterStateController>();
+            Inventory = GetComponent<InventoryManager>();
+            Party = GetComponent<PartyManager>();
         }
 
         private void Start()

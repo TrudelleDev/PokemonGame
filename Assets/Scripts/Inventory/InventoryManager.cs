@@ -13,7 +13,7 @@ namespace PokemonGame.Inventory
     /// Handles item storage, addition, removal, and notifies when the inventory changes.
     /// </summary>
     [DisallowMultipleComponent]
-    public class InventoryManager : MonoBehaviour
+    internal sealed class InventoryManager : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Initial items for this inventory.")]
@@ -24,18 +24,18 @@ namespace PokemonGame.Inventory
         /// <summary>
         /// Read-only view of all items currently in the inventory.
         /// </summary>
-        public IReadOnlyList<Item> Items => items;
+        internal IReadOnlyList<Item> Items => items;
 
         /// <summary>
         /// Raised whenever the inventory changes (items added, removed, or cleared).
         /// </summary>
-        public event Action OnItemsChanged;
+        internal event Action ItemsChanged;
 
         /// <summary>
         /// Initializes the inventory by clearing any existing items and loading
         /// the predefined starting items from the inventory definition.
         /// </summary>
-        public void Initialize()
+        internal void Initialize()
         {
             Clear();
 
@@ -59,7 +59,7 @@ namespace PokemonGame.Inventory
         /// increases its stack quantity up to a maximum of 99.
         /// </summary>
         /// <param name="item">The item to add. Must be valid and have a positive quantity.</param>
-        public void Add(Item item)
+        internal void Add(Item item)
         {
             if (!IsValid(item))
             {
@@ -87,7 +87,7 @@ namespace PokemonGame.Inventory
         /// Removes the item entirely if the quantity reaches zero.
         /// </summary>
         /// <param name="item">The item to remove. Must be valid.</param>
-        public void Remove(Item item)
+        internal void Remove(Item item)
         {
             if (!IsValid(item))
             {
@@ -114,7 +114,7 @@ namespace PokemonGame.Inventory
         /// <summary>
         /// Removes all items from the inventory.
         /// </summary>
-        public void Clear()
+        internal void Clear()
         {
             items.Clear();
             NotifyChanged();
@@ -127,7 +127,7 @@ namespace PokemonGame.Inventory
 
         private void NotifyChanged()
         {
-            OnItemsChanged?.Invoke();
+            ItemsChanged?.Invoke();
         }
     }
 }

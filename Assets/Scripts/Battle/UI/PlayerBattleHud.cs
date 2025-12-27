@@ -80,7 +80,7 @@ namespace PokemonGame.Battle.UI
 
             // Subscribe to events for real-time updates
             currentPokemon.Experience.OnLevelChange += OnPokemonLevelChange;
-            currentPokemon.Health.OnHealthChange += OnPokemonHealthChange;
+            currentPokemon.Health.HealthChange += OnPokemonHealthChange;
         }
 
         /// <summary>
@@ -124,7 +124,7 @@ namespace PokemonGame.Battle.UI
             if (currentPokemon != null)
             {
                 currentPokemon.Experience.OnLevelChange -= OnPokemonLevelChange;
-                currentPokemon.Health.OnHealthChange -= OnPokemonHealthChange;
+                currentPokemon.Health.HealthChange -= OnPokemonHealthChange;
                 currentPokemon = null;
             }
         }

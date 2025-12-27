@@ -29,8 +29,8 @@ namespace PokemonGame.Battle.Models
 
         public PlayerBattleHud Player => player;
         public OpponentBattleHud Opponent => opponent;
-        public PlayerActionPanel PlayerActions => playerActions;
+        internal PlayerActionPanel PlayerActions => playerActions;
         public MoveSelectionPanel MoveSelection => moveSelection;
-        public MoveSelectionView MoveController => moveController;
+        internal MoveSelectionView MoveController => moveController;
     }
 }

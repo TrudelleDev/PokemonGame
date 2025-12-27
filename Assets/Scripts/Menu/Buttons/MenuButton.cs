@@ -24,12 +24,12 @@ namespace PokemonGame.Menu
         /// <summary>
         /// Invoked when the button is clicked while interactable.
         /// </summary>
-        public event Action OnClick;
+        public event Action OnSubmitted;
 
         /// <summary>
         /// Invoked when the button is selected.
         /// </summary>
-        public event Action OnSelect;
+        public event Action OnHighlighted;
 
         /// <summary>
         /// Gets whether the button is currently interactable.
@@ -75,7 +75,7 @@ namespace PokemonGame.Menu
 
             if (active)
             {
-                OnSelect?.Invoke();
+                OnHighlighted?.Invoke();
             }
         }
 
@@ -114,7 +114,7 @@ namespace PokemonGame.Menu
         {
             if (IsInteractable)
             {
-                OnClick?.Invoke();
+                OnSubmitted?.Invoke();
             }
         }
 

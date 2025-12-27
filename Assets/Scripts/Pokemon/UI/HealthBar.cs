@@ -68,7 +68,7 @@ namespace PokemonGame.Pokemon.UI
 
             UpdateFillImage(pokemon.Health.CurrentHealth);
 
-            pokemon.Health.OnHealthChange += OnPokemonHealthChange;
+            pokemon.Health.HealthChange += OnPokemonHealthChange;
         }
 
         /// <summary>
@@ -80,7 +80,7 @@ namespace PokemonGame.Pokemon.UI
 
             if (boundPokemon != null)
             {
-                boundPokemon.Health.OnHealthChange -= OnPokemonHealthChange;
+                boundPokemon.Health.HealthChange -= OnPokemonHealthChange;
                 boundPokemon = null;
             }
 

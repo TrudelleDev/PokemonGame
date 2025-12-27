@@ -31,7 +31,7 @@ namespace PokemonGame.Views
         private readonly List<View> activeViews = new(); // Stack of active overlay views (bottom → top)
 
         public bool IsTransitioning { get; private set; }
-        public View CurrentView => activeViews.Count > 0 ? activeViews[^1] : null;
+        internal View CurrentView => activeViews.Count > 0 ? activeViews[^1] : null;
         public bool HasActiveView => activeViews.Count > 0;
 
         protected override void Awake()
@@ -48,7 +48,7 @@ namespace PokemonGame.Views
         /// <summary>
         /// Retrieves a registered view of the specified type without showing it.
         /// </summary>
-        public T Get<T>() where T : View
+        internal T Get<T>() where T : View
         {
             foreach (View view in views)
             {
@@ -65,7 +65,7 @@ namespace PokemonGame.Views
         /// Displays the specified view as an overlay on top of all existing ones.
         /// The previous top view is frozen, and the new one becomes the active focus.
         /// </summary>
-        public T Show<T>() where T : View
+        internal T Show<T>() where T : View
         {
             if (IsTransitioning)
             {
@@ -93,7 +93,7 @@ namespace PokemonGame.Views
             return null;
         }
 
-        public void Close<T>() where T : View
+        internal void Close<T>() where T : View
         {
             if (IsTransitioning)
                 return;

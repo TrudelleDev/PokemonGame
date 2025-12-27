@@ -10,7 +10,7 @@ namespace PokemonGame.Pokemon.Components
         public int CurrentHealth { get; private set; }
         public StatusCondition Condition { get; private set; } = StatusCondition.None;
 
-        public event Action<int, int> OnHealthChange; // oldHp, newHp
+        public event Action<int, int> HealthChange; // oldHp, newHp
         public event Action<StatusCondition> OnStatusChange;
 
         public HealthComponent(int maxHealth)
@@ -26,7 +26,7 @@ namespace PokemonGame.Pokemon.Components
             int oldHp = CurrentHealth;
             CurrentHealth = Mathf.Max(CurrentHealth - amount, 0);
 
-            OnHealthChange?.Invoke(oldHp, CurrentHealth);
+            HealthChange?.Invoke(oldHp, CurrentHealth);
             return amount;
         }
 
@@ -37,7 +37,7 @@ namespace PokemonGame.Pokemon.Components
             int oldHp = CurrentHealth;
             CurrentHealth = Mathf.Min(CurrentHealth + amount, MaxHealth);
 
-            OnHealthChange?.Invoke(oldHp, CurrentHealth);
+            HealthChange?.Invoke(oldHp, CurrentHealth);
             return CurrentHealth - oldHp;
         }
 

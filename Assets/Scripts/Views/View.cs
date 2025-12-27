@@ -1,6 +1,7 @@
 ﻿using System;
 using PokemonGame.Audio;
 using PokemonGame.Characters.Inputs;
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -8,94 +9,96 @@ using UnityEngine;
 namespace PokemonGame.Views
 {
     /// <summary>
-    /// Base class for all UI views. 
-    /// Provides standard show, hide, and close logic with independent open/close transitions.
+    /// Base class for all UI views.
+    /// Handles show, hide, freeze/unfreeze, and key-based close logic with optional transitions.
     /// </summary>
-    public abstract class View : MonoBehaviour
+    internal abstract class View : MonoBehaviour
     {
-        private const string Group = "View Settings";
+        [Title("Base View Settings")]
 
-        [BoxGroup(Group), SerializeField]
-        [Tooltip("Enable to allow this view to be closed by key input (e.g., Cancel button).")]
-        private bool allowKeyClose = false;
-
-        [BoxGroup(Group), SerializeField]
-        [Tooltip("Sound effect played when this view is closed manually.")]
+        [SerializeField, Tooltip("Sound effect played when the view is closed manually.")]
         private AudioClip closeSound;
 
-        [Title("Transitions")]
-        [BoxGroup(Group), SerializeField, Required]
-        [Tooltip("Transition used when opening this view.")]
+        [SerializeField, Required, Tooltip("Transition used when opening this view.")]
         private TransitionType openTransition = TransitionType.None;
 
-        [BoxGroup(Group), SerializeField, Required]
-        [Tooltip("Transition used when closing this view.")]
+        [SerializeField, Required, Tooltip("Transition used when closing this view.")]
         private TransitionType closeTransition = TransitionType.None;
 
         private bool isFrozen;
 
-        public event Action OnCloseKeyPress;
+        /// <summary>
+        /// Raised when the view is closed via key input.
+        /// </summary>
+        public event Action CancelKeyPressed;
 
         /// <summary>
-        /// Gets the transition used when this view opens.
+        /// Transition used when opening this view.
         /// </summary>
         public TransitionType OpenTransition => openTransition;
 
         /// <summary>
-        /// Gets the transition used when this view closes.
+        /// Transition used when closing this view.
         /// </summary>
         public TransitionType CloseTransition => closeTransition;
 
-
         /// <summary>
-        /// Called before the view is shown. Used for preloading assets or preparing data.
+        /// Preload assets or prepare data before showing the view.
         /// </summary>
         public virtual void Preload() { }
 
+        /// <summary>
+        /// Show the view.
+        /// </summary>
+        public virtual void Show() => gameObject.SetActive(true);
 
         /// <summary>
-        /// Displays the view by enabling its GameObject.
+        /// Hide the view.
         /// </summary>
-        public virtual void Show()
-        {
-            gameObject.SetActive(true);
-        }
+        public virtual void Hide() => gameObject.SetActive(false);
 
         /// <summary>
-        /// Hides the view by disabling its GameObject.
+        /// Freeze the view, disabling interaction.
+        /// By default, disables any <see cref="MenuController"/> on the GameObject.
         /// </summary>
-        public virtual void Hide()
-        {
-            gameObject.SetActive(false);
-        }
-
-        /// <summary>
-        /// Called when the view is frozen (e.g., when a modal or pause menu is open).
-        /// Override to disable animations or input.
-        /// </summary>
-        public virtual void Freeze() 
+        public virtual void Freeze()
         {
             isFrozen = true;
+
+            if (TryGetComponent<MenuController>(out var controller))
+            {
+                controller.enabled = false;
+            }
         }
 
         /// <summary>
-        /// Called when the view is unfrozen and resumes normal activity.
+        /// Unfreeze the view, resuming interaction.
+        /// By default, enables any <see cref="MenuController"/> on the GameObject.
         /// </summary>
-        public virtual void Unfreeze() 
+        public virtual void Unfreeze()
         {
-            isFrozen = false; 
+            isFrozen = false;
+
+            if (TryGetComponent<MenuController>(out var controller))
+            {
+                controller.enabled = true;
+            }
         }
 
+        protected void ResetMenuController()
+        {
+            foreach (var controller in GetComponentsInChildren<MenuController>())
+            {
+                controller.ResetController();
+            }
+        }
 
+        /// <summary>
+        /// Handles input and closes the view when the cancel key is pressed.
+        /// </summary>
         protected virtual void Update()
         {
-            if (isFrozen)
-                return;
-
-            if (!allowKeyClose)
-                return;
-
-            if (ViewManager.Instance == null || ViewManager.Instance.IsTransitioning)
+            if (isFrozen || ViewManager.Instance == null || ViewManager.Instance.IsTransitioning)
                 return;
 
             if (Input.GetKeyDown(KeyBinds.Cancel))
@@ -104,8 +107,8 @@ namespace PokemonGame.Views
                 {
                     AudioManager.Instance.PlaySFX(closeSound);
                 }
-
-                OnCloseKeyPress?.Invoke();
+                 
+                CancelKeyPressed?.Invoke();
             }
         }
     }

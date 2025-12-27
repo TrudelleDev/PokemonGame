@@ -6,7 +6,7 @@ namespace PokemonGame.Characters.Interfaces
     /// Represents an object that can be triggered by a <see cref="Character"/>.
     /// Implementations define what happens when the trigger is activated.
     /// </summary>
-    public interface ITriggerable
+    internal interface ITriggerable
     {
         /// <summary>
         /// Activates the trigger's effect for the specified <paramref name="character"/>.

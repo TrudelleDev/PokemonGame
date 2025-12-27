@@ -2,26 +2,20 @@ using System.Collections.Generic;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party
+namespace PokemonGame.Party.UI
 {
     /// <summary>
     /// Manages and binds Pokémon party data to UI slots.
     /// Automatically fills and updates the slot visuals from the current party.
     /// </summary>
-    public class PartyMenuSlotManager : MonoBehaviour
+    [DisallowMultipleComponent]
+    internal sealed class PartyMenuSlotManager : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Reference to the current player party.")]
         private PartyManager party;
 
         private List<PartyMenuSlot> slots;
-
-        private void Awake()
-        {
-            // Cache all PartyMenuSlot components in children
-            //slots = new List<PartyMenuSlot>(GetComponentsInChildren<PartyMenuSlot>());
-
-        }
 
         private void Start()
         {
@@ -32,7 +26,7 @@ namespace PokemonGame.Party
         /// Re-binds all slots to the current party data.
         /// Call this after swapping Pokémon to refresh the UI.
         /// </summary>
-        public void RefreshSlots()
+        internal void RefreshSlots()
         {
             BindSlots();
         }

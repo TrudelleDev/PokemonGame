@@ -56,7 +56,7 @@ namespace PokemonGame.Battle.States
 
             // Subscribe to inputs
             moveSelectionView.OnMoveConfirmed += OnMoveConfirmed;
-            moveSelectionView.OnCloseKeyPress += OnCancel;
+            moveSelectionView.CancelKeyPressed += OnCancel;
         }
 
         private void CloseMoveSelection()
@@ -66,7 +66,7 @@ namespace PokemonGame.Battle.States
 
             // Unsubscribe events first to prevent dangling references
             moveSelectionView.OnMoveConfirmed -= OnMoveConfirmed;
-            moveSelectionView.OnCloseKeyPress -= OnCancel;
+            moveSelectionView.CancelKeyPressed -= OnCancel;
 
             // Close the view and clear the local reference
             ViewManager.Instance.Close<MoveSelectionView>();

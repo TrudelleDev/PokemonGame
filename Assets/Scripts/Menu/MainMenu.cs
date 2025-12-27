@@ -32,14 +32,14 @@ namespace PokemonGame.Menu
         {
             mainMenuLoader = GetComponent<GameStarter>();
 
-            newGameButton.OnClick += OnNewGame;
-            exitButton.OnClick += OnExit;
+            newGameButton.OnSubmitted += OnNewGame;
+            exitButton.OnSubmitted += OnExit;
         }
 
         private void OnDestroy()
         {
-            newGameButton.OnClick -= OnNewGame;
-            exitButton.OnClick -= OnExit;
+            newGameButton.OnSubmitted -= OnNewGame;
+            exitButton.OnSubmitted -= OnExit;
         }
 
         private void OnNewGame()

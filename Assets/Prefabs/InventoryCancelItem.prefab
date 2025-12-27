@@ -209,8 +209,8 @@ GameObject:
   - component: {fileID: 2182816969818771887}
   - component: {fileID: 7241843792944798934}
   - component: {fileID: 8448948604432822959}
-  - component: {fileID: -7994920398866391600}
   - component: {fileID: 2003731682932621586}
+  - component: {fileID: 6702106166475340740}
   m_Layer: 5
   m_Name: InventoryCancelItem
   m_TagString: Untagged
@@ -272,19 +272,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &-7994920398866391600
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8207668010304545549}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 103ebd9103241c74e86b2c899be7747d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 47b3b49e7ad6efc42a3517f04193975a, type: 2}
 --- !u!114 &2003731682932621586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -300,6 +287,19 @@ MonoBehaviour:
   interactable: 1
   label: {fileID: 0}
   cursorArrow: {fileID: 1499157083710933051}
+--- !u!114 &6702106166475340740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8207668010304545549}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 103ebd9103241c74e86b2c899be7747d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 47b3b49e7ad6efc42a3517f04193975a, type: 2}
 --- !u!1 &8757461806935733840
 GameObject:
   m_ObjectHideFlags: 0

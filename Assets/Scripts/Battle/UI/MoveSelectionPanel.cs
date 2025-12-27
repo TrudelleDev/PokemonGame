@@ -68,11 +68,11 @@ namespace PokemonGame.Battle.UI
 
                     // 1. Create and store the Click handler delegate
                     clickHandlers[i] = () => OnMoveConfirmedInternal(move);
-                    button.OnClick += clickHandlers[i];
+                    button.OnSubmitted += clickHandlers[i];
 
                     // 2. Create and store the Select handler delegate
                     selectHandlers[i] = () => OnMoveHighlightedInternal(move);
-                    button.OnSelect += selectHandlers[i];
+                    button.OnSubmitted += selectHandlers[i];
                 }
                 else
                 {
@@ -98,14 +98,14 @@ namespace PokemonGame.Battle.UI
                 // Unsubscribe Click Handler
                 if (clickHandlers[i] != null)
                 {
-                    button.OnClick -= clickHandlers[i];
+                    button.OnSubmitted -= clickHandlers[i];
                     clickHandlers[i] = null;
                 }
 
                 // Unsubscribe Select Handler
                 if (selectHandlers[i] != null)
                 {
-                    button.OnSelect -= selectHandlers[i];
+                    button.OnSubmitted -= selectHandlers[i];
                     selectHandlers[i] = null;
                 }
 

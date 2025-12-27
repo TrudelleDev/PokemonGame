@@ -1,17 +1,19 @@
-﻿using PokemonGame.Party;
+﻿using PokemonGame.Party.Enums;
+using PokemonGame.Party.UI;
+using PokemonGame.Pokemon;
 using PokemonGame.Views;
 
 namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Opens the party menu during battle, allowing the player to select a Pokémon
-    /// for potential switching.
+    /// Opens the party menu during battle, allowing the player
+    /// to select a Pokémon to switch in or take action.
     /// </summary>
     public sealed class SelectPokemonState : IBattleState
     {
         private readonly BattleStateMachine machine;
         private PartyMenuView partyView;
-        private PartyMenuOptionView optionsView;
+        private PartyMenuPresenter partyPresenter;
 
         public SelectPokemonState(BattleStateMachine machine)
         {
@@ -20,37 +22,22 @@ namespace PokemonGame.Battle.States
 
         public void Enter()
         {
+            // Show the Party Menu View
             partyView = ViewManager.Instance.Show<PartyMenuView>();
-            optionsView = ViewManager.Instance.Get<PartyMenuOptionView>();
 
-            // Subscribe switch handler
-            if (optionsView != null)
-                optionsView.OnSwitchSelected += OnSwitchSelected;
+            // Get the presenter from the view
+            partyPresenter = partyView.GetComponent<PartyMenuPresenter>();
 
-            // Subscribe cancel / close handler
-            if (partyView != null)
-                partyView.OnCloseButtonPress += OnCancel;
-        }
+            // Setup presenter for battle mode
+            partyPresenter.Setup(PartySelectionMode.Battle);
 
-        public void Update() { }
+            // Subscribe to events
+            partyPresenter.PokemonConfirmed += OnPokemonSelected;
+            partyPresenter.CancelRequested += OnCancel;
 
-        public void Exit()
-        {
-            if (optionsView != null)
-            {
-                optionsView.OnSwitchSelected -= OnSwitchSelected;
-                optionsView = null;
-            }
-
-            if (partyView != null)
-            {
-                partyView.OnCloseButtonPress -= OnCancel;
-                partyView = null;
-            }
-
-            // Close views
-            ViewManager.Instance.Close<PartyMenuOptionView>();
-            ViewManager.Instance.Close<PartyMenuView>();
+            // Refresh slots to ensure correct UI
+            partyView.RefreshSlots();
+            partyView.ShowChoosePrompt();
         }
 
         private void OnCancel()
@@ -58,9 +45,23 @@ namespace PokemonGame.Battle.States
             machine.SetState(new PlayerActionState(machine));
         }
 
-        private void OnSwitchSelected()
+        public void Exit()
         {
-            machine.SetState(new SwitchPokemonState(machine));
+            if (partyPresenter != null)
+            {
+                partyPresenter.PokemonConfirmed -= OnPokemonSelected;
+                partyPresenter.CancelRequested -= OnCancel;
+                partyPresenter = null;
+            }
+
+            ViewManager.Instance.Close<PartyMenuView>();
+        }
+
+        public void Update() { }
+
+        private void OnPokemonSelected(PokemonInstance pokemon)
+        {
+            machine.SetState(new SwitchPokemonState(machine, pokemon));
         }
     }
 }

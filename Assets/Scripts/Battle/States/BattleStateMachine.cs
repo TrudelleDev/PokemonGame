@@ -14,13 +14,13 @@
         /// <summary>
         /// Gets the view component responsible for displaying battle information.
         /// </summary>
-        public BattleView BattleView { get; }
+        internal BattleView BattleView { get; }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="BattleStateMachine"/> class.
         /// </summary>
         /// <param name="battleView">The view component associated with this battle.</param>
-        public BattleStateMachine(BattleView battleView)
+        internal BattleStateMachine(BattleView battleView)
         {
             BattleView = battleView;
         }

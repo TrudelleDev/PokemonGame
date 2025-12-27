@@ -1,0 +1,44 @@
+﻿using PokemonGame.Party.UI.PartyOptions;
+using PokemonGame.Views;
+using Sirenix.OdinInspector;
+using UnityEngine;
+
+namespace PokemonGame.Party.UI
+{
+    /// <summary>
+    /// Handles party menu flow and navigation.
+    /// Listens to <see cref="PartyMenuPresenter"/> intent events
+    /// and opens or closes related views (options menu, party menu).
+    /// </summary>
+    [DisallowMultipleComponent]
+    internal sealed class PartyMenuController : MonoBehaviour
+    {
+        [SerializeField, Required]
+        [Tooltip("Presenter that raises intent events for party menu actions.")]
+        private PartyMenuPresenter partyMenuPresenter;
+
+        private void OnEnable()
+        {
+            partyMenuPresenter.OptionsRequested += HandleOptionsRequested;
+            partyMenuPresenter.CloseRequested += HandleCloseRequested;
+            partyMenuPresenter.CancelRequested += HandleCloseRequested;
+        }
+
+        private void OnDisable()
+        {
+            partyMenuPresenter.OptionsRequested -= HandleOptionsRequested;
+            partyMenuPresenter.CloseRequested -= HandleCloseRequested;
+            partyMenuPresenter.CancelRequested -= HandleCloseRequested;
+        }
+
+        private void HandleOptionsRequested()
+        {
+            ViewManager.Instance.Show<PartyMenuOptionsView>();
+        }
+
+        private void HandleCloseRequested()
+        {
+            ViewManager.Instance.Close<PartyMenuView>();
+        }
+    }
+}

@@ -14,7 +14,7 @@ namespace PokemonGame.Menu.Controllers
     /// Scans configured parents for <see cref="MenuButton"/>s,
     /// tracks the current selection, and raises events for selection and clicks.
     /// </summary>
-    public class VerticalMenuController : MonoBehaviour
+    internal class VerticalMenuController : MenuController
     {
         [Title("Button Sources")]
         [SerializeField, Required, ChildGameObjectsOnly]
@@ -222,6 +222,11 @@ namespace PokemonGame.Menu.Controllers
                     return;
                 }
             }
+        }
+
+        public override void ResetController()
+        {
+            SelectFirst();
         }
     }
 }

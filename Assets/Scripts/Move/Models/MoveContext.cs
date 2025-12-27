@@ -5,12 +5,12 @@ namespace PokemonGame.Move.Models
 {
     public readonly struct MoveContext
     {
-        public BattleView Battle { get; }
+        internal BattleView Battle { get; }
         public PokemonInstance User { get; }
         public PokemonInstance Target { get; }
         public MoveInstance Move { get; }
 
-        public MoveContext(BattleView battle, PokemonInstance user, PokemonInstance target, MoveInstance move)
+        internal MoveContext(BattleView battle, PokemonInstance user, PokemonInstance target, MoveInstance move)
         {
             Battle = battle;
             User = user;
