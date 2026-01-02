@@ -75,11 +75,11 @@ namespace PokemonGame.Party.UI
             // Unsubscribe from previous Pokémon event if any
             if (BoundPokemon != null)
             {
-                BoundPokemon.Health.HealthChange -= HandlePokemonHealthChange;
+                BoundPokemon.Health.HealthChanged -= HandlePokemonHealthChange;
             }
 
             BoundPokemon = pokemon;
-            BoundPokemon.Health.HealthChange += HandlePokemonHealthChange;
+            BoundPokemon.Health.HealthChanged += HandlePokemonHealthChange;
 
             SetSlotVisibility(true);
             UpdateDisplay(BoundPokemon);
@@ -92,7 +92,7 @@ namespace PokemonGame.Party.UI
         {
             if (BoundPokemon != null)
             {
-                BoundPokemon.Health.HealthChange -= HandlePokemonHealthChange;
+                BoundPokemon.Health.HealthChanged -= HandlePokemonHealthChange;
                 BoundPokemon = null;
             }
 

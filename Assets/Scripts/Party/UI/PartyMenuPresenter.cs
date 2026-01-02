@@ -22,6 +22,7 @@ namespace PokemonGame.Party.UI
         private PartyManager playerParty;
 
         private PartySelectionMode mode;
+
         private bool isSwapping;
         private int swapIndexA;
 
@@ -65,9 +66,6 @@ namespace PokemonGame.Party.UI
             partyMenuView.CancelRequested -= HandleCancelRequested;
         }
 
-        /// <summary>
-        /// Sets the current selection mode (Overworld, Battle, UseItem).
-        /// </summary>
         internal void Setup(PartySelectionMode selectionMode)
         {
             mode = selectionMode;
@@ -98,7 +96,7 @@ namespace PokemonGame.Party.UI
                     break;
 
                 case PartySelectionMode.Battle:
-                    PokemonConfirmed?.Invoke(playerParty.SelectedPokemon);
+                    HandleOverworldSelection(slot);
                     break;
 
                 case PartySelectionMode.UseItem:
@@ -134,6 +132,11 @@ namespace PokemonGame.Party.UI
 
         private void HandleCancelRequested()
         {
+            if (mode == PartySelectionMode.Battle)
+            {
+                return;
+            }
+
             CancelRequested?.Invoke();
         }
     }

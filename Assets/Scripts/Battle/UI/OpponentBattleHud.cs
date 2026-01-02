@@ -11,7 +11,7 @@ namespace PokemonGame.Battle.UI
     /// Displays the opponent Pokémon's battle HUD, including name, level, health, and front sprite.
     /// </summary>
     [DisallowMultipleComponent]
-    public class OpponentBattleHud : MonoBehaviour
+    internal sealed class OpponentBattleHud : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text field showing the opponent Pokémon's display name.")]
@@ -29,13 +29,13 @@ namespace PokemonGame.Battle.UI
         [Tooltip("Image component showing the opponent Pokémon's front-facing battle sprite.")]
         private Image frontSprite;
 
-        public HealthBar HealthBar => healthBar;
+        internal HealthBar HealthBar => healthBar;
 
         /// <summary>
         /// Initializes the opponent battle HUD with the given Pokémon data.
         /// </summary>
         /// <param name="pokemon">The opponent Pokémon to display.</param>
-        public void Bind(PokemonInstance pokemon)
+        internal void Bind(PokemonInstance pokemon)
         {
             if (pokemon?.Definition == null)
             {
@@ -52,7 +52,7 @@ namespace PokemonGame.Battle.UI
         /// <summary>
         /// Clears all displayed information and unbinds the current Pokémon.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             nameText.text = string.Empty;
             levelText.text = string.Empty;

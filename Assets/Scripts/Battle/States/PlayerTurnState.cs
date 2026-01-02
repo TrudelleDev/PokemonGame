@@ -1,18 +1,16 @@
-﻿using System.Collections;
-using PokemonGame.Dialogue;
+﻿using System;
+using System.Collections;
 using PokemonGame.Move;
 using PokemonGame.Move.Models;
-using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using UnityEngine;
 
 namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Executes the player's selected move and transitions the flow to the opponent's turn 
-    /// or a terminal state (e.g., VictoryState) if the opponent faints.
+    /// Executes the player's selected move and transitions to either OpponentTurnState or OpponentFaintedState.
     /// </summary>
-    public sealed class PlayerTurnState : IBattleState
+    internal sealed class PlayerTurnState : IBattleState
     {
         private const float TurnDelay = 0.5f;
 
@@ -21,23 +19,14 @@ namespace PokemonGame.Battle.States
 
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new player turn state for the selected move.
-        /// </summary>
-        /// <param name="machine">The battle state machine controlling the current battle flow.</param>
-        /// <param name="move">The move instance selected by the player to execute.</param>
-        public PlayerTurnState(BattleStateMachine machine, MoveInstance move)
+        internal PlayerTurnState(BattleStateMachine machine, MoveInstance move)
         {
             this.machine = machine;
             this.move = move;
         }
 
-        /// <summary>
-        /// Called when entering the state. Initializes animations and starts the move execution coroutine.
-        /// </summary>
         public void Enter()
         {
-            // Reset HUD and Pokemon visuals to default turn state
             Battle.Components.Animation.PlayPlayerHUDDefault();
             Battle.Components.Animation.PlayPlayerPokemonDefault();
 
@@ -46,62 +35,34 @@ namespace PokemonGame.Battle.States
 
         public void Update() { }
 
-        /// <summary>
-        /// No cleanup required when leaving this state.
-        /// </summary>
         public void Exit() { }
 
         private IEnumerator PlaySequence()
         {
-            // Wait until scene transitions are complete
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
-
-            var animation = Battle.Components.Animation;
-            var dialogue = Battle.DialogueBox;
 
             var user = Battle.PlayerPokemon;
             var target = Battle.OpponentPokemon;
-
-            // Create context for move execution
             var context = new MoveContext(Battle, user, target, move);
 
-            // 1. Announce the move
-            yield return dialogue.ShowDialogueAndWait(
+            // 1. Announce Move
+            yield return Battle.DialogueBox.ShowDialogueAndWait(
                 $"{user.Definition.DisplayName} used {move.Definition.DisplayName}!"
             );
 
-            // 2. Execute the move sequence (effects, damage, animation)
+            // 2. Execute Sequence
             yield return move.Definition.MoveEffect.PerformMoveSequence(context);
 
             // 3. Check for Faint
             if (target.Health.CurrentHealth <= 0)
             {
-                yield return PlayFaintSequence(animation, dialogue, target);
-
-                // Transition to victory state
-                machine.SetState(new VictoryState(machine));
+                machine.SetState(new OpponentFaintedState(machine, target));
                 yield break;
             }
 
-            // 4. End Turn and Transition
+            // 4. Transition to Opponent
             yield return new WaitForSecondsRealtime(TurnDelay);
-
-            // Transition to opponent's turn
             machine.SetState(new OpponentTurnState(machine));
-        }
-
-        private IEnumerator PlayFaintSequence(
-            BattleAnimation animation,
-            DialogueBox dialogue,
-            PokemonInstance opponent)
-        {
-            yield return animation.PlayOpponentDeath();
-            yield return animation.PlayOpponentHudExit();
-
-            yield return dialogue.ShowDialogueAndWaitForPlayerAdvance(
-                 $"Wild {opponent.Definition.DisplayName}\nfainted!",
-                manualArrowControl: true
-            );
         }
     }
 }

@@ -59,6 +59,8 @@ namespace PokemonGame.Battle
 
             float finalDamage = baseDamage * typeModifier * stabModifier * randomModifier;
 
+            move.UsePP();
+
             return Mathf.Max(1, Mathf.RoundToInt(finalDamage));
         }
 

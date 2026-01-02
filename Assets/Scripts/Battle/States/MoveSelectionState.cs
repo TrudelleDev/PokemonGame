@@ -6,8 +6,7 @@ namespace PokemonGame.Battle.States
 {
     /// <summary>
     /// State where the player selects a move to use in battle.
-    /// Transitions to <see cref="PlayerTurnState"/> upon move confirmation or back to 
-    /// <see cref="PlayerActionState"/> upon cancellation.
+    /// Transitions to <see cref="PlayerTurnState"/> upon confirmation or back to <see cref="PlayerActionState"/> on cancel.
     /// </summary>
     public sealed class MoveSelectionState : IBattleState
     {
@@ -16,31 +15,18 @@ namespace PokemonGame.Battle.States
 
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new move selection state.
-        /// </summary>
-        /// <param name="machine">The battle state machine context.</param>
-        public MoveSelectionState(BattleStateMachine machine)
+        internal MoveSelectionState(BattleStateMachine machine)
         {
             this.machine = machine;
         }
 
-        /// <summary>
-        /// Displays the move selection UI and waits for player input.
-        /// </summary>
         public void Enter()
         {
             OpenMoveSelection();
         }
 
-        /// <summary>
-        /// No per-frame logic required for this state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// Cleans up UI and event subscriptions when leaving the state.
-        /// </summary>
         public void Exit()
         {
             CloseMoveSelection();
@@ -55,8 +41,8 @@ namespace PokemonGame.Battle.States
             moveSelectionView.BindMoves(Battle.PlayerPokemon.Moves.Moves);
 
             // Subscribe to inputs
-            moveSelectionView.OnMoveConfirmed += OnMoveConfirmed;
-            moveSelectionView.CancelKeyPressed += OnCancel;
+            moveSelectionView.OnMoveConfirmed += HandleMoveConfirmed;
+            moveSelectionView.CancelKeyPressed += HandleCancel;
         }
 
         private void CloseMoveSelection()
@@ -65,21 +51,20 @@ namespace PokemonGame.Battle.States
                 return;
 
             // Unsubscribe events first to prevent dangling references
-            moveSelectionView.OnMoveConfirmed -= OnMoveConfirmed;
-            moveSelectionView.CancelKeyPressed -= OnCancel;
+            moveSelectionView.OnMoveConfirmed -= HandleMoveConfirmed;
+            moveSelectionView.CancelKeyPressed -= HandleCancel;
 
             // Close the view and clear the local reference
             ViewManager.Instance.Close<MoveSelectionView>();
             moveSelectionView = null;
         }
 
-        private void OnCancel()
+        private void HandleCancel()
         {
-            // Transition back to the main action menuy
             machine.SetState(new PlayerActionState(machine));
         }
 
-        private void OnMoveConfirmed(MoveInstance move)
+        private void HandleMoveConfirmed(MoveInstance move)
         {
             machine.SetState(new PlayerTurnState(machine, move));
         }

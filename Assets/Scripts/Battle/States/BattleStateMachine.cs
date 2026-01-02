@@ -1,40 +1,41 @@
-﻿namespace PokemonGame.Battle.States
+﻿using PokemonGame.Utilities;
+
+namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Controls the flow of battle by managing the active <see cref="IBattleState"/>.
-    /// Handles transitions between states such as Intro, Action Selection, and Results.
+    /// Manages the battle flow by handling transitions between <see cref="IBattleState"/> implementations.
     /// </summary>
-    public class BattleStateMachine
+    internal class BattleStateMachine
     {
         /// <summary>
-        /// Gets the currently active state governing the battle flow.
+        /// Gets the currently active battle state.
         /// </summary>
-        public IBattleState CurrentState { get; private set; }
+        internal IBattleState CurrentState { get; private set; }
 
         /// <summary>
-        /// Gets the view component responsible for displaying battle information.
+        /// Gets the view component responsible for rendering the battle UI and animations.
         /// </summary>
         internal BattleView BattleView { get; }
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="BattleStateMachine"/> class.
+        /// Initializes the machine with a reference to the battle's view.
         /// </summary>
-        /// <param name="battleView">The view component associated with this battle.</param>
         internal BattleStateMachine(BattleView battleView)
         {
             BattleView = battleView;
         }
 
         /// <summary>
-        /// Sets the new active state for the battle, executing the Exit and Enter transitions.
+        /// Transitions the battle to a new state. 
+        /// Handles the Exit logic of the old state and Enter logic of the new state.
         /// </summary>
-        /// <param name="newState">The state to transition to.</param>
-        public void SetState(IBattleState newState)
+        /// <param name="newState">The state to transition into.</param>
+        internal void SetState(IBattleState newState)
         {
             if (newState == null || newState == CurrentState)
-            {
                 return;
-            }
+
+             Log.Info(CurrentState?.GetType().Name, $"Transitioning from {CurrentState?.GetType().Name} to {newState.GetType().Name}");
 
             CurrentState?.Exit();
             CurrentState = newState;
@@ -42,9 +43,9 @@
         }
 
         /// <summary>
-        /// Executes the Update logic for the currently active state.
+        /// Processes the per-frame logic for the active state.
         /// </summary>
-        public void Update()
+        internal void Update()
         {
             CurrentState?.Update();
         }

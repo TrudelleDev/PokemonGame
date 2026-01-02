@@ -12,7 +12,7 @@ namespace PokemonGame.Battle.UI
     /// It subscribes to the bound PokemonInstance's events (Health and Experience) to update itself in real-time.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class PlayerBattleHud : MonoBehaviour
+    internal sealed class PlayerBattleHud : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text field showing the player's Pokémon name.")]
@@ -43,18 +43,18 @@ namespace PokemonGame.Battle.UI
         /// <summary>
         /// Provides access to the HealthBar component, allowing the state machine to trigger damage animations.
         /// </summary>
-        public HealthBar HealthBar => healthBar;
+        internal HealthBar HealthBar => healthBar;
 
         /// <summary>
         /// Provides access to the ExperienceBar component, allowing the VictoryState to trigger EXP fill animations.
         /// </summary>
-        public ExperienceBar ExperienceBar => experienceBar;
+        internal ExperienceBar ExperienceBar => experienceBar;
 
         /// <summary>
         /// Initializes the HUD with the given Pokémon data and sets up real-time event listeners.
         /// </summary>
         /// <param name="pokemon">The player's active Pokémon instance to display.</param>
-        public void Bind(PokemonInstance pokemon)
+        internal void Bind(PokemonInstance pokemon)
         {
             // Always unbind any previously bound Pokémon before binding a new one.
             UnsubscribeCurrentPokemon();
@@ -79,14 +79,14 @@ namespace PokemonGame.Battle.UI
             experienceBar.Bind(pokemon);
 
             // Subscribe to events for real-time updates
-            currentPokemon.Experience.OnLevelChange += OnPokemonLevelChange;
-            currentPokemon.Health.HealthChange += OnPokemonHealthChange;
+            currentPokemon.Experience.LevelChanged += HandleLevelChanged;
+            currentPokemon.Health.HealthChanged += HandleHealthChanged;
         }
 
         /// <summary>
         /// Clears the HUD display and unbinds the current Pokémon.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             // Ensure events are cleaned up first
             UnsubscribeCurrentPokemon();
@@ -102,29 +102,29 @@ namespace PokemonGame.Battle.UI
             experienceBar.Unbind();
         }
 
-        private void OnPokemonHealthChange(int oldHp, int newHp)
+        private void HandleHealthChanged(int oldHp, int newHp)
         {
-            // Update the raw HP text when health changes
-            healthText.text = $"{currentPokemon.Health.CurrentHealth}/{currentPokemon.Health.MaxHealth}";
+            UpdateHealthText();
         }
 
-        private void OnPokemonLevelChange(int newLevel)
+        private void HandleLevelChanged(int newLevel)
         {
             // Update UI elements affected by a level change (level number and max health text)
             levelText.text = currentPokemon.Experience.Level.ToString();
+            UpdateHealthText();
+        }
+
+        private void UpdateHealthText()
+        {
             healthText.text = $"{currentPokemon.Health.CurrentHealth}/{currentPokemon.Health.MaxHealth}";
         }
 
-        /// <summary>
-        /// Helper to safely unsubscribe all events from the previously bound Pokémon before a new one is bound 
-        /// or the HUD is fully unbound.
-        /// </summary>
         private void UnsubscribeCurrentPokemon()
         {
             if (currentPokemon != null)
             {
-                currentPokemon.Experience.OnLevelChange -= OnPokemonLevelChange;
-                currentPokemon.Health.HealthChange -= OnPokemonHealthChange;
+                currentPokemon.Experience.LevelChanged -= HandleLevelChanged;
+                currentPokemon.Health.HealthChanged -= HandleHealthChanged;
                 currentPokemon = null;
             }
         }

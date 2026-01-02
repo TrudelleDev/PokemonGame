@@ -10,7 +10,7 @@ namespace PokemonGame.Battle.Models
     /// Provides quick access to the player's HUD, opponent HUD, action panels, and move selection UI.
     /// </summary>
     [Serializable]
-    public struct BattleHUDs
+    internal struct BattleHUDs
     {
         [SerializeField, Required, Tooltip("Displays the player's Pokémon information, such as HP, level, and status.")]
         private PlayerBattleHud player;
@@ -19,18 +19,18 @@ namespace PokemonGame.Battle.Models
         private OpponentBattleHud opponent;
 
         [SerializeField, Required, Tooltip("Panel containing the player's battle action options (Fight, Bag, Pokémon, Run).")]
-        private PlayerActionPanel playerActions;
+        private BattleActionView playerActions;
 
         [SerializeField, Required, Tooltip("Panel displaying the player's available moves as buttons.")]
-        private MoveSelectionPanel moveSelection;
+        private BattleMoveSelectionPanel moveSelection;
 
         [SerializeField, Required, Tooltip("Controller responsible for handling move selection logic and updating the move selection panel.")]
         private MoveSelectionView moveController;
 
         public PlayerBattleHud Player => player;
         public OpponentBattleHud Opponent => opponent;
-        internal PlayerActionPanel PlayerActions => playerActions;
-        public MoveSelectionPanel MoveSelection => moveSelection;
+        internal BattleActionView PlayerActions => playerActions;
+        public BattleMoveSelectionPanel MoveSelection => moveSelection;
         internal MoveSelectionView MoveController => moveController;
     }
 }

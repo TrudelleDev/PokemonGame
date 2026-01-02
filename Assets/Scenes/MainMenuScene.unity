@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e5edc0059c7365c428b092e570d07efe, type: 3}
+      objectReference: {fileID: 21300000, guid: 55a9b3db020476246b128d64b8a77acc, type: 3}
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -757,11 +757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -773,11 +773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 25
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -12.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2748854880021428639, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Padding.m_Top
@@ -894,7 +894,7 @@ PrefabInstance:
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: e5edc0059c7365c428b092e570d07efe, type: 3}
+      objectReference: {fileID: 21300000, guid: 55a9b3db020476246b128d64b8a77acc, type: 3}
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Color.b
       value: 0.5019608
@@ -1016,7 +1016,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -1}
-  m_SizeDelta: {x: -40, y: -108.634}
+  m_SizeDelta: {x: -40, y: -119.512}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &2058043506
 MonoBehaviour:
@@ -1111,7 +1111,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0.23359375
-    y: 0.05138889
+    y: 0.04930556
     width: 0.09375
     height: 0.11111111
   near clip plane: 0.3

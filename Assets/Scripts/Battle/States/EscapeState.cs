@@ -1,21 +1,21 @@
 ﻿using System.Collections;
 using PokemonGame.Views;
+using UnityEngine;
 
 namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Handles successful escape from a wild Pokémon battle, returning the player to the overworld.
+    /// Handles the sequence for successfully fleeing a wild Pokémon battle.
+    /// This state terminates the battle loop and closes the battle view.
     /// </summary>
-    public sealed class EscapeState : IBattleState
+    internal sealed class EscapeState : IBattleState
     {
+        private const float ClosePause = 1f;
+
         private readonly BattleStateMachine machine;
         private BattleView BattleView => machine.BattleView;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="EscapeState"/> class.
-        /// </summary>
-        /// <param name="machine">The battle state machine context.</param>
-        public EscapeState(BattleStateMachine machine)
+        internal EscapeState(BattleStateMachine machine)
         {
             this.machine = machine;
         }
@@ -38,13 +38,10 @@ namespace PokemonGame.Battle.States
 
             audio.PlayRunAway();
 
-            yield return dialogue.ShowDialogueAndWaitForPlayerAdvance(
-                "Got away safely!",
-                manualArrowControl: true
-            );
+            yield return dialogue.ShowDialogueAndWait("Got away safely!");
+            yield return new WaitForSecondsRealtime(ClosePause);
 
-            dialogue.Clear();
-            ViewManager.Instance.CloseTopView();
+            ViewManager.Instance.Close<BattleView>();
         }
     }
 }

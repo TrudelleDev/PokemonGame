@@ -60,7 +60,7 @@ namespace PokemonGame.Pokemon.UI
             slider.value = pokemon.Experience.CurrentExp;
 
             pokemon.Experience.OnExperienceChange += OnPokemonExpChange;
-            pokemon.Experience.OnLevelChange += OnPokemonLevelChange;
+            pokemon.Experience.LevelChanged += OnPokemonLevelChange;
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace PokemonGame.Pokemon.UI
             if (boundPokemon != null)
             {
                 boundPokemon.Experience.OnExperienceChange -= OnPokemonExpChange;
-                boundPokemon.Experience.OnLevelChange -= OnPokemonLevelChange;
+                boundPokemon.Experience.LevelChanged -= OnPokemonLevelChange;
                 boundPokemon = null;
             }
 

@@ -9,7 +9,7 @@ namespace PokemonGame.Pokemon.Components
         public int CurrentExp { get; private set; }
 
         public event Action<int, int> OnExperienceChange; // oldExp, newExp
-        public event Action<int> OnLevelChange;
+        public event Action<int> LevelChanged;
 
         public ExperienceComponent(int level)
         {
@@ -48,7 +48,7 @@ namespace PokemonGame.Pokemon.Components
         public void LevelUp()
         {
             Level++;
-            OnLevelChange?.Invoke(Level);
+            LevelChanged?.Invoke(Level);
         }
 
         public int GetExpForCurrentLevel()

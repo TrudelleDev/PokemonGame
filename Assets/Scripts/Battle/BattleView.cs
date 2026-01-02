@@ -2,7 +2,6 @@
 using System.Collections;
 using PokemonGame.Battle.Models;
 using PokemonGame.Battle.States;
-using PokemonGame.Characters.Core;
 using PokemonGame.Dialogue;
 using PokemonGame.Inventory;
 using PokemonGame.Party;
@@ -36,7 +35,7 @@ namespace PokemonGame.Battle
         public PokemonInstance PlayerPokemon { get; private set; }
         public PokemonInstance OpponentPokemon { get; private set; }
 
-        public InventoryManager InventoryManager { get; private set; } 
+        public InventoryManager InventoryManager { get; private set; }
         public PartyManager PlayerPartyManager { get; private set; }
 
 
@@ -76,6 +75,7 @@ namespace PokemonGame.Battle
             battleComponents.Animation.ResetIntro();
             isBattleInitialized = true;
             IsInBattle = true;
+            dialogueBox.Clear();
         }
 
         private void OnEnable()
@@ -107,9 +107,18 @@ namespace PokemonGame.Battle
         public void TemporarySwap()
         {
             var partyMenu = ViewManager.Instance.Get<PartyMenuView>();
-           // partyMenu.Swap(0, temporaryPlayerParty.SelectedIndex);
+            // partyMenu.Swap(0, temporaryPlayerParty.SelectedIndex);
 
             PlayerPokemon = temporaryPlayerParty.SelectedPokemon;
+            battleHuds.Player.Bind(PlayerPokemon);
+        }
+
+        /// <summary>
+        /// Sets the active player Pokémon during battle and updates the HUD.
+        /// </summary>
+        public void SetActivePokemon(PokemonInstance pokemon)
+        {
+            PlayerPokemon = pokemon;
             battleHuds.Player.Bind(PlayerPokemon);
         }
 

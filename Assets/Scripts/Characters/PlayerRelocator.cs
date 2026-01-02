@@ -12,7 +12,7 @@ namespace PokemonGame.Characters
     /// from <see cref="MapEntryRegistry"/>. If no valid entry is found,
     /// defaults to world origin (0,0,0).
     /// </summary>
-    public class PlayerRelocator : MonoBehaviour
+    public class PlayerRelocator : Singleton<PlayerRelocator>
     {
         [SerializeField, Required]
         [Tooltip("The player character instance to position after scene load.")]
@@ -28,7 +28,7 @@ namespace PokemonGame.Characters
             SceneReadyNotifier.OnSceneReady -= RelocatePlayer;
         }
 
-        private void RelocatePlayer()
+        internal void RelocatePlayer()
         {
             MapEntryID spawnPointId = MapEntryRegistry.NextEntryId;
 

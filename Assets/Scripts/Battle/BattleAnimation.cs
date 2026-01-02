@@ -47,8 +47,8 @@ namespace PokemonGame.Battle
         public IEnumerator PlayOpponentTakeDamage() =>
             PlayAnimation(opponentAnimations.PokemonAnimator, BattleAnimationState.TakeDamage);
 
-        public IEnumerator PlayOpponentDeath() =>
-            PlayAnimation(opponentAnimations.PokemonAnimator, BattleAnimationState.Death);
+        public void PlayOpponentDeath() =>
+           opponentAnimations.PokemonAnimator.Play(BattleAnimationState.Death);
 
         public IEnumerator PlayOpponentHudExit() => PlayAnimation(opponentAnimations.HudAnimator, BattleAnimationState.Exit);
 
@@ -68,8 +68,8 @@ namespace PokemonGame.Battle
         public IEnumerator PlayPlayerTakeDamage() =>
             PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.TakeDamage);
 
-        public IEnumerator PlayPlayerDeath() =>
-            PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.Death);
+        public void PlayPlayerDeath() =>
+            playerAnimations.PokemonAnimator.Play(BattleAnimationState.Death);
 
         public void PlayPlayerPokemonIdle() =>
             playerAnimations.PokemonAnimator.Play(BattleAnimationState.Idle);

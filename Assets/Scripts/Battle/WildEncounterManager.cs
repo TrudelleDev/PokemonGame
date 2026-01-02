@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using PokemonGame.Audio;
-using PokemonGame.Characters.Core;
 using PokemonGame.Inventory;
 using PokemonGame.Party;
 using PokemonGame.Pokemon;
@@ -17,7 +16,7 @@ namespace PokemonGame.Battle
     /// Plays the battle music and opens the BattleView with the player's selected Pokémon.
     /// </summary>
     [DisallowMultipleComponent]
-    public class BattleTrigger : MonoBehaviour
+    public class WildEncounterManager : MonoBehaviour
     {
         [Title("References")]
         [SerializeField, Required]
@@ -30,6 +29,9 @@ namespace PokemonGame.Battle
 
         [SerializeField, Required]
         private InventoryManager inventory;
+
+        [Title("Encounter Settings")]
+        [SerializeField, Range(0, 100)] private int encounterChance = 10; // 10% chance per step
 
         [SerializeField, Required]
         private List<WildPokemonEntry> pokemonEntries;
@@ -44,6 +46,15 @@ namespace PokemonGame.Battle
         /// </summary>
         private void OnEnterGrass()
         {
+            // Roll the dice: if the random number is higher than our chance, don't battle
+            if (Random.Range(0, 100) >= encounterChance)
+                return;
+
+            TriggerBattle();
+        }
+
+        private void TriggerBattle()
+        {
             AudioManager.Instance.PlayBGM(battleBgm);
             AudioManager.Instance.SetBGMStartTime(1f);
 
@@ -55,7 +66,7 @@ namespace PokemonGame.Battle
 
             PokemonInstance pokemon = PokemonFactory.CreatePokemon(level, wildPokemon.Pokemon);
 
-            battle.Initialize(partyManager,inventory, pokemon);
+            battle.Initialize(partyManager, inventory, pokemon);
         }
 
         private WildPokemonEntry ChooseWildPokemon()

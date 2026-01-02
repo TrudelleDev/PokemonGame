@@ -1,23 +1,17 @@
 ﻿using System.Collections;
-using PokemonGame.Dialogue;
-using PokemonGame.Pokemon;
 
 namespace PokemonGame.Battle.States
 {
     /// <summary>
-    /// Executes the full battle introductory sequence, including animations and dialogue, 
-    /// and transitions the state machine to the <see cref="PlayerActionState"/>.
+    /// Executes the battle introductory sequence, including animations and dialogue.
+    /// Transitions to <see cref="PlayerActionState"/> upon completion.
     /// </summary>
-    public sealed class IntroState : IBattleState
+    internal sealed class IntroState : IBattleState
     {
         private readonly BattleStateMachine machine;
-        private BattleView BattleView => this.machine.BattleView;
+        private BattleView BattleView => machine.BattleView;
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="IntroState"/> class.
-        /// </summary>
-        /// <param name="machine">The battle state machine context.</param>
-        public IntroState(BattleStateMachine machine)
+        internal IntroState(BattleStateMachine machine)
         {
             this.machine = machine;
         }
@@ -35,65 +29,47 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator PlaySequence()
         {
-            // Cache components and data from the BattleView
-            var animation = BattleView.Components.Animation;
-            var audio = BattleView.Components.Audio;
-            var dialogue = BattleView.DialogueBox;
-            var opponent = BattleView.OpponentPokemon;
-            var player = BattleView.PlayerPokemon;
+            // Logic for the wild Pokemon appearing
+            yield return PlayOpponentEntrance();
 
-            string opponentName = opponent.Definition.DisplayName;
-            string playerName = player.Definition.DisplayName;
+            // Logic for the player sending out their first Pokemon
+            yield return PlayPlayerEntrance();
 
-            // Opponent Entrance
-            yield return PlayOpponentEntrance(animation, audio, dialogue, opponentName, opponent);
-
-            // Player Entrance
-            yield return PlayPlayerEntrance(animation, audio, dialogue, playerName, player);
-
-            // Transition to the main action phase
             machine.SetState(new PlayerActionState(machine));
         }
 
-        private IEnumerator PlayOpponentEntrance(
-            BattleAnimation animation,
-            BattleAudio audio,
-            DialogueBox dialogue,
-            string opponentName,
-            PokemonInstance opponent)
+        private IEnumerator PlayOpponentEntrance()
         {
-            animation.ResetIntro();
-            animation.PlayIntro();
+            var anim = BattleView.Components.Animation;
+            var opponent = BattleView.OpponentPokemon;
 
-            yield return animation.PlayOpponentPlatformEnter();
-            yield return animation.PlayOpponentHudEnter();
+            anim.ResetIntro();
+            anim.PlayIntro();
 
-            audio.PlayPokemonCry(opponent);
+            yield return anim.PlayOpponentPlatformEnter();
+            yield return anim.PlayOpponentHudEnter();
 
-            // Wait for the player to advance the dialogue
-            yield return dialogue.ShowDialogueAndWaitForPlayerAdvance(
-                $"Wild {opponentName} appeared!",
-                manualArrowControl: true
-            );
+            BattleView.Components.Audio.PlayPokemonCry(opponent);
+
+            yield return BattleView.DialogueBox.ShowDialogueAndWaitForInput($"Wild {opponent.Definition.DisplayName} appeared!");
         }
 
-        private IEnumerator PlayPlayerEntrance(
-            BattleAnimation animation,
-            BattleAudio audio,
-            DialogueBox dialogue,
-            string playerName,
-            PokemonInstance player)
+        private IEnumerator PlayPlayerEntrance()
         {
-            dialogue.ShowDialogue($"Go {playerName}!");
+            var anim = BattleView.Components.Animation;
+            var player = BattleView.PlayerPokemon;
+            var playerName = player.Definition.DisplayName;
 
-            animation.PlayPlayerTrainerExit();
-            yield return animation.PlayPlayerThrowBallSequence();
+            BattleView.DialogueBox.ShowDialogue($"Go {playerName}!");
 
-            yield return audio.PlayOpenPokeball();
-            audio.PlayPokemonCry(player);
+            anim.PlayPlayerTrainerExit();
+            yield return anim.PlayPlayerThrowBallSequence();
 
-            yield return animation.PlayPlayerSendPokemonEnter();
-            yield return animation.PlayPlayerHudEnter();
+            yield return BattleView.Components.Audio.PlayOpenPokeball();
+            BattleView.Components.Audio.PlayPokemonCry(player);
+
+            yield return anim.PlayPlayerSendPokemonEnter();
+            yield return anim.PlayPlayerHudEnter();
         }
     }
 }

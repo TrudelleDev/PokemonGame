@@ -178,5 +178,16 @@ namespace PokemonGame.Party
 
             SelectPokemon(members[index]);
         }
+
+        /// <summary>
+        /// Fully heals all Pokémon in the party (HP, status, etc.).
+        /// </summary>
+        public void HealAll()
+        {
+            foreach (var pokemon in Members)
+            {
+                pokemon.Health.SetMaxHealth();
+            }
+        }
     }
 }
