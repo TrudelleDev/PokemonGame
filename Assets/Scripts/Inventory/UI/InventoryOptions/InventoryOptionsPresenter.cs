@@ -80,7 +80,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
                 }
 
                 OverworldDialogueBox.Instance.Dialogue.ShowDialogue(result.Messages);
-                OverworldDialogueBox.Instance.Dialogue.OnDialogueFinished += ClosePartyMenu;
+                OverworldDialogueBox.Instance.Dialogue.DialogueFinished += ClosePartyMenu;
 
                 // Unsubscribe immediately to prevent multiple calls
                 partyMenuPresenter.ItemTargetSelected -= TempHandler;
@@ -93,7 +93,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         private void ClosePartyMenu()
         {
             ViewManager.Instance.Close<PartyMenuView>();
-            OverworldDialogueBox.Instance.Dialogue.OnDialogueFinished -= ClosePartyMenu;
+            OverworldDialogueBox.Instance.Dialogue.DialogueFinished -= ClosePartyMenu;
             ItemUsed?.Invoke(true);
         }
 

@@ -41,8 +41,8 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator ProcessExperienceGain()
         {
-            var player = BattleView.PlayerPokemon;
-            var opponent = BattleView.OpponentPokemon;
+            var player = BattleView.PlayerActivePokemon;
+            var opponent = BattleView.OpponentActivePokemon;
             var dialogue = BattleView.DialogueBox;
             var audio = BattleView.Components.Audio;
             var expBar = BattleView.BattleHUDs.Player.ExperienceBar;

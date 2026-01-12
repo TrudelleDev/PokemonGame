@@ -13,7 +13,7 @@ namespace PokemonGame.Tile
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterStateController))]
-    public class GrassRustleSpawner : Singleton<GrassRustleSpawner>
+    public class GrassRustleSpawner : MonoBehaviour
     {
         [Title("Settings")]
 
@@ -35,22 +35,25 @@ namespace PokemonGame.Tile
 
         public event Action OnEnterGrass;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             controller = GetComponent<CharacterStateController>();
         }
 
         private void OnEnable()
         {
+            if (controller.TileMover == null) return;
+
             controller.TileMover.OnMoveStart += OnMoveStart;
-            controller.TileMover.OnMoveComplete += OnMoveComplete;
+            controller.TileMover.MoveCompleted += OnMoveComplete;
         }
 
         private void OnDisable()
         {
+            if (controller.TileMover == null) return;
+
             controller.TileMover.OnMoveStart -= OnMoveStart;
-            controller.TileMover.OnMoveComplete -= OnMoveComplete;
+            controller.TileMover.MoveCompleted -= OnMoveComplete;
         }
 
         /// <summary>

@@ -1,5 +1,6 @@
 ﻿using PokemonGame.Characters.Direction;
 using PokemonGame.Characters.Interfaces;
+using PokemonGame.Pause;
 using PokemonGame.Raycasting;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -27,6 +28,11 @@ namespace PokemonGame.Characters.Core
 
         private void Update()
         {
+            if (PauseManager.IsPaused)
+            {
+                return;
+            }
+
             if (!character.StateController.Input.InteractPressed)
                 return;
 

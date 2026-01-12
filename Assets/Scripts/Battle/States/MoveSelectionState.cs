@@ -38,7 +38,7 @@ namespace PokemonGame.Battle.States
             moveSelectionView = ViewManager.Instance.Show<MoveSelectionView>();
 
             // Populate the view with the active Pokémon's moves
-            moveSelectionView.BindMoves(Battle.PlayerPokemon.Moves.Moves);
+            moveSelectionView.BindMoves(Battle.PlayerActivePokemon.Moves.Moves);
 
             // Subscribe to inputs
             moveSelectionView.OnMoveConfirmed += HandleMoveConfirmed;

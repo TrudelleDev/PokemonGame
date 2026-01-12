@@ -71,7 +71,7 @@ namespace PokemonGame.Views
             {
                 return null;
             }
-              
+
             foreach (View view in views)
             {
                 if (view is not T target)
@@ -85,7 +85,7 @@ namespace PokemonGame.Views
                 {
                     previous.Freeze();
                 }
-                  
+
                 StartCoroutine(ShowAsOverlay(target));
                 return target;
             }
@@ -158,7 +158,7 @@ namespace PokemonGame.Views
                 {
                     yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
                 }
-                  
+
                 yield return transition.FadeOutCoroutine();
             }
             else
@@ -181,7 +181,7 @@ namespace PokemonGame.Views
             {
                 return;
             }
-               
+
             StartCoroutine(CloseTopViewCoroutine());
         }
 
@@ -204,7 +204,7 @@ namespace PokemonGame.Views
                 {
                     yield return new WaitForSecondsRealtime(blackScreenHoldDuration);
                 }
-                  
+
                 yield return transition.FadeOutCoroutine();
             }
             else
@@ -220,7 +220,7 @@ namespace PokemonGame.Views
                 CurrentView.Unfreeze();
             }
 
-            
+
             IsTransitioning = false;
             UpdatePauseState();
             DebugHistory();

@@ -1,4 +1,5 @@
-﻿using Sirenix.OdinInspector;
+﻿using PokemonGame.Characters;
+using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
@@ -26,7 +27,22 @@ namespace PokemonGame.Tile
         /// </summary>
         private void Start()
         {
-            GrassRustleSpawner.Instance.SetTilemaps(grassTilemap, fxTilemap);
+
+            if (PlayerRegistry.Player == null)
+            {
+                Debug.LogWarning("Player not registered yet. GrassTilemaps will not be set.");
+                return;
+            }
+
+            var playerSpawner = PlayerRegistry.Player.GetComponent<GrassRustleSpawner>();
+            if (playerSpawner != null)
+            {
+                playerSpawner.SetTilemaps(grassTilemap, fxTilemap);
+            }
+            else
+            {
+                Debug.LogWarning("Player does not have a GrassRustleSpawner component.");
+            }
         }
     }
 }

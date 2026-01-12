@@ -24,7 +24,7 @@ namespace PokemonGame.Tile
         /// <summary>
         /// Event triggered when movement is completed.
         /// </summary>
-        public event Action OnMoveComplete;
+        public event Action MoveCompleted;
 
         /// <summary>
         /// Indicates whether the object is currently moving.
@@ -61,7 +61,7 @@ namespace PokemonGame.Tile
 
             transform.position = destination;
             IsMoving = false;
-            OnMoveComplete?.Invoke();
+            MoveCompleted?.Invoke();
         }
 
         /// <summary>

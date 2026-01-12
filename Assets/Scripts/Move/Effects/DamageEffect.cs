@@ -24,7 +24,7 @@ namespace PokemonGame.Move.Effects
         /// <param name="context">Current move execution context.</param>
         private bool IsTargetUser(MoveContext context)
         {
-            return context.Target == context.Battle.PlayerPokemon;
+            return context.Target == context.Battle.PlayerActivePokemon;
         }
 
         /// <summary>

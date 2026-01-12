@@ -49,7 +49,7 @@ namespace PokemonGame.Battle.States
 
             actionPanel = ViewManager.Instance.Show<BattleActionView>();
 
-            Battle.DialogueBox.ShowPrompt($"What will\n{Battle.PlayerPokemon.Definition.DisplayName} do?");
+            Battle.DialogueBox.ShowPrompt($"What will\n{Battle.PlayerActivePokemon.Definition.DisplayName} do?");
 
             actionPanel.FightSelected += HandleFightSelected;
             actionPanel.PartySelected += HandlePartySelected;

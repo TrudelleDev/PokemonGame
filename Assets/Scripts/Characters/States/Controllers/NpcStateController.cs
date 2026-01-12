@@ -4,23 +4,21 @@ using UnityEngine;
 namespace PokemonGame.Characters.States
 {
     /// <summary>
-    /// State controller for NPC characters.
-    /// Uses <see cref="NpcInput"/> to drive movement and actions.
+    /// A flexible state controller for all non-player characters.
+    /// Works with NpcInput (wandering) or TrainerInput (fixed/staring).
     /// </summary>
-    [RequireComponent(typeof(NpcInput))]
-    public class NpcStateController : CharacterStateController
+    [DisallowMultipleComponent]
+    public sealed class NpcStateController : CharacterStateController
     {
-        private NpcInput computerInput;
+        private CharacterInput aiInput;
 
-        /// <summary>
-        /// Provides NPC input source (random wandering AI).
-        /// </summary>
-        public override CharacterInput Input => computerInput;
+        public override CharacterInput Input => aiInput;
 
         protected override void Awake()
         {
             base.Awake();
-            computerInput = GetComponent<NpcInput>();
+            // Finds whatever CharacterInput is on this GameObject
+            aiInput = GetComponent<CharacterInput>();
         }
     }
 }

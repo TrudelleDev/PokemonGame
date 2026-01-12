@@ -26,6 +26,24 @@ namespace PokemonGame.Characters.Direction
         }
 
         /// <summary>
+        /// Converts an <see cref="FacingDirection"/> value to a corresponding <see cref="InputDirection"/>.
+        /// </summary>
+        /// <exception cref="System.ArgumentOutOfRangeException">
+        /// Thrown if <paramref name="facing"/> is <see cref="FacingDirection.None"/> or invalid.
+        /// </exception>
+        public static InputDirection ToInputDirection(this FacingDirection facing)
+        {
+            return facing switch
+            {
+                FacingDirection.North => InputDirection.Up,
+                FacingDirection.South => InputDirection.Down,
+                FacingDirection.West => InputDirection.Left,
+                FacingDirection.East => InputDirection.Right,
+                _ => throw new System.ArgumentOutOfRangeException(nameof(facing), facing, "Invalid FacingDirection value.")
+            };
+        }
+
+        /// <summary>
         /// Gets the opposite of a given <see cref="FacingDirection"/>.
         /// </summary>
         /// <exception cref="System.ArgumentOutOfRangeException">

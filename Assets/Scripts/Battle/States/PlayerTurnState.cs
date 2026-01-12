@@ -41,8 +41,8 @@ namespace PokemonGame.Battle.States
         {
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
 
-            var user = Battle.PlayerPokemon;
-            var target = Battle.OpponentPokemon;
+            var user = Battle.PlayerActivePokemon;
+            var target = Battle.OpponentActivePokemon;
             var context = new MoveContext(Battle, user, target, move);
 
             // 1. Announce Move

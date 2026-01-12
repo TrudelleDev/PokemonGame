@@ -9,9 +9,7 @@ namespace PokemonGame.Characters.Inputs
     /// <summary>
     /// Provides random wandering input for NPCs.
     /// </summary>
-    [RequireComponent(typeof(NpcMovementBounds))]
-    [RequireComponent(typeof(NpcStateController))]
-    public class NpcInput : CharacterInput
+    internal sealed class NpcWanderInput : CharacterInput
     {
         [SerializeField, Required]
         [Tooltip("Average time between random movement decisions.")]
@@ -51,9 +49,6 @@ namespace PokemonGame.Characters.Inputs
         /// </summary>
         protected override void ReadInput()
         {
-            // NPCs never press interact, for now
-            InteractPressed = false;
-
             // Only decide input when not already moving
             if (!stateController.TileMover.IsMoving)
             {

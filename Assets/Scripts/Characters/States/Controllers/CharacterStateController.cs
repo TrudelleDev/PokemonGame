@@ -1,7 +1,6 @@
 using PokemonGame.Characters.Core;
 using PokemonGame.Characters.Direction;
 using PokemonGame.Characters.Inputs;
-using PokemonGame.Pause;
 using PokemonGame.Tile;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -21,10 +20,12 @@ namespace PokemonGame.Characters.States
 
         private FacingDirection facingDirection;
 
+        [SerializeField, Required] TileMover tileMover;
+
         /// <summary>
         /// Tile-based movement handler for this character.
         /// </summary>
-        public TileMover TileMover { get; private set; }
+        public TileMover TileMover => tileMover;
 
         /// <summary>
         /// Handles idle state logic.
@@ -86,7 +87,6 @@ namespace PokemonGame.Characters.States
 
         protected virtual void Awake()
         {
-            TileMover = GetComponent<TileMover>();
             AnimatorController = new CharacterAnimatorController(GetComponent<Animator>());
 
             IdleState = new CharacterIdleState(this);
@@ -111,15 +111,7 @@ namespace PokemonGame.Characters.States
         /// </summary>
         protected virtual void Update()
         {
-            if (PauseManager.IsPaused)
-            {
-                if (CurrentState != IdleState)
-                {
-                    SetState(IdleState);
-                }
 
-                return;
-            }
 
             CurrentState?.Update();
         }

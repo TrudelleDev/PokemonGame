@@ -16,5 +16,7 @@ namespace PokemonGame.Battle
         public static readonly int TakeDamage = Animator.StringToHash("TakeDamage");
         public static readonly int Death = Animator.StringToHash("Death");
         public static readonly int Withdraw = Animator.StringToHash("Withdraw");
+        public static readonly int TrainerPokemonEnter = Animator.StringToHash("TrainerPokemonEnter");
+        public static readonly int WildPokemonEnter = Animator.StringToHash("WildPokemonEnter");
     }
 }

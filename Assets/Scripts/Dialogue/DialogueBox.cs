@@ -40,7 +40,7 @@ namespace PokemonGame.Dialogue
         private bool waitForInput;
 
         public event Action OnLineTypingComplete;
-        public event Action OnDialogueFinished;
+        public event Action DialogueFinished;
 
         private void Awake()
         {
@@ -162,7 +162,7 @@ namespace PokemonGame.Dialogue
 
         private void FinishDialogue()
         {
-            OnDialogueFinished?.Invoke();
+            DialogueFinished?.Invoke();
             if (!autoClose) return;
 
             Clear();

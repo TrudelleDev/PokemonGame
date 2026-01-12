@@ -20,6 +20,9 @@ namespace PokemonGame.Battle.Models
         [SerializeField, Required, Tooltip("Animator controlling the player's active Pokémon sprite.")]
         private Animator pokemonAnimator;
 
+        [SerializeField, Required]
+        private Animator pokemonBarAnimator;
+
         [SerializeField, Required, Tooltip("Animator controlling the player's HUD display.")]
         private Animator hudAnimator;
 
@@ -30,6 +33,8 @@ namespace PokemonGame.Battle.Models
         public Animator TrainerSpriteAnimator => trainerSpriteAnimator;
         public Animator PokemonAnimator => pokemonAnimator;
         public Animator HudAnimator => hudAnimator;
+
+        public Animator PokemonBarAnimator => pokemonBarAnimator;
         public Animator ThrowBallAnimator => throwBallAnimator;
     }
 }

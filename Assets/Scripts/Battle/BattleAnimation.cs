@@ -38,6 +38,8 @@ namespace PokemonGame.Battle
             yield return coverOffsetAnimator.AnimateOffsetCoroutine(Vector2.zero, new Vector2(0f, 1f), 1f);
         }
 
+        public void PlayOpponentPokemonBarEnter() => opponentAnimations.PokemonBarAnimator.Play(BattleAnimationState.Enter);
+
         public IEnumerator PlayOpponentPlatformEnter() =>
             PlayAnimation(opponentAnimations.PlatformAnimator, BattleAnimationState.Enter);
 
@@ -51,6 +53,12 @@ namespace PokemonGame.Battle
            opponentAnimations.PokemonAnimator.Play(BattleAnimationState.Death);
 
         public IEnumerator PlayOpponentHudExit() => PlayAnimation(opponentAnimations.HudAnimator, BattleAnimationState.Exit);
+
+        public void PlayOpponentPokemonBarExit() => opponentAnimations.PokemonBarAnimator.Play(BattleAnimationState.Exit);
+
+        public void PlayOpponentTrainerEnter() => opponentAnimations.TrainerAnimator.Play(BattleAnimationState.Enter);
+        public IEnumerator PlayOpponentTrainerExit() => PlayAnimation(opponentAnimations.TrainerAnimator, BattleAnimationState.Exit);
+        public IEnumerator PlayTrainerPokemonEnter() => PlayAnimation(opponentAnimations.PokemonAnimator, BattleAnimationState.TrainerPokemonEnter);
 
         // ─────────────────────────────
         //    Player Animations
@@ -94,11 +102,29 @@ namespace PokemonGame.Battle
             ThrowPokeball = false;
         }
 
+
+        public IEnumerator PlayPokemonBars()
+        {
+            opponentAnimations.PokemonBarAnimator.Play(BattleAnimationState.Enter);
+            yield return PlayAnimation(playerAnimations.PokemonBarAnimator, BattleAnimationState.Enter);
+        }
+
+
+
         public IEnumerator PlayPlayerWithdrawPokemon() =>
             PlayAnimation(playerAnimations.PokemonAnimator, BattleAnimationState.Withdraw);
 
         public IEnumerator PlayPlayerBattleHudExit() =>
             PlayAnimation(playerAnimations.HudAnimator, BattleAnimationState.Exit);
+
+        public void PlayPlayerPlatformEnter() => playerAnimations.PlatformAnimator.Play(BattleAnimationState.Enter);
+        public void PlayPlayerTrainerSpriteEnter() => playerAnimations.TrainerSpriteAnimator.Play(BattleAnimationState.Enter);
+        public void PlayOpponentPlatformEnter2() => opponentAnimations.PlatformAnimator.Play(BattleAnimationState.Enter);
+        public void PlayWildPokemonEnter() => opponentAnimations.PokemonAnimator.Play(BattleAnimationState.WildPokemonEnter); // changethis
+
+
+        public IEnumerator PlayPlayerPokemonBarEnter() => PlayAnimation(playerAnimations.PokemonBarAnimator, BattleAnimationState.Enter);
+        public void PlayPlayerPokemonBarExit() => playerAnimations.PokemonBarAnimator.Play(BattleAnimationState.Exit);
 
         // ─────────────────────────────
         //    Global Animations
@@ -113,7 +139,7 @@ namespace PokemonGame.Battle
             playerAnimations.TrainerSpriteAnimator.Play(BattleAnimationState.Enter);
 
             opponentAnimations.PlatformAnimator.Play(BattleAnimationState.Enter);
-            opponentAnimations.PokemonAnimator.Play(BattleAnimationState.Enter);
+            //opponentAnimations.PokemonAnimator.Play(BattleAnimationState.Enter);
         }
 
         /// <summary>
@@ -128,9 +154,12 @@ namespace PokemonGame.Battle
                 playerAnimations.PokemonAnimator,
                 playerAnimations.TrainerSpriteAnimator,
                 playerAnimations.ThrowBallAnimator,
+                playerAnimations.PokemonBarAnimator,
                 opponentAnimations.HudAnimator,
                 opponentAnimations.PlatformAnimator,
-                opponentAnimations.PokemonAnimator
+                opponentAnimations.PokemonAnimator,
+                opponentAnimations.PokemonBarAnimator
+
             );
         }
 

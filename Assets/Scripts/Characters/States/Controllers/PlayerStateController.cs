@@ -1,4 +1,5 @@
 ﻿using PokemonGame.Characters.Inputs;
+using PokemonGame.Pause;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -43,5 +44,20 @@ namespace PokemonGame.Characters.States
         /// Returns null if no clip is assigned.
         /// </summary>
         public override AudioClip CollisionAudioClip => collisionAudioClip;
+
+        protected override void Update()
+        {
+            if (PauseManager.IsPaused)
+            {
+                if (CurrentState != IdleState)
+                {
+                    SetState(IdleState);
+                }
+
+                return;
+            }
+
+            base.Update();
+        }
     }
 }

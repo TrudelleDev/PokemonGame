@@ -2,10 +2,8 @@
 using System.Collections;
 using PokemonGame.Battle.Models;
 using PokemonGame.Battle.States;
+using PokemonGame.Characters.Core;
 using PokemonGame.Dialogue;
-using PokemonGame.Inventory;
-using PokemonGame.Party;
-using PokemonGame.Party.UI;
 using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -29,15 +27,13 @@ namespace PokemonGame.Battle
         private DialogueBox dialogueBox;
 
         private BattleStateMachine stateMachine;
-        private PartyManager temporaryPlayerParty;
-        private PartyManager playerParty;
+        private IBattleState introState;
 
-        public PokemonInstance PlayerPokemon { get; private set; }
-        public PokemonInstance OpponentPokemon { get; private set; }
+        internal Character Player { get; private set; }
+        internal Character Opponent { get; private set; }
 
-        public InventoryManager InventoryManager { get; private set; }
-        public PartyManager PlayerPartyManager { get; private set; }
-
+        internal PokemonInstance PlayerActivePokemon { get;  private set; }
+        internal PokemonInstance OpponentActivePokemon { get;  private set; }
 
         public BattleHUDs BattleHUDs => battleHuds;
         public BattleComponents Components => battleComponents;
@@ -50,26 +46,19 @@ namespace PokemonGame.Battle
 
         public bool IsInBattle = false;
 
-        /// <summary>
-        /// Initializes the battle with the player's party and opponent Pokémon.
-        /// </summary>
-        public void Initialize(PartyManager playerParty, InventoryManager inventory, PokemonInstance opponentPokemon)
+
+        internal void InitializeWildBattle(Character player, PokemonInstance wildPokemon)
         {
-            this.playerParty = playerParty;
-            InventoryManager = inventory;
-            PlayerPartyManager = playerParty;
+            Player = player;
 
-            // Preserve original party order and set up temporary battle party.
-            playerParty.SaveOriginalPartyOrder();
-            temporaryPlayerParty = playerParty;
+            PlayerActivePokemon = player.Party.Members[0];
+            OpponentActivePokemon = wildPokemon;
 
-            PlayerPokemon = temporaryPlayerParty.Members[0];
-            OpponentPokemon = opponentPokemon;
-
-            battleHuds.Player.Bind(PlayerPokemon);
-            battleHuds.Opponent.Bind(OpponentPokemon);
+            battleHuds.Player.Bind(PlayerActivePokemon);
+            battleHuds.Opponent.Bind(OpponentActivePokemon);
 
             stateMachine = new BattleStateMachine(this);
+            introState = new WildBattleIntroState(stateMachine);
 
             // Reset intro animation for a fresh start.
             battleComponents.Animation.ResetIntro();
@@ -77,6 +66,37 @@ namespace PokemonGame.Battle
             IsInBattle = true;
             dialogueBox.Clear();
         }
+
+        /// <summary>
+        /// Initializes the battle with the player's party and opponent Pokémon.
+        /// </summary>
+        public void InitializeTrainerBattle(Character player, Character opponent)
+        {
+            Player = player;
+            Opponent = opponent;
+
+            PlayerActivePokemon = player.Party.Members[0];
+            OpponentActivePokemon = opponent.Party.Members[0];
+
+            battleHuds.Player.Bind(PlayerActivePokemon);
+            battleHuds.Opponent.Bind(OpponentActivePokemon);
+
+            stateMachine = new BattleStateMachine(this);
+            introState = new TrainerBattleIntroState(stateMachine);
+
+            // Reset intro animation for a fresh start.
+            battleComponents.Animation.ResetIntro();
+            isBattleInitialized = true;
+            IsInBattle = true;
+            dialogueBox.Clear();
+        }
+
+        public void SetNextOpponentPokemon(PokemonInstance pokemon)
+        {
+            OpponentActivePokemon = pokemon;
+            battleHuds.Opponent.Bind(pokemon);
+        }
+
 
         private void OnEnable()
         {
@@ -101,25 +121,9 @@ namespace PokemonGame.Battle
             base.Hide();
         }
 
-        /// <summary>
-        /// Handles Pokémon switching using the temporary party order.
-        /// </summary>
-        public void TemporarySwap()
+        public bool OpponentHasRemainingPokemon()
         {
-            var partyMenu = ViewManager.Instance.Get<PartyMenuView>();
-            // partyMenu.Swap(0, temporaryPlayerParty.SelectedIndex);
-
-            PlayerPokemon = temporaryPlayerParty.SelectedPokemon;
-            battleHuds.Player.Bind(PlayerPokemon);
-        }
-
-        /// <summary>
-        /// Sets the active player Pokémon during battle and updates the HUD.
-        /// </summary>
-        public void SetActivePokemon(PokemonInstance pokemon)
-        {
-            PlayerPokemon = pokemon;
-            battleHuds.Player.Bind(PlayerPokemon);
+            return Opponent != null && Opponent.Party.HasUsablePokemon();
         }
 
         /// <summary>
@@ -128,7 +132,7 @@ namespace PokemonGame.Battle
         private IEnumerator PlayIntro()
         {
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
-            stateMachine.SetState(new IntroState(stateMachine));
+            stateMachine.SetState(introState);
         }
 
         /// <summary>
@@ -139,7 +143,6 @@ namespace PokemonGame.Battle
             battleHuds.Player.Unbind();
             battleHuds.Opponent.Unbind();
 
-            playerParty.RestorePartyOrder();
             isBattleInitialized = false;
             IsInBattle = false;
 

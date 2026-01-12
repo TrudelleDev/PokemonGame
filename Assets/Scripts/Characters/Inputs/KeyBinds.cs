@@ -5,7 +5,7 @@ namespace PokemonGame.Characters.Inputs
     /// <summary>
     /// Defines global key bindings for player input.
     /// </summary>
-    public static class KeyBinds
+    internal static class KeyBinds
     {
         // --- Movement ---
 

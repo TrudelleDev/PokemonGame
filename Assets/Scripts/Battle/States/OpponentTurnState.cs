@@ -37,8 +37,8 @@ namespace PokemonGame.Battle.States
             // Wait for any UI transitions to finish before starting
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
 
-            var user = Battle.OpponentPokemon;
-            var target = Battle.PlayerPokemon;
+            var user = Battle.OpponentActivePokemon;
+            var target = Battle.PlayerActivePokemon;
 
             // Simple AI: Select the first available move
             var move = user.Moves.Moves[0];

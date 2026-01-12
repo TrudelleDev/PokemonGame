@@ -37,8 +37,14 @@ namespace PokemonGame.Battle.States
             yield return anim.PlayOpponentHudExit();
             yield return dialogue.ShowDialogueAndWaitForInput($"Wild {faintedPokemon.Definition.DisplayName}\nfainted!");
 
-            // Transition to the results
-            machine.SetState(new VictoryState(machine));
+            if (Battle.OpponentHasRemainingPokemon())
+            {
+                machine.SetState(new OpponentSendNextPokemonState(machine));
+            }
+            else
+            {
+                machine.SetState(new VictoryState(machine));
+            }
         }
     }
 }

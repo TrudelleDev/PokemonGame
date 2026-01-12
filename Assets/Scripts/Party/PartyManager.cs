@@ -189,5 +189,22 @@ namespace PokemonGame.Party
                 pokemon.Health.SetMaxHealth();
             }
         }
+
+        /// <summary>
+        /// Checks whether the party has at least one Pokémon that can still battle.
+        /// </summary>
+        /// <returns>True if at least one Pokémon has remaining HP.</returns>
+        internal bool HasUsablePokemon()
+        {
+            foreach (var pokemon in members)
+            {
+                if (pokemon.Health.CurrentHealth > 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
     }
 }

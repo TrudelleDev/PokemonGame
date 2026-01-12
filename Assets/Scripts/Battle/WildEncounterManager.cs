@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using PokemonGame.Audio;
+using PokemonGame.Characters;
+using PokemonGame.Characters.Core;
 using PokemonGame.Inventory;
 using PokemonGame.Party;
 using PokemonGame.Pokemon;
@@ -24,11 +26,7 @@ namespace PokemonGame.Battle
         private AudioClip battleBgm;
 
         [SerializeField, Required]
-        [Tooltip("Reference to the PartyManager that provides the player's current Pokémon.")]
-        private PartyManager partyManager;
-
-        [SerializeField, Required]
-        private InventoryManager inventory;
+        private Character player;
 
         [Title("Encounter Settings")]
         [SerializeField, Range(0, 100)] private int encounterChance = 10; // 10% chance per step
@@ -38,7 +36,14 @@ namespace PokemonGame.Battle
 
         private void Start()
         {
-            GrassRustleSpawner.Instance.OnEnterGrass += OnEnterGrass;
+            if (PlayerRegistry.Player == null) return;
+
+            var playerSpawner = PlayerRegistry.Player.GetComponent<GrassRustleSpawner>();
+
+            if (playerSpawner != null)
+            {
+                playerSpawner.OnEnterGrass += OnEnterGrass;
+            }
         }
 
         /// <summary>
@@ -66,7 +71,7 @@ namespace PokemonGame.Battle
 
             PokemonInstance pokemon = PokemonFactory.CreatePokemon(level, wildPokemon.Pokemon);
 
-            battle.Initialize(partyManager, inventory, pokemon);
+            battle.InitializeWildBattle(player, pokemon);
         }
 
         private WildPokemonEntry ChooseWildPokemon()

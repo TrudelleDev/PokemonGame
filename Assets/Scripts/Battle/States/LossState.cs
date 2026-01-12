@@ -34,7 +34,7 @@ namespace PokemonGame.Battle.States
         private IEnumerator PlaySequence()
         {
             yield return Battle.DialogueBox.ShowDialogueAndWaitForInput("All your Pokémon have fainted!\nYou blacked out...");  
-            Battle.PlayerPartyManager.HealAll();
+            Battle.Player.Party.HealAll();
 
             MapEntryRegistry.SetNextEntry(MapEntryID.ViridianForest_Entrance);
             PlayerRelocator.Instance.RelocatePlayer();
