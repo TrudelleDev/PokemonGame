@@ -392,7 +392,7 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+      objectReference: {fileID: 11400000, guid: 87ffb501ecf01454297e07684f1baf4e, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontStyle
       value: 0
@@ -408,7 +408,7 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+      objectReference: {fileID: 4618470527718612985, guid: 87ffb501ecf01454297e07684f1baf4e, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_characterSpacing
       value: 0
@@ -432,7 +432,7 @@ PrefabInstance:
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 55a9b3db020476246b128d64b8a77acc, type: 3}
+      objectReference: {fileID: 21300000, guid: 6e95c0d0347e7a84a883d4a786cbaeae, type: 3}
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -757,11 +757,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_SizeDelta.x
@@ -773,11 +773,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 2605380535699203216, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -12.5
       objectReference: {fileID: 0}
     - target: {fileID: 2748854880021428639, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Padding.m_Top
@@ -854,7 +854,7 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontAsset
       value: 
-      objectReference: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+      objectReference: {fileID: 11400000, guid: 87ffb501ecf01454297e07684f1baf4e, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_fontStyle
       value: 0
@@ -870,7 +870,7 @@ PrefabInstance:
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 1583439172908871083, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+      objectReference: {fileID: 4618470527718612985, guid: 87ffb501ecf01454297e07684f1baf4e, type: 2}
     - target: {fileID: 5836544459836643624, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_characterSpacing
       value: 0
@@ -894,7 +894,7 @@ PrefabInstance:
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 55a9b3db020476246b128d64b8a77acc, type: 3}
+      objectReference: {fileID: 21300000, guid: 6e95c0d0347e7a84a883d4a786cbaeae, type: 3}
     - target: {fileID: 7651786375337523167, guid: 6ac86f55c457f504ba3afdb777211e9c, type: 3}
       propertyPath: m_Color.b
       value: 0.5019608
@@ -1111,7 +1111,7 @@ Camera:
   m_NormalizedViewPortRect:
     serializedVersion: 2
     x: 0.23359375
-    y: 0.04930556
+    y: 0.04791667
     width: 0.09375
     height: 0.11111111
   near clip plane: 0.3

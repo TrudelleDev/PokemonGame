@@ -1,4 +1,4 @@
-﻿using PokemonGame.Characters.Direction;
+﻿using PokemonGame.Characters.Directions;
 using PokemonGame.Raycasting;
 using Sirenix.OdinInspector;
 using UnityEngine;

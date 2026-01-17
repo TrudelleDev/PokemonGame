@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
 using PokemonGame.Audio;
 using PokemonGame.Characters;
-using PokemonGame.Characters.Core;
-using PokemonGame.Inventory;
-using PokemonGame.Party;
+using PokemonGame.Characters.Player;
 using PokemonGame.Pokemon;
 using PokemonGame.Pokemon.Models;
 using PokemonGame.Tile;

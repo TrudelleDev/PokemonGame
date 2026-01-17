@@ -64,8 +64,8 @@ namespace PokemonGame.Battle.States
 
             //BattleView.Components.Audio.PlayPokemonCry(opponent);
 
-            yield return BattleView.DialogueBox.ShowDialogueAndWaitForInput($"{BattleView.Opponent.DisplayName}\nwould like to battle!");
-            yield return BattleView.DialogueBox.ShowDialogueAndWait($"{BattleView.Opponent.DisplayName}\nsend out {opponent.Definition.DisplayName}!");
+            yield return BattleView.DialogueBox.ShowDialogueAndWaitForInput($"{BattleView.Opponent.Definition.DisplayName}\nwould like to battle!");
+            yield return BattleView.DialogueBox.ShowDialogueAndWait($"{BattleView.Opponent.Definition.DisplayName}\nsend out {opponent.Definition.DisplayName}!");
 
             anim.PlayOpponentPokemonBarExit();
             yield return anim.PlayOpponentTrainerExit();

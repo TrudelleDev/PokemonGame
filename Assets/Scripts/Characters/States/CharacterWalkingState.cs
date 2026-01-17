@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using PokemonGame.Characters.Core;
-using PokemonGame.Characters.Direction;
+using PokemonGame.Characters.Directions;
+using PokemonGame.Characters.Interfaces;
 using PokemonGame.Utilities;
 using UnityEngine;
 
@@ -11,21 +11,14 @@ namespace PokemonGame.Characters.States
     /// Triggers are checked before movement, collisions are handled, and movement
     /// is executed via coroutine with animation.
     /// </summary>
-    public class CharacterWalkingState : ICharacterState
+    public sealed class CharacterWalkingState : ICharacterState
     {
         private readonly CharacterStateController controller;
-        private readonly CharacterTriggerHandler triggerHandler;
         private Coroutine walkRoutine;
 
-        /// <summary>
-        /// Creates a new walking state for the given controller.
-        /// Caches the <see cref="CharacterTriggerHandler"/> if present.
-        /// </summary>
-        /// <param name="controller">The character controller that owns this state.</param>
         public CharacterWalkingState(CharacterStateController controller)
         {
             this.controller = controller;
-            triggerHandler = controller.GetComponent<CharacterTriggerHandler>();
         }
 
         /// <summary>
@@ -46,7 +39,7 @@ namespace PokemonGame.Characters.States
             controller.FacingDirection = facing;
 
             // Check triggers BEFORE walking
-            if (triggerHandler != null && triggerHandler.CheckForTriggers(input.ToVector2Int()))
+            if (controller.TriggerHandler != null && controller.TriggerHandler.TryTrigger(input.ToVector2Int()))
             {
                 controller.SetState(controller.IdleState);
                 return;
@@ -63,9 +56,6 @@ namespace PokemonGame.Characters.States
             walkRoutine = controller.StartCoroutine(Walk(facing));
         }
 
-        /// <summary>
-        /// No update logic required for walking state.
-        /// </summary>
         public void Update() { }
 
         /// <summary>

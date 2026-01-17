@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using PokemonGame.Characters;
 using PokemonGame.Views;
 using UnityEngine;
 
@@ -42,6 +43,7 @@ namespace PokemonGame.Battle.States
             yield return new WaitForSecondsRealtime(ClosePause);
 
             ViewManager.Instance.Close<BattleView>();
+            BattleView.Player.GetComponent<CharacterStateController>().Unlock(); // Change this later
         }
     }
 }

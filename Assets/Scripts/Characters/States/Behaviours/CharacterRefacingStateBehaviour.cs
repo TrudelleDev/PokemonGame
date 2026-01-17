@@ -7,10 +7,11 @@ namespace PokemonGame.Characters.States.Behaviours
     /// Animator behaviour that notifies the character controller
     /// when the refacing animation finishes.
     /// </summary>
-    public class CharacterRefacingStateBehaviour : StateMachineBehaviour
+    public sealed class CharacterRefacingStateBehaviour : StateMachineBehaviour
     {
         public override void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
         {
+            // Only notify if the animator has a CharacterStateController
             if (!animator.TryGetComponent<CharacterStateController>(out var controller))
             {
                 Log.Warning(nameof(CharacterRefacingStateBehaviour), "No CharacterStateController found on animator.");

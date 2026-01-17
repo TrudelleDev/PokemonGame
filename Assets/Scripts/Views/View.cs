@@ -1,6 +1,6 @@
 ﻿using System;
 using PokemonGame.Audio;
-using PokemonGame.Characters.Inputs;
+using PokemonGame.Characters.Config;
 using PokemonGame.Menu.Controllers;
 using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
@@ -107,7 +107,7 @@ namespace PokemonGame.Views
                 {
                     AudioManager.Instance.PlaySFX(closeSound);
                 }
-                 
+
                 CancelKeyPressed?.Invoke();
             }
         }

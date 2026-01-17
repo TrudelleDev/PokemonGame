@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonGame.Characters.Inputs;
+using PokemonGame.Characters.Config;
 using PokemonGame.Menu;
 using Sirenix.OdinInspector;
 using UnityEngine;

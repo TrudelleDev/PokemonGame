@@ -2,7 +2,7 @@
 using System.Collections;
 using PokemonGame.Battle.Models;
 using PokemonGame.Battle.States;
-using PokemonGame.Characters.Core;
+using PokemonGame.Characters;
 using PokemonGame.Dialogue;
 using PokemonGame.Pokemon;
 using PokemonGame.Views;
@@ -32,8 +32,8 @@ namespace PokemonGame.Battle
         internal Character Player { get; private set; }
         internal Character Opponent { get; private set; }
 
-        internal PokemonInstance PlayerActivePokemon { get;  private set; }
-        internal PokemonInstance OpponentActivePokemon { get;  private set; }
+        internal PokemonInstance PlayerActivePokemon { get; private set; }
+        internal PokemonInstance OpponentActivePokemon { get; private set; }
 
         public BattleHUDs BattleHUDs => battleHuds;
         public BattleComponents Components => battleComponents;

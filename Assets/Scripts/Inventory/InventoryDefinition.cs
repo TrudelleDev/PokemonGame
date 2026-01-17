@@ -10,7 +10,7 @@ namespace PokemonGame.Inventory
     /// Can be used for players, NPCs, trainers, or shops.
     /// </summary>
     [CreateAssetMenu(menuName = "PokemonGame/Inventory/Definition", fileName = "NewInventoryDefinition")]
-    internal sealed class InventoryDefinition : ScriptableObject
+    public sealed class InventoryDefinition : ScriptableObject
     {
         [SerializeField, Required]
         [Tooltip("Starting items for this inventory template")]
@@ -19,6 +19,6 @@ namespace PokemonGame.Inventory
         /// <summary>
         /// Read-only list of items defined in this inventory template.
         /// </summary>
-        internal IReadOnlyList<Item> Items => items;
+        public IReadOnlyList<Item> Items => items;
     }
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.Enums;
 using PokemonGame.Utilities;
-using Sirenix.OdinInspector;
-using UnityEngine;
 
 namespace PokemonGame.Inventory
 {
@@ -12,40 +10,50 @@ namespace PokemonGame.Inventory
     /// Manages a single inventory for a player or character.
     /// Handles item storage, addition, removal, and notifies when the inventory changes.
     /// </summary>
-    [DisallowMultipleComponent]
-    internal sealed class InventoryManager : MonoBehaviour
+    public sealed class InventoryManager
     {
-        [SerializeField, Required]
-        [Tooltip("Initial items for this inventory.")]
-        private InventoryDefinition inventoryDefinition;
-
         private readonly List<Item> items = new();
 
         /// <summary>
         /// Read-only view of all items currently in the inventory.
         /// </summary>
-        internal IReadOnlyList<Item> Items => items;
+        public IReadOnlyList<Item> Items => items;
 
         /// <summary>
         /// Raised whenever the inventory changes (items added, removed, or cleared).
         /// </summary>
-        internal event Action ItemsChanged;
+        public event Action ItemsChanged;
+
+        /// <summary>
+        /// Predefined starting items for this inventory (optional).
+        /// </summary>
+        public InventoryDefinition InventoryDefinition { get; private set; }
+
+        /// <summary>
+        /// Creates a new inventory manager with an optional starting definition.
+        /// </summary>
+        /// <param name="definition">Optional initial inventory definition.</param>
+        public InventoryManager(InventoryDefinition definition = null)
+        {
+            InventoryDefinition = definition;
+            Initialize();
+        }
 
         /// <summary>
         /// Initializes the inventory by clearing any existing items and loading
         /// the predefined starting items from the inventory definition.
         /// </summary>
-        internal void Initialize()
+        public void Initialize()
         {
             Clear();
 
-            if (inventoryDefinition == null || inventoryDefinition.Items == null)
+            if (InventoryDefinition == null || InventoryDefinition.Items == null)
             {
                 Log.Warning(nameof(InventoryManager), "InventoryDefinition is missing or empty.");
                 return;
             }
 
-            foreach (Item item in inventoryDefinition.Items)
+            foreach (Item item in InventoryDefinition.Items)
             {
                 if (IsValid(item))
                 {
@@ -58,8 +66,7 @@ namespace PokemonGame.Inventory
         /// Adds an item to the inventory. If the item already exists,
         /// increases its stack quantity up to a maximum of 99.
         /// </summary>
-        /// <param name="item">The item to add. Must be valid and have a positive quantity.</param>
-        internal void Add(Item item)
+        public void Add(Item item)
         {
             if (!IsValid(item))
             {
@@ -72,7 +79,7 @@ namespace PokemonGame.Inventory
 
                 if (storedItem.ID == item.ID)
                 {
-                    storedItem.Quantity = Mathf.Min(99, storedItem.Quantity + item.Quantity);
+                    storedItem.Quantity = Math.Min(99, storedItem.Quantity + item.Quantity);
                     NotifyChanged();
                     return;
                 }
@@ -86,8 +93,7 @@ namespace PokemonGame.Inventory
         /// Removes a single unit of the specified item from the inventory.
         /// Removes the item entirely if the quantity reaches zero.
         /// </summary>
-        /// <param name="item">The item to remove. Must be valid.</param>
-        internal void Remove(Item item)
+        public void Remove(Item item)
         {
             if (!IsValid(item))
             {
@@ -114,7 +120,7 @@ namespace PokemonGame.Inventory
         /// <summary>
         /// Removes all items from the inventory.
         /// </summary>
-        internal void Clear()
+        public void Clear()
         {
             items.Clear();
             NotifyChanged();

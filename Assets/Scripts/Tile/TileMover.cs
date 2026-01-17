@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections;
-using PokemonGame.Characters.Direction;
+using PokemonGame.Characters.Directions;
 using UnityEngine;
 
 namespace PokemonGame.Tile
@@ -44,7 +44,7 @@ namespace PokemonGame.Tile
         /// <param name="animationDuration">Duration of the movement animation in seconds.</param>
         /// <returns>An enumerator used for coroutine execution.</returns>
         public IEnumerator MoveToTile(Vector3 destination, float animationDuration)
-        {       
+        {
             Vector3 startPosition = transform.position;
             IsMoving = true;
             float elapsed = 0f;

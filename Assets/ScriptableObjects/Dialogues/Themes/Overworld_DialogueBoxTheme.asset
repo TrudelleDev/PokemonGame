@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b7719acaa68395478e7f5686b6dd94b, type: 3}
   m_Name: Overworld_DialogueBoxTheme
   m_EditorClassIdentifier: 
-  boxSprite: {fileID: 21300000, guid: c7e1ecc510567cd42820d6fa26bbb4a5, type: 3}
-  font: {fileID: 11400000, guid: 3f552d693ac4ceb41a7094b3d040cec7, type: 2}
+  boxSprite: {fileID: 21300000, guid: 6e95c0d0347e7a84a883d4a786cbaeae, type: 3}
+  font: {fileID: 11400000, guid: 87ffb501ecf01454297e07684f1baf4e, type: 2}
   rectPadding:
-    left: 5
-    right: 5
+    left: 0
+    right: 0
     top: 0
-    bottom: 3
+    bottom: 0

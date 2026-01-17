@@ -1,6 +1,6 @@
 using PokemonGame.Audio;
-using PokemonGame.Characters.Inputs;
-using PokemonGame.Characters.States;
+using PokemonGame.Characters;
+using PokemonGame.Characters.Config;
 using PokemonGame.Pause;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;

@@ -1,5 +1,5 @@
-﻿using PokemonGame.Characters.Core;
-using PokemonGame.Characters.Direction;
+﻿using PokemonGame.Characters.Directions;
+using PokemonGame.Characters.Interfaces;
 
 namespace PokemonGame.Characters.States
 {
@@ -7,20 +7,13 @@ namespace PokemonGame.Characters.States
     /// Idle state: the character stands still.
     /// Evaluates input each frame and transitions to refacing, walking, or collision.
     /// </summary>
-    public class CharacterIdleState : ICharacterState
+    public sealed class CharacterIdleState : ICharacterState
     {
         private readonly CharacterStateController controller;
-        private readonly CharacterTriggerHandler triggerHandler;
 
-        /// <summary>
-        /// Creates a new idle state for the given controller.
-        /// Attempts to cache a <see cref="CharacterTriggerHandler"/> if present.
-        /// </summary>
-        /// <param name="controller">The character controller that owns this state.</param>
         public CharacterIdleState(CharacterStateController controller)
         {
             this.controller = controller;
-            controller.TryGetComponent(out triggerHandler);
         }
 
         /// <summary>
@@ -47,7 +40,7 @@ namespace PokemonGame.Characters.States
             FacingDirection facing = input.ToFacingDirection();
 
             // Trigger interactions before moving
-            if (triggerHandler != null && triggerHandler.CheckForTriggers(input.ToVector2Int()))
+            if (controller.TriggerHandler != null && controller.TriggerHandler.TryTrigger(input.ToVector2Int()))
             {
                 return;
             }

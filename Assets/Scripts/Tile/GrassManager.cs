@@ -1,4 +1,5 @@
 ﻿using PokemonGame.Characters;
+using PokemonGame.Characters.Player;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;

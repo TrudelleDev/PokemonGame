@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using PokemonGame.Characters;
+using PokemonGame.Characters.Player;
 using PokemonGame.MapEntry;
 using PokemonGame.Views;
 using UnityEngine;
@@ -33,7 +33,7 @@ namespace PokemonGame.Battle.States
 
         private IEnumerator PlaySequence()
         {
-            yield return Battle.DialogueBox.ShowDialogueAndWaitForInput("All your Pokémon have fainted!\nYou blacked out...");  
+            yield return Battle.DialogueBox.ShowDialogueAndWaitForInput("All your Pokémon have fainted!\nYou blacked out...");
             Battle.Player.Party.HealAll();
 
             MapEntryRegistry.SetNextEntry(MapEntryID.ViridianForest_Entrance);

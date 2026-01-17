@@ -1,5 +1,6 @@
 ﻿using PokemonGame.Audio;
-using PokemonGame.Characters.Direction;
+using PokemonGame.Characters.Directions;
+using PokemonGame.Characters.Interfaces;
 
 namespace PokemonGame.Characters.States
 {
@@ -7,7 +8,7 @@ namespace PokemonGame.Characters.States
     /// State entered when the character attempts to move into a blocked tile.
     /// Plays a collision animation, triggers optional SFX, and decides the next state.
     /// </summary>
-    public class CharacterCollisionState : ICharacterState
+    public sealed class CharacterCollisionState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
@@ -20,21 +21,14 @@ namespace PokemonGame.Characters.States
         {
             controller.AnimatorController.PlayCollisionStep();
 
-            // Play collision sound if defined
-            if (controller.CollisionAudioClip != null && AudioManager.Instance != null)
+            if (controller.CollisionAudioClip != null)
             {
                 AudioManager.Instance.PlaySFX(controller.CollisionAudioClip);
             }
         }
 
-        /// <summary>
-        /// No update logic required for collision state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// No cleanup required for collision state.
-        /// </summary>
         public void Exit() { }
 
         /// <summary>

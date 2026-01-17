@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Characters;
 using PokemonGame.Inventory.UI.InventoryOptions;
 using PokemonGame.Items.Definition;
 using PokemonGame.Shared.Interfaces;
@@ -21,8 +22,8 @@ namespace PokemonGame.Inventory.UI
         [SerializeField, Required, Tooltip("Panel showing detailed information about a selected item.")]
         private InventoryItemDetailPanel detailPanel;
 
-        [SerializeField, Required, Tooltip("The inventory manager containing the player's items.")]
-        private InventoryManager inventory;
+        [SerializeField, Required]
+        private Character player;
 
         [SerializeField, Required, Tooltip("The controller that handles player input for the inventory.")]
         private InventoryController controller;
@@ -34,14 +35,14 @@ namespace PokemonGame.Inventory.UI
 
         private void OnEnable()
         {
-            inventory.Initialize();
-            view.PopulateItems(inventory.Items);
+            player.Inventory.Initialize();
+            view.PopulateItems(player.Inventory.Items);
 
             controller.ItemSelected += ShowItemOptions;
             controller.ItemHighlighted += UpdateDetails;
             controller.CancelRequested += HandleCloseInventory;
 
-            inventory.ItemsChanged += HandleInventoryChanged;
+            player.Inventory.ItemsChanged += HandleInventoryChanged;
         }
 
         private void OnDisable()
@@ -50,7 +51,7 @@ namespace PokemonGame.Inventory.UI
             controller.ItemHighlighted -= UpdateDetails;
             controller.CancelRequested -= HandleCloseInventory;
 
-            inventory.ItemsChanged -= HandleInventoryChanged;
+            player.Inventory.ItemsChanged -= HandleInventoryChanged;
         }
 
         private void UpdateDetails(IDisplayable displayable)
@@ -71,7 +72,7 @@ namespace PokemonGame.Inventory.UI
             {
                 return;
             }
-           
+
             // Show the options view (UI)
             var optionsView = ViewManager.Instance.Show<InventoryOptionsView>();
 
@@ -95,7 +96,7 @@ namespace PokemonGame.Inventory.UI
 
         private void HandleInventoryChanged()
         {
-            view.PopulateItems(inventory.Items);
+            view.PopulateItems(player.Inventory.Items);
         }
     }
 }

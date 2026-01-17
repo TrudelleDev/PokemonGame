@@ -1,17 +1,15 @@
-﻿namespace PokemonGame.Characters.States
+﻿using PokemonGame.Characters.Interfaces;
+
+namespace PokemonGame.Characters.States
 {
     /// <summary>
     /// State for turning the character to a new facing without moving.
     /// Plays a refacing animation, then returns to idle.
     /// </summary>
-    public class CharacterRefacingState : ICharacterState
+    public sealed class CharacterRefacingState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
-        /// <summary>
-        /// Creates a new refacing state for the given controller.
-        /// </summary>
-        /// <param name="controller">The character controller that owns this state.</param>
         public CharacterRefacingState(CharacterStateController controller)
         {
             this.controller = controller;
@@ -33,14 +31,8 @@
             }
         }
 
-        /// <summary>
-        /// No update logic required for refacing state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// No cleanup required for idle state.
-        /// </summary>
         public void Exit() { }
 
         /// <summary>

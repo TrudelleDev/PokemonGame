@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using PokemonGame.Audio;
-using PokemonGame.Characters.Inputs;
+using PokemonGame.Characters.Config;
 using PokemonGame.Pause;
 using PokemonGame.Utilities;
 using Sirenix.OdinInspector;

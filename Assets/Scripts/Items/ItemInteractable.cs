@@ -1,5 +1,5 @@
 ﻿using PokemonGame.Audio;
-using PokemonGame.Characters.Core;
+using PokemonGame.Characters;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Dialogue;
 using PokemonGame.Inventory;
@@ -38,10 +38,10 @@ namespace PokemonGame.Items
             ItemDefinition definition = item.Definition;
 
             string itemFoundLine = item.Quantity > 1
-                ? $"{player.DisplayName} found {item.Quantity} × {definition.DisplayName}!"
-                : $"{player.DisplayName} found a {definition.DisplayName}!";
+                ? $"{player.Definition.DisplayName} found {item.Quantity} × {definition.DisplayName}!"
+                : $"{player.Definition.DisplayName} found a {definition.DisplayName}!";
 
-            string putInBagLine = $"{player.DisplayName} put the {definition.DisplayName}\n" +
+            string putInBagLine = $"{player.Definition.DisplayName} put the {definition.DisplayName}\n" +
                              $"in the {definition.Category} Pocket.";
 
             if (receiveItemClip != null)

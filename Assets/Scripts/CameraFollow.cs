@@ -1,4 +1,4 @@
-using PokemonGame.Characters.Core;
+using PokemonGame.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

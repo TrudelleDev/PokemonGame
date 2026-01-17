@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using PokemonGame.Characters;
 using PokemonGame.Characters.States;
 using Sirenix.OdinInspector;
 using UnityEngine;

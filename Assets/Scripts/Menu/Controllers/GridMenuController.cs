@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using PokemonGame.Audio;
-using PokemonGame.Characters.Inputs;
+using PokemonGame.Characters.Config;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;

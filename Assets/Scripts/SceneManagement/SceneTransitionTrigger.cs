@@ -2,10 +2,12 @@
 using PokemonGame.Characters.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using PokemonGame.Characters.Core;
 using PokemonGame.Transitions;
 using PokemonGame.MapEntry;
-using PokemonGame.Characters.Direction;
+using PokemonGame.Characters;
+using PokemonGame.Characters.Directions;
+
+
 
 
 #if UNITY_EDITOR
@@ -30,7 +32,7 @@ namespace PokemonGame.SceneManagement
         [Title("Requirements")]
         [SerializeField, Required]
         [Tooltip("Player must face this direction to activate the trigger.")]
-        private FacingDirection requiredFacing;     
+        private FacingDirection requiredFacing;
 
         [Title("Spawn Location")]
         [SerializeField, Required]

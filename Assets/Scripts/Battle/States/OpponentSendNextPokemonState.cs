@@ -37,7 +37,7 @@ namespace PokemonGame.Battle.States
 
             Battle.SetNextOpponentPokemon(nextPokemon);
 
-            yield return Battle.DialogueBox.ShowDialogueAndWait($"{Battle.Opponent.DisplayName}\nsend out {opponent.Definition.DisplayName}!");
+            yield return Battle.DialogueBox.ShowDialogueAndWait($"{Battle.Opponent.Definition.DisplayName}\nsend out {opponent.Definition.DisplayName}!");
 
             yield return anim.PlayTrainerPokemonEnter();
             yield return anim.PlayOpponentHudEnter();

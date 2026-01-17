@@ -1,6 +1,4 @@
-﻿using PokemonGame.Characters.Core;
-
-namespace PokemonGame.Characters.Interfaces
+﻿namespace PokemonGame.Characters.Interfaces
 {
     /// <summary>
     /// Represents an object that can be interacted with by a <see cref="Character"/>.
@@ -9,7 +7,7 @@ namespace PokemonGame.Characters.Interfaces
     public interface IInteractable
     {
         /// <summary>
-        /// Performs an interaction for the specified <paramref name="character"/>.
+        /// Called when a <see cref="Character"/> interacts with this object.
         /// </summary>
         /// <param name="character">The character initiating the interaction.</param>
         void Interact(Character character);
