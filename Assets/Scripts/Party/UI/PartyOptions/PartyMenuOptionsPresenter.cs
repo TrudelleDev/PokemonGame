@@ -6,18 +6,20 @@ using UnityEngine;
 namespace PokemonGame.Party.UI.PartyOptions
 {
     /// <summary>
-    /// Presenter for the party menu options (Switch, Summary, Cancel).
+    /// Presenter for the party menu options (Swap, Info, Return).
     /// Listens to <see cref="PartyMenuOptionsController"/> events and executes
     /// the corresponding actions such as starting a swap, opening the
-    /// summary view, or closing the options menu.
+    /// info view, or closing the options menu.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuOptionsPresenter : MonoBehaviour
+    public sealed class PartyMenuOptionsPresenter : MonoBehaviour
     {
-        [SerializeField, Required, Tooltip("Controller handling user input for the party menu options.")]
+        [SerializeField, Required]
+        [Tooltip("Controller handling user input for the party menu options.")]
         private PartyMenuOptionsController controller;
 
-        [SerializeField, Required, Tooltip("Reference to the parent Party Menu Presenter, used for initiating Pokémon swaps.")]
+        [SerializeField, Required]
+        [Tooltip("Reference to the parent Party Menu Presenter, used for initiating Pokémon swaps.")]
         private PartyMenuPresenter presenter;
 
         [SerializeField, Required, Tooltip("Reference to the player's party manager.")]
@@ -25,31 +27,31 @@ namespace PokemonGame.Party.UI.PartyOptions
 
         private void OnEnable()
         {
-            controller.SwitchSelected += HandleSwitchSelected;
-            controller.SummarySelected += HandleSummarySelected;
-            controller.CancelSelected += HandleCancelSelected;
+            controller.SwapSelected += HandleSwapSelected;
+            controller.InfoSelected += HandleInfoSelected;
+            controller.ReturnSelected += HandleReturnSelected;
         }
 
         private void OnDisable()
         {
-            controller.SwitchSelected -= HandleSwitchSelected;
-            controller.SummarySelected -= HandleSummarySelected;
-            controller.CancelSelected -= HandleCancelSelected;
+            controller.SwapSelected -= HandleSwapSelected;
+            controller.InfoSelected -= HandleInfoSelected;
+            controller.ReturnSelected -= HandleReturnSelected;
         }
 
-        private void HandleSwitchSelected()
+        private void HandleSwapSelected()
         {
             presenter.StartSwap();
             ClosePartyMenuOption();
         }
 
-        private void HandleSummarySelected()
+        private void HandleInfoSelected()
         {
             ViewManager.Instance.Show<SummaryView>();
             ClosePartyMenuOption();
         }
 
-        private void HandleCancelSelected()
+        private void HandleReturnSelected()
         {
             ClosePartyMenuOption();
         }

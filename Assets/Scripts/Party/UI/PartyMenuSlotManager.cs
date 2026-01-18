@@ -6,14 +6,14 @@ using UnityEngine;
 namespace PokemonGame.Party.UI
 {
     /// <summary>
-    /// Manages and binds Pokémon party data to UI slots.
+    /// Manages and binds Monster party data to UI slots.
     /// Automatically fills and updates the slot visuals from the current party.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuSlotManager : MonoBehaviour
+    public sealed class PartyMenuSlotManager : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Reference to the current player party.")]
+        [Tooltip("Player character owning the active party.")]
         private Character player;
 
         private List<PartyMenuSlot> slots;
@@ -25,7 +25,7 @@ namespace PokemonGame.Party.UI
 
         /// <summary>
         /// Re-binds all slots to the current party data.
-        /// Call this after swapping Pokémon to refresh the UI.
+        /// Call this after swapping Monster to refresh the UI.
         /// </summary>
         internal void RefreshSlots()
         {
@@ -33,7 +33,7 @@ namespace PokemonGame.Party.UI
         }
 
         /// <summary>
-        /// Binds each slot to a corresponding Pokémon in the party.
+        /// Binds each slot to a corresponding Monster in the party.
         /// Extra slots are cleared.
         /// </summary>
         private void BindSlots()

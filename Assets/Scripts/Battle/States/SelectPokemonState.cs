@@ -24,10 +24,9 @@ namespace PokemonGame.Battle.States
             partyPresenter = partyView.GetComponent<PartyMenuPresenter>();
 
             partyPresenter.Setup(PartySelectionMode.Overworld);
-            partyPresenter.CancelRequested += HandleCancel;
+            partyPresenter.ReturnRequested += HandleCancel;
 
             partyView.RefreshSlots();
-            partyView.ShowChoosePrompt();
         }
 
         public void Update() { }
@@ -36,7 +35,7 @@ namespace PokemonGame.Battle.States
         {
             if (partyPresenter != null)
             {
-                partyPresenter.CancelRequested -= HandleCancel;
+                partyPresenter.ReturnRequested -= HandleCancel;
                 partyPresenter = null;
             }
 

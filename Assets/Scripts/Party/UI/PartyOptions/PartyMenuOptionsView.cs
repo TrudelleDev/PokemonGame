@@ -7,74 +7,56 @@ using UnityEngine;
 namespace PokemonGame.Party.UI.PartyOptions
 {
     /// <summary>
-    /// UI view for the party Pokémon option menu.
-    /// Raises intent events when the player requests to switch Pokémon,
-    /// view the summary, or cancel the menu.
-    /// Contains no game or flow logic.
+    /// UI view for the party Monster option menu.
+    /// Raises intent events when the player requests to swap Monster,
+    /// view the info, or cancel the menu.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuOptionsView : View
+    public sealed class PartyMenuOptionsView : View
     {
         [SerializeField, Required]
-        [Tooltip("Button used to open the selected Pokémon's summary.")]
+        [Tooltip("Button used to open the selected Monster's info.")]
         private MenuButton summaryButton;
 
         [SerializeField, Required]
-        [Tooltip("Button used to initiate switching the selected Pokémon.")]
+        [Tooltip("Button used to initiate swaping the selected Monster.")]
         private MenuButton switchButton;
 
-        [SerializeField, Required]
-        [Tooltip("Button used to cancel and close the option menu.")]
-        private MenuButton cancelButton;
-
-        /// <summary>
-        /// Raised when the player requests to switch the selected Pokémon.
-        /// </summary>
-        internal event Action SwitchRequested;
-
-        /// <summary>
-        /// Raised when the player requests to switch the selected Pokémon.
-        /// </summary>
-        internal event Action SummaryRequested;
-
-        /// <summary>
-        /// Raised when the player requests to cancel and close the option menu.
-        /// </summary>
-        internal event Action CancelRequested;
+        public event Action SwapRequested;
+        public event Action InfoRequested;
+        public event Action CancelRequested;
 
         private void OnEnable()
         {
-            summaryButton.OnSubmitted += OnSummaryRequested;
-            switchButton.OnSubmitted += OnSwitchRequested;
-            cancelButton.OnSubmitted += OnCancelRequested;
+            summaryButton.OnSubmitted += OnInfoRequested;
+            switchButton.OnSubmitted += OnSwapRequested;
 
             // Base view event
-            CancelKeyPressed += OnCancelRequested;
+            ReturnKeyPressed += OnReturnRequested;
 
             ResetMenuController();
         }
 
         private void OnDisable()
         {
-            summaryButton.OnSubmitted -= OnSummaryRequested;
-            switchButton.OnSubmitted -= OnSwitchRequested;
-            cancelButton.OnSubmitted -= OnCancelRequested;
+            summaryButton.OnSubmitted -= OnInfoRequested;
+            switchButton.OnSubmitted -= OnSwapRequested;
 
             // Base view event
-            CancelKeyPressed -= OnCancelRequested;
+            ReturnKeyPressed -= OnReturnRequested;
         }
 
-        private void OnSummaryRequested()
+        private void OnInfoRequested()
         {
-            SummaryRequested?.Invoke();
+            InfoRequested?.Invoke();
         }
 
-        private void OnSwitchRequested()
+        private void OnSwapRequested()
         {
-            SwitchRequested?.Invoke();
+            SwapRequested?.Invoke();
         }
 
-        private void OnCancelRequested()
+        private void OnReturnRequested()
         {
             CancelRequested?.Invoke();
         }

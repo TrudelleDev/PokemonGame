@@ -5,25 +5,25 @@ using UnityEngine;
 namespace PokemonGame.Party.Models
 {
     /// <summary>
-    /// Represents a single Pokémon entry in a trainer's party,
+    /// Represents a single Monster entry in a trainer's party,
     /// including its species and starting level.
     /// </summary>
     [Serializable]
     public struct PartyMemberEntry
     {
-        [SerializeField, Tooltip("Pokémon species for this party slot.")]
-        private PokemonDefinition pokemonDefinition;
+        [SerializeField, Tooltip("Mosnter species for this party slot.")]
+        private PokemonDefinition monsterDefinition;
 
-        [SerializeField, Range(1, 100), Tooltip("Level of this Pokémon.")]
+        [SerializeField, Range(1, 100), Tooltip("Level of this Monster.")]
         private int level;
 
         /// <summary>
-        /// The Pokémon species assigned to this party slot.
+        /// The Monster species assigned to this party slot.
         /// </summary>
-        public readonly PokemonDefinition PokemonDefinition => pokemonDefinition;
+        public readonly PokemonDefinition MonsterDefinition => monsterDefinition;
 
         /// <summary>
-        /// The level of this Pokémon.
+        /// The level of this Monster.
         /// </summary>
         public readonly int Level => level;
     }

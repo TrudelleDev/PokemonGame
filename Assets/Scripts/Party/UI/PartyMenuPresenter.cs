@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Characters;
 using PokemonGame.Party.Enums;
 using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
@@ -11,62 +12,62 @@ namespace PokemonGame.Party.UI
     /// and raises events for selection, swapping, and menu actions.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuPresenter : MonoBehaviour
+    public sealed class PartyMenuPresenter : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Reference to the PartyMenuView for UI interaction.")]
+        [Tooltip("UI view that displays party slots and forwards input.")]
         private PartyMenuView partyMenuView;
 
         [SerializeField, Required]
-        [Tooltip("Reference to the player's party manager.")]
-        private PartyManager playerParty;
+        [Tooltip("Player character owning the active party.")]
+        private Character player;
 
         private PartySelectionMode mode;
-
         private bool isSwapping;
         private int swapIndexA;
 
         /// <summary>
-        /// Raised when the player confirms a Pokémon selection.
+        /// Raised when a Monster is confirmed for an action 
         /// </summary>
-        internal event Action<PokemonInstance> PokemonConfirmed;
+        public event Action<PokemonInstance> MonsterConfirmed;
 
         /// <summary>
-        /// Raised when the player selects a Pokémon as the target for an item.
+        /// Raised when a Monster is selected as a target for item usage.
         /// </summary>
-        internal event Action<PokemonInstance> ItemTargetSelected;
+        public event Action<PokemonInstance> ItemTargetSelected;
 
         /// <summary>
-        /// Raised when the player requests to open the options menu.
+        /// Raised when the user requests to open the options menu
+        /// for the currently selected party slot.
         /// </summary>
-        internal event Action OptionsRequested;
+        public event Action OptionsRequested;
 
         /// <summary>
-        /// Raised when the player requests to close the current view.
+        /// Raised when the user requests to return or close the party menu,
         /// </summary>
-        internal event Action CloseRequested;
-
-        /// <summary>
-        /// Raised when the player requests to cancel the current action or menu.
-        /// </summary>
-        internal event Action CancelRequested;
+        public event Action ReturnRequested;
 
         private void OnEnable()
         {
             partyMenuView.SlotPressed += HandleSlotPressed;
-            partyMenuView.CancelRequested += HandleCancelRequested;
+            partyMenuView.ReturnRequested += HandleReturnRequested;
 
-            partyMenuView.RefreshSlots();
             partyMenuView.ShowChoosePrompt();
+            partyMenuView.RefreshSlots();
         }
 
         private void OnDisable()
         {
             partyMenuView.SlotPressed -= HandleSlotPressed;
-            partyMenuView.CancelRequested -= HandleCancelRequested;
+            partyMenuView.ReturnRequested -= HandleReturnRequested;
         }
 
-        internal void Setup(PartySelectionMode selectionMode)
+        /// <summary>
+        /// Configures the presenter for the given party selection mode.
+        /// The mode determines how slot input is interpreted
+        /// </summary>
+        /// <param name="selectionMode">The context in which the party menu is being used.</param>
+        public void Setup(PartySelectionMode selectionMode)
         {
             mode = selectionMode;
         }
@@ -74,20 +75,20 @@ namespace PokemonGame.Party.UI
         /// <summary>
         /// Starts a swap operation for overworld mode.
         /// </summary>
-        internal void StartSwap()
+        public void StartSwap()
         {
             // Can only swap during overworld mode
             if (mode != PartySelectionMode.Overworld)
                 return;
 
             isSwapping = true;
-            swapIndexA = playerParty.SelectedIndex;
+            swapIndexA = player.Party.SelectedIndex;
             partyMenuView.ShowSwapPrompt(partyMenuView.CurrentSlotButton);
         }
 
         private void HandleSlotPressed(PartyMenuSlot slot)
         {
-            playerParty.SelectSlotIndex(slot.Index);
+            player.Party.SelectSlotIndex(slot.Index);
 
             switch (mode)
             {
@@ -100,7 +101,7 @@ namespace PokemonGame.Party.UI
                     break;
 
                 case PartySelectionMode.UseItem:
-                    ItemTargetSelected?.Invoke(playerParty.SelectedPokemon);
+                    ItemTargetSelected?.Invoke(player.Party.SelectedMonster);
                     break;
             }
         }
@@ -111,7 +112,7 @@ namespace PokemonGame.Party.UI
             {
                 if (swapIndexA != slot.Index)
                 {
-                    playerParty.Swap(swapIndexA, slot.Index);
+                    player.Party.Swap(swapIndexA, slot.Index);
                 }
 
                 EndSwap();
@@ -127,17 +128,16 @@ namespace PokemonGame.Party.UI
         {
             isSwapping = false;
             partyMenuView.ClearSwapLock();
-            partyMenuView.ShowChoosePrompt();
         }
 
-        private void HandleCancelRequested()
+        private void HandleReturnRequested()
         {
             if (mode == PartySelectionMode.Battle)
             {
                 return;
             }
 
-            CancelRequested?.Invoke();
+            ReturnRequested?.Invoke();
         }
     }
 }

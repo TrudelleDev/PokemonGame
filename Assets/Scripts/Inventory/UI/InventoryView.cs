@@ -42,13 +42,13 @@ namespace PokemonGame.Inventory.UI
 
         private void OnEnable()
         {
-            CancelKeyPressed += OnCancel;
+            ReturnKeyPressed += OnCancel;
             ResetMenuController();
         }
 
         private void OnDisable()
         {
-            CancelKeyPressed -= OnCancel;
+            ReturnKeyPressed -= OnCancel;
         }
 
         /// <summary>

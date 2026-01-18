@@ -37,7 +37,7 @@ namespace PokemonGame.Inventory.UI
             view.CancelRequested += HandleCancelRequested;
 
             // Optional: bind Escape key to cancel
-            view.CancelKeyPressed += HandleCancelRequested;
+            view.ReturnKeyPressed += HandleCancelRequested;
         }
 
         private void OnDisable()
@@ -45,7 +45,7 @@ namespace PokemonGame.Inventory.UI
             view.OptionSubmitted -= HandleItemSelected;
             view.OptionHighlighted -= HandleItemHighlighted;
             view.CancelRequested -= HandleCancelRequested;
-            view.CancelKeyPressed -= HandleCancelRequested;
+            view.ReturnKeyPressed -= HandleCancelRequested;
         }
 
         private void HandleItemSelected(IDisplayable displayable)

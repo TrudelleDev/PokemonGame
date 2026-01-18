@@ -11,7 +11,7 @@ namespace PokemonGame.Party.UI
     /// and opens or closes related views (options menu, party menu).
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuController : MonoBehaviour
+    public sealed class PartyMenuController : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Presenter that raises intent events for party menu actions.")]
@@ -20,15 +20,13 @@ namespace PokemonGame.Party.UI
         private void OnEnable()
         {
             partyMenuPresenter.OptionsRequested += HandleOptionsRequested;
-            partyMenuPresenter.CloseRequested += HandleCloseRequested;
-            partyMenuPresenter.CancelRequested += HandleCloseRequested;
+            partyMenuPresenter.ReturnRequested += HandleReturnRequested;
         }
 
         private void OnDisable()
         {
             partyMenuPresenter.OptionsRequested -= HandleOptionsRequested;
-            partyMenuPresenter.CloseRequested -= HandleCloseRequested;
-            partyMenuPresenter.CancelRequested -= HandleCloseRequested;
+            partyMenuPresenter.ReturnRequested -= HandleReturnRequested;
         }
 
         private void HandleOptionsRequested()
@@ -36,7 +34,7 @@ namespace PokemonGame.Party.UI
             ViewManager.Instance.Show<PartyMenuOptionsView>();
         }
 
-        private void HandleCloseRequested()
+        private void HandleReturnRequested()
         {
             ViewManager.Instance.Close<PartyMenuView>();
         }

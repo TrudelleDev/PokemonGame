@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 699602f04915b9f4596a5a9a33486432, type: 3}
   m_Name: Red_Trainer
   m_EditorClassIdentifier: 
-  displayName: Red
   title: 
+  displayName: Red
   battleSprite: {fileID: -1491807730, guid: 61021260a05e02644a307b0d2b055f1b, type: 3}
-  partyDefinition: {fileID: 11400000, guid: 7a8cc2a6557a8dd46854a69a33b2a90f, type: 2}
+  partyDefinition: {fileID: 11400000, guid: 92c1c7b411c8ae64ca059b0e15a1da80, type: 2}
   inventoryDefinition: {fileID: 11400000, guid: dc02298ea92a46e44992c146e5fa6e1c, type: 2}

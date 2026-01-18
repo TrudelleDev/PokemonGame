@@ -9,42 +9,32 @@ namespace PokemonGame.Party.UI.PartyOptions
     /// Raises events for the presenter when an option is selected.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PartyMenuOptionsController : MonoBehaviour
+    public sealed class PartyMenuOptionsController : MonoBehaviour
     {
-        [SerializeField, Required, Tooltip("Reference to the Party Menu Options view that raises option events.")]
+        [SerializeField, Required]
+        [Tooltip("Reference to the Party Menu Options view that raises option events.")]
         private PartyMenuOptionsView view;
 
-        /// <summary>
-        /// Raised when the 'Switch' option is selected.
-        /// </summary>
-        internal event Action SwitchSelected;
-
-        /// <summary>
-        /// Raised when the 'Summary' option is selected.
-        /// </summary>
-        internal event Action SummarySelected;
-
-        /// <summary>
-        /// Raised when the 'Cancel' option is selected.
-        /// </summary>
-        internal event Action CancelSelected;
+        public event Action SwapSelected;
+        public event Action InfoSelected;
+        public event Action ReturnSelected;
 
         private void OnEnable()
         {
-            view.SwitchRequested += OnSwitchRequested;
-            view.SummaryRequested += OnSummaryRequested;
-            view.CancelRequested += OnCancelRequested;
+            view.SwapRequested += OnSwapRequested;
+            view.InfoRequested += OnInfoRequested;
+            view.CancelRequested += OnReturnRequested;
         }
 
         private void OnDisable()
         {
-            view.SwitchRequested -= OnSwitchRequested;
-            view.SummaryRequested -= OnSummaryRequested;
-            view.CancelRequested -= OnCancelRequested;
+            view.SwapRequested -= OnSwapRequested;
+            view.InfoRequested -= OnInfoRequested;
+            view.CancelRequested -= OnReturnRequested;
         }
 
-        private void OnSwitchRequested() => SwitchSelected?.Invoke();
-        private void OnSummaryRequested() => SummarySelected?.Invoke();
-        private void OnCancelRequested() => CancelSelected?.Invoke();
+        private void OnSwapRequested() => SwapSelected?.Invoke();
+        private void OnInfoRequested() => InfoSelected?.Invoke();
+        private void OnReturnRequested() => ReturnSelected?.Invoke();
     }
 }

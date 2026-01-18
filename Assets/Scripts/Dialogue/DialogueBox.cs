@@ -18,13 +18,12 @@ namespace PokemonGame.Dialogue
     [DisallowMultipleComponent]
     public sealed class DialogueBox : MonoBehaviour
     {
-        private const string ArrowSpriteAsset = "<sprite name=Arrow>";
-
         [Title("Visual")]
         [SerializeField, Required, Space] private TextMeshProUGUI dialogueText;
         [SerializeField, Required] private Image boxImage;
         [SerializeField, Required] private DialogueBoxTheme defaultTheme;
         [SerializeField, Required] private GameObject content;
+        [SerializeField, Required] private Image cursor;
 
         [Title("Audio")]
         [SerializeField, Required] private AudioClip textAdvanceSfx;
@@ -47,6 +46,8 @@ namespace PokemonGame.Dialogue
             ApplyTheme(defaultTheme);
             Clear();
             if (autoClose) content.SetActive(false);
+
+            cursor.gameObject.SetActive(false);
         }
 
         /// <summary>
@@ -117,9 +118,11 @@ namespace PokemonGame.Dialogue
                 OnLineTypingComplete?.Invoke();
 
                 if (ShouldShowArrow)
-                    AppendArrow();
+                    cursor.gameObject.SetActive(true);
 
                 yield return WaitForAdvance();
+
+                cursor.gameObject.SetActive(false);
                 lineIndex++;
             }
 
@@ -148,11 +151,7 @@ namespace PokemonGame.Dialogue
         private bool ShouldShowArrow =>
          waitForInput || (lines.Length > 1 && lineIndex < lines.Length - 1);
 
-        private void AppendArrow()
-        {
-            if (!dialogueText.text.EndsWith(ArrowSpriteAsset))
-                dialogueText.text += ArrowSpriteAsset;
-        }
+        
 
         public void Clear()
         {

@@ -12,7 +12,7 @@ namespace PokemonGame.Views
     /// Base class for all UI views.
     /// Handles show, hide, freeze/unfreeze, and key-based close logic with optional transitions.
     /// </summary>
-    internal abstract class View : MonoBehaviour
+    public abstract class View : MonoBehaviour
     {
         [Title("Base View Settings")]
 
@@ -30,7 +30,7 @@ namespace PokemonGame.Views
         /// <summary>
         /// Raised when the view is closed via key input.
         /// </summary>
-        public event Action CancelKeyPressed;
+        public event Action ReturnKeyPressed;
 
         /// <summary>
         /// Transition used when opening this view.
@@ -108,7 +108,7 @@ namespace PokemonGame.Views
                     AudioManager.Instance.PlaySFX(closeSound);
                 }
 
-                CancelKeyPressed?.Invoke();
+                ReturnKeyPressed?.Invoke();
             }
         }
     }

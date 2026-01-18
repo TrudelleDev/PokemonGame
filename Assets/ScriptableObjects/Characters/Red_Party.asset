@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Red_Party
   m_EditorClassIdentifier: 
   members:
-  - pokemonDefinition: {fileID: 11400000, guid: e8ba5f07fe821d640b8d6ea764b9ee07, type: 2}
+  - monsterDefinition: {fileID: 11400000, guid: e8ba5f07fe821d640b8d6ea764b9ee07, type: 2}
     level: 6

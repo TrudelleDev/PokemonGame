@@ -6,8 +6,10 @@ using PokemonGame.Utilities;
 namespace PokemonGame.Party
 {
     /// <summary>
-    /// Runtime manager for a Pokémon party.
-    /// Owns party state and battle-related logic.
+    /// Manages a player's monster party at runtime.
+    /// Tracks party state, selection, and supports battle-related operations
+    /// such as swapping, healing, and restoring original order.
+    /// Raises events when the party changes.
     /// </summary>
     public sealed class PartyManager
     {
@@ -17,29 +19,29 @@ namespace PokemonGame.Party
         private List<PokemonInstance> originalPartyOrder;
 
         /// <summary>
-        /// The currently selected Pokémon in the party.
+        /// The currently selected monster in the party.
         /// </summary>
-        public PokemonInstance SelectedPokemon { get; private set; }
+        public PokemonInstance SelectedMonster { get; private set; }
 
         /// <summary>
-        /// Gets the index of the currently selected Pokémon, or -1 if none.
+        /// The index of the currently selected monster, or -1 if none is selected.
         /// </summary>
-        public int SelectedIndex =>
-            SelectedPokemon != null ? members.IndexOf(SelectedPokemon) : -1;
+        public int SelectedIndex => SelectedMonster != null ? members.IndexOf(SelectedMonster) : -1;
 
         /// <summary>
-        /// All Pokémon currently in the party.
+        /// Read-only list of all monsters in the party.
         /// </summary>
         public IReadOnlyList<PokemonInstance> Members => members;
 
         /// <summary>
-        /// Event fired when the party composition changes.
+        /// Raised whenever the party composition changes.
         /// </summary>
         public event Action PartyChanged;
 
         /// <summary>
-        /// Creates a party manager from a predefined party definition.
+        /// Initializes the party manager with a predefined party definition.
         /// </summary>
+        /// <param name="partyDefinition">The party definition containing initial monsters and levels.</param>
         public PartyManager(PartyDefinition partyDefinition)
         {
             InitializeParty(partyDefinition);
@@ -55,28 +57,32 @@ namespace PokemonGame.Party
 
             foreach (var entry in partyDefinition.Members)
             {
-                if (entry.PokemonDefinition == null)
+                if (entry.MonsterDefinition == null)
                 {
                     continue;
                 }
 
-                var pokemon = PokemonFactory.CreatePokemon(
+                var monster = PokemonFactory.CreatePokemon(
                     entry.Level,
-                    entry.PokemonDefinition
+                    entry.MonsterDefinition
                 );
 
-                AddPokemon(pokemon);
+                AddMonster(monster);
             }
 
             if (members.Count > 0)
             {
-                SelectedPokemon = members[0];
+                SelectedMonster = members[0];
             }
         }
 
-        public void AddPokemon(PokemonInstance pokemon)
+        /// <summary>
+        /// Adds a monster to the party if there is space.
+        /// </summary>
+        /// <param name="monster">The monster instance to add.</param>
+        public void AddMonster(PokemonInstance monster)
         {
-            if (pokemon == null)
+            if (monster == null)
             {
                 return;
             }
@@ -84,19 +90,25 @@ namespace PokemonGame.Party
             if (members.Count >= MaxPartySize)
             {
                 Log.Warning(nameof(PartyManager),
-                    $"Cannot add more than {MaxPartySize} Pokémon.");
+                    $"Cannot add more than {MaxPartySize} Monster.");
                 return;
             }
 
-            members.Add(pokemon);
+            members.Add(monster);
             PartyChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Saves the current party order for later restoration.
+        /// </summary>
         public void SaveOriginalPartyOrder()
         {
             originalPartyOrder = new List<PokemonInstance>(members);
         }
 
+        /// <summary>
+        /// Restores the party to the previously saved order.
+        /// </summary>
         public void RestorePartyOrder()
         {
             if (originalPartyOrder == null)
@@ -110,6 +122,12 @@ namespace PokemonGame.Party
             PartyChanged?.Invoke();
         }
 
+        /// <summary>
+        /// Swaps two monsters in the party by their indices.
+        /// </summary>
+        /// <param name="indexA">Index of the first monster.</param>
+        /// <param name="indexB">Index of the second monster.</param>
+        /// <returns>True if the swap was successful; false otherwise.</returns>
         public bool Swap(int indexA, int indexB)
         {
             if (indexA < 0 || indexA >= members.Count ||
@@ -119,23 +137,15 @@ namespace PokemonGame.Party
                 return false;
             }
 
-            (members[indexA], members[indexB]) =
-                (members[indexB], members[indexA]);
-
+            (members[indexA], members[indexB]) = (members[indexB], members[indexA]);
             PartyChanged?.Invoke();
             return true;
         }
 
-        public void SelectPokemon(PokemonInstance pokemon)
-        {
-            if (pokemon == null || !members.Contains(pokemon))
-            {
-                return;
-            }
-
-            SelectedPokemon = pokemon;
-        }
-
+        /// <summary>
+        /// Selects the monster at the given slot index.
+        /// </summary>
+        /// <param name="index">Index of the monster to select.</param>
         public void SelectSlotIndex(int index)
         {
             if (index < 0 || index >= members.Count)
@@ -143,22 +153,29 @@ namespace PokemonGame.Party
                 return;
             }
 
-            SelectedPokemon = members[index];
+            SelectedMonster = members[index];
         }
 
+        /// <summary>
+        /// Fully restores health for all monsters in the party.
+        /// </summary>
         public void HealAll()
         {
-            foreach (var pokemon in members)
+            foreach (var monster in members)
             {
-                pokemon.Health.SetMaxHealth();
+                monster.Health.SetMaxHealth();
             }
         }
 
+        /// <summary>
+        /// Checks whether any monsters in the party have remaining health.
+        /// </summary>
+        /// <returns>True if at least one monster can fight; false otherwise.</returns>
         public bool HasUsablePokemon()
         {
-            foreach (var pokemon in members)
+            foreach (var monster in members)
             {
-                if (pokemon.Health.CurrentHealth > 0)
+                if (monster.Health.CurrentHealth > 0)
                 {
                     return true;
                 }

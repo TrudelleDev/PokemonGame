@@ -39,7 +39,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
             cancelButton.OnSubmitted += OncancelRequested;
 
             // Base view event
-            CancelKeyPressed += OncancelRequested;
+            ReturnKeyPressed += OncancelRequested;
             ResetMenuController();
         }
 
@@ -49,7 +49,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
             cancelButton.OnSubmitted -= OncancelRequested;
 
             // Base view event
-            CancelKeyPressed -= OncancelRequested;
+            ReturnKeyPressed -= OncancelRequested;
         }
 
         /// <summary>

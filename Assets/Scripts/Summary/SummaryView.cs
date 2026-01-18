@@ -26,7 +26,7 @@ namespace PokemonGame.Summary
         /// </summary>
         public void OnEnable()
         {
-            PokemonInstance selectedPokemon = party.SelectedPokemon;
+            PokemonInstance selectedPokemon = party.SelectedMonster;
 
             if (selectedPokemon == null)
             {

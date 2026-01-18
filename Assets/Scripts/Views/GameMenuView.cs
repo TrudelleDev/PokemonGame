@@ -35,7 +35,7 @@ namespace PokemonGame.Views
             exitButton.OnSubmitted += OnCloseRequested;
 
             // Base view event
-            CancelKeyPressed += OnCloseRequested;
+            ReturnKeyPressed += OnCloseRequested;
 
             ResetMenuController();
         }
@@ -47,7 +47,7 @@ namespace PokemonGame.Views
             exitButton.OnSubmitted -= OnCloseRequested;
 
             // Base view event
-            CancelKeyPressed -= OnCloseRequested;
+            ReturnKeyPressed -= OnCloseRequested;
         }
 
         protected override void Update()
