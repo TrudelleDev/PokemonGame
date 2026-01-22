@@ -1,31 +1,33 @@
 ﻿using System;
 using System.Linq;
+using PokemonGame.Characters;
 using PokemonGame.Dialogue;
+using PokemonGame.Items;
 using PokemonGame.Items.Definition;
+using PokemonGame.Items.Models;
 using PokemonGame.Party.Enums;
 using PokemonGame.Party.UI;
 using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Inventory.UI.InventoryOptions
 {
     /// <summary>
     /// Handles the flow of using an inventory item via <see cref="InventoryOptionsController"/>.
-    /// Opens the party menu when necessary and reacts to Pokémon selection.
+    /// Opens the party menu when necessary and reacts to Monster selection.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryOptionsPresenter : MonoBehaviour
+    public sealed class InventoryOptionsPresenter : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Controller managing the InventoryOptionsView buttons.")]
         private InventoryOptionsController inventoryOptionsController;
 
         [SerializeField, Required, Tooltip("Inventory manager containing the player's items.")]
-        private InventoryManager playerInventory;
+        private Character player;
 
-        [SerializeField, Required, Tooltip("Presenter for the party menu used for selecting Pokémon targets.")]
+        [SerializeField, Required, Tooltip("Presenter for the party menu used for selecting Monster targets.")]
         private PartyMenuPresenter partyMenuPresenter;
 
         [SerializeField, Required, Tooltip("View displaying inventory item options.")]
@@ -36,18 +38,18 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         /// <summary>
         /// Raised when an item has been used successfully.
         /// </summary>
-        internal event Action<bool> ItemUsed;
+        public event Action<bool> ItemUsed;
 
         private void OnEnable()
         {
-            inventoryOptionsController.UseRequested += HandleUse;
-            inventoryOptionsController.CancelRequested += HandleCancel;
+            inventoryOptionsController.UseRequested += HandleUseRequested;
+            inventoryOptionsController.ReturnRequested += HandleReturnRequested;
         }
 
         private void OnDisable()
         {
-            inventoryOptionsController.UseRequested -= HandleUse;
-            inventoryOptionsController.CancelRequested -= HandleCancel;
+            inventoryOptionsController.UseRequested -= HandleUseRequested;
+            inventoryOptionsController.ReturnRequested -= HandleReturnRequested;
         }
 
         /// <summary>
@@ -55,28 +57,35 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         /// Must be called before using the item.
         /// </summary>
         /// <param name="item">The item definition selected by the player.</param>
-        internal void Initialize(ItemDefinition item)
+        public void Initialize(ItemDefinition item)
         {
             currentItem = item;
-            inventoryOptionsView.SetDescription($"{currentItem.DisplayName}\nis selected.");
         }
 
-        private void HandleUse()
+        private void HandleUseRequested()
         {
-            if (currentItem == null) return;
+            if (currentItem == null)
+            {
+                return;
+            }
 
             ViewManager.Instance.Close<InventoryOptionsView>();
             partyMenuPresenter.Setup(PartySelectionMode.UseItem);
 
             void TempHandler(PokemonInstance pokemon)
             {
-                var itemInstance = playerInventory.Items.FirstOrDefault(i => i.Definition == currentItem);
-                if (itemInstance == null) return;
+                var itemInstance = player.Inventory.Items.FirstOrDefault(i => i.Definition == currentItem);
 
-                var result = currentItem.Use(pokemon);
+                if (itemInstance == null)
+                {
+                    return;
+                }
+
+                ItemUseResult result = currentItem.Use(pokemon);
+
                 if (result.Used)
                 {
-                    playerInventory.Remove(itemInstance);
+                    player.Inventory.Remove(itemInstance);
                 }
 
                 OverworldDialogueBox.Instance.Dialogue.ShowDialogue(result.Messages);
@@ -97,7 +106,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
             ItemUsed?.Invoke(true);
         }
 
-        private void HandleCancel()
+        private void HandleReturnRequested()
         {
             ViewManager.Instance.CloseTopView();
         }

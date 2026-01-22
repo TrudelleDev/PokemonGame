@@ -14,7 +14,7 @@ namespace PokemonGame.Inventory.UI
     /// Subscribes to an <see cref="InventoryController"/> to respond to player input.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryPresenter : MonoBehaviour
+    public sealed class InventoryPresenter : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Reference to the InventoryView displaying items.")]
         private InventoryView view;
@@ -22,7 +22,7 @@ namespace PokemonGame.Inventory.UI
         [SerializeField, Required, Tooltip("Panel showing detailed information about a selected item.")]
         private InventoryItemDetailPanel detailPanel;
 
-        [SerializeField, Required]
+        [SerializeField, Required, Tooltip("The player character that owns the inventory being displayed.")]
         private Character player;
 
         [SerializeField, Required, Tooltip("The controller that handles player input for the inventory.")]
@@ -31,7 +31,7 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Raised when an item is used, returning true if usage was successful.
         /// </summary>
-        internal event Action<bool> ItemUsed;
+        public event Action<bool> ItemUsed;
 
         private void OnEnable()
         {
@@ -40,7 +40,7 @@ namespace PokemonGame.Inventory.UI
 
             controller.ItemSelected += ShowItemOptions;
             controller.ItemHighlighted += UpdateDetails;
-            controller.CancelRequested += HandleCloseInventory;
+            controller.ReturnRequested += HandleCloseInventory;
 
             player.Inventory.ItemsChanged += HandleInventoryChanged;
         }
@@ -49,7 +49,7 @@ namespace PokemonGame.Inventory.UI
         {
             controller.ItemSelected -= ShowItemOptions;
             controller.ItemHighlighted -= UpdateDetails;
-            controller.CancelRequested -= HandleCloseInventory;
+            controller.ReturnRequested -= HandleCloseInventory;
 
             player.Inventory.ItemsChanged -= HandleInventoryChanged;
         }

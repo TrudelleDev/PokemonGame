@@ -8,18 +8,16 @@ namespace PokemonGame.Items
 {
     /// <summary>
     /// Represents a runtime item stack in the player's inventory or world.
-    /// Each item references a static <see cref="ItemDefinition"/> (name, category, icon, etc.)
+    /// Each item references a static <see cref="ItemDefinition"/>
     /// and maintains a mutable quantity that can be increased or decreased at runtime.
     /// </summary>
     [Serializable]
     public class Item
     {
-        [SerializeField, Required]
-        [Tooltip("Reference to the item's static definition.")]
+        [SerializeField, Required, Tooltip("Reference to the item's static definition.")]
         private ItemDefinition definition;
 
-        [SerializeField, Required, Range(1, 99)]
-        [Tooltip("Number of items in this stack.")]
+        [SerializeField, Required, Range(1, 99), Tooltip("Number of items in this stack.")]
         private int quantity = 1;
 
         /// <summary>

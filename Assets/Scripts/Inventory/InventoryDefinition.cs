@@ -9,7 +9,7 @@ namespace PokemonGame.Inventory
     /// Defines the starting items for an inventory template. 
     /// Can be used for players, NPCs, trainers, or shops.
     /// </summary>
-    [CreateAssetMenu(menuName = "PokemonGame/Inventory/Definition", fileName = "NewInventoryDefinition")]
+    [CreateAssetMenu(menuName = "MonsterTamer/Inventory/Definition", fileName = "NewInventoryDefinition")]
     public sealed class InventoryDefinition : ScriptableObject
     {
         [SerializeField, Required]

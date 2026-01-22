@@ -13,21 +13,32 @@ namespace PokemonGame.Items.UI
     /// </summary>
     public class ItemUI : MonoBehaviour, IMenuOptionDisplaySource
     {
-        [SerializeField, Required]
-        [Tooltip("Text element displaying the item's name.")]
+        [SerializeField, Required, Tooltip("Text element displaying the item's name.")]
         private TextMeshProUGUI nameText;
 
-        [SerializeField, Required]
-        [Tooltip("Text element displaying the item's quantity.")]
-        private TextMeshProUGUI countText;
+        [SerializeField, Required, Tooltip("Text element displaying the item's quantity.")]
+        private TextMeshProUGUI quantityText;
 
         private MenuButton button;
 
+        /// <summary>
+        /// Raised when the item is submitted (confirmed) by the player.
+        /// </summary>
         public event Action<IDisplayable> OnSubmitted;
+
+        /// <summary>
+        /// Raised when the item is highlighted by menu navigation.
+        /// </summary>
         public event Action<IDisplayable> OnHighlighted;
 
+        /// <summary>
+        /// The runtime item currently bound to this UI element.
+        /// </summary>
         public Item Item { get; private set; }
 
+        /// <summary>
+        /// Displayable data source used by menu systems.
+        /// </summary>
         public IDisplayable Displayable => Item.Definition;
 
         private void Awake()
@@ -60,7 +71,7 @@ namespace PokemonGame.Items.UI
 
             Item = item;
             nameText.text = item.Definition.DisplayName;
-            countText.text = item.Quantity.ToString();
+            quantityText.text = item.Quantity.ToString();
         }
 
         /// <summary>
@@ -70,7 +81,7 @@ namespace PokemonGame.Items.UI
         {
             Item = null;
             nameText.text = string.Empty;
-            countText.text = string.Empty;
+            quantityText.text = string.Empty;
         }
 
         private void HandleClick()

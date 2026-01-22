@@ -14,7 +14,7 @@ namespace PokemonGame.Inventory.UI
     /// Handles item list population, highlighting, submitting, and canceling.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryView : View
+    public sealed class InventoryView : View
     {
         [SerializeField, Required, Tooltip("Prefab used for each inventory item in the UI.")]
         private ItemUI inventoryItemPrefab;
@@ -28,27 +28,27 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Raised when an item or option is highlighted in the inventory UI.
         /// </summary>
-        internal event Action<IDisplayable> OptionHighlighted;
+        public event Action<IDisplayable> OptionHighlighted;
 
         /// <summary>
         /// Raised when an item or option is submitted (selected) in the inventory UI.
         /// </summary>
-        internal event Action<IDisplayable> OptionSubmitted;
+        public event Action<IDisplayable> OptionSubmitted;
 
         /// <summary>
         /// Raised when the cancel button or cancel key is pressed in the inventory UI.
         /// </summary>
-        internal event Action CancelRequested;
+        public event Action ReturnRequested;
 
         private void OnEnable()
         {
-            ReturnKeyPressed += OnCancel;
+            ReturnKeyPressed += OnReturnRequested;
             ResetMenuController();
         }
 
         private void OnDisable()
         {
-            ReturnKeyPressed -= OnCancel;
+            ReturnKeyPressed -= OnReturnRequested;
         }
 
         /// <summary>
@@ -56,7 +56,7 @@ namespace PokemonGame.Inventory.UI
         /// Adds a Cancel button at the bottom.
         /// </summary>
         /// <param name="items">The list of items to display.</param>
-        internal void PopulateItems(IReadOnlyList<Item> items)
+        public void PopulateItems(IReadOnlyList<Item> items)
         {
             ClearItems();
 
@@ -91,7 +91,7 @@ namespace PokemonGame.Inventory.UI
 
             button.transform.SetAsLastSibling();
             button.OnHighlighted += OnOptionHighlighted;
-            button.OnSubmitted += OnCancel;
+            button.OnSubmitted += OnReturnRequested;
         }
 
         private void OnOptionSubmitted(IDisplayable menuOption)
@@ -104,9 +104,9 @@ namespace PokemonGame.Inventory.UI
             OptionHighlighted?.Invoke(menuOption);
         }
 
-        private void OnCancel()
+        private void OnReturnRequested()
         {
-            CancelRequested?.Invoke();
+            ReturnRequested?.Invoke();
         }
     }
 }

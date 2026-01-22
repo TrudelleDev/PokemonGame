@@ -8,10 +8,12 @@ namespace PokemonGame.Inventory
 {
     /// <summary>
     /// Manages a single inventory for a player or character.
-    /// Handles item storage, addition, removal, and notifies when the inventory changes.
+    /// Handles item storage, addition and removal
     /// </summary>
     public sealed class InventoryManager
     {
+        private const int MaxQuantity = 99;
+
         private readonly List<Item> items = new();
 
         /// <summary>
@@ -66,6 +68,9 @@ namespace PokemonGame.Inventory
         /// Adds an item to the inventory. If the item already exists,
         /// increases its stack quantity up to a maximum of 99.
         /// </summary>
+        /// <param name="item">
+        /// The item instance to add to the inventory.
+        /// </param>
         public void Add(Item item)
         {
             if (!IsValid(item))
@@ -79,7 +84,7 @@ namespace PokemonGame.Inventory
 
                 if (storedItem.ID == item.ID)
                 {
-                    storedItem.Quantity = Math.Min(99, storedItem.Quantity + item.Quantity);
+                    storedItem.Quantity = Math.Min(MaxQuantity, storedItem.Quantity + item.Quantity);
                     NotifyChanged();
                     return;
                 }
@@ -93,6 +98,9 @@ namespace PokemonGame.Inventory
         /// Removes a single unit of the specified item from the inventory.
         /// Removes the item entirely if the quantity reaches zero.
         /// </summary>
+        /// <param name="item">
+        /// The item instance to add to the inventory.
+        /// </param>
         public void Remove(Item item)
         {
             if (!IsValid(item))

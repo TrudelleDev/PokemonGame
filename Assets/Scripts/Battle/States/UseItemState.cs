@@ -23,7 +23,7 @@ namespace PokemonGame.Battle.States
             inventoryView = ViewManager.Instance.Show<InventoryView>();
             inventoryPresenter = inventoryView.GetComponent<InventoryPresenter>();
 
-            inventoryView.CancelRequested += HandleCancel;
+            inventoryView.ReturnRequested += HandleCancel;
             inventoryPresenter.ItemUsed += HandleItemUsed;
         }
 
@@ -39,7 +39,7 @@ namespace PokemonGame.Battle.States
 
             if (inventoryView != null)
             {
-                inventoryView.CancelRequested -= HandleCancel;
+                inventoryView.ReturnRequested -= HandleCancel;
                 inventoryView = null;
             }
 

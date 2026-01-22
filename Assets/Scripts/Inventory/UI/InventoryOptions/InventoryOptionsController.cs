@@ -7,34 +7,34 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
     /// <summary>
     /// Handles user interaction for <see cref="InventoryOptionsView"/>.
     /// Raises events to notify the presenter when an option is selected.
-    /// Acts as a controller separating UI logic from presentation logic.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryOptionsController : MonoBehaviour
+    public sealed class InventoryOptionsController : MonoBehaviour
     {
-        [SerializeField, Required, Tooltip("Reference to the InventoryOptionsView containing the option buttons.")]
+        [SerializeField, Required]
+        [Tooltip("Reference to the InventoryOptionsView containing the option buttons.")]
         private InventoryOptionsView inventoryOptionsView;
 
         /// <summary>
         /// Raised when the 'Use' option is selected by the player.
         /// </summary>
-        internal event Action UseRequested;
+        public event Action UseRequested;
 
         /// <summary>
-        /// Raised when the 'Cancel' option is selected by the player.
+        /// Raised when the 'Return' option is selected by the player.
         /// </summary>
-        internal event Action CancelRequested;
+        public event Action ReturnRequested;
 
         private void OnEnable()
         {
             inventoryOptionsView.UseRequested += OnUseRequested;
-            inventoryOptionsView.CancelRequested += OnCancelRequested;
+            inventoryOptionsView.ReturnRequested += OnCancelRequested;
         }
 
         private void OnDisable()
         {
             inventoryOptionsView.UseRequested -= OnUseRequested;
-            inventoryOptionsView.CancelRequested -= OnCancelRequested;
+            inventoryOptionsView.ReturnRequested -= OnCancelRequested;
         }
 
         private void OnUseRequested() 
@@ -44,7 +44,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
 
         private void OnCancelRequested()
         {
-            CancelRequested?.Invoke();
+            ReturnRequested?.Invoke();
         }
     }
 }

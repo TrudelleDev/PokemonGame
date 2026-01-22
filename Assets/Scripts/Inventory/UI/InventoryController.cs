@@ -10,7 +10,7 @@ namespace PokemonGame.Inventory.UI
     /// and raises events for item selection, highlighting, and cancellation.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryController : MonoBehaviour
+    public sealed class InventoryController : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Reference to the inventory view.")]
         private InventoryView view;
@@ -18,34 +18,32 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Raised when the player selects an item.
         /// </summary>
-        internal event Action<IDisplayable> ItemSelected;
+        public event Action<IDisplayable> ItemSelected;
 
         /// <summary>
         /// Raised when the player highlights an item (cursor moves).
         /// </summary>
-        internal event Action<IDisplayable> ItemHighlighted;
+        public event Action<IDisplayable> ItemHighlighted;
 
         /// <summary>
         /// Raised when the player requests to close the inventory.
         /// </summary>
-        internal event Action CancelRequested;
+        public event Action ReturnRequested;
 
         private void OnEnable()
         {
             view.OptionSubmitted += HandleItemSelected;
             view.OptionHighlighted += HandleItemHighlighted;
-            view.CancelRequested += HandleCancelRequested;
-
-            // Optional: bind Escape key to cancel
-            view.ReturnKeyPressed += HandleCancelRequested;
+            view.ReturnRequested += HandleReturnRequested;
+            view.ReturnKeyPressed += HandleReturnRequested;
         }
 
         private void OnDisable()
         {
             view.OptionSubmitted -= HandleItemSelected;
             view.OptionHighlighted -= HandleItemHighlighted;
-            view.CancelRequested -= HandleCancelRequested;
-            view.ReturnKeyPressed -= HandleCancelRequested;
+            view.ReturnRequested -= HandleReturnRequested;
+            view.ReturnKeyPressed -= HandleReturnRequested;
         }
 
         private void HandleItemSelected(IDisplayable displayable)
@@ -58,9 +56,9 @@ namespace PokemonGame.Inventory.UI
             ItemHighlighted?.Invoke(displayable);
         }
 
-        private void HandleCancelRequested()
+        private void HandleReturnRequested()
         {
-            CancelRequested?.Invoke();
+            ReturnRequested?.Invoke();
         }
     }
 }

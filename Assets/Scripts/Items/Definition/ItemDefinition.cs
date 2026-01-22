@@ -1,4 +1,5 @@
 using PokemonGame.Items.Enums;
+using PokemonGame.Items.Models;
 using PokemonGame.Pokemon;
 using PokemonGame.Shared.Interfaces;
 using Sirenix.OdinInspector;
@@ -12,48 +13,29 @@ namespace PokemonGame.Items.Definition
     /// </summary>
     public abstract class ItemDefinition : ScriptableObject, IDisplayable
     {
-        // ---- Identity ----
+        protected const string FailMessage = "But it failed...";
+        protected const string NoEffectMessage = "It won't have any effect.";
 
-        [BoxGroup("Identity")]
-        [Tooltip("Stable unique identifier for this item.")]
-        [SerializeField, Required]
+        [SerializeField, Tooltip("Stable unique identifier for this item.")]
         private ItemId id;
 
-        [BoxGroup("Identity")]
-        [Tooltip("Display name shown in UI.")]
-        [SerializeField, Required]
+        [SerializeField, Required, Tooltip("Display name shown in UI.")]
         private string displayName;
 
-        // ---- Visuals ----
-
-        [BoxGroup("Visuals")]
-        [Tooltip("Icon displayed for this item.")]
-        [SerializeField]
+        [SerializeField, Required, Tooltip("Icon displayed for this item.")]
         private Sprite icon;
 
-        // ---- Description ----
-
-        [BoxGroup("Description")]
+        [SerializeField, Required, TextArea(5, 10)]
         [Tooltip("Description text shown to the player.")]
-        [SerializeField, TextArea(5, 10)]
         private string description;
 
-        // ---- Classification ----
-
-        [BoxGroup("Classification")]
-        [Tooltip("High-level item category (e.g., Healing, Battle, Key).")]
-        [SerializeField, Required]
-        private ItemCategory category;
-
-        // ---- Properties ----
-
         /// <summary>
-        /// Unique identifier used to reference this item.
+        /// Stable identifier used for item comparison and serialization.
         /// </summary>
         public ItemId ItemId => id;
 
         /// <summary>
-        /// Display name of the item.
+        /// Name displayed to the player in UI.
         /// </summary>
         public string DisplayName => displayName;
 
@@ -63,15 +45,15 @@ namespace PokemonGame.Items.Definition
         public string Description => description;
 
         /// <summary>
-        /// Icon representing the item.
+        /// Icon used in inventory and menus.
         /// </summary>
         public Sprite Icon => icon;
 
         /// <summary>
-        /// Item category.
+        /// Applies the item's effect to the target.
         /// </summary>
-        public ItemCategory Category => category;
-
+        /// <param name="target">Target Pokémon instance.</param>
+        /// <returns>Result of the item usage.</returns>
         public abstract ItemUseResult Use(PokemonInstance target);
     }
 }

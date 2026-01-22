@@ -10,7 +10,7 @@ namespace PokemonGame.Inventory.UI
     /// including description text and icon image.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryItemDetailPanel : MonoBehaviour
+    public sealed class InventoryItemDetailPanel : MonoBehaviour
     {
         [SerializeField, Tooltip("Text field displaying the item's description.")]
         private TextMeshProUGUI descriptionText;
@@ -21,8 +21,8 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Binds an item to the detail panel and updates the UI.
         /// </summary>
-        /// <param name="item">The item to display, implementing <see cref="IDisplayable"/>.</param>
-        internal void Bind(IDisplayable item)
+        /// <param name="item">The item to display.</param>
+        public void Bind(IDisplayable item)
         {
             if (item == null)
             {
@@ -38,18 +38,10 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Clears the detail panel UI and hides the icon.
         /// </summary>
-        internal void Unbind()
+        public void Unbind()
         {
             descriptionText.text = string.Empty;
             iconImage.enabled = false;
-        }
-
-        /// <summary>
-        /// Clear the description text.
-        /// </summary>
-        internal void ClearText()
-        {
-            descriptionText.text = " ";
         }
     }
 }

@@ -2,17 +2,16 @@
 using PokemonGame.Menu;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
-using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Inventory.UI.InventoryOptions
 {
     /// <summary>
-    /// Displays options for a selected inventory item (Use, Cancel).
+    /// Displays options for a selected inventory item (Use, Return).
     /// Raises events when the player selects an option.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class InventoryOptionsView : View
+    public sealed class InventoryOptionsView : View
     {
         [SerializeField, Required, Tooltip("Button used to confirm item usage.")]
         private MenuButton useButton;
@@ -20,45 +19,33 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         [SerializeField, Required, Tooltip("Button used to cancel and close the options menu.")]
         private MenuButton cancelButton;
 
-        [SerializeField, Required, Tooltip("Text element used to display the selected item name and description.")]
-        private TextMeshProUGUI descriptionText;
-
         /// <summary>
         /// Raised when the player chooses to use the selected item.
         /// </summary>
-        internal event Action UseRequested;
+        public event Action UseRequested;
 
         /// <summary>
-        /// Raised when the player cancels the inventory options menu.
+        /// Raised when the 'Return' option is selected by the player.
         /// </summary>
-        internal event Action CancelRequested;
+        public event Action ReturnRequested;
 
         private void OnEnable()
         {
             useButton.OnSubmitted += OnUseRequested;
-            cancelButton.OnSubmitted += OncancelRequested;
+            cancelButton.OnSubmitted += OnReturnRequested;
 
             // Base view event
-            ReturnKeyPressed += OncancelRequested;
+            ReturnKeyPressed += OnReturnRequested;
             ResetMenuController();
         }
 
         private void OnDisable()
         {
             useButton.OnSubmitted -= OnUseRequested;
-            cancelButton.OnSubmitted -= OncancelRequested;
+            cancelButton.OnSubmitted -= OnReturnRequested;
 
             // Base view event
-            ReturnKeyPressed -= OncancelRequested;
-        }
-
-        /// <summary>
-        /// Updates the description text displayed in the inventory options view.
-        /// </summary>
-        /// <param name="text">The text to display as the item description.</param>
-        internal void SetDescription(string text)
-        {
-            descriptionText.text = text;
+            ReturnKeyPressed -= OnReturnRequested;
         }
 
         private void OnUseRequested()
@@ -66,9 +53,9 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
             UseRequested?.Invoke();
         }
 
-        private void OncancelRequested() 
+        private void OnReturnRequested()
         {
-            CancelRequested?.Invoke();
-        } 
+            ReturnRequested?.Invoke();
+        }
     }
 }
