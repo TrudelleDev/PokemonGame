@@ -42,7 +42,7 @@ namespace PokemonGame.Pokemon.UI
             }
 
             typeImage.sprite = typeSprite;
-            typeImage.enabled = true;
+            typeImage.gameObject.SetActive(true);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace PokemonGame.Pokemon.UI
         public void Unbind()
         {
             EnsureImage();
-            typeImage.enabled = false;
+            typeImage.gameObject.SetActive(false);
         }
 
         private Sprite GetTypeSprite(PokemonInstance pokemon)

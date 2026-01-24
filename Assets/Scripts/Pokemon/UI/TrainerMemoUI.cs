@@ -27,10 +27,9 @@ namespace PokemonGame.Pokemon.UI
                 return;
             }
 
-            string natureName = pokemon.Nature.Definition.DisplayName ?? "Unknown";
             string location = string.IsNullOrWhiteSpace(pokemon.Meta.LocationEncounter) ? "an unknown location" : pokemon.Meta.LocationEncounter;
 
-            memoText.text = $"{natureName} nature.{Environment.NewLine}Met at {location} at level {pokemon.Experience.Level}.";
+            memoText.text = $"Met at {location} at level {pokemon.Experience.Level}.";
         }
 
         /// <summary>

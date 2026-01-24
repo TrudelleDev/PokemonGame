@@ -1,17 +1,17 @@
-﻿using TMPro;
+﻿using Sirenix.OdinInspector;
+using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Pokemon.UI
 {
     public class ExperienceUI : MonoBehaviour
     {
-        [SerializeField]
-        private ExperienceBar experienceBar;
-
-        [SerializeField]
+        [SerializeField, Required]
         private TextMeshProUGUI totalExperiencePointText;
-        [SerializeField]
+        [SerializeField, Required]
         private TextMeshProUGUI nextLevelExperiencePointText;
+        [SerializeField, Required]
+        private ExperienceBar experienceBar;
 
         public void Bind(PokemonInstance pokemon)
         {
@@ -23,9 +23,10 @@ namespace PokemonGame.Pokemon.UI
 
             pokemon.Experience.OnExperienceChange += Pokemon_OnExperienceChange;
 
-            experienceBar.Bind(pokemon);
+
             totalExperiencePointText.text = pokemon.Experience.CurrentExp.ToString();
             nextLevelExperiencePointText.text = (pokemon.Experience.GetExpForNextLevel() - pokemon.Experience.CurrentExp).ToString();
+            experienceBar.Bind(pokemon);
 
         }
 
@@ -36,9 +37,9 @@ namespace PokemonGame.Pokemon.UI
 
         public void Unbind()
         {
-            experienceBar.Unbind();
             totalExperiencePointText.text = string.Empty;
             nextLevelExperiencePointText.text = string.Empty;
+            experienceBar.Unbind();
         }
     }
 }

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170287bc9c5e6b343a557bf8d1ea1c38, type: 3}
   m_Name: Dragon_Type
   m_EditorClassIdentifier: 
-  icon: {fileID: 495970638, guid: d74433f63ac29cd47ab4759cab224051, type: 3}
+  icon: {fileID: 21300000, guid: 7331d02f29312794396e48ee1bf12237, type: 3}
   effectivenessGroups:
     superEffectiveAgainst: []
     notEffectiveAgainst: []

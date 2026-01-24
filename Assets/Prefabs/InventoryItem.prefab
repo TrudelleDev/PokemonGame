@@ -286,7 +286,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nameText: {fileID: 4405431761937242117}
-  countText: {fileID: 4358024844826890951}
+  quantityText: {fileID: 4358024844826890951}
 --- !u!222 &418128658326753195
 CanvasRenderer:
   m_ObjectHideFlags: 0

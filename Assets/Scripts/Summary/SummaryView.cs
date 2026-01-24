@@ -1,4 +1,4 @@
-using PokemonGame.Party;
+using PokemonGame.Characters;
 using PokemonGame.Pokemon;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
@@ -7,26 +7,25 @@ using UnityEngine;
 namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Displays detailed information about the selected Pokémon,
+    /// Displays detailed information about the selected Monster,
     /// including stats, skills, and moves.
     /// </summary>
     internal class SummaryView : View
     {
-        [SerializeField, Required]
-        [Tooltip("Tabs for stats, skills, and move details.")]
+        [SerializeField, Required, Tooltip("Tabs for stats, skills, and move details.")]
         private SummaryTabGroup summaryTabs;
 
         [SerializeField, Required]
-        [Tooltip("Reference to the player's party for selecting the current Pokémon.")]
-        private PartyManager party;
+        [Tooltip("Reference to the player's party for selecting the current Monster.")]
+        private Character player;
 
         /// <summary>
         /// Called when the view is enabled.
-        /// Resets the panel controller and binds the summary tabs to the selected Pokémon.
+        /// Resets the panel controller and binds the summary tabs to the selected Monster.
         /// </summary>
-        public void OnEnable()
+        private void OnEnable()
         {
-            PokemonInstance selectedPokemon = party.SelectedMonster;
+            PokemonInstance selectedPokemon = player.Party.SelectedMonster;
 
             if (selectedPokemon == null)
             {
@@ -34,7 +33,19 @@ namespace PokemonGame.Summary
                 return;
             }
 
+            ResetMenuController();
             summaryTabs.Bind(selectedPokemon);
+            ReturnKeyPressed += HandleReturnKeyPressed;
+        }
+
+        private void OnDisable()
+        {
+            ReturnKeyPressed -= HandleReturnKeyPressed;
+        }
+
+        private void HandleReturnKeyPressed()
+        {
+            ViewManager.Instance.Close<SummaryView>();
         }
     }
 }

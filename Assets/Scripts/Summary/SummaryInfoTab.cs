@@ -6,35 +6,34 @@ using UnityEngine;
 namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Controls the detailed Pokémon info panel in the summary screen.
-    /// Displays Pokédex number, name, unique ID, type icons, and trainer details.
-    /// Supports dynamic data binding and clears the UI when data is missing or invalid.
+    /// Controls the detailed Monster info panel in the summary screen.
+    /// Displays monster overview and trainer memo.
     /// </summary>
     public class SummaryInfoTab : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's overview information such as name, types, and ID.")]
-        private PokemonOverviewUI pokemonOverviewUI;
+        [Tooltip("Displays the Monster's overview information")]
+        private PokemonOverviewUI monsterOverviewUI;
 
         [SerializeField, Required]
         [Tooltip("Displays the trainer's memo (e.g., caught location, encounter date).")]
         private TrainerMemoUI trainerMemoUI;
 
         /// <summary>
-        /// Binds the specified Pokémon to the overview and trainer memo UI elements.
-        /// Clears the UI if the Pokémon or its core data is null.
+        /// Binds the specified Monster to the overview and trainer memo UI elements.
+        /// Clears the UI if the Monster or its core data is null.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The Monster instance to display.</param>
+        public void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            pokemonOverviewUI.Bind(pokemon);
-            trainerMemoUI.Bind(pokemon);
+            monsterOverviewUI.Bind(monster);
+            trainerMemoUI.Bind(monster);
         }
 
         /// <summary>
@@ -42,7 +41,7 @@ namespace PokemonGame.Summary
         /// </summary>
         public void Unbind()
         {
-            pokemonOverviewUI.Unbind();
+            monsterOverviewUI.Unbind();
             trainerMemoUI.Unbind();
         }
     }

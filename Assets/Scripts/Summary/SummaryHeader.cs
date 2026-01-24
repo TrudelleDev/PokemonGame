@@ -7,47 +7,32 @@ using UnityEngine;
 namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Manages the UI elements for the Pokémon summary header.
-    /// Displays the Pokémon's name, level, gender, and sprite.
-    /// Safely handles null or incomplete Pokémon data by clearing the UI.
+    /// Manages the UI elements for the Monster summary header.
+    /// Displays the Mosnter's name and sprite.
     /// </summary>
     public class SummaryHeader : MonoBehaviour
     {
-        [Title("Text")]
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's name.")]
+        [SerializeField, Required, Tooltip("Displays the Monster's name.")]
         private TextMeshProUGUI nameText;
 
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's level.")]
-        private TextMeshProUGUI levelText;
-
-        [Title("Sprites")]
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's front-facing sprite.")]
-        private PokemonSprite frontSprite;
-
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's gender icon.")]
-        private PokemonGenderSymbol genderIcon;
+        [SerializeField, Required, Tooltip("Displays the Monster's front-facing sprite.")]
+        private PokemonSprite sprite;
 
         /// <summary>
-        /// Binds the given Pokémon data to the name, level, gender icon, and sprite.
-        /// Clears the UI if <paramref name="pokemon"/> is null or missing required data.
+        /// Binds the given Monster definition to the name and sprite.
+        /// Clears the UI if <paramref name="monster"/> is null or missing required definition.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display, or null to clear the UI.</param>
-        public void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The Monster instance to display, or null to clear the UI.</param>
+        public void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = $"Lv{pokemon.Experience.Level}";
-            genderIcon.Bind(pokemon);
-            frontSprite.Bind(pokemon);
+            nameText.text = monster.Definition.DisplayName;
+            sprite.Bind(monster);
         }
 
         /// <summary>
@@ -56,9 +41,7 @@ namespace PokemonGame.Summary
         public void Unbind()
         {
             nameText.text = string.Empty;
-            levelText.text = string.Empty;
-            genderIcon.Unbind();
-            frontSprite.Unbind();
+            sprite.Unbind();
         }
     }
 }

@@ -1,6 +1,7 @@
 using PokemonGame.Characters.Directions;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Characters.States;
+using PokemonGame.Pause;
 using PokemonGame.Raycasting;
 using PokemonGame.Tile;
 using Sirenix.OdinInspector;
@@ -92,7 +93,7 @@ namespace PokemonGame.Characters
         /// </summary>
         private void Update()
         {
-            if (isLocked)
+            if (isLocked || PauseManager.IsPaused )
             {
                 if (CurrentState != IdleState)
                 {

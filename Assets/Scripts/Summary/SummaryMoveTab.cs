@@ -1,3 +1,4 @@
+using PokemonGame.Menu.Controllers;
 using PokemonGame.Move.UI;
 using PokemonGame.Pokemon;
 using Sirenix.OdinInspector;
@@ -13,25 +14,15 @@ namespace PokemonGame.Summary
     public class SummaryMoveTab : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's name, level, and gender.")]
-        private SummaryHeader header;
-
-        [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's icon and species name.")]
-        private SummaryIdentityPanel identityPanel;
-
-        [SerializeField, Required]
         [Tooltip("Displays the list of moves and handles binding each move slot.")]
         private MoveSlotUIManager moveManager;
 
-        private void OnEnable()
-        {
-            header.gameObject.SetActive(false);
-        }
+        [SerializeField, Required]
+        private VerticalMenuController controller;
 
         private void OnDisable()
         {
-            header.gameObject.SetActive(true);
+            controller.ResetController();
         }
 
         /// <summary>
@@ -49,7 +40,7 @@ namespace PokemonGame.Summary
                 return;
             }
 
-            identityPanel.Bind(pokemon);
+           // identityPanel.Bind(pokemon);
             moveManager.Bind(pokemon);
         }
 
@@ -58,7 +49,7 @@ namespace PokemonGame.Summary
         /// </summary>
         public void Unbind()
         {
-            identityPanel.Unbind();
+           // identityPanel.Unbind();
             moveManager.Unbind();
         }
     }

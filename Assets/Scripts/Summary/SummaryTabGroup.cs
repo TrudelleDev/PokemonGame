@@ -6,51 +6,49 @@ using UnityEngine;
 namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Coordinates the UI components in the Pokémon summary screen,
-    /// including the always-visible header and switchable content tabs (Info, Skills, Moves).
-    /// Handles data binding and unbinding for each section to ensure accurate display
-    /// based on the currently selected Pokémon.
+    /// Manages the Pokémon summary UI, including the header and tab content
+    /// (Info, Skills, Moves), and handles data binding for the selected Pokémon.
     /// </summary>
     [Serializable]
     public class SummaryTabGroup
     {
         [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's name, level, gender, and visual representation.")]
+        [Tooltip("Displays the Monster's name, level, gender, and sprite.")]
         private SummaryHeader header;
 
         [SerializeField, Required]
-        [Tooltip("Tab displaying general information about the selected Pokémon.")]
+        [Tooltip("Displays general information about the Monster.")]
         private SummaryInfoTab infoTab;
 
         [SerializeField, Required]
-        [Tooltip("Tab displaying the Pokémon's skill stats such as HP, Attack, and Defense.")]
+        [Tooltip("Displays the Monster's core stats.")]
         private SummarySkillTab skillTab;
 
         [SerializeField, Required]
-        [Tooltip("Tab displaying the Pokémon's moves and related details.")]
+        [Tooltip("Displays the Monster's moves.")]
         private SummaryMoveTab moveTab;
 
         /// <summary>
-        /// Binds the provided Pokémon data to all UI sections in the summary screen.
-        /// If the Pokémon or its core data is null, all sections are cleared instead.
+        /// Binds a Monster to all summary UI sections.
+        /// Clears the UI if the Monster or its definition is invalid.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display in the summary screen.</param>
-        public void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The Monster to display in the summary UI.</param>
+        public void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            header.Bind(pokemon);
-            infoTab.Bind(pokemon);
-            skillTab.Bind(pokemon);
-            moveTab.Bind(pokemon);
+            header.Bind(monster);
+            infoTab.Bind(monster);
+            skillTab.Bind(monster);
+            moveTab.Bind(monster);
         }
 
         /// <summary>
-        /// Clears all UI sections by unbinding any previously bound Pokémon data.
+        /// Unbinds all summary UI sections.
         /// </summary>
         public void Unbind()
         {

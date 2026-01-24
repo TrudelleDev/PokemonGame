@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 170287bc9c5e6b343a557bf8d1ea1c38, type: 3}
   m_Name: Poison_Type
   m_EditorClassIdentifier: 
-  icon: {fileID: 1939088295, guid: d74433f63ac29cd47ab4759cab224051, type: 3}
+  icon: {fileID: 21300000, guid: 22d4955ab881dac4295c8c893ce51369, type: 3}
   effectivenessGroups:
     superEffectiveAgainst: []
     notEffectiveAgainst: []

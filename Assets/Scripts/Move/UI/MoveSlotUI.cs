@@ -24,10 +24,6 @@ namespace PokemonGame.Move.UI
         [Tooltip("Image displaying the move's elemental type icon.")]
         private Image typeImage;
 
-        [SerializeField, Required]
-        [Tooltip("Image displaying the move's damage category icon (Physical, Special, or Status).")]
-        private Image categoryImage;
-
         public MoveInstance Move { get; private set; }
 
         /// <summary>
@@ -47,7 +43,6 @@ namespace PokemonGame.Move.UI
             powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
             powerPointText.alignment = TextAlignmentOptions.Right;
             typeImage.sprite = move.Definition.Classification.TypeDefinition.Icon;
-            categoryImage.sprite = move.Definition.Classification.CategoryDefinition.Icon;
             typeImage.enabled = true;
         }
 
@@ -61,7 +56,6 @@ namespace PokemonGame.Move.UI
             powerPointText.text = "--";
             powerPointText.alignment = TextAlignmentOptions.Left;
             typeImage.sprite = null;
-            categoryImage.sprite = null;
             typeImage.enabled = false;
         }
     }

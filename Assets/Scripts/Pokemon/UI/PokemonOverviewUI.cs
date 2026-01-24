@@ -31,12 +31,10 @@ namespace PokemonGame.Pokemon.UI
         private TextMeshProUGUI originalTrainerText;
 
         [SerializeField, Required]
-        [Tooltip("Displays the Pokémon's unique ID.")]
-        private TextMeshProUGUI idText;
+        private TextMeshProUGUI leveltext;
 
         [SerializeField, Required]
-        [Tooltip("Displays the held item's name, if any.")]
-        private TextMeshProUGUI itemNameText;
+        private TextMeshProUGUI natureText;
 
         /// <summary>
         /// Binds the Pokémon data to the UI fields.
@@ -46,13 +44,13 @@ namespace PokemonGame.Pokemon.UI
         {
             pokedexNumberText.text = pokemon.Definition.PokedexNumber.ToString("D3");
             nameText.text = pokemon.Definition.DisplayName;
-            idText.text = pokemon.Meta.ID;
+            natureText.text = pokemon.Nature.Definition.DisplayName;
             originalTrainerText.text = pokemon.Meta.OwnerName;
 
             primaryTypeSprite.Bind(pokemon);
             secondaryTypeSprite.Bind(pokemon);
 
-            itemNameText.text = "None"; // or: pokemon.HeldItem?.DisplayName ?? "None";
+            leveltext.text = pokemon.Experience.Level.ToString();
         }
 
         /// <summary>
@@ -62,9 +60,9 @@ namespace PokemonGame.Pokemon.UI
         {
             pokedexNumberText.text = string.Empty;
             nameText.text = string.Empty;
-            idText.text = string.Empty;
+            natureText.text = string.Empty;
             originalTrainerText.text = string.Empty;
-            itemNameText.text = string.Empty;
+            leveltext.text = string.Empty;
             primaryTypeSprite.Unbind();
             secondaryTypeSprite.Unbind();
         }

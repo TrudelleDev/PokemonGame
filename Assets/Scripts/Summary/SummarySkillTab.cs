@@ -6,42 +6,41 @@ using UnityEngine;
 namespace PokemonGame.Summary
 {
     /// <summary>
-    /// Displays detailed Pokémon stats and ability information in the summary screen.
-    /// Supports dynamic data binding and clears the UI when the Pokémon data is missing or invalid.
+    /// Displays detailed Monster stats and ability information in the summary screen.
+    /// Supports dynamic data binding and clears the UI when the Monster definition is missing or invalid.
     /// </summary>
     public class SummarySkillTab : MonoBehaviour
     {
-        [SerializeField, Required]
-        [Tooltip("Group containing base stat UI elements (HP, Attack, Defense, etc.).")]
+        [SerializeField, Required, Tooltip("Group containing base stat UI elements.")]
         private PokemonStatsUI statsUI;
 
-        [SerializeField]
+        [SerializeField, Required, Tooltip("Group containing experience UI elements.")]
         private ExperienceUI experienceUI;
 
         /// <summary>
-        /// Binds the specified Pokémon data to the stat and ability UI groups.
-        /// Clears the UI if the Pokémon data is missing or invalid.
+        /// Binds the specified Monster definition to the stat and experience UI groups.
+        /// Clears the UI if the Monster defenition is missing or invalid.
         /// </summary>
-        /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The Monster instance to display.</param>
+        public void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            statsUI.Bind(pokemon);
-            experienceUI.Bind(pokemon);
+            statsUI.Bind(monster);
+            experienceUI.Bind(monster);
         }
 
         /// <summary>
-        /// Clears the stat and ability UI elements.
+        /// Clears the stat and experience UI elements.
         /// </summary>
         public void Unbind()
         {
             statsUI.Unbind();
-            experienceUI?.Unbind();
+            experienceUI.Unbind();
         }
     }
 }
