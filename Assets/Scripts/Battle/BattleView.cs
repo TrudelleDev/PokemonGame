@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using PokemonGame.Audio;
 using PokemonGame.Battle.Models;
 using PokemonGame.Battle.States.Core;
 using PokemonGame.Battle.States.Intro;
@@ -20,6 +21,9 @@ namespace PokemonGame.Battle
     [DisallowMultipleComponent]
     internal sealed class BattleView : View
     {
+        [SerializeField, Tooltip("Background music clip that plays when a battle begins.")]
+        private AudioClip battleBgm;
+
         [SerializeField, Tooltip("The player's and opponent's HUDs for health, status, etc.")]
         private BattleHUDs battleHuds;
 
@@ -114,6 +118,8 @@ namespace PokemonGame.Battle
             introState = new WildBattleIntroState(stateMachine);
 
             dialogueBox.Clear();
+
+            AudioManager.Instance.PlayBGM(battleBgm);
         }
 
         /// <summary>
@@ -140,6 +146,8 @@ namespace PokemonGame.Battle
             introState = new TrainerBattleIntroState(stateMachine);
 
             dialogueBox.Clear();
+
+            AudioManager.Instance.PlayBGM(battleBgm);
         }
 
         /// <summary>

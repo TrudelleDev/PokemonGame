@@ -20,6 +20,12 @@ namespace PokemonGame.Audio
         {
             base.Awake();
             CreateAudioSources();
+            WarmUp();
+        }
+
+        private void WarmUp()
+        {
+            sfxSource.PlayOneShot(AudioClip.Create("silent", 1, 1, 44100, false), 0f);
         }
 
         #region BGM
@@ -60,7 +66,9 @@ namespace PokemonGame.Audio
             if (clip == null)
                 return;
 
+
             sfxSource.PlayOneShot(clip);
+
         }
 
         /// <summary>
@@ -119,9 +127,14 @@ namespace PokemonGame.Audio
             sfxSource = gameObject.AddComponent<AudioSource>();
             sfxSource.outputAudioMixerGroup = sfxGroup;
 
+            sfxSource.ignoreListenerPause = true;
+            sfxSource.priority = 0; // UI = highest priority
+            sfxSource.spatialBlend = 0f; // force 2D
+
             // Stoppable SFX Source
             sfxStoppableSource = gameObject.AddComponent<AudioSource>();
             sfxStoppableSource.outputAudioMixerGroup = sfxGroup;
+            sfxStoppableSource.ignoreListenerPause = true;
         }
     }
 }

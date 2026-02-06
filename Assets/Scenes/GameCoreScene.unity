@@ -14856,58 +14856,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1937948059}
   m_CullTransparentMesh: 1
---- !u!1 &2002400904
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2002400906}
-  - component: {fileID: 2002400905}
-  m_Layer: 0
-  m_Name: WildEncounterManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &2002400905
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002400904}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a69301a0365f7264f802e37d9fd87a1c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  battleBgm: {fileID: 8300000, guid: ece02b01f1f790a49a6276e3bd80d656, type: 3}
-  player: {fileID: 1302094212524140728}
-  encounterChance: 10
-  pokemonEntries:
-  - definition: {fileID: 11400000, guid: 11c4367c6cdc4084187370e4bfdf689d, type: 2}
-    minLevel: 50
-    maxLevel: 100
-    encounterRate: 100
---- !u!4 &2002400906
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2002400904}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &2011761049
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15698,6 +15646,7 @@ MonoBehaviour:
   audioSettings: {fileID: 0}
   openTransition: 2
   closeTransition: 1
+  battleBgm: {fileID: 8300000, guid: ece02b01f1f790a49a6276e3bd80d656, type: 3}
   battleHuds:
     playerBattleHud: {fileID: 235997423}
     opponentBattleHud: {fileID: 1771462528}
@@ -15761,10 +15710,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12fed5c3d45c72c439dca455bcf93669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectivenessSounds:
-    normalSound: {fileID: 8300000, guid: a5e2d8c2054d39c4ab96f153d0315178, type: 3}
-    superEffectiveSound: {fileID: 8300000, guid: f9cf4cdcda60a5e41a40470036b59d54, type: 3}
-    notVeryEffectiveSound: {fileID: 8300000, guid: 8f8696651f8b9ef46b5018218ba22b91, type: 3}
 --- !u!114 &2059395315
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16771,20 +16716,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &726787455648688438
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1327479335497395143}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b6429b1be94c774dbc4e35e4d87bdbe, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rustleTile: {fileID: 11400000, guid: 1a1b03f9fc3a9964ab8c3f7c66d4ae52, type: 2}
-  maxTrailCount: 3
 --- !u!114 &738268425333264847
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17216,7 +17147,6 @@ GameObject:
   - component: {fileID: 4313284261296620144}
   - component: {fileID: 149676469947884096}
   - component: {fileID: 5755575980577299672}
-  - component: {fileID: 726787455648688438}
   - component: {fileID: 9200808988402430977}
   m_Layer: 3
   m_Name: Player
@@ -20496,7 +20426,7 @@ PrefabInstance:
     - target: {fileID: 8091568736246600120, guid: 40f89a24a02b01c40bfe99f77125be8d, type: 3}
       propertyPath: menuCloseSfx
       value: 
-      objectReference: {fileID: 8300000, guid: 826d7fb4e90e9cd47a91ae98e3eb8e06, type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 8091568736246600120, guid: 40f89a24a02b01c40bfe99f77125be8d, type: 3}
       propertyPath: audioSettings
       value: 
@@ -22341,7 +22271,6 @@ SceneRoots:
   m_Roots:
   - {fileID: 5555212340154051802}
   - {fileID: 5774351736596929311}
-  - {fileID: 2002400906}
   - {fileID: 2446407253781869776}
   - {fileID: 8174533336694109917}
   - {fileID: 2075147501408823746}

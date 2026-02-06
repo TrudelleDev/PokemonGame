@@ -19,7 +19,7 @@ MonoBehaviour:
     powerPoint: 30
   classification:
     typeDefinition: {fileID: 11400000, guid: 1859622edcd774e43923a56c4074437b, type: 2}
-    category: 0
+    category: 1
   moveEffect: {fileID: 11400000, guid: fab21e12a6fc2224396406094f0f9bc3, type: 2}
   effect: "A spray of bubbles hits the foe. It may lower the foe\u2019s Speed stat."
   sound: {fileID: 8300000, guid: 92e8593513c2ffd4db42689b2d25268b, type: 3}

@@ -65515,8 +65515,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fae1c1e5d5d9902448c585150317c9c8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  grassTilemap: {fileID: 961395899}
-  fxTilemap: {fileID: 1499612745}
+  encounterTilemap: {fileID: 961395899}
+  encounterChance: 10
+  monsterDatabase: {fileID: 11400000, guid: 393c09afcfbcab648a2281e1fb3bb20a, type: 2}
 --- !u!1 &2059959257
 GameObject:
   m_ObjectHideFlags: 0
@@ -100432,8 +100433,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b6429b1be94c774dbc4e35e4d87bdbe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rustleTile: {fileID: 11400000, guid: 1a1b03f9fc3a9964ab8c3f7c66d4ae52, type: 2}
-  maxTrailCount: 3
 --- !u!114 &9105230262629277996
 MonoBehaviour:
   m_ObjectHideFlags: 0

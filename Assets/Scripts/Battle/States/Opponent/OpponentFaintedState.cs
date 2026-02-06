@@ -73,7 +73,7 @@ namespace PokemonGame.Battle.States.Opponent
             yield return Battle.TurnPauseYield;
 
             // Determine next state
-            if (Battle.Opponent.Party.HasUsablePokemon())
+            if (Battle.Opponent != null && Battle.Opponent.Party.HasUsablePokemon())
             {
                 machine.SetState(new OpponentSwapMonsterState(machine));
             }
