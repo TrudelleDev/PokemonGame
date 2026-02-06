@@ -6,7 +6,7 @@ namespace PokemonGame.Characters.States
     /// State for turning the character to a new facing without moving.
     /// Plays a refacing animation, then returns to idle.
     /// </summary>
-    public sealed class CharacterRefacingState : ICharacterState
+    internal sealed class CharacterRefacingState : ICharacterState
     {
         private readonly CharacterStateController controller;
 

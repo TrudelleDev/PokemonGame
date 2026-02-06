@@ -9,7 +9,7 @@ namespace PokemonGame.Pokemon.UI
     /// <summary>
     /// Displays a Pokémon's trainer-related memo, including nature and encounter location.
     /// </summary>
-    public class TrainerMemoUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class TrainerMemoUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the trainer's memo, such as encounter details.")]

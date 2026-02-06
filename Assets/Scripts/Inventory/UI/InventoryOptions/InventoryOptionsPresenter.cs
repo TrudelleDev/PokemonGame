@@ -19,7 +19,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
     /// Opens the party menu when necessary and reacts to Monster selection.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class InventoryOptionsPresenter : MonoBehaviour
+    internal sealed class InventoryOptionsPresenter : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Controller managing the InventoryOptionsView buttons.")]
         private InventoryOptionsController inventoryOptionsController;

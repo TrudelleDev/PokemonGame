@@ -21,7 +21,7 @@ namespace PokemonGame.SceneManagement
     /// Applies fades, relocates the player to a defined spawn point,
     /// and can play an optional sound effect.
     /// </summary>
-    public class SceneTransitionTrigger : MonoBehaviour, ITriggerable
+    internal class SceneTransitionTrigger : MonoBehaviour, ITriggerable
     {
 #if UNITY_EDITOR
         [Title("Scenes (Editor Only)")]

@@ -13,7 +13,7 @@ namespace PokemonGame.Party.UI
     /// Displays party slots and raises user input events without containing game logic.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class PartyMenuView : View
+    internal sealed class PartyMenuView : View
     {
         private const string SelectMonsterMessage = "Select a Monster.";
         private const string SwapStartMessage = "Move to where?";

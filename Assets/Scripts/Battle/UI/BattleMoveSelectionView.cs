@@ -11,7 +11,7 @@ namespace PokemonGame.Battle.UI
     /// and displays details, raising a single event for the state machine.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class BattleMoveSelectionView : View
+    internal sealed class BattleMoveSelectionView : View
     {
         [SerializeField, Required]
         [Tooltip("The panel that contains the 4 move buttons and handles all user input events.")]

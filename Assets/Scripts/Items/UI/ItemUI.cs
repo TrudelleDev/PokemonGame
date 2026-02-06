@@ -11,7 +11,7 @@ namespace PokemonGame.Items.UI
     /// Displays the item's name and quantity.
     /// Automatically clears the UI when no valid item is assigned.
     /// </summary>
-    public class ItemUI : MonoBehaviour, IMenuOptionDisplaySource
+    internal class ItemUI : MonoBehaviour, IMenuOptionDisplaySource
     {
         [SerializeField, Required, Tooltip("Text element displaying the item's name.")]
         private TextMeshProUGUI nameText;

@@ -1,14 +1,13 @@
-﻿using PokemonGame.Shared.Interfaces;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
 namespace PokemonGame.Move.UI
 {
     /// <summary>
-    /// Displays basic details of a Pokémon move, including power, accuracy, and effect text.
+    /// Displays basic details of a Monster move, including power, accuracy, and effect text.
     /// </summary>
-    public class MoveDetailUI : MonoBehaviour, IBindable<MoveInstance>, IUnbind
+    internal sealed class MoveDetailUI : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text element displaying the move's base power.")]
@@ -26,7 +25,7 @@ namespace PokemonGame.Move.UI
         /// Binds the given move's data to the UI elements.
         /// </summary>
         /// <param name="move">The move to display.</param>
-        public void Bind(MoveInstance move)
+        internal void Bind(MoveInstance move)
         {
             if (move?.Definition == null)
             {
@@ -42,7 +41,7 @@ namespace PokemonGame.Move.UI
         /// <summary>
         /// Clears all move-related UI elements.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             powerText.text = string.Empty;
             accuracyText.text = string.Empty;

@@ -12,7 +12,7 @@ namespace PokemonGame.Party.UI
     /// and raises events for selection, swapping, and menu actions.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class PartyMenuPresenter : MonoBehaviour
+    internal sealed class PartyMenuPresenter : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("UI view that displays party slots and forwards input.")]

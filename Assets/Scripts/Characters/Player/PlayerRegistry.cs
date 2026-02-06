@@ -5,7 +5,7 @@ namespace PokemonGame.Characters.Player
     /// <summary>
     /// Stores a global reference to the active player character.
     /// </summary>
-    public static class PlayerRegistry
+    internal static class PlayerRegistry
     {
         /// <summary>
         /// The currently registered player character.

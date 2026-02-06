@@ -5,11 +5,11 @@ using UnityEngine;
 namespace PokemonGame.Move.Models
 {
     /// <summary>
-    /// Contains the numerical stats of a Pokémon move, including its base power,
-    /// accuracy, and maximum number of uses (PP).
+    /// Represents the numerical attributes of a Monster move,
+    /// including base power, accuracy, and maximum uses (PP).
     /// </summary>
     [Serializable]
-    public struct MoveInfo
+    internal struct MoveInfo
     {
         [SerializeField, Required, Tooltip("Base power of the move (0 if status move).")]
         private int power;
@@ -20,8 +20,19 @@ namespace PokemonGame.Move.Models
         [SerializeField, Required, Tooltip("Maximum number of times the move can be used.")]
         private int powerPoint;
 
-        public readonly int Power => power;
-        public readonly int Accuracy => accuracy;
-        public readonly int PowerPoint => powerPoint;
+        /// <summary>
+        /// Base power of the move (0 if status move).
+        /// </summary>
+        internal readonly int Power => power;
+
+        /// <summary>
+        /// Accuracy of the move as a percentage (0–100).
+        /// </summary>
+        internal readonly int Accuracy => accuracy;
+
+        /// <summary>
+        /// Maximum number of times the move can be used
+        /// </summary>
+        internal readonly int PowerPoint => powerPoint;
     }
 }

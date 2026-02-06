@@ -6,32 +6,59 @@ using UnityEngine;
 namespace PokemonGame.Move
 {
     /// <summary>
-    /// Defines a Pokemon move, including stats, classification, and in-game effect text.
+    /// Defines a Monster move, including its stats, type/category, effect behavior, 
+    /// and in-game description.
     /// </summary>
-    [CreateAssetMenu(menuName = "PokemonGame/Move/Move Definition")]
-    public class MoveDefinition : ScriptableObject
+    [CreateAssetMenu(menuName = "MonsterTamer/Move/Move Definition")]
+    internal sealed class MoveDefinition : ScriptableObject
     {
         [SerializeField, Required, Tooltip("Display name of the move.")]
         private string displayName;
 
-        [SerializeField, Tooltip("Base stats of the move: power, accuracy, and PP.")]
+        [SerializeField, Tooltip("Base stats of the move: Power, Accuracy, and PP.")]
         private MoveInfo moveInfo;
 
-        [SerializeField, Tooltip("Classification of the move: type and category.")]
+        [SerializeField, Tooltip("Classification of the move: Type and Category.")]
         private MoveClassification classification;
 
-        [SerializeField]
+        [SerializeField, Tooltip("The effect this move applies (damage, status, etc.).")]
         private MoveEffect moveEffect;
 
         [SerializeField, Required, TextArea(5, 10)]
         [Tooltip("Description or effect text shown to the player.")]
         private string effect;
 
-        public string DisplayName => displayName;
-        public MoveInfo MoveInfo => moveInfo;
-        public MoveClassification Classification => classification;
+        [SerializeField, Tooltip("Sound played when the move is used.")]
+        private AudioClip sound;
 
-        public MoveEffect MoveEffect => moveEffect;
-        public string Effect => effect;
+        /// <summary>
+        /// Display name of the move.
+        /// </summary>
+        internal string DisplayName => displayName;
+
+        /// <summary>
+        /// Base stats of the move (Power, Accuracy, PP).
+        /// </summary>
+        internal MoveInfo MoveInfo => moveInfo;
+
+        /// <summary>
+        /// Type and category of the move.
+        /// </summary>
+        internal MoveClassification Classification => classification;
+
+        /// <summary>
+        /// The effect applied by the move (damage, status, etc.).
+        /// </summary>
+        internal MoveEffect MoveEffect => moveEffect;
+
+        /// <summary>
+        /// Description or effect text shown to the player.
+        /// </summary>
+        internal string Effect => effect;
+
+        /// <summary>
+        /// Sound played when the move is used.
+        /// </summary>
+        internal AudioClip Sound => sound;
     }
 }

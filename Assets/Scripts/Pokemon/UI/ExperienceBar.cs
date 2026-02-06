@@ -10,7 +10,7 @@ namespace PokemonGame.Pokemon.UI
     /// Displays the Pokémon's EXP bar and smoothly animates when EXP changes.
     /// </summary>
     [RequireComponent(typeof(Slider))]
-    public class ExperienceBar : MonoBehaviour
+    internal class ExperienceBar : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Image that fills the EXP bar visually (assign from the Slider's Fill child).")]

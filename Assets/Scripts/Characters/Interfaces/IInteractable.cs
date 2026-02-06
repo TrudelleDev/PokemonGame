@@ -4,7 +4,7 @@
     /// Represents an object that can be interacted with by a <see cref="Character"/>.
     /// Typical examples include NPCs, signs, or items in the overworld.
     /// </summary>
-    public interface IInteractable
+    internal interface IInteractable
     {
         /// <summary>
         /// Called when a <see cref="Character"/> interacts with this object.

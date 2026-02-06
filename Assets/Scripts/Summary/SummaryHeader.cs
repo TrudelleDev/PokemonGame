@@ -10,7 +10,7 @@ namespace PokemonGame.Summary
     /// Manages the UI elements for the Monster summary header.
     /// Displays the Mosnter's name and sprite.
     /// </summary>
-    public class SummaryHeader : MonoBehaviour
+    internal class SummaryHeader : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Displays the Monster's name.")]
         private TextMeshProUGUI nameText;

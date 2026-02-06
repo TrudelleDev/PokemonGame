@@ -2,7 +2,7 @@
 
 namespace PokemonGame.Pokemon.Components
 {
-    public class MovesComponent
+    internal class MovesComponent
     {
         public MoveInstance[] Moves { get; private set; }
 

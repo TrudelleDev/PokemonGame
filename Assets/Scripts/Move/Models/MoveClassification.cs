@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Move.Enums;
 using PokemonGame.Type;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -6,22 +7,26 @@ using UnityEngine;
 namespace PokemonGame.Move.Models
 {
     /// <summary>
-    /// Defines the elemental type and damage category of a Pokémon move.
-    /// The type determines effectiveness interactions (e.g., Fire vs Grass),
-    /// while the category determines whether the move is Physical, Special, or Status.
+    /// Defines how a move behaves in combat by specifying its elemental type
+    /// and damage category (Physical, Special, or Status).
     /// </summary>
     [Serializable]
-    public struct MoveClassification
+    internal struct MoveClassification
     {
-        [SerializeField, Required]
-        [Tooltip("The elemental type of the move (e.g., Fire, Water, Electric).")]
+        [SerializeField, Required, Tooltip("The elemental type of the move (e.g., Fire, Water, Electric).")]
         private TypeDefinition typeDefinition;
 
-        [SerializeField, Required]
-        [Tooltip("The damage category of the move (Physical, Special, or Status).")]
-        private MoveCategoryDefinition categoryDefinition;
+        [SerializeField, Tooltip("Determines whether the move is Physical, Special, or Status.")]
+        private MoveCategory category;
 
-        public readonly TypeDefinition TypeDefinition => typeDefinition;
-        public readonly MoveCategoryDefinition CategoryDefinition => categoryDefinition;
+        /// <summary>
+        /// Gets the elemental type of the move.
+        /// </summary>
+        internal readonly TypeDefinition TypeDefinition => typeDefinition;
+
+        /// <summary>
+        /// Gets the move category (Physical, Special, or Status).
+        /// </summary>
+        internal readonly MoveCategory Category => category;
     }
 }

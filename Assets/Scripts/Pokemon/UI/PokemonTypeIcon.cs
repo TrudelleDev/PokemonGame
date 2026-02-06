@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemon.UI
     /// Hides the icon if the type is not available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public class PokemonTypeIcon : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class PokemonTypeIcon : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Select whether to show the Pokémon's primary or secondary type icon.")]

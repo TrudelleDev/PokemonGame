@@ -12,7 +12,7 @@ namespace PokemonGame.Characters
 
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterStateController))]
-    public sealed class Character : MonoBehaviour
+    internal sealed class Character : MonoBehaviour
     {
         // ID generation range
         private const int MinID = 10000;

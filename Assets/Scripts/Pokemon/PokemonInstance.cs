@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemon
     /// Represents a runtime Pokémon instance with dynamic state (level, stats, health, moves, etc.)
     /// constructed from static definitions (species, nature, ability, moves).
     /// </summary>
-    public class PokemonInstance
+    internal class PokemonInstance
     {
         public ExperienceComponent Experience { get; }
         public HealthComponent Health { get; }

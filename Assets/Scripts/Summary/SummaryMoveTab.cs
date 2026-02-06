@@ -11,7 +11,7 @@ namespace PokemonGame.Summary
     /// Handles binding Pokémon data to the identity panel and move slots.
     /// Manages visibility of the header during enable/disable.
     /// </summary>
-    public class SummaryMoveTab : MonoBehaviour
+    internal class SummaryMoveTab : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Displays the list of moves and handles binding each move slot.")]

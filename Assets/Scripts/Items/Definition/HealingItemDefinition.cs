@@ -10,7 +10,7 @@ namespace PokemonGame.Items.Definition
     /// to a Monster when used.
     /// </summary>
     [CreateAssetMenu(menuName = "MonsterTamer/Items/Healing Item Definition")]
-    public class HealingItemDefinition : ItemDefinition
+    internal class HealingItemDefinition : ItemDefinition
     {
         private const string RestoredTemplate = "{0}'s HP was restored\nby {1} points.";
 

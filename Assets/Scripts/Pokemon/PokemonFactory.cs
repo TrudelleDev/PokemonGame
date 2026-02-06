@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemon
     /// Factory class responsible for creating Pokémon instances at runtime.
     /// Supports creating wild Pokémon with randomized nature, ability, and moves.
     /// </summary>
-    public static class PokemonFactory
+    internal static class PokemonFactory
     {
         private const int MaxMove = 4;
 

@@ -8,7 +8,7 @@ namespace PokemonGame.Characters.States
     /// State entered when the character attempts to move into a blocked tile.
     /// Plays a collision animation, triggers optional SFX, and decides the next state.
     /// </summary>
-    public sealed class CharacterCollisionState : ICharacterState
+    internal sealed class CharacterCollisionState : ICharacterState
     {
         private readonly CharacterStateController controller;
 

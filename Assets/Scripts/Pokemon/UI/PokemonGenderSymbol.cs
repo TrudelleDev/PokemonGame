@@ -5,7 +5,7 @@ using UnityEngine;
 namespace PokemonGame.Pokemon.UI
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
-    public class PokemonGenderSymbol : MonoBehaviour
+    internal class PokemonGenderSymbol : MonoBehaviour
     {
         private const string MaleSymbol = "£";
         private const string FemaleSymbol = "¬";

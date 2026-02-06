@@ -10,7 +10,7 @@ namespace PokemonGame.Summary
     /// (Info, Skills, Moves), and handles data binding for the selected Pokémon.
     /// </summary>
     [Serializable]
-    public class SummaryTabGroup
+    internal class SummaryTabGroup
     {
         [SerializeField, Required]
         [Tooltip("Displays the Monster's name, level, gender, and sprite.")]

@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemon.UI
     /// <summary>
     /// Displays a Pokémon's base stats including HP, Attack, Defense, Special stats, and Speed.
     /// </summary>
-    public class PokemonStatsUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class PokemonStatsUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         private HealthBar healthBar;

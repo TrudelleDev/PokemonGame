@@ -28,9 +28,9 @@ namespace PokemonGame.Battle
         /// <param name="target">The Pokémon receiving the move.</param>
         /// <param name="move">The move being used.</param>
         /// <returns>The final damage as an integer (minimum 1).</returns>
-        public static int CalculateDamage(PokemonInstance user, PokemonInstance target, MoveInstance move)
+        internal static int CalculateDamage(PokemonInstance user, PokemonInstance target, MoveInstance move)
         {
-            bool isPhysical = move.Definition.Classification.CategoryDefinition.Category == MoveCategory.Physical;
+            bool isPhysical = move.Definition.Classification.Category == MoveCategory.Physical;
 
             int attack = isPhysical
                 ? user.Stats.StatStage.Modified.Attack

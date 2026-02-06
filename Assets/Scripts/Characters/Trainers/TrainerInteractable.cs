@@ -12,7 +12,7 @@ namespace PokemonGame.Characters.Trainers
     /// Handles trainer interaction logic, including pre- and post-battle dialogue
     /// and initializing trainer battles.
     /// </summary>
-    public sealed class TrainerInteractable : MonoBehaviour, IInteractable
+    internal sealed class TrainerInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required, Tooltip("Dialogue shown before the trainer battle.")]
         private DialogueDefinition preBattleDialogue;

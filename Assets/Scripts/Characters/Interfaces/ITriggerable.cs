@@ -4,7 +4,7 @@
     /// Represents an object that can be triggered by a <see cref="Character"/>.
     /// Implementations define what happens when the trigger is activated.
     /// </summary>
-    public interface ITriggerable
+    internal interface ITriggerable
     {
         /// <summary>
         /// Activates this trigger for the given <see cref="Character"/>.

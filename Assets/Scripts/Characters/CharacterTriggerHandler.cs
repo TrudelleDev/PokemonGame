@@ -8,7 +8,7 @@ namespace PokemonGame.Characters
     /// Detects and activates triggers in front of the character,
     /// such as warp tiles, cutscenes, or scripted events.
     /// </summary>
-    public sealed class CharacterTriggerHandler
+    internal sealed class CharacterTriggerHandler
     {
         private readonly Character character;
         private readonly RaycastSettings raycastSettings;

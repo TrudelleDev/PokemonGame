@@ -11,7 +11,7 @@ namespace PokemonGame.Pokemon.UI
     /// Hides the image if no valid sprite is available.
     /// </summary>
     [RequireComponent(typeof(Image))]
-    public partial class PokemonSprite : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal partial class PokemonSprite : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Determines which sprite variant to display (Menu, Front, or Back).")]

@@ -10,7 +10,7 @@ namespace PokemonGame.Characters
     /// Used to configure trainer identity, battle appearance, party composition, and starting inventory.
     /// </summary>
     [CreateAssetMenu(menuName = "PokemonGame/Characters/Charcater Definition")]
-    public sealed class CharacterDefinition : ScriptableObject
+    internal sealed class CharacterDefinition : ScriptableObject
     {
         [SerializeField, Tooltip("Optional trainer's title (e.g., Bug Catcher, Ace Trainer).")]
         private string title;

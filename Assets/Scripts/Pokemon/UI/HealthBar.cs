@@ -14,7 +14,7 @@ namespace PokemonGame.Pokemon.UI
     /// Smoothly animates when the health changes.
     /// </summary>
     [RequireComponent(typeof(Slider))]
-    public class HealthBar : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class HealthBar : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         private const float HighHealthThreshold = 0.5f;
         private const float MidHealthThreshold = 0.25f;

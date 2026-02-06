@@ -12,7 +12,7 @@ namespace PokemonGame.Items
     /// and maintains a mutable quantity that can be increased or decreased at runtime.
     /// </summary>
     [Serializable]
-    public class Item
+    internal class Item
     {
         [SerializeField, Required, Tooltip("Reference to the item's static definition.")]
         private ItemDefinition definition;

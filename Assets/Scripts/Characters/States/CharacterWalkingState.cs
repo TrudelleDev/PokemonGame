@@ -11,7 +11,7 @@ namespace PokemonGame.Characters.States
     /// Triggers are checked before movement, collisions are handled, and movement
     /// is executed via coroutine with animation.
     /// </summary>
-    public sealed class CharacterWalkingState : ICharacterState
+    internal sealed class CharacterWalkingState : ICharacterState
     {
         private readonly CharacterStateController controller;
         private Coroutine walkRoutine;

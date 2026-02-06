@@ -10,7 +10,7 @@ namespace PokemonGame.Characters
     /// Handles interactable checks in front of the character based on input.
     /// Triggers objects like NPCs, signs, and items.
     /// </summary>
-    public sealed class CharacterInteractionHandler
+    internal sealed class CharacterInteractionHandler
     {
         private readonly Character character;
         private readonly RaycastSettings raycastSettings;

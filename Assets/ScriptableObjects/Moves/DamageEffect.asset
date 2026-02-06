@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c6623f8a0883404ca80cb65221da67e, type: 3}
-  m_Name: Damage_Effect
+  m_Name: DamageEffect
   m_EditorClassIdentifier: 
   effectivenessSounds:
     normalSound: {fileID: 8300000, guid: a5e2d8c2054d39c4ab96f153d0315178, type: 3}

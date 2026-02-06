@@ -50,7 +50,7 @@ namespace PokemonGame.Battle.UI
         /// Bind an array of moves to the buttons, enabling interaction and events.
         /// </summary>
         /// <param name="moves">Array of 1–4 moves for the active Monster.</param>
-        public void BindMoves(MoveInstance[] moves)
+        internal void BindMoves(MoveInstance[] moves)
         {
             UnbindMoves();
 

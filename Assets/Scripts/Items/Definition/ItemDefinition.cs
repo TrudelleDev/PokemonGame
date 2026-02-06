@@ -11,7 +11,7 @@ namespace PokemonGame.Items.Definition
     /// Abstract base definition for all game items.
     /// Stores identity, visuals, description, and category.
     /// </summary>
-    public abstract class ItemDefinition : ScriptableObject, IDisplayable
+    internal abstract class ItemDefinition : ScriptableObject, IDisplayable
     {
         protected const string FailMessage = "But it failed...";
         protected const string NoEffectMessage = "It won't have any effect.";

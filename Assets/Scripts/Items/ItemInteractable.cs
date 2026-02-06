@@ -11,7 +11,7 @@ namespace PokemonGame.Items
     /// <summary>
     /// Interactable item pickup: grants an item stack to the interacting character.
     /// </summary>
-    public class ItemInteractable : MonoBehaviour, IInteractable
+    internal class ItemInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required, Tooltip("The item this pickup grants.")]
         private Item item;

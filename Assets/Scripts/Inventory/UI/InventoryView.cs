@@ -14,7 +14,7 @@ namespace PokemonGame.Inventory.UI
     /// Handles item list population, highlighting, submitting, and canceling.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class InventoryView : View
+    internal sealed class InventoryView : View
     {
         [SerializeField, Required, Tooltip("Prefab used for each inventory item in the UI.")]
         private ItemUI inventoryItemPrefab;

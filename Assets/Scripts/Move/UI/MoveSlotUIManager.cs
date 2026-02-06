@@ -6,29 +6,29 @@ using UnityEngine;
 namespace PokemonGame.Move.UI
 {
     /// <summary>
-    /// Manages and binds a Pokémon's moves to the summary screen UI slots.
+    /// Manages and binds a Monster's moves to the summary screen UI slots.
     /// Handles populating move data and enabling/disabling interaction.
     /// </summary>
-    public class MoveSlotUIManager : MonoBehaviour
+    internal sealed class MoveSlotUIManager : MonoBehaviour
     {
         /// <summary>
-        /// Binds all of a Pokémon's moves to the corresponding summary UI slots.
+        /// Binds all of a Monster's moves to the corresponding summary UI slots.
         /// </summary>
-        /// <param name="pokemon">The Pokémon whose moves will be displayed.</param>
-        public void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The Monster whose moves will be displayed.</param>
+        internal void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Moves == null)
+            if (monster?.Moves == null)
             {
                 return;
             }
 
-            BindMoves(pokemon.Moves.Moves);
+            BindMoves(monster.Moves.Moves);
         }
 
         /// <summary>
         /// Clears all move slots and disables interactivity.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             for (int i = 0; i < transform.childCount; i++)
             {

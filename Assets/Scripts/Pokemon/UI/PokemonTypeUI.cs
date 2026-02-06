@@ -7,7 +7,7 @@ namespace PokemonGame.Pokemon.UI
     /// <summary>
     /// Displays the Pokémon's primary and secondary type icons.
     /// </summary>
-    public class PokemonTypeUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class PokemonTypeUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's primary type icon.")]

@@ -8,7 +8,7 @@ namespace PokemonGame.Pokemon.UI
     /// <summary>
     /// Displays general Pokémon information including Pokédex number, name, types, trainer, and held item.
     /// </summary>
-    public class PokemonOverviewUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
+    internal class PokemonOverviewUI : MonoBehaviour, IBindable<PokemonInstance>, IUnbind
     {
         [SerializeField, Required]
         [Tooltip("Displays the Pokémon's Pokédex number.")]

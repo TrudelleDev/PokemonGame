@@ -9,7 +9,7 @@ namespace PokemonGame.Move.UI
     /// Controls the move detail section in the summary screen.
     /// Listens for move selection and updates the detail display accordingly.
     /// </summary>
-    public class MoveDetailUIController : MonoBehaviour
+    internal sealed class MoveDetailUIController : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Displays the selected move's power, accuracy, and effect.")]
@@ -33,7 +33,7 @@ namespace PokemonGame.Move.UI
         {
             MoveSlotUI summaryMove = button.GetComponent<MoveSlotUI>();
 
-            if (summaryMove?.Move != null)
+            if (summaryMove.Move != null)
             {
                 moveDetail.Bind(summaryMove.Move);
             }

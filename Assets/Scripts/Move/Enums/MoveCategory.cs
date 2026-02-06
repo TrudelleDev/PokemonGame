@@ -1,9 +1,9 @@
 ﻿namespace PokemonGame.Move.Enums
 {
     /// <summary>
-    /// Defines the category of a Pokémon move.
+    /// Defines the category of a Monster move.
     /// </summary>
-    public enum MoveCategory
+    internal enum MoveCategory
     {
         /// <summary>
         /// Physical moves use the user's Attack stat and the target's Defense stat.

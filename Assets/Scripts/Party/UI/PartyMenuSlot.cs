@@ -14,7 +14,7 @@ namespace PokemonGame.Party.UI
     /// </summary>
     [DisallowMultipleComponent]
     [RequireComponent(typeof(MenuButton))]
-    public sealed class PartyMenuSlot : MonoBehaviour
+    internal sealed class PartyMenuSlot : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Displays the Monster's name.")]
         private TextMeshProUGUI nameText;

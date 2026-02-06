@@ -1,5 +1,4 @@
-﻿using PokemonGame.Shared.Interfaces;
-using Sirenix.OdinInspector;
+﻿using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,10 +6,10 @@ using UnityEngine.UI;
 namespace PokemonGame.Move.UI
 {
     /// <summary>
-    /// Displays a compact UI slot for a Pokémon move, showing its name,
+    /// Displays a compact UI slot for a Monster move, showing its name,
     /// remaining PP, type icon, and damage category icon.
     /// </summary>
-    public class MoveSlotUI : MonoBehaviour, IBindable<MoveInstance>, IUnbind
+    internal sealed class MoveSlotUI : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text displaying the move's name.")]
@@ -30,7 +29,7 @@ namespace PokemonGame.Move.UI
         /// Binds the given move data to the UI slot.
         /// </summary>
         /// <param name="move">The move to display.</param>
-        public void Bind(MoveInstance move)
+        internal void Bind(MoveInstance move)
         {
             if (move?.Definition == null)
             {
@@ -49,7 +48,7 @@ namespace PokemonGame.Move.UI
         /// <summary>
         /// Clears all UI elements and resets the slot to an empty state.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             Move = null;
             nameText.text = "-";

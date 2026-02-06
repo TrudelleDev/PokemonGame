@@ -10,7 +10,7 @@ namespace PokemonGame.Items.Definition
     /// Defines an item that cures a specific status condition (e.g., Poison, Burn, Paralysis).
     /// </summary>
     [CreateAssetMenu(menuName = "MonsterTamer/Items/Status Condition Item Definition")]
-    public class StatusItemDefinition : ItemDefinition
+    internal class StatusItemDefinition : ItemDefinition
     {
         private const string RestoredTemplate = "{0} is no longer {1}.";
 

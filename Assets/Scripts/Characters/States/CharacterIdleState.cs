@@ -7,7 +7,7 @@ namespace PokemonGame.Characters.States
     /// Idle state: the character stands still.
     /// Evaluates input each frame and transitions to refacing, walking, or collision.
     /// </summary>
-    public sealed class CharacterIdleState : ICharacterState
+    internal sealed class CharacterIdleState : ICharacterState
     {
         private readonly CharacterStateController controller;
 

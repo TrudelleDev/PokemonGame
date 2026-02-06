@@ -62,7 +62,7 @@ namespace PokemonGame.Pokemon
         public PokemonGenderRatio GenderRatio => genderRatio;
         public PokemonStats BaseStats => baseStats;
         public NatureDatabase PossibleNatures => possibleNatures;
-        public LevelUpMove[] LevelUpMoves => levelUpMoves;
+        internal LevelUpMove[] LevelUpMoves => levelUpMoves;
         public AudioClip CryClip => cryClip;
         public PokemonSprites Sprites => sprites;
     }

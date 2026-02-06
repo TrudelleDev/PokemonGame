@@ -11,7 +11,7 @@ namespace PokemonGame.Battle.UI
     /// including its remaining Power Points (PP) and elemental type icon.
     /// </summary>
     [DisallowMultipleComponent]
-    public sealed class BattleMoveInfoPanel : MonoBehaviour
+    internal sealed class BattleMoveInfoPanel : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the move's remaining and total PP (e.g., '10/15').")]

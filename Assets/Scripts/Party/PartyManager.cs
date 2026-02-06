@@ -12,7 +12,7 @@ namespace PokemonGame.Party
     /// such as swapping, healing, and restoring original order.
     /// Raises events when the party changes.
     /// </summary>
-    public sealed class PartyManager
+    internal sealed class PartyManager
     {
         public const int MaxPartySize = 6;
 
@@ -22,7 +22,7 @@ namespace PokemonGame.Party
         /// <summary>
         /// The currently selected monster in the party.
         /// </summary>
-        public PokemonInstance SelectedMonster { get; private set; }
+        internal PokemonInstance SelectedMonster { get; private set; }
 
         /// <summary>
         /// The index of the currently selected monster, or -1 if none is selected.

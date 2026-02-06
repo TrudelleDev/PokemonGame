@@ -1,48 +1,49 @@
 ﻿using System.Collections;
 using PokemonGame.Move.Models;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Move.Effects
 {
     /// <summary>
-    /// Base abstract class for all move effects (damage, status, stat changes, etc.).
-    /// Inherits from ScriptableObject to allow effects to be created as reusable assets.
+    /// Base class for all move effects (damage, status, stat changes, etc.).
     /// </summary>
-    public abstract class MoveEffect : ScriptableObject
+    internal abstract class MoveEffect : ScriptableObject
     {
         /// <summary>
-        /// Waits for the target's health bar animation to complete before proceeding.
-        /// Overridable to allow specific effects to skip the wait.
+        /// Waits for the target Monster's health animation to complete.
+        /// Override if the effect doesn't need to wait for health updates.
         /// </summary>
-        /// <param name="context">The context containing the user, target, and move data.</param>
+        /// <param name="context">The context containing user, target, and move info.</param>
         protected virtual IEnumerator WaitForHealthAnimation(MoveContext context)
         {
-            yield break; // Default implementation immediately yields, doing nothing.
+            yield break;
         }
 
         /// <summary>
-        /// Provides the text to be displayed in the battle log for this effect.
+        /// Applies the main effect (damage, status, or stat changes) to the target.
         /// </summary>
-        /// <param name="context">The context containing the user, target, and move data.</param>
-        protected virtual string GetEffectText(MoveContext context) => string.Empty;
-
-        /// <summary>
-        /// Defines the logic for applying damage, stat changes, or other primary effects.
-        /// </summary>
-        /// <param name="context">The context containing the user, target, and move data.</param>
+        /// <param name="context">The context containing user, target, and move info.</param>
         protected abstract void ApplyEffect(MoveContext context);
 
         /// <summary>
-        /// Plays the visual and audio feedback when the move connects.
+        /// Plays visual and audio feedback for the move.
         /// </summary>
-        /// <param name="context">The context containing the user, target, and move data.</param>
+        /// <param name="context">The context containing user, target, and move info.</param>
         protected abstract IEnumerator PlayEffectAnimation(MoveContext context);
 
         /// <summary>
-        /// The main coroutine that orchestrates the entire sequence of the move's effect.
+        /// Plays the move's sound effect. Override for custom audio.
         /// </summary>
-        /// <param name="context">The context containing the user, target, and move data.</param>
-        public abstract IEnumerator PerformMoveSequence(MoveContext context);
+        /// <param name="context">The context containing user, target, and move info.</param>
+        protected virtual void PlayEffectSound(MoveContext context)
+        {
+            context.Battle.Components.Audio.PlayMoveSound(context.Move.Definition);
+        }
+
+        /// <summary>
+        /// Runs the full move sequence, including animations, effects, health updates, and dialogue.
+        /// </summary>
+        /// <param name="context">The context containing user, target, and move info.</param>
+        internal abstract IEnumerator PerformMoveSequence(MoveContext context);
     }
 }

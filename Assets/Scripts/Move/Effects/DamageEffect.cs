@@ -1,50 +1,48 @@
 ﻿using System.Collections;
-using PokemonGame.Audio;
 using PokemonGame.Battle;
 using PokemonGame.Move.Models;
 using PokemonGame.Type;
-using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace PokemonGame.Move.Effects
 {
     /// <summary>
-    /// Handles the complete sequence for a damaging move, including animations,
-    /// applying damage, waiting for health bar updates, and showing effectiveness dialogue.
+    /// Executes a standard damaging move sequence.
+    /// Handles damage calculation, hit animations, HP bar updates,
+    /// sound playback, and effectiveness dialogue for Monsters.
     /// </summary>
-    [CreateAssetMenu(menuName = "PokemonGame/Move/Effects/Damage Effect")]
-    public class DamageEffect : MoveEffect
+    [CreateAssetMenu(menuName = "MonsterTamer/Move/Effects/Damage Effect")]
+    internal sealed class DamageEffect : MoveEffect
     {
-        [SerializeField, Tooltip("Optional delay before the hit animation starts.")]
-        private float preHitDelay = 0.5f;
-
         /// <summary>
-        /// Returns true if the move's target is the player's Pokémon.
+        /// Returns true if the target Monster belongs to the player.
+        /// Used to select the correct HUD and animation side.
         /// </summary>
-        /// <param name="context">Current move execution context.</param>
-        private bool IsTargetUser(MoveContext context)
+        private static bool IsTargetPlayer(MoveContext context)
         {
             return context.Target == context.Battle.PlayerActiveMonster;
         }
 
         /// <summary>
-        /// Calculates and applies damage to the target Pokémon.
+        /// Calculates and applies damage to the target Monster.
         /// </summary>
-        /// <param name="context">Current move execution context.</param>
         protected override void ApplyEffect(MoveContext context)
         {
-            int damage = DamageCalculator.CalculateDamage(context.User, context.Target, context.Move);
+            int damage = DamageCalculator.CalculateDamage(
+                context.User,
+                context.Target,
+                context.Move);
+
             context.Target.Health.TakeDamage(damage);
         }
 
         /// <summary>
-        /// Waits until the target's health bar animation finishes updating.
-        /// Ensures the sequence doesn't continue until UI is done animating.
+        /// Waits for the target Monster's HP bar animation to finish.
+        /// Ensures the move sequence does not continue while the HUD is updating.
         /// </summary>
-        /// <param name="context">Current move execution context.</param>
         protected override IEnumerator WaitForHealthAnimation(MoveContext context)
         {
-            var healthBar = IsTargetUser(context)
+            var healthBar = IsTargetPlayer(context)
                 ? context.Battle.BattleHUDs.PlayerBattleHud.HealthBar
                 : context.Battle.BattleHUDs.OpponentBattleHud.HealthBar;
 
@@ -52,40 +50,33 @@ namespace PokemonGame.Move.Effects
         }
 
         /// <summary>
-        /// Plays the appropriate damage animation for the attacker or defender.
+        /// Plays the hit reaction animation on the target Monster.
         /// </summary>
-        /// <param name="context">Current move execution context.</param>
         protected override IEnumerator PlayEffectAnimation(MoveContext context)
         {
-            var animationCoroutine = IsTargetUser(context)
+            yield return IsTargetPlayer(context)
                 ? context.Battle.Components.Animation.PlayPlayerMonsterTakeDamage()
                 : context.Battle.Components.Animation.PlayOpponentMonsterTakeDamage();
-
-            yield return animationCoroutine;
         }
 
         /// <summary>
-        /// Performs the full damage move sequence including delay, animations,
-        /// damage calculation, health animation wait, and effectiveness text.
+        /// Performs the full damaging move sequence:
+        /// animation, sound, damage application, HP update,
+        /// and effectiveness dialogue for the target Monster.
         /// </summary>
-        /// <param name="context">Current move execution context.</param>
-        public override IEnumerator PerformMoveSequence(MoveContext context)
+        internal override IEnumerator PerformMoveSequence(MoveContext context)
         {
-            if (preHitDelay > 0)
-            {
-                yield return new WaitForSecondsRealtime(preHitDelay);
-            }
+            var moveType = context.Move.Definition.Classification.TypeDefinition;
+            var targetType = context.Target.Definition.Types.FirstType;
+            var effectiveness = moveType.EffectivenessGroups.GetEffectiveness(targetType);
 
-            TypeDefinition moveType = context.Move.Definition.Classification.TypeDefinition;
-            TypeDefinition targetType = context.Target.Definition.Types.FirstType;
-            TypeEffectiveness moveEffectiveness = moveType.EffectivenessGroups.GetEffectiveness(targetType);
-
-            context.Battle.Components.Audio.PlayEffectivenessSound(moveEffectiveness);
-
+            PlayEffectSound(context);
             yield return PlayEffectAnimation(context);
+
             ApplyEffect(context);
             yield return WaitForHealthAnimation(context);
-            yield return context.Battle.DialogueBox.ShowDialogueAndWait(moveEffectiveness.ToText());
+
+            yield return context.Battle.DialogueBox.ShowDialogueAndWait(effectiveness.ToText());
         }
     }
 }

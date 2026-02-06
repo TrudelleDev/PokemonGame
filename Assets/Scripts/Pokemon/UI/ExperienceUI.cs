@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemon.UI
 {
-    public class ExperienceUI : MonoBehaviour
+    internal class ExperienceUI : MonoBehaviour
     {
         [SerializeField, Required]
         private TextMeshProUGUI totalExperiencePointText;

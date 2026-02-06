@@ -10,7 +10,7 @@ namespace PokemonGame.Inventory
     /// Manages a single inventory for a player or character.
     /// Handles item storage, addition and removal
     /// </summary>
-    public sealed class InventoryManager
+    internal sealed class InventoryManager
     {
         private const int MaxQuantity = 99;
 

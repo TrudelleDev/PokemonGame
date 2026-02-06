@@ -9,7 +9,7 @@ namespace PokemonGame.Summary
     /// Controls the detailed Monster info panel in the summary screen.
     /// Displays monster overview and trainer memo.
     /// </summary>
-    public class SummaryInfoTab : MonoBehaviour
+    internal class SummaryInfoTab : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Displays the Monster's overview information")]

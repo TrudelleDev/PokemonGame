@@ -12,7 +12,7 @@ namespace PokemonGame.Dialogue
     /// when the player interacts with it.
     /// </summary>
     [DisallowMultipleComponent]
-    public class DialogueInteractable : MonoBehaviour, IInteractable
+    internal class DialogueInteractable : MonoBehaviour, IInteractable
     {
         [SerializeField, Required]
         [Tooltip("Dialogue definition to play when this object is interacted with.")]

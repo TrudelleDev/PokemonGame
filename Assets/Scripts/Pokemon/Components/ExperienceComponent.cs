@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace PokemonGame.Pokemon.Components
 {
-    public class ExperienceComponent
+    internal class ExperienceComponent
     {
         public int Level { get; private set; }
         public int CurrentExp { get; private set; }

@@ -14,7 +14,7 @@ namespace PokemonGame.Characters
     /// Manages states, animator, facing direction, and movement.
     /// </summary>
     [DisallowMultipleComponent]
-    public class CharacterStateController : MonoBehaviour
+    internal class CharacterStateController : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Direction the character faces when the scene starts.")]
         private FacingDirection startingDirection;
