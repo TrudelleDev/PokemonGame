@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Battle.Animations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -9,15 +10,22 @@ namespace PokemonGame.Battle.Models
     /// Used by <see cref="BattleView"/> to manage battle visuals and sound effects.
     /// </summary>
     [Serializable]
-    public struct BattleComponents
+    internal struct BattleComponents
     {
-        [SerializeField, Required, Tooltip("Controls all battle animations for player and opponent Pokémon.")]
+        [SerializeField, Required, Tooltip("Controls all battle animations for player and opponent Monster.")]
         private BattleAnimation animation;
 
         [SerializeField, Required, Tooltip("Handles all battle-related audio effects and music.")]
         private BattleAudio audio;
 
-        public BattleAnimation Animation => animation;
-        public BattleAudio Audio => audio;
+        /// <summary>
+        /// Controls all battle animations for player and opponent Monster.
+        /// </summary>
+        internal readonly BattleAnimation Animation => animation;
+
+        /// <summary>
+        /// Handles all battle-related audio effects and music.
+        /// </summary>
+        internal readonly BattleAudio Audio => audio;
     }
 }

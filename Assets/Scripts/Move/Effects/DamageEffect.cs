@@ -24,7 +24,7 @@ namespace PokemonGame.Move.Effects
         /// <param name="context">Current move execution context.</param>
         private bool IsTargetUser(MoveContext context)
         {
-            return context.Target == context.Battle.PlayerActivePokemon;
+            return context.Target == context.Battle.PlayerActiveMonster;
         }
 
         /// <summary>
@@ -45,8 +45,8 @@ namespace PokemonGame.Move.Effects
         protected override IEnumerator WaitForHealthAnimation(MoveContext context)
         {
             var healthBar = IsTargetUser(context)
-                ? context.Battle.BattleHUDs.Player.HealthBar
-                : context.Battle.BattleHUDs.Opponent.HealthBar;
+                ? context.Battle.BattleHUDs.PlayerBattleHud.HealthBar
+                : context.Battle.BattleHUDs.OpponentBattleHud.HealthBar;
 
             yield return healthBar.WaitForHealthAnimationComplete();
         }
@@ -58,8 +58,8 @@ namespace PokemonGame.Move.Effects
         protected override IEnumerator PlayEffectAnimation(MoveContext context)
         {
             var animationCoroutine = IsTargetUser(context)
-                ? context.Battle.Components.Animation.PlayPlayerTakeDamage()
-                : context.Battle.Components.Animation.PlayOpponentTakeDamage();
+                ? context.Battle.Components.Animation.PlayPlayerMonsterTakeDamage()
+                : context.Battle.Components.Animation.PlayOpponentMonsterTakeDamage();
 
             yield return animationCoroutine;
         }

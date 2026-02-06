@@ -1,4 +1,5 @@
 ﻿using System;
+using PokemonGame.Audio;
 using PokemonGame.Characters.Config;
 using PokemonGame.Menu;
 using Sirenix.OdinInspector;
@@ -23,6 +24,10 @@ namespace PokemonGame.Views
 
         [SerializeField, Required, Tooltip("Closes the game menu.")]
         private MenuButton exitButton;
+
+        [Title("Audio")]
+        [SerializeField, Required]
+        private AudioClip menuCloseSfx;
 
         internal event Action PartyOpenRequested;
         internal event Action InventoryOpenRequested;
@@ -56,7 +61,7 @@ namespace PokemonGame.Views
 
             if (Input.GetKeyDown(KeyBinds.Menu))
             {
-                CloseRequested?.Invoke();
+               OnCloseRequested();
             }
         }
 
@@ -72,6 +77,7 @@ namespace PokemonGame.Views
 
         private void OnCloseRequested()
         {
+            AudioManager.Instance.PlaySFX(menuCloseSfx);
             CloseRequested?.Invoke();
         }
     }

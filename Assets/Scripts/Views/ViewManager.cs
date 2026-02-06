@@ -232,7 +232,7 @@ namespace PokemonGame.Views
             PauseManager.SetPaused(shouldPause);
         }
 
-        public void CloseAll(params System.Type[] types)
+        public void ForceClose(params System.Type[] types)
         {
             foreach (var type in types)
             {

@@ -21,10 +21,8 @@ namespace PokemonGame.Menu.Controllers
         [Tooltip("Parents to scan for MenuButton components.")]
         private List<Transform> buttonSources = new();
 
-        [Title("Audio")]
         [SerializeField, Required]
-        [Tooltip("Sound effect for selection changes and clicks.")]
-        private AudioClip selectSound;
+        private AudioSetting audioSetting;
 
         private readonly List<MenuButton> buttons = new();
         private MenuButton currentButton;
@@ -154,9 +152,9 @@ namespace PokemonGame.Menu.Controllers
             currentButton = button;
             currentButton.SetSelected(true);
 
-            if (playSound)
+            if (playSound && audioSetting != null)
             {
-                AudioManager.Instance.PlaySFX(selectSound);
+                AudioManager.Instance.PlaySFX(audioSetting.UISelectClip);
             }
 
             OnSelect?.Invoke(button);
@@ -170,7 +168,9 @@ namespace PokemonGame.Menu.Controllers
             if (currentButton != null)
             {
                 currentButton.Click();
-                AudioManager.Instance.PlaySFX(selectSound);
+
+                if(audioSetting != null)
+                    AudioManager.Instance.PlaySFX(audioSetting.UIConfirmClip);
             }
 
             OnClick?.Invoke(currentButton);

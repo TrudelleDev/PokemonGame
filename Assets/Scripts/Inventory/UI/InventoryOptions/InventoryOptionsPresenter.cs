@@ -34,6 +34,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         private InventoryOptionsView inventoryOptionsView;
 
         private ItemDefinition currentItem;
+        private bool lastItemUseSucceeded;
 
         /// <summary>
         /// Raised when an item has been used successfully.
@@ -82,6 +83,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
                 }
 
                 ItemUseResult result = currentItem.Use(pokemon);
+                lastItemUseSucceeded = result.Used;
 
                 if (result.Used)
                 {
@@ -103,7 +105,7 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
         {
             ViewManager.Instance.Close<PartyMenuView>();
             OverworldDialogueBox.Instance.Dialogue.DialogueFinished -= ClosePartyMenu;
-            ItemUsed?.Invoke(true);
+            ItemUsed?.Invoke(lastItemUseSucceeded);
         }
 
         private void HandleReturnRequested()

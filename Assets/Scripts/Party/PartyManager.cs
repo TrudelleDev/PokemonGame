@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using PokemonGame.Pokemon;
 using PokemonGame.Utilities;
 
@@ -154,6 +155,12 @@ namespace PokemonGame.Party
             }
 
             SelectedMonster = members[index];
+        }
+
+        public PokemonInstance GetFirstUsablePokemon()
+        {
+            // The Party class is the "expert" on its own members
+            return Members.FirstOrDefault(m => m.Health.CurrentHealth > 0);
         }
 
         /// <summary>

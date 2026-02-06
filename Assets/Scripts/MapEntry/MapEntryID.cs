@@ -10,7 +10,7 @@
         None = 0,
 
         // Viridian Forest
-        ViridianForest_Entrance,
+        ForestEntrance,
         ViridianForest_ExitNorth,
         ViridianForest_ExitSouth,
 

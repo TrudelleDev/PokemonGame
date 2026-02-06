@@ -1,4 +1,5 @@
-﻿using PokemonGame.Battle;
+﻿using PokemonGame.Audio;
+using PokemonGame.Battle;
 using PokemonGame.Characters.Interfaces;
 using PokemonGame.Dialogue;
 using PokemonGame.Views;
@@ -18,6 +19,10 @@ namespace PokemonGame.Characters.Trainers
 
         [SerializeField, Required, Tooltip("Dialogue shown after the trainer has been defeated.")]
         private DialogueDefinition postBattleDialogue;
+
+        [SerializeField, Required]
+        private AudioClip battleBGMClip;
+
 
         private bool hasBattled;
         private Character player;
@@ -56,6 +61,8 @@ namespace PokemonGame.Characters.Trainers
         private void OnPreBattleDialogueFinished()
         {
             OverworldDialogueBox.Instance.Dialogue.DialogueFinished -= OnPreBattleDialogueFinished;
+
+            AudioManager.Instance.PlayBGM(battleBGMClip);
             BattleView battle = ViewManager.Instance.Show<BattleView>();
             battle.InitializeTrainerBattle(player, trainer);
             hasBattled = true;

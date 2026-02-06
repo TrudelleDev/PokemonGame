@@ -6,35 +6,33 @@ namespace PokemonGame.Battle.Models
 {
     /// <summary>
     /// Contains references to all animators used for the player during battle,
-    /// including the platform, trainer sprite, active Pokémon, HUD, and Pokéball throw animations.
+    /// including Monster sprite, and HUD animations.
     /// </summary>
     [Serializable]
-    public struct PlayerAnimations
+    internal struct PlayerAnimations
     {
-        [SerializeField, Required, Tooltip("Animator controlling the player's battle platform.")]
-        private Animator platformAnimator;
+        [SerializeField, Required, Tooltip("Animator controlling the player's Monster sprite.")]
+        private Animator monsterAnimator;
 
         [SerializeField, Required, Tooltip("Animator controlling the player's trainer sprite.")]
-        private Animator trainerSpriteAnimator;
-
-        [SerializeField, Required, Tooltip("Animator controlling the player's active Pokémon sprite.")]
-        private Animator pokemonAnimator;
-
-        [SerializeField, Required]
-        private Animator pokemonBarAnimator;
+        private Animator trainerAnimator;
 
         [SerializeField, Required, Tooltip("Animator controlling the player's HUD display.")]
         private Animator hudAnimator;
 
-        [SerializeField, Required, Tooltip("Animator used for the Pokéball throw animation.")]
-        private Animator throwBallAnimator;
+        /// <summary>
+        /// Animator controlling the player's trainer sprite.
+        /// </summary>
+        internal readonly Animator MonsterAnimator => monsterAnimator;
 
-        public Animator PlatformAnimator => platformAnimator;
-        public Animator TrainerSpriteAnimator => trainerSpriteAnimator;
-        public Animator PokemonAnimator => pokemonAnimator;
-        public Animator HudAnimator => hudAnimator;
+        /// <summary>
+        /// Animator controlling the player's Monster sprite.
+        /// </summary>
+        internal readonly Animator TrainerSpriteAnimator => trainerAnimator;
 
-        public Animator PokemonBarAnimator => pokemonBarAnimator;
-        public Animator ThrowBallAnimator => throwBallAnimator;
+        /// <summary>
+        /// Animator controlling the player's HUD display.
+        /// </summary>
+        internal readonly Animator HudAnimator => hudAnimator;
     }
 }

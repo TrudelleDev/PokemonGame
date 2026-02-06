@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using PokemonGame.Audio;
 using PokemonGame.Characters.Directions;
 using PokemonGame.Characters.Player;
 using PokemonGame.Raycasting;
@@ -32,6 +33,9 @@ namespace PokemonGame.Characters.Trainers
 
         [SerializeField, Tooltip("The maximum distance the trainer can see the player.")]
         private float viewDistance = 5f;
+
+        [SerializeField, Required]
+        private AudioClip trainerTriggerClip;
 
         private readonly Vector2 visionBoxSize = new(0.9f, 0.9f);
 
@@ -112,10 +116,14 @@ namespace PokemonGame.Characters.Trainers
             var playerState = player.GetComponent<CharacterStateController>();
             playerState.Lock();
 
+
+            AudioManager.Instance.PlayBGM(trainerTriggerClip);
+
             // 1. Show alert icon
             exclamationIcon.gameObject.SetActive(true);
             yield return new WaitForSeconds(ExclamationDuration);
             exclamationIcon.gameObject.SetActive(false);
+
 
             // 2. Approach player safely
             Vector2Int playerTile = Vector2Int.RoundToInt(player.transform.position);

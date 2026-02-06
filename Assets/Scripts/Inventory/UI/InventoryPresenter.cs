@@ -89,6 +89,11 @@ namespace PokemonGame.Inventory.UI
             }
         }
 
+        private void HandleItemUsed(bool result)
+        {
+            ItemUsed?.Invoke(result);
+        }
+
         private void HandleCloseInventory()
         {
             ViewManager.Instance.Close<InventoryView>();

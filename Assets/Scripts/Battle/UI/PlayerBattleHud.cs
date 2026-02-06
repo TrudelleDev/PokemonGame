@@ -8,96 +8,92 @@ using UnityEngine.UI;
 namespace PokemonGame.Battle.UI
 {
     /// <summary>
-    /// Displays the player's active Pokémon HUD, including name, level, HP text, health bar, and back sprite.
-    /// It subscribes to the bound PokemonInstance's events (Health and Experience) to update itself in real-time.
+    /// Displays the player's active Monster HUD, including name, level, HP text, health bar, experience bar, and back sprite.
+    /// Updates in real-time via subscribed events from the bound <see cref="PokemonInstance"/>.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class PlayerBattleHud : MonoBehaviour
+    public sealed class PlayerBattleHud : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Text field showing the player's Pokémon name.")]
+        [Tooltip("Text field showing the player's Monster name.")]
         private TextMeshProUGUI nameText;
 
         [SerializeField, Required]
-        [Tooltip("Text field showing the player's Pokémon level.")]
+        [Tooltip("Text field showing the player's Monster level.")]
         private TextMeshProUGUI levelText;
 
         [SerializeField, Required]
-        [Tooltip("Text field showing the player's Pokémon current and maximum HP (e.g., 100/150).")]
+        [Tooltip("Text field showing the player's Monster current and maximum HP (e.g., 100/150).")]
         private TextMeshProUGUI healthText;
 
         [SerializeField, Required]
-        [Tooltip("Health bar component displaying the player's Pokémon HP visually.")]
+        [Tooltip("Health bar component displaying the player's Monster HP visually.")]
         private HealthBar healthBar;
 
         [SerializeField, Required]
-        [Tooltip("Experience bar component displaying the player's Pokémon current EXP progress.")]
+        [Tooltip("Experience bar component displaying the player's Monster current EXP progress.")]
         private ExperienceBar experienceBar;
 
         [SerializeField, Required]
         [Tooltip("Image showing the player's Pokémon back-facing battle sprite.")]
         private Image backSprite;
 
-        private PokemonInstance currentPokemon;
+        private PokemonInstance activeMonster;
 
         /// <summary>
-        /// Provides access to the HealthBar component, allowing the state machine to trigger damage animations.
+        /// Provides access to the HealthBar component for damage animations or updates.
         /// </summary>
         internal HealthBar HealthBar => healthBar;
 
         /// <summary>
-        /// Provides access to the ExperienceBar component, allowing the VictoryState to trigger EXP fill animations.
+        /// Provides access to the ExperienceBar component for EXP gain animations.
         /// </summary>
         internal ExperienceBar ExperienceBar => experienceBar;
 
         /// <summary>
-        /// Initializes the HUD with the given Pokémon data and sets up real-time event listeners.
+        /// Binds the HUD to a specific Monster instance and subscribes to events for live updates.
         /// </summary>
-        /// <param name="pokemon">The player's active Pokémon instance to display.</param>
-        internal void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The active Monster instance.</param>
+        internal void Bind(PokemonInstance monster)
         {
-            // Always unbind any previously bound Pokémon before binding a new one.
-            UnsubscribeCurrentPokemon();
+            // Unsubscribe from any previously bound Monster
+            UnsubscribeCurrentMonster();
 
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            // Storing the reference is essential for accessing Health/Experience properties in event handlers.
-            currentPokemon = pokemon;
+            activeMonster = monster;
 
-            // Initial UI update
-            nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = pokemon.Experience.Level.ToString();
-            healthText.text = $"{pokemon.Health.CurrentHealth}/{pokemon.Health.MaxHealth}";
-            backSprite.sprite = pokemon.Definition.Sprites.BackSprite;
+            // Initialize HUD
+            nameText.text = monster.Definition.DisplayName;
+            levelText.text = $"L{monster.Experience.Level}";
+            UpdateHealthText();
+            backSprite.sprite = monster.Definition.Sprites.BackSprite;
 
-            // Delegate binding to specialized sub-components
-            healthBar.Bind(pokemon);
-            experienceBar.Bind(pokemon);
+            // Bind sub-components
+            healthBar.Bind(monster);
+            experienceBar.Bind(monster);
 
-            // Subscribe to events for real-time updates
-            currentPokemon.Experience.LevelChanged += HandleLevelChanged;
-            currentPokemon.Health.HealthChanged += HandleHealthChanged;
+            // Subscribe to live updates
+            activeMonster.Health.HealthChanged += HandleHealthChanged;
+            activeMonster.Experience.LevelChanged += HandleLevelChanged;
         }
 
         /// <summary>
-        /// Clears the HUD display and unbinds the current Pokémon.
+        /// Clears the HUD and unsubscribes from all Monster events.
         /// </summary>
         internal void Unbind()
         {
-            // Ensure events are cleaned up first
-            UnsubscribeCurrentPokemon();
+            UnsubscribeCurrentMonster();
 
-            // Reset UI state
             nameText.text = string.Empty;
             levelText.text = string.Empty;
             healthText.text = "- / -";
             backSprite.sprite = null;
 
-            // Delegate unbinding to specialized sub-components
             healthBar.Unbind();
             experienceBar.Unbind();
         }
@@ -109,24 +105,23 @@ namespace PokemonGame.Battle.UI
 
         private void HandleLevelChanged(int newLevel)
         {
-            // Update UI elements affected by a level change (level number and max health text)
-            levelText.text = currentPokemon.Experience.Level.ToString();
+            levelText.text = $"L{activeMonster.Experience.Level}";
             UpdateHealthText();
         }
 
         private void UpdateHealthText()
         {
-            healthText.text = $"{currentPokemon.Health.CurrentHealth}/{currentPokemon.Health.MaxHealth}";
+            healthText.text = $"{activeMonster.Health.CurrentHealth}/{activeMonster.Health.MaxHealth}";
         }
 
-        private void UnsubscribeCurrentPokemon()
+        private void UnsubscribeCurrentMonster()
         {
-            if (currentPokemon != null)
+            if (activeMonster != null)
             {
-                currentPokemon.Experience.LevelChanged -= HandleLevelChanged;
-                currentPokemon.Health.HealthChanged -= HandleHealthChanged;
-                currentPokemon = null;
+                activeMonster.Health.HealthChanged -= HandleHealthChanged;
+                activeMonster.Experience.LevelChanged -= HandleLevelChanged;
+                activeMonster = null;
             }
         }
     }
-}
+} 

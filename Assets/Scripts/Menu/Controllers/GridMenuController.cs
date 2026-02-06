@@ -27,10 +27,8 @@ namespace PokemonGame.Menu.Controllers
         [Tooltip("Number of columns in this grid. Buttons will wrap according to this width.")]
         private int columns = 2;
 
-        [Title("Audio")]
         [SerializeField, Required]
-        [Tooltip("Sound effect for selection changes and clicks.")]
-        private AudioClip selectSound;
+        private AudioSetting audioSetting;
 
         private readonly List<MenuButton> buttons = new();
         private MenuButton currentButton;
@@ -139,7 +137,7 @@ namespace PokemonGame.Menu.Controllers
 
             if (playSound)
             {
-                AudioManager.Instance.PlaySFX(selectSound);
+                AudioManager.Instance.PlaySFX(audioSetting.UISelectClip);
             }
 
             OnSelect?.Invoke(button);
@@ -156,7 +154,7 @@ namespace PokemonGame.Menu.Controllers
             }
 
             currentButton.Click();
-            AudioManager.Instance.PlaySFX(selectSound);
+            AudioManager.Instance.PlaySFX(audioSetting.UIConfirmClip);
             OnClick?.Invoke(currentButton);
         }
 

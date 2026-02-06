@@ -4,6 +4,7 @@ using PokemonGame.Pokemon.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace PokemonGame.Party.UI
 {
@@ -23,6 +24,9 @@ namespace PokemonGame.Party.UI
 
         [SerializeField, Required, Tooltip("Displays the Monster's current HP.")]
         private TextMeshProUGUI healthText;
+
+        [SerializeField, Required]
+        private Image menuSprite;
 
         [SerializeField, Required, Tooltip("Displays a visual health bar representing HP.")]
         private HealthBar healthBar;
@@ -87,6 +91,8 @@ namespace PokemonGame.Party.UI
             levelText.text = string.Empty;
             healthText.text = string.Empty;
 
+            menuSprite.enabled = false;
+
             healthBar.Unbind();
 
             SetSlotVisibility(false);
@@ -114,6 +120,10 @@ namespace PokemonGame.Party.UI
             nameText.text = monster.Definition.DisplayName;
             levelText.text = $"lv{monster.Experience.Level}";
             healthText.text = $"{monster.Health.CurrentHealth}/{monster.Health.MaxHealth}";
+
+            menuSprite.enabled = true;
+            menuSprite.sprite = monster.Definition.Sprites.MenuSprite;
+
             monster.Health.CurrentHealth.ToString();
 
             healthBar.Bind(monster);

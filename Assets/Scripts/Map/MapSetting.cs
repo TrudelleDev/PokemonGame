@@ -55,7 +55,7 @@ namespace PokemonGame.Map
 
             if (OverworldDialogueBox.Instance.Dialogue != null && dialogueSetting != null)
             {
-                OverworldDialogueBox.Instance.Dialogue.ApplyTheme(dialogueSetting);
+               // OverworldDialogueBox.Instance.Dialogue.ApplyTheme(dialogueSetting);
             }
         }
     }

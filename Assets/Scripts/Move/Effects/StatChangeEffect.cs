@@ -56,7 +56,8 @@ namespace PokemonGame.Move.Effects
         /// <param name="context">Current move execution context.</param>
         protected override IEnumerator PlayEffectAnimation(MoveContext context)
         {
-            yield return context.Battle.Components.Animation.PlayStatusEffect();
+            yield return null;
+         //   yield return context.Battle.Components.Animation.PlayStatusEffect();
         }
 
         /// <summary>

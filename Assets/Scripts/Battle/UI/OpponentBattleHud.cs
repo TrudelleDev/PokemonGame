@@ -8,49 +8,54 @@ using UnityEngine.UI;
 namespace PokemonGame.Battle.UI
 {
     /// <summary>
-    /// Displays the opponent Pokémon's battle HUD, including name, level, health, and front sprite.
+    /// Displays the opponent Monster's battle HUD, including name, level, HP, and front sprite.
+    /// Provides methods to bind and unbind Monster data.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class OpponentBattleHud : MonoBehaviour
+    public sealed class OpponentBattleHud : MonoBehaviour
     {
         [SerializeField, Required]
-        [Tooltip("Text field showing the opponent Pokémon's display name.")]
+        [Tooltip("Text field showing the opponent Monster's display name.")]
         private TextMeshProUGUI nameText;
 
         [SerializeField, Required]
-        [Tooltip("Text field showing the opponent Pokémon's level.")]
+        [Tooltip("Text field showing the opponent Monster's level.")]
         private TextMeshProUGUI levelText;
 
         [SerializeField, Required]
-        [Tooltip("Health bar component displaying the opponent Pokémon's current HP.")]
+        [Tooltip("Health bar component displaying the opponent Monster's current HP.")]
         private HealthBar healthBar;
 
         [SerializeField, Required]
-        [Tooltip("Image component showing the opponent Pokémon's front-facing battle sprite.")]
+        [Tooltip("Image component showing the opponent Monster's front-facing battle sprite.")]
         private Image frontSprite;
 
+        /// <summary>
+        /// Provides external access to the health bar for updates.
+        /// </summary>
         internal HealthBar HealthBar => healthBar;
 
         /// <summary>
-        /// Initializes the opponent battle HUD with the given Pokémon data.
+        /// Binds the opponent HUD to the given Monster instance.
+        /// Updates name, level, health bar, and front sprite.
         /// </summary>
-        /// <param name="pokemon">The opponent Pokémon to display.</param>
-        internal void Bind(PokemonInstance pokemon)
+        /// <param name="monster">The opponent Monster to display.</param>
+        internal void Bind(PokemonInstance monster)
         {
-            if (pokemon?.Definition == null)
+            if (monster?.Definition == null)
             {
                 Unbind();
                 return;
             }
 
-            nameText.text = pokemon.Definition.DisplayName;
-            levelText.text = pokemon.Experience.Level.ToString();
-            healthBar.Bind(pokemon);
-            frontSprite.sprite = pokemon.Definition.Sprites.FrontSprite;
+            nameText.text = monster.Definition.DisplayName;
+            levelText.text = $"L{monster.Experience.Level}";
+            healthBar.Bind(monster);
+            frontSprite.sprite = monster.Definition.Sprites.FrontSprite;
         }
 
         /// <summary>
-        /// Clears all displayed information and unbinds the current Pokémon.
+        /// Clears all HUD elements and unbinds any Monster reference.
         /// </summary>
         internal void Unbind()
         {

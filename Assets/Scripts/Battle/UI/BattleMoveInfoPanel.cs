@@ -8,23 +8,23 @@ namespace PokemonGame.Battle.UI
 {
     /// <summary>
     /// Displays detailed information about the currently selected move,
-    /// including its remaining Power Points (PP), and elemental type icon.
+    /// including its remaining Power Points (PP) and elemental type icon.
     /// </summary>
     [DisallowMultipleComponent]
-    public class BattleMoveInfoPanel : MonoBehaviour
+    public sealed class BattleMoveInfoPanel : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Text field displaying the move's remaining and total PP (e.g., '10/15').")]
-        private TextMeshProUGUI powerPointText;
+        private TextMeshProUGUI ppText;
 
         [SerializeField, Required]
         [Tooltip("Image showing the move's elemental type (e.g., Fire, Water, Grass).")]
-        private Image typeImage;
+        private Image typeIcon;
 
         /// <summary>
-        /// Binds the given move data to the detail panel, updating PP and type icon.
+        /// Updates the panel to display information for the given move.
         /// </summary>
-        /// <param name="move">The move to display information for.</param>
+        /// <param name="move">The move instance to display.</param>
         public void Bind(MoveInstance move)
         {
             if (move?.Definition == null)
@@ -33,8 +33,8 @@ namespace PokemonGame.Battle.UI
                 return;
             }
 
-            powerPointText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
-            typeImage.sprite = move.Definition.Classification.TypeDefinition.Icon;
+            ppText.text = $"{move.PowerPointRemaining}/{move.Definition.MoveInfo.PowerPoint}";
+            typeIcon.sprite = move.Definition.Classification.TypeDefinition.Icon;
         }
 
         /// <summary>
@@ -42,8 +42,8 @@ namespace PokemonGame.Battle.UI
         /// </summary>
         public void Unbind()
         {
-            powerPointText.text = string.Empty;
-            typeImage.sprite = null;
+            ppText.text = string.Empty;
+            typeIcon.sprite = null;
         }
     }
 }

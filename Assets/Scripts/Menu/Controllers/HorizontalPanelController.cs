@@ -13,10 +13,8 @@ namespace PokemonGame.Menu.Controllers
     /// </summary>
     internal class HorizontalPanelController : MenuController
     {
-        [Title("Audio")]
         [SerializeField, Required]
-        [Tooltip("Sound played when the navigation changes.")]
-        private AudioClip navigateSound;
+        private AudioSetting audioSettings;
 
         private int currentPanelIndex;
         private int previousPanelIndex;
@@ -53,9 +51,9 @@ namespace PokemonGame.Menu.Controllers
                 transform.GetChild(previousPanelIndex).gameObject.SetActive(false);
                 transform.GetChild(currentPanelIndex).gameObject.SetActive(true);
 
-                if (navigateSound != null && AudioManager.Instance != null)
+                if (audioSettings != null && AudioManager.Instance != null)
                 {
-                    AudioManager.Instance.PlaySFX(navigateSound);
+                    AudioManager.Instance.PlaySFX(audioSettings.UISelectClip);
                 }
 
                 previousPanelIndex = currentPanelIndex;

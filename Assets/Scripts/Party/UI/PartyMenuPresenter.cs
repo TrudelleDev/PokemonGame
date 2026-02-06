@@ -97,7 +97,7 @@ namespace PokemonGame.Party.UI
                     break;
 
                 case PartySelectionMode.Battle:
-                    HandleOverworldSelection(slot);
+                    OptionsRequested?.Invoke();
                     break;
 
                 case PartySelectionMode.UseItem:

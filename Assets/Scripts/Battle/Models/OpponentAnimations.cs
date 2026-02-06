@@ -6,31 +6,33 @@ namespace PokemonGame.Battle.Models
 {
     /// <summary>
     /// Contains references to all animators used for the opponent during battle,
-    /// including the platform, Pokémon sprite, and HUD animations.
+    /// including Monster sprite, and HUD animations.
     /// </summary>
     [Serializable]
-    public struct OpponentAnimations
+    internal struct OpponentAnimations
     {
-        [SerializeField, Required, Tooltip("Animator controlling the opponent's battle platform.")]
-        private Animator platformAnimator;
+        [SerializeField, Required, Tooltip("Animator controlling the wild or opponent's Monster sprite.")]
+        private Animator monsterAnimator;
 
-        [SerializeField, Required, Tooltip("Animator controlling the opponent's Pokémon sprite.")]
-        private Animator pokemonAnimator;
-
-        [SerializeField, Required] 
+        [SerializeField, Required, Tooltip("Animator controlling the opponent's trainer sprite")] 
         private Animator trainerAnimator;
-
-        [SerializeField, Required]
-        private Animator pokemonBarAnimator;
 
         [SerializeField, Required, Tooltip("Animator controlling the opponent's HUD display.")]
         private Animator hudAnimator;
 
-        public Animator PlatformAnimator => platformAnimator;
-        public Animator PokemonAnimator => pokemonAnimator;
-        public Animator TrainerAnimator => trainerAnimator;
+        /// <summary>
+        /// Animator controlling the wild or opponent's Monster sprite.
+        /// </summary>
+        internal readonly Animator MonsterAnimator => monsterAnimator;
 
-        public Animator PokemonBarAnimator => pokemonBarAnimator;
-        public Animator HudAnimator => hudAnimator;
+        /// <summary>
+        /// Animator controlling the opponent's trainer sprite
+        /// </summary>
+        internal readonly Animator TrainerAnimator => trainerAnimator;
+
+        /// <summary>
+        /// Animator controlling the opponent's HUD display.
+        /// </summary>
+        internal readonly Animator HudAnimator => hudAnimator;
     }
 }

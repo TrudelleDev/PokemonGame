@@ -12,25 +12,20 @@ namespace PokemonGame.Battle.Models
     [Serializable]
     internal struct BattleHUDs
     {
-        [SerializeField, Required, Tooltip("Displays the player's Pokémon information, such as HP, level, and status.")]
-        private PlayerBattleHud player;
+        [SerializeField, Required, Tooltip("Displays the player's Monster information.")]
+        private PlayerBattleHud playerBattleHud;
 
-        [SerializeField, Required, Tooltip("Displays the opponent's Pokémon information, such as HP, level, and status.")]
-        private OpponentBattleHud opponent;
+        [SerializeField, Required, Tooltip("Displays the opponent's Monster information.")]
+        private OpponentBattleHud opponentBattleHud;
 
-        [SerializeField, Required, Tooltip("Panel containing the player's battle action options (Fight, Bag, Pokémon, Run).")]
-        private BattleActionView playerActions;
+        /// <summary>
+        /// Displays the player's Monster information.
+        /// </summary>
+        internal readonly PlayerBattleHud PlayerBattleHud => playerBattleHud;
 
-        [SerializeField, Required, Tooltip("Panel displaying the player's available moves as buttons.")]
-        private BattleMoveSelectionPanel moveSelection;
-
-        [SerializeField, Required, Tooltip("Controller responsible for handling move selection logic and updating the move selection panel.")]
-        private MoveSelectionView moveController;
-
-        public PlayerBattleHud Player => player;
-        public OpponentBattleHud Opponent => opponent;
-        internal BattleActionView PlayerActions => playerActions;
-        public BattleMoveSelectionPanel MoveSelection => moveSelection;
-        internal MoveSelectionView MoveController => moveController;
+        /// <summary>
+        /// Displays the opponent's Monster information.
+        /// </summary>
+        internal readonly OpponentBattleHud OpponentBattleHud => opponentBattleHud;
     }
 }

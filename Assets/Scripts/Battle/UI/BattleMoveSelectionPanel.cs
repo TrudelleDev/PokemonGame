@@ -7,44 +7,49 @@ using UnityEngine;
 namespace PokemonGame.Battle.UI
 {
     /// <summary>
-    /// Display the player's available moves as buttons.
-    /// Raises events when moves are highlighted or confirmed.
+    /// Displays the player's available moves as interactive buttons.
+    /// 
+    /// Handles binding moves to UI buttons, highlighting moves,
+    /// and confirming move selection.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class BattleMoveSelectionPanel : MonoBehaviour
+    public sealed class BattleMoveSelectionPanel : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Button representing the first move slot.")]
-        private MenuButton moveButton1;
+        private MenuButton firstMoveButton;
 
         [SerializeField, Required, Tooltip("Button representing the second move slot.")]
-        private MenuButton moveButton2;
+        private MenuButton secondMoveButton;
 
         [SerializeField, Required, Tooltip("Button representing the third move slot.")]
-        private MenuButton moveButton3;
+        private MenuButton thirdMoveButton;
 
         [SerializeField, Required, Tooltip("Button representing the fourth move slot.")]
-        private MenuButton moveButton4;
+        private MenuButton fourthMoveButton;
 
+        // Internal arrays to store temporary event handlers for each button
         private readonly Action[] clickHandlers = new Action[4];
         private readonly Action[] selectHandlers = new Action[4];
 
         /// <summary>
-        /// Invoked when a move is confirmed (clicked or accepted).
+        /// Raised when a move is confirmed by the player.
         /// </summary>
         internal event Action<MoveInstance> MoveConfirmed;
 
         /// <summary>
-        /// Invoked when a move is highlighted (hovered or navigated to).
+        /// Raised when a move is highlighted (hovered or selected via navigation).
         /// </summary>
         internal event Action<MoveInstance> MoveHighlighted;
 
-        // Lazy property to access all buttons easily
-        private MenuButton[] Buttons => new[] { moveButton1, moveButton2, moveButton3, moveButton4 };
+        /// <summary>
+        /// Convenience property for accessing all four buttons as an array.
+        /// </summary>
+        private MenuButton[] Buttons => new[] { firstMoveButton, secondMoveButton, thirdMoveButton, fourthMoveButton };
 
         /// <summary>
-        /// Bind moves to buttons and enable interaction.
+        /// Bind an array of moves to the buttons, enabling interaction and events.
         /// </summary>
-        /// <param name="moves">Array of 1–4 moves.</param>
+        /// <param name="moves">Array of 1–4 moves for the active Monster.</param>
         public void BindMoves(MoveInstance[] moves)
         {
             UnbindMoves();
@@ -74,7 +79,7 @@ namespace PokemonGame.Battle.UI
         }
 
         /// <summary>
-        /// Clear all bindings and disable buttons.
+        /// Clears all button bindings and disables interaction.
         /// </summary>
         public void UnbindMoves()
         {

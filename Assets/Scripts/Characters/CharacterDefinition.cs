@@ -27,10 +27,15 @@ namespace PokemonGame.Characters
         [SerializeField, Required, Tooltip("The starting inventory assigned to this trainer.")]
         private InventoryDefinition inventoryDefinition;
 
+        [SerializeField, TextArea(2,10)]
+        private string endBattleDialogue;
+
         public string Title => title;
         public string DisplayName => displayName;
         public Sprite BattleSprite => battleSprite;
         public PartyDefinition PartyDefinition => partyDefinition;
         public InventoryDefinition InventoryDefinition => inventoryDefinition;
+
+        public string EndBattleDialogue => endBattleDialogue;
     }
 }

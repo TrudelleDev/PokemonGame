@@ -8,49 +8,65 @@ namespace PokemonGame.Battle.UI
 {
     /// <summary>
     /// View that displays the main battle action options
-    /// (Fight, Bag, Pokémon, Run).
     /// Raises intent events when the player selects an action,
     /// allowing the battle state machine to react accordingly.
     /// </summary>
     [DisallowMultipleComponent]
-    internal sealed class BattleActionView : View
+    public sealed class BattleActionView : View
     {
         [SerializeField, Required, Tooltip("Button to initiate the move selection screen.")]
-        private MenuButton fightButton;
+        private MenuButton moveSelectionButton;
 
-        [SerializeField, Required, Tooltip("Button to open the inventory/item selection screen.")]
-        private MenuButton bagButton;
+        [SerializeField, Required, Tooltip("Button to open the inventory screen.")]
+        private MenuButton inventoryButton;
 
-        [SerializeField, Required, Tooltip("Button to open the party/switch Pokémon screen.")]
+        [SerializeField, Required, Tooltip("Button to open the Monster party screen.")]
         private MenuButton partyButton;
 
         [SerializeField, Required, Tooltip("Button to attempt escaping the battle.")]
-        private MenuButton runButton;
+        private MenuButton escapeButton;
 
-        internal event Action FightSelected;
-        internal event Action BagSelected;
-        internal event Action PartySelected;
-        internal event Action RunSelected;
+        /// <summary>
+        /// Raised when the player selects the move selection option.
+        /// </summary>
+        internal event Action MoveSelectionRequested;
+
+        /// <summary>
+        /// Raised when the player selects the inventory option.
+        /// </summary>
+        internal event Action InventoryRequested;
+
+        /// <summary>
+        /// Raised when the player selects the party option.
+        /// </summary>
+        internal event Action PartyRequested;
+
+        /// <summary>
+        /// Raised when the player selects the escape option.
+        /// </summary>
+        internal event Action EscapeRequested;
 
         private void OnEnable()
         {
-            fightButton.OnSubmitted += OnFightSelected;
-            bagButton.OnSubmitted += OnBagSelected;
-            partyButton.OnSubmitted += OnPartySelected;
-            runButton.OnSubmitted += OnRunSelected;
+            moveSelectionButton.OnSubmitted += OnMoveSelectionRequested;
+            inventoryButton.OnSubmitted += OnInventoryRequested;
+            partyButton.OnSubmitted += OnPartyRequested;
+            escapeButton.OnSubmitted += OnEscapeRequested;
         }
 
         private void OnDisable()
         {
-            fightButton.OnSubmitted -= OnFightSelected;
-            bagButton.OnSubmitted -= OnBagSelected;
-            partyButton.OnSubmitted -= OnPartySelected;
-            runButton.OnSubmitted -= OnRunSelected;
+            moveSelectionButton.OnSubmitted -= OnMoveSelectionRequested;
+            inventoryButton.OnSubmitted -= OnInventoryRequested;
+            partyButton.OnSubmitted -= OnPartyRequested;
+            escapeButton.OnSubmitted -= OnEscapeRequested;
+
+            ResetMenuController();
         }
 
-        private void OnFightSelected() => FightSelected?.Invoke();
-        private void OnBagSelected() => BagSelected?.Invoke();
-        private void OnPartySelected() => PartySelected?.Invoke();
-        private void OnRunSelected() => RunSelected?.Invoke();
+        private void OnMoveSelectionRequested() => MoveSelectionRequested?.Invoke();
+        private void OnInventoryRequested() => InventoryRequested?.Invoke();
+        private void OnPartyRequested() => PartyRequested?.Invoke();
+        private void OnEscapeRequested() => EscapeRequested?.Invoke();
     }
 }

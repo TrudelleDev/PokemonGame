@@ -55,10 +55,6 @@ namespace PokemonGame.Pokemon
         [SerializeField, Tooltip("Front/back/battle/menu sprites for this Pokémon.")]
         private PokemonSprites sprites;
 
-        [BoxGroup("Visuals")]
-        [SerializeField, Required, Tooltip("Animator override for animating the Pokémon in menus.")]
-        private AnimatorOverrideController menuSpriteOverrider;
-
         // ------------- Public Properties -------------
         public string DisplayName => displayName;
         public int PokedexNumber => pokedexNumber;
@@ -69,6 +65,5 @@ namespace PokemonGame.Pokemon
         public LevelUpMove[] LevelUpMoves => levelUpMoves;
         public AudioClip CryClip => cryClip;
         public PokemonSprites Sprites => sprites;
-        public AnimatorOverrideController MenuSpriteOverrider => menuSpriteOverrider;
     }
 }

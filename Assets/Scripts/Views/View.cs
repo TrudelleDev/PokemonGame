@@ -16,8 +16,8 @@ namespace PokemonGame.Views
     {
         [Title("Base View Settings")]
 
-        [SerializeField, Tooltip("Sound effect played when the view is closed manually.")]
-        private AudioClip closeSound;
+        [SerializeField, Required]
+        private AudioSetting audioSettings;
 
         [SerializeField, Required, Tooltip("Transition used when opening this view.")]
         private TransitionType openTransition = TransitionType.None;
@@ -55,7 +55,16 @@ namespace PokemonGame.Views
         /// <summary>
         /// Hide the view.
         /// </summary>
-        public virtual void Hide() => gameObject.SetActive(false);
+        public virtual void Hide()
+        {
+            if (audioSettings != null)
+            {
+                AudioManager.Instance.PlaySFX(audioSettings.UIReturnClip);
+            }
+
+            gameObject.SetActive(false);
+        }
+
 
         /// <summary>
         /// Freeze the view, disabling interaction.
@@ -103,11 +112,6 @@ namespace PokemonGame.Views
 
             if (Input.GetKeyDown(KeyBinds.Cancel))
             {
-                if (closeSound != null)
-                {
-                    AudioManager.Instance.PlaySFX(closeSound);
-                }
-
                 ReturnKeyPressed?.Invoke();
             }
         }

@@ -25,12 +25,12 @@ namespace PokemonGame.Dialogue
         [SerializeField, Required] private GameObject content;
         [SerializeField, Required] private Image cursor;
 
-        [Title("Audio")]
-        [SerializeField, Required] private AudioClip textAdvanceSfx;
-
         [Title("Settings")]
         [SerializeField, MinValue(0.01f)] private float characterDelay = 0.05f;
         [SerializeField] private bool autoClose = true;
+
+        [SerializeField, Required]
+        private AudioSetting audioSetting;
 
         private string[] lines;
         private int lineIndex;
@@ -43,7 +43,7 @@ namespace PokemonGame.Dialogue
 
         private void Awake()
         {
-            ApplyTheme(defaultTheme);
+            //ApplyTheme(defaultTheme);
             Clear();
             if (autoClose) content.SetActive(false);
 
@@ -107,7 +107,9 @@ namespace PokemonGame.Dialogue
         public IEnumerator WaitForAdvance()
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
-            AudioManager.Instance.PlaySFX(textAdvanceSfx);
+
+            if(audioSetting != null)
+                AudioManager.Instance?.PlaySFX(audioSetting.UIConfirmClip);
         }
 
         private IEnumerator RunDialogueSequence()
