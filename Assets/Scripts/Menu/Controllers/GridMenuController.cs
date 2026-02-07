@@ -28,7 +28,7 @@ namespace PokemonGame.Menu.Controllers
         private int columns = 2;
 
         [SerializeField, Required]
-        private AudioSetting audioSetting;
+        private Audio.AudioSettings audioSetting;
 
         private readonly List<MenuButton> buttons = new();
         private MenuButton currentButton;
@@ -137,7 +137,7 @@ namespace PokemonGame.Menu.Controllers
 
             if (playSound)
             {
-                AudioManager.Instance.PlaySFX(audioSetting.UISelectClip);
+                AudioManager.Instance.PlaySFX(audioSetting.UISelectSfx);
             }
 
             OnSelect?.Invoke(button);
@@ -154,7 +154,7 @@ namespace PokemonGame.Menu.Controllers
             }
 
             currentButton.Click();
-            AudioManager.Instance.PlaySFX(audioSetting.UIConfirmClip);
+            AudioManager.Instance.PlaySFX(audioSetting.UIConfirmSfx);
             OnClick?.Invoke(currentButton);
         }
 

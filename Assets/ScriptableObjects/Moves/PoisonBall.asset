@@ -10,16 +10,16 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8faac129f641cdb4a8297f0e296fc9a4, type: 3}
-  m_Name: Peck
+  m_Name: PoisonBall
   m_EditorClassIdentifier: 
-  displayName: Razor Leaf
+  displayName: FireBlast
   moveInfo:
-    power: 35
+    power: 40
     accuracy: 100
     powerPoint: 25
   classification:
-    typeDefinition: {fileID: 11400000, guid: 919e73ff959ba794bbc045b570c50b5f, type: 2}
+    typeDefinition: {fileID: 11400000, guid: 7d3ababfd487d5d4b8f56b126fd68e66, type: 2}
     category: 0
   moveEffect: {fileID: 11400000, guid: fab21e12a6fc2224396406094f0f9bc3, type: 2}
-  effect: The foe is jabbed with a sharply pointed beak or horn.
-  sound: {fileID: 8300000, guid: 90be7bac430dfbd47989e790eb47cf95, type: 3}
+  effect: The foe is attacked with small flames. The foe may suffer a burn.
+  sound: {fileID: 8300000, guid: 9ead1f07f725aa14fbaabed80b347f20, type: 3}

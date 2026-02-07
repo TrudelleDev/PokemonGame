@@ -156,7 +156,7 @@ MonoBehaviour:
   item:
     definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
     quantity: 1
-  receiveItemClip: {fileID: 8300000, guid: bfcba8a0f5b33f7489b6d3047610bb50, type: 3}
+  receiveItemClip: {fileID: 8300000, guid: d3f27e2597dc4064f924a2d8ce2ddc4e, type: 3}
 --- !u!212 &549233138
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -8104,7 +8104,7 @@ MonoBehaviour:
   item:
     definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
     quantity: 1
-  receiveItemClip: {fileID: 8300000, guid: bfcba8a0f5b33f7489b6d3047610bb50, type: 3}
+  receiveItemClip: {fileID: 8300000, guid: d3f27e2597dc4064f924a2d8ce2ddc4e, type: 3}
 --- !u!212 &835393334
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65187,7 +65187,7 @@ MonoBehaviour:
   item:
     definition: {fileID: 11400000, guid: cd2bf49e6628ee842a5209200c3d3452, type: 2}
     quantity: 1
-  receiveItemClip: {fileID: 8300000, guid: bfcba8a0f5b33f7489b6d3047610bb50, type: 3}
+  receiveItemClip: {fileID: 8300000, guid: d3f27e2597dc4064f924a2d8ce2ddc4e, type: 3}
 --- !u!1 &1806825803
 GameObject:
   m_ObjectHideFlags: 0
@@ -65267,7 +65267,7 @@ MonoBehaviour:
   item:
     definition: {fileID: 11400000, guid: 87b5113ad6a24ba4bb132d4f0cebad25, type: 2}
     quantity: 1
-  receiveItemClip: {fileID: 8300000, guid: bfcba8a0f5b33f7489b6d3047610bb50, type: 3}
+  receiveItemClip: {fileID: 8300000, guid: d3f27e2597dc4064f924a2d8ce2ddc4e, type: 3}
 --- !u!212 &1838943830
 SpriteRenderer:
   m_ObjectHideFlags: 0

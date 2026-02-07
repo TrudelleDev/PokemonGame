@@ -14,7 +14,7 @@ namespace PokemonGame.Menu.Controllers
     internal class HorizontalPanelController : MenuController
     {
         [SerializeField, Required]
-        private AudioSetting audioSettings;
+        private Audio.AudioSettings audioSettings;
 
         private int currentPanelIndex;
         private int previousPanelIndex;
@@ -53,7 +53,7 @@ namespace PokemonGame.Menu.Controllers
 
                 if (audioSettings != null && AudioManager.Instance != null)
                 {
-                    AudioManager.Instance.PlaySFX(audioSettings.UISelectClip);
+                    AudioManager.Instance.PlaySFX(audioSettings.UISelectSfx);
                 }
 
                 previousPanelIndex = currentPanelIndex;

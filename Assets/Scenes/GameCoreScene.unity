@@ -17314,7 +17314,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSources:
   - {fileID: 5284162303506675608}
-  audioSetting: {fileID: 0}
+  audioSetting: {fileID: 11400000, guid: 5e9c76c71b5558d4484bbd2c27068881, type: 2}
 --- !u!224 &1545015638317815952
 RectTransform:
   m_ObjectHideFlags: 0
@@ -21101,7 +21101,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   startingDirection: 0
   tileMover: {fileID: 149676469947884096}
-  collisionAudioClip: {fileID: 8300000, guid: 700179018b63ab44dad3c67845a67a37, type: 3}
+  collisionAudioClip: {fileID: 8300000, guid: 9a3354b47063a9043b3496eeaa28a61c, type: 3}
   walkAnimationClip: {fileID: 7400000, guid: a705d923782d16d488faeeac0b3bb62d, type: 2}
   raycastSettings: {fileID: 11400000, guid: dd261dc58812d944283a3e8088a90ba6, type: 2}
 --- !u!224 &7493619910897625057
@@ -21445,7 +21445,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   buttonSources:
   - {fileID: 8131486402798387552}
-  audioSetting: {fileID: 0}
+  audioSetting: {fileID: 11400000, guid: 5e9c76c71b5558d4484bbd2c27068881, type: 2}
 --- !u!114 &8046628438837718098
 MonoBehaviour:
   m_ObjectHideFlags: 0

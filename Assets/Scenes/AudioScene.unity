@@ -152,12 +152,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d2667be329d6d6049a43eac9a9a46987, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isGlobal: 1
-  bgmGroup: {fileID: 8008709457918690755, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
-  sfxGroup: {fileID: -5583654715033347684, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
-  globalClips:
-  - key: Confirm
-    clip: {fileID: 8300000, guid: 667105b33932a2c48951a4831c6cb4fb, type: 3}
+  bgmMixerGroup: {fileID: 8008709457918690755, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
+  sfxMixerGroup: {fileID: -5583654715033347684, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
+  uiMixerGroup: {fileID: 6599723572552504126, guid: e2f14b5a29b6c214ab3516411100b390, type: 2}
 --- !u!4 &8948523925940801067
 Transform:
   m_ObjectHideFlags: 0

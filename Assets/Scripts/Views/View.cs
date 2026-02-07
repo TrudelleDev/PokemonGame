@@ -17,7 +17,7 @@ namespace PokemonGame.Views
         [Title("Base View Settings")]
 
         [SerializeField, Required]
-        private AudioSetting audioSettings;
+        private Audio.AudioSettings audioSettings;
 
         [SerializeField, Required, Tooltip("Transition used when opening this view.")]
         private TransitionType openTransition = TransitionType.None;
@@ -59,7 +59,7 @@ namespace PokemonGame.Views
         {
             if (audioSettings != null)
             {
-                AudioManager.Instance.PlaySFX(audioSettings.UIReturnClip);
+                AudioManager.Instance.PlaySFX(audioSettings.UIReturnSfx);
             }
 
             gameObject.SetActive(false);
