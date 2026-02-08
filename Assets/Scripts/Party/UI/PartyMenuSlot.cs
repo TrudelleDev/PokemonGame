@@ -1,6 +1,6 @@
-using PokemonGame.Menu;
 using PokemonGame.Pokemon;
 using PokemonGame.Pokemon.UI;
+using PokemonGame.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;

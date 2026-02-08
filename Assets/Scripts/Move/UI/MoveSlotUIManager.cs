@@ -1,6 +1,6 @@
 using System.Collections.Generic;
-using PokemonGame.Menu;
 using PokemonGame.Pokemon;
+using PokemonGame.Shared.UI.Core;
 using UnityEngine;
 
 namespace PokemonGame.Move.UI

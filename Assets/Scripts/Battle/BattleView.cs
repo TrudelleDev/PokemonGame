@@ -47,7 +47,7 @@ namespace PokemonGame.Battle
         /// <summary>
         /// Cached pause duration used between turn-based battle actions.
         /// </summary>
-        internal readonly WaitForSecondsRealtime TurnPauseYield = new(0.5f);
+        internal readonly WaitForSecondsRealtime TurnPauseYield = new(1f);
 
         /// <summary>
         /// The player character participating in the current battle.

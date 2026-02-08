@@ -1,7 +1,7 @@
 ﻿using System;
 using PokemonGame.Audio;
 using PokemonGame.Characters.Config;
-using PokemonGame.Menu.Controllers;
+using PokemonGame.Shared.UI.Core;
 using PokemonGame.Transitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -16,8 +16,11 @@ namespace PokemonGame.Views
     {
         [Title("Base View Settings")]
 
-        [SerializeField, Required]
-        private Audio.AudioSettings audioSettings;
+        [SerializeField]
+        private AudioClip closeSound;
+
+        [SerializeField]
+        private MenuController menuController;
 
         [SerializeField, Required, Tooltip("Transition used when opening this view.")]
         private TransitionType openTransition = TransitionType.None;
@@ -57,14 +60,9 @@ namespace PokemonGame.Views
         /// </summary>
         public virtual void Hide()
         {
-            if (audioSettings != null)
-            {
-                AudioManager.Instance.PlaySFX(audioSettings.UIReturnSfx);
-            }
-
+            AudioManager.Instance.PlayUISFX(closeSound);
             gameObject.SetActive(false);
         }
-
 
         /// <summary>
         /// Freeze the view, disabling interaction.
@@ -74,9 +72,9 @@ namespace PokemonGame.Views
         {
             isFrozen = true;
 
-            if (TryGetComponent<MenuController>(out var controller))
+            if (menuController != null)
             {
-                controller.enabled = false;
+                menuController.enabled = false;
             }
         }
 
@@ -88,17 +86,17 @@ namespace PokemonGame.Views
         {
             isFrozen = false;
 
-            if (TryGetComponent<MenuController>(out var controller))
+            if (menuController != null)
             {
-                controller.enabled = true;
+                menuController.enabled = true;
             }
         }
 
         protected void ResetMenuController()
         {
-            foreach (var controller in GetComponentsInChildren<MenuController>())
+            if (menuController != null)
             {
-                controller.ResetController();
+                menuController.ResetController();
             }
         }
 

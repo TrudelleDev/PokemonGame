@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using PokemonGame.Items;
 using PokemonGame.Items.UI;
 using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared.UI.MenuButtons;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -90,8 +91,8 @@ namespace PokemonGame.Inventory.UI
             CancelMenuButton button = Instantiate(cancelButtonPrefab, itemsContainer);
 
             button.transform.SetAsLastSibling();
-            button.OnHighlighted += OnOptionHighlighted;
-            button.OnSubmitted += OnReturnRequested;
+            button.Selected += OnOptionHighlighted;
+            button.Confirmed += OnReturnRequested;
         }
 
         private void OnOptionSubmitted(IDisplayable menuOption)

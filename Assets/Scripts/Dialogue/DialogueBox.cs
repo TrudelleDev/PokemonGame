@@ -30,7 +30,7 @@ namespace PokemonGame.Dialogue
         [SerializeField] private bool autoClose = true;
 
         [SerializeField, Required]
-        private Audio.AudioSettings audioSetting;
+        private Audio.UIAudioSettings audioSetting;
 
         private string[] lines;
         private int lineIndex;
@@ -109,7 +109,7 @@ namespace PokemonGame.Dialogue
             yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
 
             if(audioSetting != null)
-                AudioManager.Instance?.PlaySFX(audioSetting.UIConfirmSfx);
+                AudioManager.Instance?.PlaySFX(audioSetting.ConfirmSfx);
         }
 
         private IEnumerator RunDialogueSequence()

@@ -1,5 +1,5 @@
 using System;
-using PokemonGame.Menu;
+using PokemonGame.Shared.UI.Core;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -28,8 +28,8 @@ namespace PokemonGame.Party.UI.PartyOptions
 
         private void OnEnable()
         {
-            summaryButton.OnSubmitted += OnInfoRequested;
-            switchButton.OnSubmitted += OnSwapRequested;
+            summaryButton.Confirmed += OnInfoRequested;
+            switchButton.Confirmed += OnSwapRequested;
 
             // Base view event
             ReturnKeyPressed += OnReturnRequested;
@@ -39,8 +39,8 @@ namespace PokemonGame.Party.UI.PartyOptions
 
         private void OnDisable()
         {
-            summaryButton.OnSubmitted -= OnInfoRequested;
-            switchButton.OnSubmitted -= OnSwapRequested;
+            summaryButton.Confirmed -= OnInfoRequested;
+            switchButton.Confirmed -= OnSwapRequested;
 
             // Base view event
             ReturnKeyPressed -= OnReturnRequested;

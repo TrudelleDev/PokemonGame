@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonGame.Menu;
+using PokemonGame.Shared.UI.Core;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -48,18 +48,18 @@ namespace PokemonGame.Battle.UI
 
         private void OnEnable()
         {
-            moveSelectionButton.OnSubmitted += OnMoveSelectionRequested;
-            inventoryButton.OnSubmitted += OnInventoryRequested;
-            partyButton.OnSubmitted += OnPartyRequested;
-            escapeButton.OnSubmitted += OnEscapeRequested;
+            moveSelectionButton.Confirmed += OnMoveSelectionRequested;
+            inventoryButton.Confirmed += OnInventoryRequested;
+            partyButton.Confirmed += OnPartyRequested;
+            escapeButton.Confirmed += OnEscapeRequested;
         }
 
         private void OnDisable()
         {
-            moveSelectionButton.OnSubmitted -= OnMoveSelectionRequested;
-            inventoryButton.OnSubmitted -= OnInventoryRequested;
-            partyButton.OnSubmitted -= OnPartyRequested;
-            escapeButton.OnSubmitted -= OnEscapeRequested;
+            moveSelectionButton.Confirmed -= OnMoveSelectionRequested;
+            inventoryButton.Confirmed -= OnInventoryRequested;
+            partyButton.Confirmed -= OnPartyRequested;
+            escapeButton.Confirmed -= OnEscapeRequested;
 
             ResetMenuController();
         }

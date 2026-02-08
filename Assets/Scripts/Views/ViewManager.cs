@@ -41,7 +41,11 @@ namespace PokemonGame.Views
             foreach (View view in views)
             {
                 view.Preload();
-                view.Hide();
+
+                if (view.gameObject.activeInHierarchy)
+                {
+                    view.Hide();
+                }
             }
         }
 

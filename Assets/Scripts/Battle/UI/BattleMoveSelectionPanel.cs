@@ -1,6 +1,6 @@
 ﻿using System;
-using PokemonGame.Menu;
 using PokemonGame.Move;
+using PokemonGame.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -65,10 +65,10 @@ namespace PokemonGame.Battle.UI
                     button.SetInteractable(true);
 
                     clickHandlers[i] = () => MoveConfirmed?.Invoke(move);
-                    button.OnSubmitted += clickHandlers[i];
+                    button.Confirmed += clickHandlers[i];
 
                     selectHandlers[i] = () => MoveHighlighted?.Invoke(move);
-                    button.OnHighlighted += selectHandlers[i];
+                    button.Selected += selectHandlers[i];
                 }
                 else
                 {
@@ -89,13 +89,13 @@ namespace PokemonGame.Battle.UI
             {
                 if (clickHandlers[i] != null)
                 {
-                    Buttons[i].OnSubmitted -= clickHandlers[i];
+                    Buttons[i].Confirmed -= clickHandlers[i];
                     clickHandlers[i] = null;
                 }
 
                 if (selectHandlers[i] != null)
                 {
-                    Buttons[i].OnHighlighted -= selectHandlers[i];
+                    Buttons[i].Selected -= selectHandlers[i];
                     selectHandlers[i] = null;
                 }
 

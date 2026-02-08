@@ -18,12 +18,12 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Raised when the player selects an item.
         /// </summary>
-        public event Action<IDisplayable> ItemSelected;
+        internal event Action<IDisplayable> ItemSelected;
 
         /// <summary>
         /// Raised when the player highlights an item (cursor moves).
         /// </summary>
-        public event Action<IDisplayable> ItemHighlighted;
+        internal event Action<IDisplayable> ItemHighlighted;
 
         /// <summary>
         /// Raised when the player requests to close the inventory.

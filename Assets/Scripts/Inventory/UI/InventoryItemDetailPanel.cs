@@ -22,7 +22,7 @@ namespace PokemonGame.Inventory.UI
         /// Binds an item to the detail panel and updates the UI.
         /// </summary>
         /// <param name="item">The item to display.</param>
-        public void Bind(IDisplayable item)
+        internal void Bind(IDisplayable item)
         {
             if (item == null)
             {
@@ -38,7 +38,7 @@ namespace PokemonGame.Inventory.UI
         /// <summary>
         /// Clears the detail panel UI and hides the icon.
         /// </summary>
-        public void Unbind()
+        internal void Unbind()
         {
             descriptionText.text = string.Empty;
             iconImage.enabled = false;

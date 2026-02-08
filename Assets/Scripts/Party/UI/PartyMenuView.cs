@@ -1,6 +1,6 @@
 ﻿using System;
-using PokemonGame.Menu;
-using PokemonGame.Menu.Controllers;
+using PokemonGame.Shared.UI.Core;
+using PokemonGame.Shared.UI.Navigation;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -50,7 +50,7 @@ namespace PokemonGame.Party.UI
 
         private void OnEnable()
         {
-            partySlotController.OnClick += OnSlotClicked;
+            partySlotController.Confirmed += OnSlotClicked;
             ReturnKeyPressed += OnCancelRequested; // Base view event
 
             dialogueText.text = SelectMonsterMessage;
@@ -59,7 +59,7 @@ namespace PokemonGame.Party.UI
 
         private void OnDisable()
         {
-            partySlotController.OnClick -= OnSlotClicked;
+            partySlotController.Confirmed -= OnSlotClicked;
             ReturnKeyPressed -= OnCancelRequested; // Base view event
         }
 

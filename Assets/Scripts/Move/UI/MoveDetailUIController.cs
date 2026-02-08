@@ -1,5 +1,5 @@
-﻿using PokemonGame.Menu;
-using PokemonGame.Menu.Controllers;
+﻿using PokemonGame.Shared.UI.Core;
+using PokemonGame.Shared.UI.Navigation;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -21,12 +21,12 @@ namespace PokemonGame.Move.UI
 
         private void Awake()
         {
-            controller.OnSelect += OnControllerSelect;
+            controller.Selected += OnControllerSelect;
         }
 
         private void OnDestroy()
         {
-            controller.OnSelect -= OnControllerSelect;
+            controller.Selected -= OnControllerSelect;
         }
 
         private void OnControllerSelect(MenuButton button)

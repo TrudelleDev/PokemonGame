@@ -5,7 +5,7 @@ namespace PokemonGame.Shared.Interfaces
     /// <summary>
     /// Represents something that can be displayed in the UI with an icon and description.
     /// </summary>
-    public interface IDisplayable
+    internal interface IDisplayable
     {
         /// <summary>
         /// Gets the display name shown in the UI.

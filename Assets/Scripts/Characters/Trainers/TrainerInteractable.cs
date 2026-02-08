@@ -41,17 +41,16 @@ namespace PokemonGame.Characters.Trainers
         /// <param name="player">The player character interacting with the trainer.</param>
         public void Interact(Character player)
         {
-            this.player = player;       
-            playerStateController = player.GetComponent<CharacterStateController>();
-            playerStateController.Lock(); // Lock the player for the interaction
-
+            
             if (hasBattled)
             {
-                // Post-battle dialogue
-                OverworldDialogueBox.Instance.Dialogue.DialogueFinished += OnPostBattleDialogueFinished;
                 OverworldDialogueBox.Instance.Dialogue.ShowDialogue(postBattleDialogue.Lines);
                 return;
             }
+
+            this.player = player;
+            playerStateController = player.GetComponent<CharacterStateController>();
+            playerStateController.Lock(); // Lock the player for the interaction
 
             // Pre-battle dialogue
             OverworldDialogueBox.Instance.Dialogue.DialogueFinished += OnPreBattleDialogueFinished;
@@ -65,15 +64,16 @@ namespace PokemonGame.Characters.Trainers
             AudioManager.Instance.PlayBGM(battleBGMClip);
             BattleView battle = ViewManager.Instance.Show<BattleView>();
             battle.InitializeTrainerBattle(player, trainer);
+            battle.OnBattleViewClose += OnBattleFinished;
             hasBattled = true;
         }
 
-        private void OnPostBattleDialogueFinished()
+        private void OnBattleFinished()
         {
-            OverworldDialogueBox.Instance.Dialogue.DialogueFinished -= OnPostBattleDialogueFinished;
-
-            // Unlock player after post-battle dialogue
-            playerStateController.Unlock();
+            if (playerStateController != null)
+            {
+                playerStateController.Unlock();
+            }
         }
     }
 }

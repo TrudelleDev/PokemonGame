@@ -1,6 +1,6 @@
-using PokemonGame.Menu.Controllers;
 using PokemonGame.Move.UI;
 using PokemonGame.Pokemon;
+using PokemonGame.Shared.UI.Navigation;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -40,7 +40,7 @@ namespace PokemonGame.Summary
                 return;
             }
 
-           // identityPanel.Bind(pokemon);
+            // identityPanel.Bind(pokemon);
             moveManager.Bind(pokemon);
         }
 
@@ -49,7 +49,7 @@ namespace PokemonGame.Summary
         /// </summary>
         public void Unbind()
         {
-           // identityPanel.Unbind();
+            // identityPanel.Unbind();
             moveManager.Unbind();
         }
     }

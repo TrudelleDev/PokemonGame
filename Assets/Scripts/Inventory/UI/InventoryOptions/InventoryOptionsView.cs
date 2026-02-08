@@ -1,5 +1,5 @@
 ﻿using System;
-using PokemonGame.Menu;
+using PokemonGame.Shared.UI.Core;
 using PokemonGame.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -31,8 +31,8 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
 
         private void OnEnable()
         {
-            useButton.OnSubmitted += OnUseRequested;
-            cancelButton.OnSubmitted += OnReturnRequested;
+            useButton.Confirmed += OnUseRequested;
+            cancelButton.Confirmed += OnReturnRequested;
 
             // Base view event
             ReturnKeyPressed += OnReturnRequested;
@@ -41,8 +41,8 @@ namespace PokemonGame.Inventory.UI.InventoryOptions
 
         private void OnDisable()
         {
-            useButton.OnSubmitted -= OnUseRequested;
-            cancelButton.OnSubmitted -= OnReturnRequested;
+            useButton.Confirmed -= OnUseRequested;
+            cancelButton.Confirmed -= OnReturnRequested;
 
             // Base view event
             ReturnKeyPressed -= OnReturnRequested;

@@ -1,6 +1,6 @@
 using System;
-using PokemonGame.Menu;
 using PokemonGame.Shared.Interfaces;
+using PokemonGame.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -11,7 +11,7 @@ namespace PokemonGame.Items.UI
     /// Displays the item's name and quantity.
     /// Automatically clears the UI when no valid item is assigned.
     /// </summary>
-    internal class ItemUI : MonoBehaviour, IMenuOptionDisplaySource
+    internal class ItemUI : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Text element displaying the item's name.")]
         private TextMeshProUGUI nameText;
@@ -46,15 +46,15 @@ namespace PokemonGame.Items.UI
             button = GetComponent<MenuButton>();
         }
         private void OnEnable()
-        {        
-            button.OnSubmitted += HandleClick;
-            button.OnHighlighted += HandleHighlighted;
+        {
+            button.Confirmed += HandleClick;
+            button.Selected += HandleHighlighted;
         }
 
         private void OnDisable()
         {
-            button.OnSubmitted -= HandleClick;
-            button.OnHighlighted -= HandleHighlighted;
+            button.Confirmed -= HandleClick;
+            button.Selected -= HandleHighlighted;
         }
 
         /// <summary>

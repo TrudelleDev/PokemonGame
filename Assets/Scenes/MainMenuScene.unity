@@ -915,7 +915,7 @@ GameObject:
   - component: {fileID: 2058043506}
   - component: {fileID: 2058043507}
   m_Layer: 5
-  m_Name: VerticalLayoutGroup
+  m_Name: MenuOptionGroup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -980,9 +980,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe3e66d177767424aa1c73f578afacf4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  buttonSources:
-  - {fileID: 2058043505}
-  audioSetting: {fileID: 11400000, guid: 5e9c76c71b5558d4484bbd2c27068881, type: 2}
+  audioSettings: {fileID: 11400000, guid: 5e9c76c71b5558d4484bbd2c27068881, type: 2}
 --- !u!114 &43051466452801152
 MonoBehaviour:
   m_ObjectHideFlags: 0
