@@ -1,8 +1,8 @@
-﻿using PokemonGame.Pokemon.Enums;
-using PokemonGame.Pokemon.Models;
+﻿using MonsterTamer.Pokemon.Enums;
+using MonsterTamer.Pokemon.Models;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Components
+namespace MonsterTamer.Pokemon.Components
 {
     public class StatStageComponent
     {

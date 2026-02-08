@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Pokemon.Enums;
-using PokemonGame.Pokemon.Models;
+using MonsterTamer.Pokemon.Enums;
+using MonsterTamer.Pokemon.Models;
 using UnityEngine;
 
-namespace PokemonGame.Nature.Models
+namespace MonsterTamer.Nature.Models
 {
     /// <summary>
     /// Defines how a nature modifies a Pokémon's stats.

@@ -1,11 +1,11 @@
 ﻿using System;
-using PokemonGame.Characters;
-using PokemonGame.Party.Enums;
-using PokemonGame.Pokemon;
+using MonsterTamer.Characters;
+using MonsterTamer.Party.Enums;
+using MonsterTamer.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI
+namespace MonsterTamer.Party.UI
 {
     /// <summary>
     /// Handles user input on the party menu, interprets intent, 

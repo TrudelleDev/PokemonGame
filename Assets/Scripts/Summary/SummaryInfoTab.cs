@@ -1,9 +1,9 @@
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.UI;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Controls the detailed Monster info panel in the summary screen.

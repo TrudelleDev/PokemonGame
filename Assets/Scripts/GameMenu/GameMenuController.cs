@@ -1,10 +1,10 @@
-using PokemonGame.GameMenu;
-using PokemonGame.Inventory.UI;
-using PokemonGame.Party.Enums;
-using PokemonGame.Party.UI;
+using MonsterTamer.GameMenu;
+using MonsterTamer.Inventory.UI;
+using MonsterTamer.Party.Enums;
+using MonsterTamer.Party.UI;
 using UnityEngine;
 
-namespace PokemonGame.Views
+namespace MonsterTamer.Views
 {
     /// <summary>
     /// Controls the main game menu flow.

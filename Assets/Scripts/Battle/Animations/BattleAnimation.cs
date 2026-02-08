@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Utilities;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Utilities;
 using UnityEngine;
 
-namespace PokemonGame.Battle.Animations
+namespace MonsterTamer.Battle.Animations
 {
     /// <summary>
     /// Centralized controller responsible for coordinating all battle-related animations

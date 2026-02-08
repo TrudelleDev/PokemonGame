@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Audio
+namespace MonsterTamer.Audio
 {
     /// <summary>
     /// Defines sound effects used by the UI.

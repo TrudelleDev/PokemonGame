@@ -1,11 +1,11 @@
 ﻿using System;
-using PokemonGame.Characters.Config;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Views;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.GameMenu
+namespace MonsterTamer.GameMenu
 {
     /// <summary>
     /// Main game menu view. Raises events when the player requests

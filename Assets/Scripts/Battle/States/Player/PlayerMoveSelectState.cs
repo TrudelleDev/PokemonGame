@@ -1,9 +1,9 @@
-﻿using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.UI;
-using PokemonGame.Move;
-using PokemonGame.Views;
+﻿using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.UI;
+using MonsterTamer.Move;
+using MonsterTamer.Views;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles the move selection flow, including UI binding and player input.

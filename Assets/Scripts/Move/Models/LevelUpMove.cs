@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Move.Models
+namespace MonsterTamer.Move.Models
 {
     /// <summary>
     /// Represents a move a Monster learns at a specific level.

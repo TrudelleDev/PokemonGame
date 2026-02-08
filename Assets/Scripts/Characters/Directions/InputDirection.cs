@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Characters.Directions
+﻿namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
     /// Represents raw directional input from the player or AI.

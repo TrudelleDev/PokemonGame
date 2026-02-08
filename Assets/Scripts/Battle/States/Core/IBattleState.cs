@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Battle.States.Core
+﻿namespace MonsterTamer.Battle.States.Core
 {
     /// <summary>
     /// Defines the lifecycle contract for a battle state.

@@ -1,9 +1,9 @@
-using PokemonGame.Move.Effects;
-using PokemonGame.Move.Models;
+using MonsterTamer.Move.Effects;
+using MonsterTamer.Move.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Move
+namespace MonsterTamer.Move
 {
     /// <summary>
     /// Defines a Monster move, including its stats, type/category, effect behavior, 

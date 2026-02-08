@@ -3,7 +3,7 @@ using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
 
-namespace PokemonGame.Transitions
+namespace MonsterTamer.Transitions
 {
     /// <summary>
     /// Base class for UI transitions (fade, mask, etc.).

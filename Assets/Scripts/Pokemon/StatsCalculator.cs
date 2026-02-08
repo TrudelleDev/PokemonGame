@@ -1,7 +1,7 @@
-﻿using PokemonGame.Pokemon.Models;
+﻿using MonsterTamer.Pokemon.Models;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon
+namespace MonsterTamer.Pokemon
 {
     public static class StatsCalculator
     {

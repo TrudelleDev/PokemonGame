@@ -1,7 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Type
+namespace MonsterTamer.Type
 {
     /// <summary>
     /// Define a Pokémon or move type, including its icon and type effectiveness.

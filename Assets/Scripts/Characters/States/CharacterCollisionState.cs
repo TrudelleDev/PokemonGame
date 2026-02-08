@@ -1,8 +1,8 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Interfaces;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Interfaces;
 
-namespace PokemonGame.Characters.States
+namespace MonsterTamer.Characters.States
 {
     /// <summary>
     /// State entered when the character attempts to move into a blocked tile.

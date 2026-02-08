@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Pokemon;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Pokemon;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles the forced "send out" sequence for a new monster

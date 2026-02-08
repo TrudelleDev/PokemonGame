@@ -1,8 +1,8 @@
-using PokemonGame.Characters;
+using MonsterTamer.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame
+namespace MonsterTamer
 {
     /// <summary>
     /// Minimal camera follow.

@@ -1,11 +1,11 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Battle;
-using PokemonGame.Dialogue;
-using PokemonGame.Views;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Battle;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Map
+namespace MonsterTamer.Map
 {
     /// <summary>
     /// Defines the map's audio and dialogue configuration.

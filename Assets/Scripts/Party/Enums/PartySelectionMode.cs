@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Party.Enums
+﻿namespace MonsterTamer.Party.Enums
 {
     /// <summary>
     /// Defines the context in which the player is interacting with the party menu.

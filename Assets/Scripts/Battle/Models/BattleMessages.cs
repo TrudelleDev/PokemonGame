@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Battle.Models
+﻿namespace MonsterTamer.Battle.Models
 {
     /// <summary>
     /// Centralized collection of player-facing battle dialogue messages.

@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Transitions
+namespace MonsterTamer.Transitions
 {
     /// <summary>
     /// Central registry for all transitions (scene + UI).

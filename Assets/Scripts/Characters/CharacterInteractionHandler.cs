@@ -1,10 +1,10 @@
-﻿using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Pause;
-using PokemonGame.Raycasting;
+﻿using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Pause;
+using MonsterTamer.Raycasting;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Handles interactable checks in front of the character based on input.

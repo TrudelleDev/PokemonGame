@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using PokemonGame.Move.Models;
+using MonsterTamer.Move.Models;
 using UnityEngine;
 
-namespace PokemonGame.Move.Effects
+namespace MonsterTamer.Move.Effects
 {
     /// <summary>
     /// Base class for all move effects (damage, status, stat changes, etc.).

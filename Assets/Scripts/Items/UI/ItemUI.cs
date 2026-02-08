@@ -1,11 +1,11 @@
 using System;
-using PokemonGame.Shared.Interfaces;
-using PokemonGame.Shared.UI.Core;
+using MonsterTamer.Shared.Interfaces;
+using MonsterTamer.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Items.UI
+namespace MonsterTamer.Items.UI
 {
     /// <summary>
     /// Displays the item's name and quantity.

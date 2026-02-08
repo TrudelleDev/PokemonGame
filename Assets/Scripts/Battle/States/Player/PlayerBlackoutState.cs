@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Characters.Player;
-using PokemonGame.MapEntry;
-using PokemonGame.Views;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Characters.Player;
+using MonsterTamer.MapEntry;
+using MonsterTamer.Views;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles the blackout sequence when the player has no usable monsters remaining.

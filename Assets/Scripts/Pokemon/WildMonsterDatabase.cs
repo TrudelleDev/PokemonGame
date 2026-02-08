@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PokemonGame.Pokemon.Models;
+using MonsterTamer.Pokemon.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon
+namespace MonsterTamer.Pokemon
 {
     /// <summary>
     /// Database of wild Monsters that can appear in the game.

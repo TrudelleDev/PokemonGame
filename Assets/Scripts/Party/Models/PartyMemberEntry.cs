@@ -1,8 +1,8 @@
 ﻿using System;
-using PokemonGame.Pokemon;
+using MonsterTamer.Pokemon;
 using UnityEngine;
 
-namespace PokemonGame.Party.Models
+namespace MonsterTamer.Party.Models
 {
     /// <summary>
     /// Represents a single Monster entry in a trainer's party,

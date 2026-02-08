@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Raycasting
+namespace MonsterTamer.Raycasting
 {
     /// <summary>
     /// Holds common raycasting settings for interaction and pathfinding.

@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI.InventoryOptions
+namespace MonsterTamer.Inventory.UI.InventoryOptions
 {
     /// <summary>
     /// Handles user interaction for <see cref="InventoryOptionsView"/>.

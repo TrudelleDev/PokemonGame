@@ -1,11 +1,11 @@
-using PokemonGame.Items.Enums;
-using PokemonGame.Items.Models;
-using PokemonGame.Pokemon;
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Items.Enums;
+using MonsterTamer.Items.Models;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Items.Definition
+namespace MonsterTamer.Items.Definition
 {
     /// <summary>
     /// Abstract base definition for all game items.

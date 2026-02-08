@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemon.Components
+﻿namespace MonsterTamer.Pokemon.Components
 {
     public class MetadataComponent
     {

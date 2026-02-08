@@ -1,7 +1,7 @@
 ﻿using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Dialogue
+namespace MonsterTamer.Dialogue
 {
     /// <summary>
     /// Defines one or more dialogue lines

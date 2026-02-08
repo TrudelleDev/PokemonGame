@@ -1,14 +1,14 @@
 ﻿using System.Collections;
-using PokemonGame.Audio;
-using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Player;
-using PokemonGame.Raycasting;
-using PokemonGame.Tile;
-using PokemonGame.Utilities;
+using MonsterTamer.Audio;
+using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Player;
+using MonsterTamer.Raycasting;
+using MonsterTamer.Tile;
+using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Trainers
+namespace MonsterTamer.Characters.Trainers
 {
     /// <summary>
     /// Detects the player using line-of-sight and triggers the trainer challenge sequence.

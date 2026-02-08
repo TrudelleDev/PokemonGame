@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pause
+﻿namespace MonsterTamer.Pause
 {
     /// <summary>
     /// Global pause manager for the game.

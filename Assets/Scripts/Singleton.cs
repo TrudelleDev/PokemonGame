@@ -1,7 +1,7 @@
-﻿using PokemonGame.Utilities;
+﻿using MonsterTamer.Utilities;
 using UnityEngine;
 
-namespace PokemonGame
+namespace MonsterTamer
 {
     /// <summary>
     /// Generic base class for implementing a singleton MonoBehaviour.

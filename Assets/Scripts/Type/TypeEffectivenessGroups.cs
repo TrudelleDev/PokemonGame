@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace PokemonGame.Type
+namespace MonsterTamer.Type
 {
     /// <summary>
     /// Stores lists of target types for each type effectiveness category.

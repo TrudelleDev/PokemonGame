@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Component that signals when its scene is ready for use.

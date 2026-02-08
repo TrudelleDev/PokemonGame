@@ -1,6 +1,6 @@
-﻿using PokemonGame.Characters.Directions;
+﻿using MonsterTamer.Characters.Directions;
 
-namespace PokemonGame.Characters.Trainers
+namespace MonsterTamer.Characters.Trainers
 {
     /// <summary>
     /// Provides externally forced movement input for trainers (vision, scripts, cutscenes).

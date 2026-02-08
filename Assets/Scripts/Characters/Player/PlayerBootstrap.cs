@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Characters.Player
+namespace MonsterTamer.Characters.Player
 {
     /// <summary>
     /// Registers and unregisters the player character with the <see cref="PlayerRegistry"/>.

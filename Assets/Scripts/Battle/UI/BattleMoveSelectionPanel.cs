@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Move;
-using PokemonGame.Shared.UI.Core;
+using MonsterTamer.Move;
+using MonsterTamer.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.UI
+namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays the player's available moves as interactive buttons.

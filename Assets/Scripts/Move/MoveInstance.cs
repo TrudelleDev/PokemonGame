@@ -1,4 +1,4 @@
-namespace PokemonGame.Move
+namespace MonsterTamer.Move
 {
     /// <summary>
     /// Represents an in-battle instance of a Monster move,

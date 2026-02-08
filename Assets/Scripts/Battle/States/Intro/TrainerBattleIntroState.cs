@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Player;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Player;
 
-namespace PokemonGame.Battle.States.Intro
+namespace MonsterTamer.Battle.States.Intro
 {
     /// <summary>
     /// Manages the opening sequence of a trainer battle.

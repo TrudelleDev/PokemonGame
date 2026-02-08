@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Move.UI
+namespace MonsterTamer.Move.UI
 {
     /// <summary>
     /// Displays basic details of a Monster move, including power, accuracy, and effect text.

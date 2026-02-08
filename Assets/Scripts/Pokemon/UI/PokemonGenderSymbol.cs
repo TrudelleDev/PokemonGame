@@ -1,8 +1,8 @@
-using PokemonGame.Pokemon.Enums;
+using MonsterTamer.Pokemon.Enums;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     [RequireComponent(typeof(TextMeshProUGUI))]
     internal class PokemonGenderSymbol : MonoBehaviour

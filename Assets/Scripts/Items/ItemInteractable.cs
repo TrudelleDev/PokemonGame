@@ -1,12 +1,12 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Characters;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Dialogue;
-using PokemonGame.Items.Definition;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Characters;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Items.Definition;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Items
+namespace MonsterTamer.Items
 {
     /// <summary>
     /// Interactable item pickup: grants an item stack to the interacting character.

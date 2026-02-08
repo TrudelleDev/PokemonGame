@@ -1,8 +1,8 @@
-using PokemonGame.Nature.Models;
+using MonsterTamer.Nature.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Nature
+namespace MonsterTamer.Nature
 {
     /// <summary>
     /// Define a Pokemon nature that modifies stats and has a display name.

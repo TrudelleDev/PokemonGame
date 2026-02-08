@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Characters.Interfaces
+﻿namespace MonsterTamer.Characters.Interfaces
 {
     /// <summary>
     /// Interface for defining character states.

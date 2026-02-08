@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     /// <summary>
     /// Displays the Pokémon's EXP bar and smoothly animates when EXP changes.

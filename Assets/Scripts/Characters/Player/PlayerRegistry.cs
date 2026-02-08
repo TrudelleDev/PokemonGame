@@ -1,6 +1,6 @@
-﻿using PokemonGame.Utilities;
+﻿using MonsterTamer.Utilities;
 
-namespace PokemonGame.Characters.Player
+namespace MonsterTamer.Characters.Player
 {
     /// <summary>
     /// Stores a global reference to the active player character.

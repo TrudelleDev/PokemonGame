@@ -1,4 +1,4 @@
-﻿namespace PokemonGame
+﻿namespace MonsterTamer
 {
     public class Pokedex
     {

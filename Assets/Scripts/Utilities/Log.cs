@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     public static class Log
     {

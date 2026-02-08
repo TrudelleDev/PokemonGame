@@ -1,10 +1,10 @@
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.UI;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Manages the UI elements for the Monster summary header.

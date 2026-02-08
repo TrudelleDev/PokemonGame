@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using PokemonGame.Audio;
+using MonsterTamer.Audio;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.Core
+namespace MonsterTamer.Shared.UI.Core
 {
     /// <summary>
     /// Base class for menu controllers.

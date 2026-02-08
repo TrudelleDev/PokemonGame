@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.MapEntry
+﻿namespace MonsterTamer.MapEntry
 {
     /// <summary>
     /// Identifiers for map entry points.

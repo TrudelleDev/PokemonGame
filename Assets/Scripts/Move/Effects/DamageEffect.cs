@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using PokemonGame.Battle;
-using PokemonGame.Move.Models;
-using PokemonGame.Type;
+using MonsterTamer.Battle;
+using MonsterTamer.Move.Models;
+using MonsterTamer.Type;
 using UnityEngine;
 
-namespace PokemonGame.Move.Effects
+namespace MonsterTamer.Move.Effects
 {
     /// <summary>
     /// Executes a standard damaging move sequence.

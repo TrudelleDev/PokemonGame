@@ -1,10 +1,10 @@
-﻿using PokemonGame.MapEntry;
-using PokemonGame.SceneManagement;
-using PokemonGame.Utilities;
+﻿using MonsterTamer.MapEntry;
+using MonsterTamer.SceneManagement;
+using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Player
+namespace MonsterTamer.Characters.Player
 {
     /// <summary>
     /// Relocates the player after a scene load by resolving the next entry

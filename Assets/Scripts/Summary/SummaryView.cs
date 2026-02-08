@@ -1,10 +1,10 @@
-using PokemonGame.Characters;
-using PokemonGame.Pokemon;
-using PokemonGame.Views;
+using MonsterTamer.Characters;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Displays detailed information about the selected Monster,

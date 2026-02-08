@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI.PartyOptions
+namespace MonsterTamer.Party.UI.PartyOptions
 {
     /// <summary>
     /// Handles user interaction for the Party Menu Options view.

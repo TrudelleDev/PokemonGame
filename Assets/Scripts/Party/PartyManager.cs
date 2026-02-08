@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using PokemonGame.Pokemon;
-using PokemonGame.Utilities;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Utilities;
 
-namespace PokemonGame.Party
+namespace MonsterTamer.Party
 {
     /// <summary>
     /// Manages a player's monster party at runtime.

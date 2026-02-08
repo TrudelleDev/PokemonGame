@@ -1,12 +1,12 @@
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.UI;
-using PokemonGame.Shared.UI.Core;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.UI;
+using MonsterTamer.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Party.UI
+namespace MonsterTamer.Party.UI
 {
     /// <summary>
     /// Displays a Monster's information in a party menu slot, including name, level, health, and sprite.

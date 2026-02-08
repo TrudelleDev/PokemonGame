@@ -2,7 +2,7 @@
 using TMPro;
 using System.Collections;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     [RequireComponent(typeof(TMP_Text))]
     public class InlineArrowBouncer : MonoBehaviour

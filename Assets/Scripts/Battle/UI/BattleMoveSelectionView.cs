@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Move;
-using PokemonGame.Views;
+using MonsterTamer.Move;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.UI
+namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Composite view for move selection. Mediates user input from the panel 

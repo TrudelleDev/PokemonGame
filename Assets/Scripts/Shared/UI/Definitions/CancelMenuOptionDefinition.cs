@@ -1,8 +1,8 @@
-﻿using PokemonGame.Shared.Interfaces;
+﻿using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.Definitions
+namespace MonsterTamer.Shared.UI.Definitions
 {
     /// <summary>
     /// Defines a menu option representing a "Cancel" action.

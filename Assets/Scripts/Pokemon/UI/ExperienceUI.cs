@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     internal class ExperienceUI : MonoBehaviour
     {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace PokemonGame.MapEntry
+namespace MonsterTamer.MapEntry
 {
     /// <summary>
     /// Global registry for map entry points.

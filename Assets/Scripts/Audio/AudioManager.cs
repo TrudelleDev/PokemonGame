@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace PokemonGame.Audio
+namespace MonsterTamer.Audio
 {
     /// <summary>
     /// Central audio controller responsible for playing background music (BGM),

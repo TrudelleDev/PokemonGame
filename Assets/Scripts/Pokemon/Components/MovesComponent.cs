@@ -1,6 +1,6 @@
-﻿using PokemonGame.Move;
+﻿using MonsterTamer.Move;
 
-namespace PokemonGame.Pokemon.Components
+namespace MonsterTamer.Pokemon.Components
 {
     internal class MovesComponent
     {

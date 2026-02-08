@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Raycasting
+namespace MonsterTamer.Raycasting
 {
     /// <summary>
     /// Utility class for raycasting functionality.

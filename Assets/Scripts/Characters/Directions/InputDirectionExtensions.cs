@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Characters.Directions
+namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
     /// Provides utility methods for converting between <see cref="InputDirection"/> 

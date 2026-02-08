@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles the victory sequence for the player after defeating a wild opponent.

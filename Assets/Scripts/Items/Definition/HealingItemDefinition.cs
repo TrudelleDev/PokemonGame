@@ -1,9 +1,9 @@
-using PokemonGame.Items.Models;
-using PokemonGame.Pokemon;
+using MonsterTamer.Items.Models;
+using MonsterTamer.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Items.Definition
+namespace MonsterTamer.Items.Definition
 {
     /// <summary>
     /// Healing item definition. Restores a fixed amount of HP

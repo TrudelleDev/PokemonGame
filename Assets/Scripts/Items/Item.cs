@@ -1,10 +1,10 @@
 using System;
-using PokemonGame.Items.Definition;
-using PokemonGame.Items.Enums;
+using MonsterTamer.Items.Definition;
+using MonsterTamer.Items.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Items
+namespace MonsterTamer.Items
 {
     /// <summary>
     /// Represents a runtime item stack in the player's inventory or world.

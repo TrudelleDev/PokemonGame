@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Move.Enums;
-using PokemonGame.Type;
+using MonsterTamer.Move.Enums;
+using MonsterTamer.Type;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Move.Models
+namespace MonsterTamer.Move.Models
 {
     /// <summary>
     /// Defines how a move behaves in combat by specifying its elemental type

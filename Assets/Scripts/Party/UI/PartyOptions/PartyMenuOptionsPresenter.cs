@@ -1,9 +1,9 @@
-﻿using PokemonGame.Summary;
-using PokemonGame.Views;
+﻿using MonsterTamer.Summary;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI.PartyOptions
+namespace MonsterTamer.Party.UI.PartyOptions
 {
     /// <summary>
     /// Presenter for the party menu options (Swap, Info, Return).

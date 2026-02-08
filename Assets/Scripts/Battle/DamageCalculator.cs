@@ -1,10 +1,10 @@
-﻿using PokemonGame.Move;
-using PokemonGame.Move.Enums;
-using PokemonGame.Pokemon;
-using PokemonGame.Type;
+﻿using MonsterTamer.Move;
+using MonsterTamer.Move.Enums;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Type;
 using UnityEngine;
 
-namespace PokemonGame.Battle
+namespace MonsterTamer.Battle
 {
     /// <summary>
     /// Centralized system that calculates the damage dealt by a Monster move,

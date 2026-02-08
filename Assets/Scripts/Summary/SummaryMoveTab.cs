@@ -1,10 +1,10 @@
-using PokemonGame.Move.UI;
-using PokemonGame.Pokemon;
-using PokemonGame.Shared.UI.Navigation;
+using MonsterTamer.Move.UI;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Shared.UI.Navigation;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Controls the move tab of the Pokémon summary screen.

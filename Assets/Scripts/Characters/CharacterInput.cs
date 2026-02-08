@@ -1,7 +1,7 @@
-using PokemonGame.Characters.Directions;
+using MonsterTamer.Characters.Directions;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Base class for handling character input.

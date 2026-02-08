@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Utilities;
+using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Utilities;
 using UnityEngine;
 
-namespace PokemonGame.Characters.States
+namespace MonsterTamer.Characters.States
 {
     /// <summary>
     /// Walking state: the character moves one tile in the current facing direction.

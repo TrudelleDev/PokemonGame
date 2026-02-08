@@ -1,11 +1,11 @@
 ﻿using System;
-using PokemonGame.Move;
-using PokemonGame.Move.Models;
-using PokemonGame.Nature;
-using PokemonGame.Utilities;
+using MonsterTamer.Move;
+using MonsterTamer.Move.Models;
+using MonsterTamer.Nature;
+using MonsterTamer.Utilities;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon
+namespace MonsterTamer.Pokemon
 {
     /// <summary>
     /// Factory class responsible for creating Pokémon instances at runtime.

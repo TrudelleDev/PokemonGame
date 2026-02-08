@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using PokemonGame.Items;
-using PokemonGame.Items.Enums;
-using PokemonGame.Utilities;
+using MonsterTamer.Items;
+using MonsterTamer.Items.Enums;
+using MonsterTamer.Utilities;
 
-namespace PokemonGame.Inventory
+namespace MonsterTamer.Inventory
 {
     /// <summary>
     /// Manages a single inventory for a player or character.

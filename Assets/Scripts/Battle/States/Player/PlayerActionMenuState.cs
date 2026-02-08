@@ -1,11 +1,11 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.UI;
-using PokemonGame.Views;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.UI;
+using MonsterTamer.Views;
 using UnityEngine;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Displays the primary action menu (Fight, Bag, Monsters, Flee)

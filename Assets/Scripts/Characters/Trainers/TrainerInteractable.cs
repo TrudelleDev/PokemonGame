@@ -1,12 +1,12 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Battle;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Dialogue;
-using PokemonGame.Views;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Battle;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Trainers
+namespace MonsterTamer.Characters.Trainers
 {
     /// <summary>
     /// Handles trainer interaction logic, including pre- and post-battle dialogue

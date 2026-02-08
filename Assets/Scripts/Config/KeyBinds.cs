@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Characters.Config
+namespace MonsterTamer.Characters.Config
 {
     /// <summary>
     /// Defines global key bindings for player input.

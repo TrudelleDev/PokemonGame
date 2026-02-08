@@ -1,13 +1,13 @@
-using PokemonGame.Audio;
-using PokemonGame.Characters;
-using PokemonGame.Characters.Config;
-using PokemonGame.GameMenu;
-using PokemonGame.Pause;
-using PokemonGame.Views;
+using MonsterTamer.Audio;
+using MonsterTamer.Characters;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.GameMenu;
+using MonsterTamer.Pause;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame
+namespace MonsterTamer
 {
     /// <summary>
     /// Handles the opening of the game menu when no other views are active.

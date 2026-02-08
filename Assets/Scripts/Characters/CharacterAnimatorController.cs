@@ -1,7 +1,7 @@
-﻿using PokemonGame.Characters.Directions;
+﻿using MonsterTamer.Characters.Directions;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Controls character animations (idle, walk, collision, refacing) via Animator.

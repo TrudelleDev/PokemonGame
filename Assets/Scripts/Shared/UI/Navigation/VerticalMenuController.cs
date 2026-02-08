@@ -1,9 +1,9 @@
-using PokemonGame.Characters.Config;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Views;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Views;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.Navigation
+namespace MonsterTamer.Shared.UI.Navigation
 {
     /// <summary>
     /// Handles vertical menu navigation (up/down) for keyboard/controller input.

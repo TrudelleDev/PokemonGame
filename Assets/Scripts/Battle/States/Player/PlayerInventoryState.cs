@@ -1,9 +1,9 @@
-﻿using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Opponent;
-using PokemonGame.Inventory.UI;
-using PokemonGame.Views;
+﻿using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Opponent;
+using MonsterTamer.Inventory.UI;
+using MonsterTamer.Views;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles opening the player's inventory during battle,

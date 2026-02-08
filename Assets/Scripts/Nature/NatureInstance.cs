@@ -1,4 +1,4 @@
-namespace PokemonGame.Nature
+namespace MonsterTamer.Nature
 {
     /// <summary>
     /// Represents a runtime instance of a Pokemon nature.

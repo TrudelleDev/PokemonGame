@@ -4,7 +4,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Transitions.Controllers
+namespace MonsterTamer.Transitions.Controllers
 {
     /// <summary>
     /// Pokémon-style battle intro transition.

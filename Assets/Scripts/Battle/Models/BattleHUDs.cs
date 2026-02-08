@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Battle.UI;
+using MonsterTamer.Battle.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.Models
+namespace MonsterTamer.Battle.Models
 {
     /// <summary>
     /// Holds references to all HUD and UI components used in a battle.

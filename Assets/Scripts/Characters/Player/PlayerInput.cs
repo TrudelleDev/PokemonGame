@@ -1,8 +1,8 @@
-using PokemonGame.Characters.Config;
-using PokemonGame.Characters.Directions;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Characters.Directions;
 using UnityEngine;
 
-namespace PokemonGame.Characters.Player
+namespace MonsterTamer.Characters.Player
 {
     /// <summary>
     /// Handles player input for character movement using WASD or Arrow Keys.

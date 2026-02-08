@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     /// <summary>
     /// Represents rectangular padding values for UI layout elements.

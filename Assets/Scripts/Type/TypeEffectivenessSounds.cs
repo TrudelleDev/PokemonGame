@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Type
+namespace MonsterTamer.Type
 {
     /// <summary>
     /// Stores the audio clips to play for each type effectiveness category.

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     internal static class VisionGizmoDrawer
     {

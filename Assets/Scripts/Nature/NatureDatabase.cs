@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Nature
+namespace MonsterTamer.Nature
 {
     /// <summary>
     /// Holds a list of all available Pokemon natures and provides utility methods.

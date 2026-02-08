@@ -1,9 +1,9 @@
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.UI;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Displays detailed Monster stats and ability information in the summary screen.

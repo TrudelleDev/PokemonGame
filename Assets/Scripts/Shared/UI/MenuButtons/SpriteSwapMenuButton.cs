@@ -1,9 +1,9 @@
-﻿using PokemonGame.Shared.UI.Core;
+﻿using MonsterTamer.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Shared.UI.MenuButtons
+namespace MonsterTamer.Shared.UI.MenuButtons
 {
     /// <summary>
     /// A menu button that swaps the target image sprite

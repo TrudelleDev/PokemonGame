@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     public static class AnimationUtility
     {

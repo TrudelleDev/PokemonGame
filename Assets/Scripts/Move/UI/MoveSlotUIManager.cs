@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using PokemonGame.Pokemon;
-using PokemonGame.Shared.UI.Core;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Shared.UI.Core;
 using UnityEngine;
 
-namespace PokemonGame.Move.UI
+namespace MonsterTamer.Move.UI
 {
     /// <summary>
     /// Manages and binds a Monster's moves to the summary screen UI slots.

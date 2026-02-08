@@ -1,13 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using PokemonGame.Pause;
-using PokemonGame.Transitions;
-using PokemonGame.Utilities;
+using MonsterTamer.Pause;
+using MonsterTamer.Transitions;
+using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Views
+namespace MonsterTamer.Views
 {
     /// <summary>
     /// Manages a stacked overlay system for <see cref="View"/> instances.

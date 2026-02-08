@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Linq;
-using PokemonGame.Characters;
-using PokemonGame.Dialogue;
-using PokemonGame.Items;
-using PokemonGame.Items.Definition;
-using PokemonGame.Items.Models;
-using PokemonGame.Party.Enums;
-using PokemonGame.Party.UI;
-using PokemonGame.Pokemon;
-using PokemonGame.Views;
+using MonsterTamer.Characters;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Items;
+using MonsterTamer.Items.Definition;
+using MonsterTamer.Items.Models;
+using MonsterTamer.Party.Enums;
+using MonsterTamer.Party.UI;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI.InventoryOptions
+namespace MonsterTamer.Inventory.UI.InventoryOptions
 {
     /// <summary>
     /// Handles the flow of using an inventory item via <see cref="InventoryOptionsController"/>.

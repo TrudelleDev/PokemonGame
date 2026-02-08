@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Opponent;
-using PokemonGame.Pokemon;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Opponent;
+using MonsterTamer.Pokemon;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles a voluntary Monster switch during battle.

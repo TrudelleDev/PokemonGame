@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace PokemonGame
+namespace MonsterTamer
 {
     public class IDGenerator
     {

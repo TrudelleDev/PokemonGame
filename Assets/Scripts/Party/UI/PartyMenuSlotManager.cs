@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using PokemonGame.Characters;
+using MonsterTamer.Characters;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI
+namespace MonsterTamer.Party.UI
 {
     /// <summary>
     /// Manages and binds Monster party data to UI slots.

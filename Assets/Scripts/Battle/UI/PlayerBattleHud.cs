@@ -1,11 +1,11 @@
-﻿using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.UI;
+﻿using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Battle.UI
+namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays the player's active Monster HUD, including name, level, HP text, health bar, experience bar, and back sprite.

@@ -1,13 +1,13 @@
 ﻿using System;
-using PokemonGame.Characters;
-using PokemonGame.Inventory.UI.InventoryOptions;
-using PokemonGame.Items.Definition;
-using PokemonGame.Shared.Interfaces;
-using PokemonGame.Views;
+using MonsterTamer.Characters;
+using MonsterTamer.Inventory.UI.InventoryOptions;
+using MonsterTamer.Items.Definition;
+using MonsterTamer.Shared.Interfaces;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI
+namespace MonsterTamer.Inventory.UI
 {
     /// <summary>
     /// Handles inventory UI logic and data binding.

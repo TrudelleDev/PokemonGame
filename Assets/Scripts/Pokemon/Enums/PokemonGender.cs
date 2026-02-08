@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemon.Enums
+﻿namespace MonsterTamer.Pokemon.Enums
 {
     /// <summary>
     /// Represents the gender of a Pokémon.

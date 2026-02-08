@@ -1,8 +1,8 @@
-using PokemonGame.Move;
-using PokemonGame.Nature;
-using PokemonGame.Pokemon.Components;
+using MonsterTamer.Move;
+using MonsterTamer.Nature;
+using MonsterTamer.Pokemon.Components;
 
-namespace PokemonGame.Pokemon
+namespace MonsterTamer.Pokemon
 {
     /// <summary>
     /// Represents a runtime Pokémon instance with dynamic state (level, stats, health, moves, etc.)

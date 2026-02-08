@@ -1,10 +1,10 @@
-using PokemonGame.Pokemon.Enums;
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Pokemon.Enums;
+using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     /// <summary>
     /// Displays the Pokémon type icon (Primary or Secondary) in a UI Image.

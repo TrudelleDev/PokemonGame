@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections;
-using PokemonGame.Audio;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Intro;
-using PokemonGame.Characters;
-using PokemonGame.Dialogue;
-using PokemonGame.Pokemon;
-using PokemonGame.Views;
+using MonsterTamer.Audio;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Intro;
+using MonsterTamer.Characters;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Battle
+namespace MonsterTamer.Battle
 {
     /// <summary>
     /// Manages the battle view lifecycle, including HUD binding,

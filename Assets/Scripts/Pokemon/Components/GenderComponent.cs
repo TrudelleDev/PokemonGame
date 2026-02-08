@@ -1,6 +1,6 @@
-﻿using PokemonGame.Pokemon.Enums;
+﻿using MonsterTamer.Pokemon.Enums;
 
-namespace PokemonGame.Pokemon.Components
+namespace MonsterTamer.Pokemon.Components
 {
     public struct GenderComponent
     {

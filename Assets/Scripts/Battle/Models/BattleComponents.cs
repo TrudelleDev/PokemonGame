@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Battle.Animations;
+using MonsterTamer.Battle.Animations;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.Models
+namespace MonsterTamer.Battle.Models
 {
     /// <summary>
     /// Holds references to core battle components, such as animations and audio.

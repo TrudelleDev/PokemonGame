@@ -1,9 +1,9 @@
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Shared.Interfaces;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Inventory.UI
+namespace MonsterTamer.Inventory.UI
 {
     /// <summary>
     /// Displays detailed information for a selected inventory item,

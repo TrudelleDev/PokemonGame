@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Shared.Interfaces
+﻿namespace MonsterTamer.Shared.Interfaces
 {
     /// <summary>
     /// Generic interface for components that can bind a data instance of type T.

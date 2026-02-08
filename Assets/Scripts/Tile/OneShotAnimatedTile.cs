@@ -3,7 +3,7 @@ using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace PokemonGame.Tile
+namespace MonsterTamer.Tile
 {
     /// <summary>
     /// A tile that plays a single animation sequence once, then optionally clears itself.

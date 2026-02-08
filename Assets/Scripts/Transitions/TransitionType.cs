@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Transitions
+﻿namespace MonsterTamer.Transitions
 {
     /// <summary>
     /// Defines the available transition effect types for views and scene changes.

@@ -1,12 +1,12 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Player;
-using PokemonGame.Move.Models;
-using PokemonGame.Views;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Player;
+using MonsterTamer.Move.Models;
+using MonsterTamer.Views;
 using UnityEngine;
 
-namespace PokemonGame.Battle.States.Opponent
+namespace MonsterTamer.Battle.States.Opponent
 {
     /// <summary>
     /// Handles the AI logic for the opponent's turn.

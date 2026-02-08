@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Items.Enums
+﻿namespace MonsterTamer.Items.Enums
 {
     /// <summary>
     /// Defines all unique identifiers for items.

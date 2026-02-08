@@ -1,8 +1,8 @@
-﻿using PokemonGame.Utilities;
+﻿using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.MapEntry
+namespace MonsterTamer.MapEntry
 {
     /// <summary>
     /// Marker component for a map entry point.

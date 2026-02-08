@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Defines configuration values for health bar animation speed and delays.

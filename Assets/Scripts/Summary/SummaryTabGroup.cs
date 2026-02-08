@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Pokemon;
+using MonsterTamer.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Summary
+namespace MonsterTamer.Summary
 {
     /// <summary>
     /// Manages the Pokémon summary UI, including the header and tab content

@@ -1,10 +1,10 @@
 using System;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Views;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI.PartyOptions
+namespace MonsterTamer.Party.UI.PartyOptions
 {
     /// <summary>
     /// UI view for the party Monster option menu.

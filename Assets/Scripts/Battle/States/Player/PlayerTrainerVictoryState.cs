@@ -1,8 +1,8 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Views;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Views;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles the victory flow for trainer battles.

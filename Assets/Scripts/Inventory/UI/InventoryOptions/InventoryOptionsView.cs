@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Views;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI.InventoryOptions
+namespace MonsterTamer.Inventory.UI.InventoryOptions
 {
     /// <summary>
     /// Displays options for a selected inventory item (Use, Return).

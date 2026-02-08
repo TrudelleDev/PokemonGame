@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Move.UI
+namespace MonsterTamer.Move.UI
 {
     /// <summary>
     /// Displays a compact UI slot for a Monster move, showing its name,

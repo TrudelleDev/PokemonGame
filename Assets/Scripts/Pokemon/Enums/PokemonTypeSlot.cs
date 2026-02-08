@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemon.Enums
+﻿namespace MonsterTamer.Pokemon.Enums
 {
     /// <summary>
     /// Defines the primary or secondary type slot for a Pokémon.

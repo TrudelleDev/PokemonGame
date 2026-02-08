@@ -1,13 +1,13 @@
-﻿using PokemonGame.MapEntry;
+﻿using MonsterTamer.MapEntry;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using PokemonGame.Transitions;
+using MonsterTamer.Transitions;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Handles starting gameplay sessions from the main menu.

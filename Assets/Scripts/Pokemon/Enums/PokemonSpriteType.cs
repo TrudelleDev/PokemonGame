@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemon
+﻿namespace MonsterTamer.Pokemon
 {
     /// <summary>
     /// Specifies the type of sprite to display for a Pokémon in the UI.

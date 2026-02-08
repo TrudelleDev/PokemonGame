@@ -1,11 +1,11 @@
 using System;
-using PokemonGame.Shared.Interfaces;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Shared.UI.Definitions;
+using MonsterTamer.Shared.Interfaces;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Shared.UI.Definitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.MenuButtons
+namespace MonsterTamer.Shared.UI.MenuButtons
 {
     /// <summary>
     /// Represents a cancel option in a menu.

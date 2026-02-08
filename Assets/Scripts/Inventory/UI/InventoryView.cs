@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using PokemonGame.Items;
-using PokemonGame.Items.UI;
-using PokemonGame.Shared.Interfaces;
-using PokemonGame.Shared.UI.MenuButtons;
-using PokemonGame.Views;
+using MonsterTamer.Items;
+using MonsterTamer.Items.UI;
+using MonsterTamer.Shared.Interfaces;
+using MonsterTamer.Shared.UI.MenuButtons;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI
+namespace MonsterTamer.Inventory.UI
 {
     /// <summary>
     /// View responsible for displaying the player's inventory.

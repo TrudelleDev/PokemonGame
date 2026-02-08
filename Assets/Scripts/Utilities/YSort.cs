@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Utilities
+namespace MonsterTamer.Utilities
 {
     /// <summary>
     /// Dynamically updates the <see cref="SpriteRenderer.sortingOrder"/> 

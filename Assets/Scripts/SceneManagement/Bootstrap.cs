@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Bootstraps the game by loading core data definitions and essential scenes

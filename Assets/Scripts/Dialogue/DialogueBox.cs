@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections;
-using PokemonGame.Audio;
-using PokemonGame.Characters.Config;
-using PokemonGame.Pause;
-using PokemonGame.Utilities;
+using MonsterTamer.Audio;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Pause;
+using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Dialogue
+namespace MonsterTamer.Dialogue
 {
     /// <summary>
     /// Handles the display and sequencing of dialogue lines.

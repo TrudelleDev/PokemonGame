@@ -1,13 +1,13 @@
-using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Characters.States;
-using PokemonGame.Pause;
-using PokemonGame.Raycasting;
-using PokemonGame.Tile;
+using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Characters.States;
+using MonsterTamer.Pause;
+using MonsterTamer.Raycasting;
+using MonsterTamer.Tile;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Base controller for all characters (Player, NPC).

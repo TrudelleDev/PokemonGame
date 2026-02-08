@@ -1,9 +1,9 @@
-﻿using PokemonGame.Shared.UI.Core;
-using PokemonGame.Shared.UI.Navigation;
+﻿using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Shared.UI.Navigation;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Move.UI
+namespace MonsterTamer.Move.UI
 {
     /// <summary>
     /// Controls the move detail section in the summary screen.

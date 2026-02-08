@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Views;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.UI
+namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// View that displays the main battle action options

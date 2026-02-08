@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Characters.Directions
+﻿namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
     /// Represents the cardinal direction a character is currently facing.

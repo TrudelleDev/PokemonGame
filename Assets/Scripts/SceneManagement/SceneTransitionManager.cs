@@ -1,12 +1,12 @@
 using System.Threading.Tasks;
-using PokemonGame.MapEntry;
-using PokemonGame.Pause;
-using PokemonGame.Transitions;
-using PokemonGame.Utilities;
+using MonsterTamer.MapEntry;
+using MonsterTamer.Pause;
+using MonsterTamer.Transitions;
+using MonsterTamer.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Manages scene-to-scene transitions.

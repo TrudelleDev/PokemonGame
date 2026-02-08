@@ -1,10 +1,10 @@
-﻿using PokemonGame.Move;
+﻿using MonsterTamer.Move;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Battle.UI
+namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays detailed information about the currently selected move,

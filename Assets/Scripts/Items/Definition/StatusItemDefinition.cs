@@ -1,10 +1,10 @@
-﻿using PokemonGame.Items.Models;
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.Enums;
+﻿using MonsterTamer.Items.Models;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Items.Definition
+namespace MonsterTamer.Items.Definition
 {
     /// <summary>
     /// Defines an item that cures a specific status condition (e.g., Poison, Burn, Paralysis).

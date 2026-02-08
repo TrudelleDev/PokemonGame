@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Shared.Interfaces
+﻿namespace MonsterTamer.Shared.Interfaces
 {
     /// <summary>
     /// Defines a method to unbind or clear bound data.

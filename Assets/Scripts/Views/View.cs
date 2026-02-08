@@ -1,12 +1,12 @@
 ﻿using System;
-using PokemonGame.Audio;
-using PokemonGame.Characters.Config;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Transitions;
+using MonsterTamer.Audio;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Transitions;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Views
+namespace MonsterTamer.Views
 {
     /// <summary>
     /// Base class for all UI views.

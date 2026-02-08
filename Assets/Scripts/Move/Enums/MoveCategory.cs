@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Move.Enums
+﻿namespace MonsterTamer.Move.Enums
 {
     /// <summary>
     /// Defines the category of a Monster move.

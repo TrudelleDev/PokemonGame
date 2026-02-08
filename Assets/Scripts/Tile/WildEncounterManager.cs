@@ -1,15 +1,15 @@
 ﻿using System.Linq;
-using PokemonGame.Battle;
-using PokemonGame.Characters;
-using PokemonGame.Characters.Player;
-using PokemonGame.Pokemon;
-using PokemonGame.Pokemon.Models;
-using PokemonGame.Views;
+using MonsterTamer.Battle;
+using MonsterTamer.Characters;
+using MonsterTamer.Characters.Player;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Pokemon.Models;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.Tilemaps;
 
-namespace PokemonGame.Tile
+namespace MonsterTamer.Tile
 {
     /// <summary>
     /// Handles wild Monster encounters triggered by player movement on specific tiles (e.g. grass).

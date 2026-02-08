@@ -1,10 +1,10 @@
-using PokemonGame.Move.Models;
-using PokemonGame.Nature;
-using PokemonGame.Pokemon.Models;
+using MonsterTamer.Move.Models;
+using MonsterTamer.Nature;
+using MonsterTamer.Pokemon.Models;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon
+namespace MonsterTamer.Pokemon
 {
     /// <summary>
     /// Defines a Pokémon's core data, types, stats, and visuals.
@@ -65,5 +65,6 @@ namespace PokemonGame.Pokemon
         internal LevelUpMove[] LevelUpMoves => levelUpMoves;
         public AudioClip CryClip => cryClip;
         public PokemonSprites Sprites => sprites;
+
     }
 }

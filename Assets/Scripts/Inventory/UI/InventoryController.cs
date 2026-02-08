@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory.UI
+namespace MonsterTamer.Inventory.UI
 {
     /// <summary>
     /// Handles player input for the inventory menu, interprets intent,

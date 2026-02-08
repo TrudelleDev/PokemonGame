@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     /// <summary>
     /// Displays a Pokémon's trainer-related memo, including nature and encounter location.

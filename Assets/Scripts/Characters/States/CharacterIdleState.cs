@@ -1,7 +1,7 @@
-﻿using PokemonGame.Characters.Directions;
-using PokemonGame.Characters.Interfaces;
+﻿using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Interfaces;
 
-namespace PokemonGame.Characters.States
+namespace MonsterTamer.Characters.States
 {
     /// <summary>
     /// Idle state: the character stands still.

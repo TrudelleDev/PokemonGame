@@ -1,11 +1,11 @@
 ﻿using System.Linq;
-using PokemonGame.Move;
-using PokemonGame.Move.Enums;
-using PokemonGame.Pokemon.Models;
-using PokemonGame.Type;
+using MonsterTamer.Move;
+using MonsterTamer.Move.Enums;
+using MonsterTamer.Pokemon.Models;
+using MonsterTamer.Type;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Components
+namespace MonsterTamer.Pokemon.Components
 {
     /// <summary>
     /// Manages a Pokémon's calculated statistics (IVs, EVs, core stats) and

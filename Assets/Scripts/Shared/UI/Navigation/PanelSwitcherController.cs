@@ -1,9 +1,9 @@
-using PokemonGame.Audio;
-using PokemonGame.Characters.Config;
-using PokemonGame.Views;
+using MonsterTamer.Audio;
+using MonsterTamer.Characters.Config;
+using MonsterTamer.Views;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.Navigation
+namespace MonsterTamer.Shared.UI.Navigation
 {
     /// <summary>
     /// Handles switching between child panels using keyboard/controller input.

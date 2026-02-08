@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Contains a Pokémon's gender distribution as male and female ratios.

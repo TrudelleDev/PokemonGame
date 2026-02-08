@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Contains references for a Pokémon's visual representation: front, back, and menu.

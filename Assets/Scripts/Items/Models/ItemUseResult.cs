@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Items.Models
+﻿namespace MonsterTamer.Items.Models
 {
     /// <summary>
     /// Represents the outcome of using an item.

@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Type
+﻿namespace MonsterTamer.Type
 {
     /// <summary>
     /// Provides extension methods for the <see cref=TypeEffectiveness"/> enum,

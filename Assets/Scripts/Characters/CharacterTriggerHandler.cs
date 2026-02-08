@@ -1,8 +1,8 @@
-﻿using PokemonGame.Characters.Interfaces;
-using PokemonGame.Raycasting;
+﻿using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Raycasting;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Detects and activates triggers in front of the character,

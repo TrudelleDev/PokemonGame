@@ -1,9 +1,9 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Player;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Player;
 
-namespace PokemonGame.Battle.States.Opponent
+namespace MonsterTamer.Battle.States.Opponent
 {
     /// <summary>
     /// Handles the transition and animation sequence for the opponent sending out their next available Monster.

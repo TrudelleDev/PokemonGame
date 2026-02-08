@@ -1,9 +1,9 @@
-﻿using PokemonGame.Shared.Interfaces;
+﻿using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     /// <summary>
     /// Displays general Pokémon information including Pokédex number, name, types, trainer, and held item.

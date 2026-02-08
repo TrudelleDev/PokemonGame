@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using PokemonGame.Items;
+using MonsterTamer.Items;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Inventory
+namespace MonsterTamer.Inventory
 {
     /// <summary>
     /// Defines the starting items for an inventory template. 

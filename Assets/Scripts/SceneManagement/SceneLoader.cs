@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using PokemonGame.Utilities;
+using MonsterTamer.Utilities;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Centralized utility for scene management.

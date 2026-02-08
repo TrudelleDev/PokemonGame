@@ -1,10 +1,10 @@
-using PokemonGame.Pokemon;
-using PokemonGame.Shared.Interfaces;
+using MonsterTamer.Pokemon;
+using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Pokemon.UI
+namespace MonsterTamer.Pokemon.UI
 {
     /// <summary>
     /// Displays a Pokémon sprite in the UI using a specific sprite type.

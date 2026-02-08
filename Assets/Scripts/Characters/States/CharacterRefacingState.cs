@@ -1,6 +1,6 @@
-﻿using PokemonGame.Characters.Interfaces;
+﻿using MonsterTamer.Characters.Interfaces;
 
-namespace PokemonGame.Characters.States
+namespace MonsterTamer.Characters.States
 {
     /// <summary>
     /// State for turning the character to a new facing without moving.

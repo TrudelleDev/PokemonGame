@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Defines the set of sprites used to represent different health states

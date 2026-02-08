@@ -1,11 +1,11 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Characters.Interfaces;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Characters.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
-using PokemonGame.Transitions;
-using PokemonGame.MapEntry;
-using PokemonGame.Characters;
-using PokemonGame.Characters.Directions;
+using MonsterTamer.Transitions;
+using MonsterTamer.MapEntry;
+using MonsterTamer.Characters;
+using MonsterTamer.Characters.Directions;
 
 
 
@@ -14,7 +14,7 @@ using PokemonGame.Characters.Directions;
 using UnityEditor;
 #endif
 
-namespace PokemonGame.SceneManagement
+namespace MonsterTamer.SceneManagement
 {
     /// <summary>
     /// Trigger for transitioning the player to a target scene. 

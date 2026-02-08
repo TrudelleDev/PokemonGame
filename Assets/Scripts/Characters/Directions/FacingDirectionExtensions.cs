@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Characters.Directions
+namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
     /// Provides helper methods for working with <see cref="FacingDirection"/>.

@@ -1,9 +1,9 @@
-﻿using PokemonGame.Utilities;
+﻿using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Dialogue
+namespace MonsterTamer.Dialogue
 {
     /// <summary>
     /// Defines the visual and layout properties used to style a <see cref="DialogueBox"/>.

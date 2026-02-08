@@ -1,7 +1,7 @@
-using PokemonGame.Utilities;
+using MonsterTamer.Utilities;
 using UnityEngine;
 
-namespace PokemonGame.Characters.States.Behaviours
+namespace MonsterTamer.Characters.States.Behaviours
 {
     /// <summary>
     /// Animator behaviour that notifies the character controller

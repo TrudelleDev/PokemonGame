@@ -1,9 +1,9 @@
-using PokemonGame.Inventory;
-using PokemonGame.Party;
+using MonsterTamer.Inventory;
+using MonsterTamer.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Characters
+namespace MonsterTamer.Characters
 {
     /// <summary>
     /// Represents a character in the game world.

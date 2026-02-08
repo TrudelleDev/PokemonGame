@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Type
+﻿namespace MonsterTamer.Type
 {
     /// <summary>
     /// Represents how effective a move is against a target's type.

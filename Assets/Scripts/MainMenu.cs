@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
-using PokemonGame.SceneManagement;
-using PokemonGame.Shared.UI.Core;
+using MonsterTamer.SceneManagement;
+using MonsterTamer.Shared.UI.Core;
 
 
 
@@ -9,7 +9,7 @@ using PokemonGame.Shared.UI.Core;
 using UnityEditor;
 #endif
 
-namespace PokemonGame
+namespace MonsterTamer
 {
     /// <summary>
     /// Binds main menu UI buttons (New Game, Continue, Exit) 

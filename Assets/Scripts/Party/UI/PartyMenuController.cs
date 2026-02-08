@@ -1,9 +1,9 @@
-﻿using PokemonGame.Party.UI.PartyOptions;
-using PokemonGame.Views;
+﻿using MonsterTamer.Party.UI.PartyOptions;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI
+namespace MonsterTamer.Party.UI
 {
     /// <summary>
     /// Handles party menu flow and navigation.

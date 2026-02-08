@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Battle.Models
+namespace MonsterTamer.Battle.Models
 {
     /// <summary>
     /// Contains references to all animators used for the player during battle,

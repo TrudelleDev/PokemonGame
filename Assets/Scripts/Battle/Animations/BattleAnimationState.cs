@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Battle.Animations
+namespace MonsterTamer.Battle.Animations
 {
     /// <summary>
     /// Contains static Animator state hashes used by battle animation sequences.

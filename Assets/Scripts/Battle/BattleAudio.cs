@@ -1,8 +1,8 @@
-﻿using PokemonGame.Audio;
-using PokemonGame.Move;
+﻿using MonsterTamer.Audio;
+using MonsterTamer.Move;
 using UnityEngine;
 
-namespace PokemonGame.Battle
+namespace MonsterTamer.Battle
 {
     /// <summary>
     /// Handles playing audio cues during battle, such as move sounds.

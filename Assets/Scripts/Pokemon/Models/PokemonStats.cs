@@ -1,10 +1,10 @@
 ﻿using System;
-using PokemonGame.Pokemon.Enums;
+using MonsterTamer.Pokemon.Enums;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Represents a Pokémon's core stats: Hit Points (HP), Attack, Defense,

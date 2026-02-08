@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace PokemonGame.Shared.Interfaces
+namespace MonsterTamer.Shared.Interfaces
 {
     /// <summary>
     /// Represents something that can be displayed in the UI with an icon and description.

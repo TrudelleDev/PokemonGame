@@ -1,9 +1,9 @@
 ﻿using System;
-using PokemonGame.Type;
+using MonsterTamer.Type;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Models
+namespace MonsterTamer.Pokemon.Models
 {
     /// <summary>
     /// Contains a Pokémon’s primary type and an optional secondary type.

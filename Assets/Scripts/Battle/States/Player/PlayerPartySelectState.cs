@@ -1,14 +1,14 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Dialogue;
-using PokemonGame.Party.Enums;
-using PokemonGame.Party.UI;
-using PokemonGame.Party.UI.PartyOptions;
-using PokemonGame.Views;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Dialogue;
+using MonsterTamer.Party.Enums;
+using MonsterTamer.Party.UI;
+using MonsterTamer.Party.UI.PartyOptions;
+using MonsterTamer.Views;
 using UnityEngine;
 
-namespace PokemonGame.Battle.States.Player
+namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
     /// Handles party selection during battle, including forced and optional swaps.

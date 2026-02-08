@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Pokemon.Enums
+﻿namespace MonsterTamer.Pokemon.Enums
 {
     /// <summary>
     /// Represents the different stats a Pokemon can have.

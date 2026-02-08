@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Characters.Interfaces
+﻿namespace MonsterTamer.Characters.Interfaces
 {
     /// <summary>
     /// Represents an object that can be triggered by a <see cref="Character"/>.

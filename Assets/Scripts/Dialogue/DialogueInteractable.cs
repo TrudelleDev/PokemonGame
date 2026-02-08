@@ -1,11 +1,11 @@
-using PokemonGame.Characters;
-using PokemonGame.Characters.Interfaces;
-using PokemonGame.Pause;
-using PokemonGame.Utilities;
+using MonsterTamer.Characters;
+using MonsterTamer.Characters.Interfaces;
+using MonsterTamer.Pause;
+using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Dialogue
+namespace MonsterTamer.Dialogue
 {
     /// <summary>
     /// An interactable object that triggers a dialogue sequence

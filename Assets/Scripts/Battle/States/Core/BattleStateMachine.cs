@@ -1,4 +1,4 @@
-﻿namespace PokemonGame.Battle.States.Core
+﻿namespace MonsterTamer.Battle.States.Core
 {
     /// <summary>
     /// Manages the battle flow by transitioning between and updating <see cref="IBattleState"/> instances.

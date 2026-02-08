@@ -1,10 +1,10 @@
 ﻿using System.Collections;
-using PokemonGame.Battle.Models;
-using PokemonGame.Battle.States.Core;
-using PokemonGame.Battle.States.Player;
-using PokemonGame.Pokemon;
+using MonsterTamer.Battle.Models;
+using MonsterTamer.Battle.States.Core;
+using MonsterTamer.Battle.States.Player;
+using MonsterTamer.Pokemon;
 
-namespace PokemonGame.Battle.States.Opponent
+namespace MonsterTamer.Battle.States.Opponent
 {
     /// <summary>
     /// Handles the sequence that plays when the opponent's active Monster faints.

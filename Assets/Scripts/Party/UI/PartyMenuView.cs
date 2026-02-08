@@ -1,12 +1,12 @@
 ﻿using System;
-using PokemonGame.Shared.UI.Core;
-using PokemonGame.Shared.UI.Navigation;
-using PokemonGame.Views;
+using MonsterTamer.Shared.UI.Core;
+using MonsterTamer.Shared.UI.Navigation;
+using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Party.UI
+namespace MonsterTamer.Party.UI
 {
     /// <summary>
     /// UI-only view for the party menu.

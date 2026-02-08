@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace PokemonGame.Pokemon.Components
+namespace MonsterTamer.Pokemon.Components
 {
     internal class ExperienceComponent
     {

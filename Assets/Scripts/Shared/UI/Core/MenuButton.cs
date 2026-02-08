@@ -2,7 +2,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace PokemonGame.Shared.UI.Core
+namespace MonsterTamer.Shared.UI.Core
 {
     /// <summary>
     /// Base class for all menu buttons.

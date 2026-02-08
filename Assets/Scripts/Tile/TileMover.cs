@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
-using PokemonGame.Characters.Directions;
+using MonsterTamer.Characters.Directions;
 using UnityEngine;
 
-namespace PokemonGame.Tile
+namespace MonsterTamer.Tile
 {
     /// <summary>
     /// Provides smooth, grid-based movement and directional path checking.

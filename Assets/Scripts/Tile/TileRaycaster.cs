@@ -1,9 +1,9 @@
-﻿using PokemonGame.Characters.Directions;
-using PokemonGame.Raycasting;
+﻿using MonsterTamer.Characters.Directions;
+using MonsterTamer.Raycasting;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Tile
+namespace MonsterTamer.Tile
 {
     /// <summary>
     /// Provides directional raycasting functionality for obstacle detection.

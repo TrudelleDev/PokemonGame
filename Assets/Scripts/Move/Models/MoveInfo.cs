@@ -2,7 +2,7 @@
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace PokemonGame.Move.Models
+namespace MonsterTamer.Move.Models
 {
     /// <summary>
     /// Represents the numerical attributes of a Monster move,

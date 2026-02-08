@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace PokemonGame.Transitions.Controllers
+namespace MonsterTamer.Transitions.Controllers
 {
     /// <summary>
     /// Controls full-screen fade effects for scene and UI transitions.

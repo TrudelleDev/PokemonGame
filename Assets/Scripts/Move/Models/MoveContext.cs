@@ -1,7 +1,7 @@
-﻿using PokemonGame.Battle;
-using PokemonGame.Pokemon;
+﻿using MonsterTamer.Battle;
+using MonsterTamer.Pokemon;
 
-namespace PokemonGame.Move.Models
+namespace MonsterTamer.Move.Models
 {
     /// <summary>
     /// Contains all relevant data for executing a Monster move,
