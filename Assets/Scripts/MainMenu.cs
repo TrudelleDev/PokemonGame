@@ -20,7 +20,6 @@ namespace MonsterTamer
     public class MainMenu : MonoBehaviour
     {
         [Title("UI Buttons")]
-
         [SerializeField, Required]
         [Tooltip("Button that starts a new game.")]
         private MenuButton newGameButton;

@@ -1,5 +1,5 @@
 ﻿using System;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using UnityEngine;
 
 namespace MonsterTamer.Party.Models
@@ -9,10 +9,10 @@ namespace MonsterTamer.Party.Models
     /// including its species and starting level.
     /// </summary>
     [Serializable]
-    public struct PartyMemberEntry
+    internal struct PartyMemberEntry
     {
         [SerializeField, Tooltip("Mosnter species for this party slot.")]
-        private PokemonDefinition monsterDefinition;
+        private MonsterDefinition monsterDefinition;
 
         [SerializeField, Range(1, 100), Tooltip("Level of this Monster.")]
         private int level;
@@ -20,7 +20,7 @@ namespace MonsterTamer.Party.Models
         /// <summary>
         /// The Monster species assigned to this party slot.
         /// </summary>
-        public readonly PokemonDefinition MonsterDefinition => monsterDefinition;
+        public readonly MonsterDefinition MonsterDefinition => monsterDefinition;
 
         /// <summary>
         /// The level of this Monster.

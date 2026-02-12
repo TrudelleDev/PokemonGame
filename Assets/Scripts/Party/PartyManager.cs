@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using MonsterTamer.Utilities;
 
 namespace MonsterTamer.Party
@@ -16,13 +16,13 @@ namespace MonsterTamer.Party
     {
         public const int MaxPartySize = 6;
 
-        private readonly List<PokemonInstance> members = new();
-        private List<PokemonInstance> originalPartyOrder;
+        private readonly List<MonsterInstance> members = new();
+        private List<MonsterInstance> originalPartyOrder;
 
         /// <summary>
         /// The currently selected monster in the party.
         /// </summary>
-        internal PokemonInstance SelectedMonster { get; private set; }
+        internal MonsterInstance SelectedMonster { get; private set; }
 
         /// <summary>
         /// The index of the currently selected monster, or -1 if none is selected.
@@ -32,7 +32,7 @@ namespace MonsterTamer.Party
         /// <summary>
         /// Read-only list of all monsters in the party.
         /// </summary>
-        public IReadOnlyList<PokemonInstance> Members => members;
+        public IReadOnlyList<MonsterInstance> Members => members;
 
         /// <summary>
         /// Raised whenever the party composition changes.
@@ -63,7 +63,7 @@ namespace MonsterTamer.Party
                     continue;
                 }
 
-                var monster = PokemonFactory.CreatePokemon(
+                var monster = MonsterFactory.Create(
                     entry.Level,
                     entry.MonsterDefinition
                 );
@@ -81,7 +81,7 @@ namespace MonsterTamer.Party
         /// Adds a monster to the party if there is space.
         /// </summary>
         /// <param name="monster">The monster instance to add.</param>
-        public void AddMonster(PokemonInstance monster)
+        public void AddMonster(MonsterInstance monster)
         {
             if (monster == null)
             {
@@ -104,7 +104,7 @@ namespace MonsterTamer.Party
         /// </summary>
         public void SaveOriginalPartyOrder()
         {
-            originalPartyOrder = new List<PokemonInstance>(members);
+            originalPartyOrder = new List<MonsterInstance>(members);
         }
 
         /// <summary>
@@ -157,7 +157,7 @@ namespace MonsterTamer.Party
             SelectedMonster = members[index];
         }
 
-        public PokemonInstance GetFirstUsablePokemon()
+        public MonsterInstance GetFirstUsablePokemon()
         {
             // The Party class is the "expert" on its own members
             return Members.FirstOrDefault(m => m.Health.CurrentHealth > 0);
@@ -170,7 +170,7 @@ namespace MonsterTamer.Party
         {
             foreach (var monster in members)
             {
-                monster.Health.SetMaxHealth();
+                monster.Health.RestoreFullHealth();
             }
         }
 

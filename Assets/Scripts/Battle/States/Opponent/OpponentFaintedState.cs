@@ -2,7 +2,7 @@
 using MonsterTamer.Battle.Models;
 using MonsterTamer.Battle.States.Core;
 using MonsterTamer.Battle.States.Player;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 
 namespace MonsterTamer.Battle.States.Opponent
 {
@@ -13,7 +13,7 @@ namespace MonsterTamer.Battle.States.Opponent
     internal sealed class OpponentFaintedState : IBattleState
     {
         private readonly BattleStateMachine machine;
-        private readonly PokemonInstance monster;
+        private readonly MonsterInstance monster;
 
         private BattleView Battle => machine.BattleView;
 
@@ -26,7 +26,7 @@ namespace MonsterTamer.Battle.States.Opponent
         /// <param name="monster">
         /// The opponent's Monster that just fainted.
         /// </param>
-        internal OpponentFaintedState(BattleStateMachine machine, PokemonInstance monster)
+        internal OpponentFaintedState(BattleStateMachine machine, MonsterInstance monster)
         {
             this.machine = machine;
             this.monster = monster;

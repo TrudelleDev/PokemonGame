@@ -1,5 +1,5 @@
-﻿using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+﻿using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -9,7 +9,7 @@ namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays the player's active Monster HUD, including name, level, HP text, health bar, experience bar, and back sprite.
-    /// Updates in real-time via subscribed events from the bound <see cref="PokemonInstance"/>.
+    /// Updates in real-time via subscribed events from the bound <see cref="MonsterInstance"/>.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class PlayerBattleHud : MonoBehaviour
@@ -38,7 +38,7 @@ namespace MonsterTamer.Battle.UI
         [Tooltip("Image showing the player's Pokémon back-facing battle sprite.")]
         private Image backSprite;
 
-        private PokemonInstance activeMonster;
+        private MonsterInstance activeMonster;
 
         /// <summary>
         /// Provides access to the HealthBar component for damage animations or updates.
@@ -54,7 +54,7 @@ namespace MonsterTamer.Battle.UI
         /// Binds the HUD to a specific Monster instance and subscribes to events for live updates.
         /// </summary>
         /// <param name="monster">The active Monster instance.</param>
-        internal void Bind(PokemonInstance monster)
+        internal void Bind(MonsterInstance monster)
         {
             // Unsubscribe from any previously bound Monster
             UnsubscribeCurrentMonster();
@@ -124,4 +124,4 @@ namespace MonsterTamer.Battle.UI
             }
         }
     }
-} 
+}

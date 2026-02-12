@@ -1,5 +1,5 @@
-using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using MonsterTamer.Shared.UI.Core;
 using Sirenix.OdinInspector;
 using TMPro;
@@ -37,7 +37,7 @@ namespace MonsterTamer.Party.UI
 
         private MenuButton menuButton;
 
-        public PokemonInstance BoundMonster { get; private set; }
+        public MonsterInstance BoundMonster { get; private set; }
 
         /// <summary>
         /// The index of this slot within the party menu.
@@ -55,7 +55,7 @@ namespace MonsterTamer.Party.UI
         /// Clears the slot if the Monster is null or invalid, and subscribes to health changes.
         /// </summary>
         /// <param name="monster">The Monster to bind, or null to clear the slot.</param>
-        public void Bind(PokemonInstance monster)
+        public void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {
@@ -115,7 +115,7 @@ namespace MonsterTamer.Party.UI
             UpdateDisplay(BoundMonster);
         }
 
-        private void UpdateDisplay(PokemonInstance monster)
+        private void UpdateDisplay(MonsterInstance monster)
         {
             nameText.text = monster.Definition.DisplayName;
             levelText.text = $"lv{monster.Experience.Level}";

@@ -2,7 +2,7 @@
 using MonsterTamer.Battle.Models;
 using MonsterTamer.Battle.States.Core;
 using MonsterTamer.Battle.States.Opponent;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 
 namespace MonsterTamer.Battle.States.Player
 {
@@ -14,7 +14,7 @@ namespace MonsterTamer.Battle.States.Player
     internal sealed class PlayerSwapMonsterState : IBattleState
     {
         private readonly BattleStateMachine machine;
-        private readonly PokemonInstance monster;
+        private readonly MonsterInstance monster;
 
         private BattleView Battle => machine.BattleView;
 
@@ -27,7 +27,7 @@ namespace MonsterTamer.Battle.States.Player
         /// <param name="monster">
         /// The Monster selected to replace the active one.
         /// </param>
-        internal PlayerSwapMonsterState(BattleStateMachine machine, PokemonInstance monster)
+        internal PlayerSwapMonsterState(BattleStateMachine machine, MonsterInstance monster)
         {
             this.machine = machine;
             this.monster = monster;

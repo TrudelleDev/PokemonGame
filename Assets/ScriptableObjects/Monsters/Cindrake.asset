@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Cindrake
   m_EditorClassIdentifier: 
   displayName: Cindrake
-  pokedexNumber: 1
-  types:
+  codexNumber: 1
+  typing:
     firstType: {fileID: 11400000, guid: e9d851052d965b048912a5a2289d1133, type: 2}
-    hasSecondType: 0
     secondType: {fileID: 0}
-  genderRatio:
-    maleRatio: 87.5
   baseStats:
     healthPoint: 39
     attack: 52
@@ -31,7 +28,6 @@ MonoBehaviour:
   levelUpMoves:
   - level: 1
     moveDefinition: {fileID: 11400000, guid: 9e372a24d65448c41a319ef4adcc2f2d, type: 2}
-  cryClip: {fileID: 8300000, guid: bf8422bc3731b9f4e9537937537cedf2, type: 3}
   sprites:
     frontSprite: {fileID: 404585501, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}
     backSprite: {fileID: 404585501, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}

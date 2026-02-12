@@ -67,7 +67,7 @@ namespace MonsterTamer.Move.Effects
         internal override IEnumerator PerformMoveSequence(MoveContext context)
         {
             var moveType = context.Move.Definition.Classification.TypeDefinition;
-            var targetType = context.Target.Definition.Types.FirstType;
+            var targetType = context.Target.Definition.Typing.FirstType;
             var effectiveness = moveType.EffectivenessGroups.GetEffectiveness(targetType);
 
             PlayEffectSound(context);

@@ -1,5 +1,5 @@
 ﻿using System;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -33,7 +33,7 @@ namespace MonsterTamer.Summary
         /// Clears the UI if the Monster or its definition is invalid.
         /// </summary>
         /// <param name="monster">The Monster to display in the summary UI.</param>
-        public void Bind(PokemonInstance monster)
+        public void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {

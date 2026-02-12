@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Sporey
   m_EditorClassIdentifier: 
   displayName: Sporey
-  pokedexNumber: 13
-  types:
-    firstType: {fileID: 11400000, guid: f7535478357dcc6459a3d1581479bd8a, type: 2}
-    hasSecondType: 0
-    secondType: {fileID: 0}
-  genderRatio:
-    maleRatio: 50
+  codexNumber: 10
+  typing:
+    firstType: {fileID: 11400000, guid: dce2d6a87187447458f416b8ca1fd749, type: 2}
+    secondType: {fileID: 11400000, guid: 7d3ababfd487d5d4b8f56b126fd68e66, type: 2}
   baseStats:
     healthPoint: 40
     attack: 35
@@ -31,7 +28,6 @@ MonoBehaviour:
   levelUpMoves:
   - level: 1
     moveDefinition: {fileID: 11400000, guid: 81e967e928eae3043b461600c3646a2d, type: 2}
-  cryClip: {fileID: 8300000, guid: 856ab0807e8b7ad4eb2831b9ceeb190d, type: 3}
   sprites:
     frontSprite: {fileID: -2114409321, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}
     backSprite: {fileID: -2114409321, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}

@@ -10,13 +10,14 @@ namespace MonsterTamer.Shared.UI.MenuButtons
     /// A menu button that tints its text and/or image
     /// based on selection and interactable state.
     /// </summary>
-    internal class TintMenuButton : MenuButton
+    internal sealed class TintMenuButton : MenuButton
     {
         [Title("Targets")]
-        [Tooltip("Optional: Text to tint when selected.")]
+
+        [Tooltip("Text to tint when selected.")]
         [SerializeField] private TextMeshProUGUI targetText;
 
-        [Tooltip("Optional: Image to tint when selected.")]
+        [Tooltip("Image to tint when selected.")]
         [SerializeField] private Graphic targetImage;
 
         [Title("Colors")]

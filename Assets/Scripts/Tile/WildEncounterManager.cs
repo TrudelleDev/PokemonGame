@@ -2,8 +2,8 @@
 using MonsterTamer.Battle;
 using MonsterTamer.Characters;
 using MonsterTamer.Characters.Player;
-using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.Models;
+using MonsterTamer.Monster;
+using MonsterTamer.Monster.Models;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -103,9 +103,9 @@ namespace MonsterTamer.Tile
         {
             encounterLocked = true;
 
-            WildPokemonEntry entry = ChooseWildMonster();
+            WildMonsterEntry entry = ChooseWildMonster();
             int level = Random.Range(entry.MinLevel, entry.MaxLevel + 1);
-            PokemonInstance monster = PokemonFactory.CreatePokemon(level, entry.Pokemon);
+            MonsterInstance monster = MonsterFactory.Create(level, entry.Definition);
 
             BattleView battle = ViewManager.Instance.Show<BattleView>();
             battle.InitializeWildBattle(player, monster);
@@ -115,7 +115,7 @@ namespace MonsterTamer.Tile
         /// <summary>
         /// Selects a wild Monster based on weighted encounter rates.
         /// </summary>
-        private WildPokemonEntry ChooseWildMonster()
+        private WildMonsterEntry ChooseWildMonster()
         {
             int totalWeight = monsterDatabase.Entries.Sum(e => e.EncounterRate);
             int roll = Random.Range(0, totalWeight);

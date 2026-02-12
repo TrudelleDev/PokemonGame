@@ -1,6 +1,6 @@
-﻿using MonsterTamer.Move;
+﻿using MonsterTamer.Monster;
+using MonsterTamer.Move;
 using MonsterTamer.Move.Enums;
-using MonsterTamer.Pokemon;
 using MonsterTamer.Type;
 using UnityEngine;
 
@@ -28,17 +28,17 @@ namespace MonsterTamer.Battle
         /// <param name="target">The Pokémon receiving the move.</param>
         /// <param name="move">The move being used.</param>
         /// <returns>The final damage as an integer (minimum 1).</returns>
-        internal static int CalculateDamage(PokemonInstance user, PokemonInstance target, MoveInstance move)
+        internal static int CalculateDamage(MonsterInstance user, MonsterInstance target, MoveInstance move)
         {
             bool isPhysical = move.Definition.Classification.Category == MoveCategory.Physical;
 
             int attack = isPhysical
-                ? user.Stats.StatStage.Modified.Attack
-                : user.Stats.StatStage.Modified.SpecialAttack;
+                ? user.Stats.Core.Attack
+                : user.Stats.Core.SpecialAttack;
 
             int defense = isPhysical
-                ? target.Stats.StatStage.Modified.Defense
-                : target.Stats.StatStage.Modified.SpecialDefense;
+                ? target.Stats.Core.Defense
+                : target.Stats.Core.SpecialDefense;
 
             float baseDamage =
                 (((LevelMultiplier * user.Experience.Level + 10f) / LevelDamageDivider)
@@ -61,11 +61,11 @@ namespace MonsterTamer.Battle
         /// <param name="move">The move being used.</param>
         /// <param name="target">The Monster receiving the move.</param>
         /// <returns>A multiplier representing effectiveness (e.g., 0.5, 1, 2).</returns>
-        private static float CalculateTypeModifier(MoveInstance move, PokemonInstance target)
+        private static float CalculateTypeModifier(MoveInstance move, MonsterInstance target)
         {
             float multiplier = 1f;
             var moveType = move.Definition.Classification.TypeDefinition;
-            var types = target.Definition.Types;
+            var types = target.Definition.Typing;
 
             multiplier *= moveType.EffectivenessGroups.GetEffectiveness(types.FirstType).ToMultiplier();
 
@@ -84,10 +84,10 @@ namespace MonsterTamer.Battle
         /// <param name="user">The Monster using the move.</param>
         /// <param name="move">The move being used.</param>
         /// <returns>STAB multiplier.</returns>
-        private static float CalculateSTAB(PokemonInstance user, MoveInstance move)
+        private static float CalculateSTAB(MonsterInstance user, MoveInstance move)
         {
             var moveType = move.Definition.Classification.TypeDefinition;
-            var types = user.Definition.Types;
+            var types = user.Definition.Typing;
 
             return (types.FirstType == moveType || types.SecondType == moveType) ? STABMultiplier : 1f;
         }

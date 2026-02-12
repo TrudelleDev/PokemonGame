@@ -1,40 +1,37 @@
 ﻿using System;
-using MonsterTamer.Pokemon.Enums;
-using MonsterTamer.Pokemon.Models;
+using MonsterTamer.Monster.Enums;
 using UnityEngine;
 
 namespace MonsterTamer.Nature.Models
 {
     /// <summary>
-    /// Defines how a nature modifies a Pokémon's stats.
-    /// Each nature increases one stat by 10% and decreases another by 10%.
+    /// Describes the stat-shifting effect of a Nature.
+    /// Typically involves a 10% buff to one stat and a 10% nerf to another.
     /// </summary>
     [Serializable]
-    public struct NatureStatsModifier
+    internal struct NatureStatsModifier
     {
-        public const float IncreaseMultiplier = 1.1f;
-        public const float DecreaseMultiplier = 0.9f;
+        private const float IncreaseMultiplier = 1.1f;
+        private const float DecreaseMultiplier = 0.9f;
+        private const float NeutralMultiplier = 1.0f;
 
-        [SerializeField, Tooltip("The stat this nature increases.")]
-        private PokemonStat increase;
-        [SerializeField, Tooltip("The stat this nature decreases.")]
-        private PokemonStat decrease;
+        [SerializeField] private MonsterStat increase;
+        [SerializeField] private MonsterStat decrease;
+
+        public readonly MonsterStat IncreasedStat => increase;
+        public readonly MonsterStat DecreasedStat => decrease;
 
         /// <summary>
-        /// Applies the nature's stat modifications to the Pokémon's stats.
+        /// Returns the multiplier for a specific stat. 
+        /// Used by the StatsCalculator during the primary derivation formula.
         /// </summary>
-        /// <param name="stats">The stats to modify.</param>
-        public readonly void Apply(ref PokemonStats stats)
+        public readonly float GetMultiplier(MonsterStat stat)
         {
-            if (increase != PokemonStat.None)
-            {
-                stats[increase] = Mathf.FloorToInt(stats[increase] * IncreaseMultiplier);
-            }
+            if (stat == MonsterStat.None) return NeutralMultiplier;
+            if (stat == increase) return IncreaseMultiplier;
+            if (stat == decrease) return DecreaseMultiplier;
 
-            if (decrease != PokemonStat.None)
-            {
-                stats[decrease] = Mathf.FloorToInt(stats[decrease] * DecreaseMultiplier);
-            }
+            return NeutralMultiplier;
         }
     }
 }

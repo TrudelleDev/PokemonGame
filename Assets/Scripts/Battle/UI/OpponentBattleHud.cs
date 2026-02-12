@@ -1,5 +1,5 @@
-﻿using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+﻿using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -40,7 +40,7 @@ namespace MonsterTamer.Battle.UI
         /// Updates name, level, health bar, and front sprite.
         /// </summary>
         /// <param name="monster">The opponent Monster to display.</param>
-        internal void Bind(PokemonInstance monster)
+        internal void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {

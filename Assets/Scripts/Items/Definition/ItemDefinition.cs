@@ -1,6 +1,6 @@
 using MonsterTamer.Items.Enums;
 using MonsterTamer.Items.Models;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using MonsterTamer.Shared.Interfaces;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -54,6 +54,6 @@ namespace MonsterTamer.Items.Definition
         /// </summary>
         /// <param name="target">Target Pokémon instance.</param>
         /// <returns>Result of the item usage.</returns>
-        public abstract ItemUseResult Use(PokemonInstance target);
+        public abstract ItemUseResult Use(MonsterInstance target);
     }
 }

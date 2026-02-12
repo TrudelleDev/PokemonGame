@@ -1,5 +1,5 @@
 using MonsterTamer.Characters;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -25,7 +25,7 @@ namespace MonsterTamer.Summary
         /// </summary>
         private void OnEnable()
         {
-            PokemonInstance selectedPokemon = player.Party.SelectedMonster;
+            MonsterInstance selectedPokemon = player.Party.SelectedMonster;
 
             if (selectedPokemon == null)
             {

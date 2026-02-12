@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using MonsterTamer.Battle.Models;
 using MonsterTamer.Battle.States.Core;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 
 namespace MonsterTamer.Battle.States.Player
 {
@@ -12,7 +12,7 @@ namespace MonsterTamer.Battle.States.Player
     internal sealed class PlayerForcedSendOutState : IBattleState
     {
         private readonly BattleStateMachine machine;
-        private readonly PokemonInstance selectedMonster;
+        private readonly MonsterInstance selectedMonster;
 
         /// <summary>
         /// Shortcut to the active battle view.
@@ -28,7 +28,7 @@ namespace MonsterTamer.Battle.States.Player
         /// <param name="selectedMonster">
         /// The monster to be sent into battle.
         /// </param>
-        internal PlayerForcedSendOutState(BattleStateMachine machine, PokemonInstance selectedMonster)
+        internal PlayerForcedSendOutState(BattleStateMachine machine, MonsterInstance selectedMonster)
         {
             this.machine = machine;
             this.selectedMonster = selectedMonster;

@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Peepin
   m_EditorClassIdentifier: 
   displayName: Peepin
-  pokedexNumber: 13
-  types:
-    firstType: {fileID: 11400000, guid: 919e73ff959ba794bbc045b570c50b5f, type: 2}
-    hasSecondType: 1
-    secondType: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
-  genderRatio:
-    maleRatio: 50
+  codexNumber: 12
+  typing:
+    firstType: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
+    secondType: {fileID: 11400000, guid: 919e73ff959ba794bbc045b570c50b5f, type: 2}
   baseStats:
     healthPoint: 40
     attack: 45
@@ -31,7 +28,6 @@ MonoBehaviour:
   levelUpMoves:
   - level: 1
     moveDefinition: {fileID: 11400000, guid: 1430cd0f059bc384f9436bbf80819014, type: 2}
-  cryClip: {fileID: 0}
   sprites:
     frontSprite: {fileID: -737192903, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}
     backSprite: {fileID: -737192903, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}

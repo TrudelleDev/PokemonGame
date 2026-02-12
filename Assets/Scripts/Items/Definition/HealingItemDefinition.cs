@@ -1,5 +1,5 @@
 using MonsterTamer.Items.Models;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -26,7 +26,7 @@ namespace MonsterTamer.Items.Definition
         /// Result indicating whether the item was consumed and
         /// the message(s) to display.
         /// </returns>
-        public override ItemUseResult Use(PokemonInstance target)
+        public override ItemUseResult Use(MonsterInstance target)
         {
             if (target == null)
             {

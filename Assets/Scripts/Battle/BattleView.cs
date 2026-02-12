@@ -6,7 +6,7 @@ using MonsterTamer.Battle.States.Core;
 using MonsterTamer.Battle.States.Intro;
 using MonsterTamer.Characters;
 using MonsterTamer.Dialogue;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -63,12 +63,12 @@ namespace MonsterTamer.Battle
         /// <summary>
         /// The player's currently active Monster in battle.
         /// </summary>
-        internal PokemonInstance PlayerActiveMonster { get; private set; }
+        internal MonsterInstance PlayerActiveMonster { get; private set; }
 
         /// <summary>
         /// The opponent's currently active Monster in battle.
         /// </summary>
-        internal PokemonInstance OpponentActiveMonster { get; private set; }
+        internal MonsterInstance OpponentActiveMonster { get; private set; }
 
         /// <summary>
         /// Provides access to all battle HUD elements.
@@ -101,7 +101,7 @@ namespace MonsterTamer.Battle
         /// </summary>
         /// <param name="player">The player character participating in the battle.</param>
         /// <param name="monster">The wild Monster to battle against.</param>
-        internal void InitializeWildBattle(Character player, PokemonInstance monster)
+        internal void InitializeWildBattle(Character player, MonsterInstance monster)
         {
             Player = player;
             Opponent = null;
@@ -154,7 +154,7 @@ namespace MonsterTamer.Battle
         /// Replaces the opponent's active Monster (trainer battles only).
         /// </summary>
         /// <param name="monster">The new opponent Monster to display in battle.</param>
-        internal void SetNextOpponentMonster(PokemonInstance monster)
+        internal void SetNextOpponentMonster(MonsterInstance monster)
         {
             OpponentActiveMonster = monster;
             battleHuds.OpponentBattleHud.Bind(monster);
@@ -164,7 +164,7 @@ namespace MonsterTamer.Battle
         /// Replaces the player's active Monster and updates party order.
         /// </summary>
         /// <param name="monster">The new player Monster to display in battle.</param>
-        internal void SetNextPlayerMonster(PokemonInstance monster)
+        internal void SetNextPlayerMonster(MonsterInstance monster)
         {
             PlayerActiveMonster = monster;
             battleHuds.PlayerBattleHud.Bind(monster);

@@ -1,7 +1,7 @@
 ﻿using System;
 using MonsterTamer.Characters;
+using MonsterTamer.Monster;
 using MonsterTamer.Party.Enums;
-using MonsterTamer.Pokemon;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -29,12 +29,12 @@ namespace MonsterTamer.Party.UI
         /// <summary>
         /// Raised when a Monster is confirmed for an action 
         /// </summary>
-        public event Action<PokemonInstance> MonsterConfirmed;
+        public event Action<MonsterInstance> MonsterConfirmed;
 
         /// <summary>
         /// Raised when a Monster is selected as a target for item usage.
         /// </summary>
-        public event Action<PokemonInstance> ItemTargetSelected;
+        public event Action<MonsterInstance> ItemTargetSelected;
 
         /// <summary>
         /// Raised when the user requests to open the options menu

@@ -2,12 +2,11 @@
 using System.Linq;
 using MonsterTamer.Characters;
 using MonsterTamer.Dialogue;
-using MonsterTamer.Items;
 using MonsterTamer.Items.Definition;
 using MonsterTamer.Items.Models;
+using MonsterTamer.Monster;
 using MonsterTamer.Party.Enums;
 using MonsterTamer.Party.UI;
-using MonsterTamer.Pokemon;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -73,7 +72,7 @@ namespace MonsterTamer.Inventory.UI.InventoryOptions
             ViewManager.Instance.Close<InventoryOptionsView>();
             partyMenuPresenter.Setup(PartySelectionMode.UseItem);
 
-            void TempHandler(PokemonInstance pokemon)
+            void TempHandler(MonsterInstance pokemon)
             {
                 var itemInstance = player.Inventory.Items.FirstOrDefault(i => i.Definition == currentItem);
 

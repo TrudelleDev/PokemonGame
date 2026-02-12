@@ -1,23 +1,26 @@
 using MonsterTamer.Nature.Models;
+using MonsterTamer.Monster.Enums; // Assuming MonsterStat enum is here
 using Sirenix.OdinInspector;
 using UnityEngine;
 
 namespace MonsterTamer.Nature
 {
     /// <summary>
-    /// Define a Pokemon nature that modifies stats and has a display name.
+    /// Defines a Monster's nature, which modifies specific stats by a fixed percentage.
     /// </summary>
-    [CreateAssetMenu(menuName = "PokemonGame/Nature/Nature Definition")]
+    [CreateAssetMenu(menuName = "MonsterTamer/Nature/Nature Definition")]
     public class NatureDefinition : ScriptableObject
     {
-        [SerializeField, Required, Tooltip("Name shown in the UI.")]
+        [SerializeField, Required]
         private string displayName;
 
         [SerializeField]
-        [Tooltip("Modifiers applied by this nature: one stat is increased and another is decreased.")]
         private NatureStatsModifier modifiers;
 
         public string DisplayName => displayName;
-        public NatureStatsModifier Modifiers => modifiers;
+
+        // This is the "bridge" that lets the StatsCalculator work.
+        // It simply asks the struct for the float value (0.9, 1.0, or 1.1).
+        public float GetMultiplier(MonsterStat stat) => modifiers.GetMultiplier(stat);
     }
 }

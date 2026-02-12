@@ -1,5 +1,5 @@
+using MonsterTamer.Monster;
 using MonsterTamer.Move.UI;
-using MonsterTamer.Pokemon;
 using MonsterTamer.Shared.UI.Navigation;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -30,7 +30,7 @@ namespace MonsterTamer.Summary
         /// Clears the UI if the Pokémon instance or its core data is null.
         /// </summary>
         /// <param name="pokemon">The Pokémon instance to display.</param>
-        public void Bind(PokemonInstance pokemon)
+        public void Bind(MonsterInstance pokemon)
         {
             // always reset state first
             Unbind();

@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Buzzle
   m_EditorClassIdentifier: 
   displayName: Buzzle
-  pokedexNumber: 16
-  types:
+  codexNumber: 0
+  typing:
     firstType: {fileID: 11400000, guid: f7535478357dcc6459a3d1581479bd8a, type: 2}
-    hasSecondType: 0
-    secondType: {fileID: 11400000, guid: 5a601fb978930454db43ed5be049233f, type: 2}
-  genderRatio:
-    maleRatio: 50
+    secondType: {fileID: 11400000, guid: 7d3ababfd487d5d4b8f56b126fd68e66, type: 2}
   baseStats:
     healthPoint: 35
     attack: 50
@@ -31,7 +28,6 @@ MonoBehaviour:
   levelUpMoves:
   - level: 1
     moveDefinition: {fileID: 11400000, guid: b7a0f30b035ca4c45978b4d8c0a690f1, type: 2}
-  cryClip: {fileID: 0}
   sprites:
     frontSprite: {fileID: 632941744, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}
     backSprite: {fileID: 632941744, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}

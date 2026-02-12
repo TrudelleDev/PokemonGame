@@ -1,5 +1,5 @@
-using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -12,7 +12,7 @@ namespace MonsterTamer.Summary
     internal class SummarySkillTab : MonoBehaviour
     {
         [SerializeField, Required, Tooltip("Group containing base stat UI elements.")]
-        private PokemonStatsUI statsUI;
+        private MonsterStatsPanel statsUI;
 
         [SerializeField, Required, Tooltip("Group containing experience UI elements.")]
         private ExperienceUI experienceUI;
@@ -22,7 +22,7 @@ namespace MonsterTamer.Summary
         /// Clears the UI if the Monster defenition is missing or invalid.
         /// </summary>
         /// <param name="monster">The Monster instance to display.</param>
-        public void Bind(PokemonInstance monster)
+        public void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {

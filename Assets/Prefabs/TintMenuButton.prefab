@@ -74,7 +74,7 @@ GameObject:
   - component: {fileID: 1814835975388292669}
   - component: {fileID: 6712619075971268433}
   - component: {fileID: 7651786375337523167}
-  - component: {fileID: 4793092953496092179}
+  - component: {fileID: 1437957306659147044}
   m_Layer: 5
   m_Name: TintMenuButton
   m_TagString: Untagged
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &4793092953496092179
+--- !u!114 &1437957306659147044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -152,11 +152,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 04d5e10189f159a4081896f07adb0150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  interactable: 1
+  label: {fileID: 0}
   targetText: {fileID: 5836544459836643624}
-  targetImage: {fileID: 7651786375337523167}
-  normalColor: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
+  targetImage: {fileID: 0}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
   highlightedColor: {r: 1, g: 1, b: 1, a: 1}
-  previewHighlight: 1
+  disabledColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &5114506033185898736
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,8 +228,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: f85a20621022fb94c82053be9de127ef, type: 2}
-  m_sharedMaterial: {fileID: 1583439172908871083, guid: f85a20621022fb94c82053be9de127ef, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

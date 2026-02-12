@@ -13,13 +13,10 @@ MonoBehaviour:
   m_Name: Leaflin
   m_EditorClassIdentifier: 
   displayName: Leaflin
-  pokedexNumber: 1
-  types:
+  codexNumber: 4
+  typing:
     firstType: {fileID: 11400000, guid: dce2d6a87187447458f416b8ca1fd749, type: 2}
-    hasSecondType: 0
-    secondType: {fileID: 11400000, guid: 7d3ababfd487d5d4b8f56b126fd68e66, type: 2}
-  genderRatio:
-    maleRatio: 87.5
+    secondType: {fileID: 0}
   baseStats:
     healthPoint: 45
     attack: 49
@@ -31,7 +28,6 @@ MonoBehaviour:
   levelUpMoves:
   - level: 4
     moveDefinition: {fileID: 11400000, guid: 81e967e928eae3043b461600c3646a2d, type: 2}
-  cryClip: {fileID: 8300000, guid: 856ab0807e8b7ad4eb2831b9ceeb190d, type: 3}
   sprites:
     frontSprite: {fileID: -1900053458, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}
     backSprite: {fileID: -1900053458, guid: e1f83455fed86cc4b92502be22ca2e09, type: 3}

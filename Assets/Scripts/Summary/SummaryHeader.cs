@@ -1,5 +1,5 @@
-using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using Sirenix.OdinInspector;
 using TMPro;
 using UnityEngine;
@@ -16,14 +16,14 @@ namespace MonsterTamer.Summary
         private TextMeshProUGUI nameText;
 
         [SerializeField, Required, Tooltip("Displays the Monster's front-facing sprite.")]
-        private PokemonSprite sprite;
+        private MonsterSprite sprite;
 
         /// <summary>
         /// Binds the given Monster definition to the name and sprite.
         /// Clears the UI if <paramref name="monster"/> is null or missing required definition.
         /// </summary>
         /// <param name="monster">The Monster instance to display, or null to clear the UI.</param>
-        public void Bind(PokemonInstance monster)
+        public void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {

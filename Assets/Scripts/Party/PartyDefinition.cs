@@ -9,7 +9,7 @@ namespace MonsterTamer.Party
     /// Defines a trainer's party with a fixed set of Monster.
     /// </summary>
     [CreateAssetMenu(menuName = "PokemonGame/Party/Party Definition")]
-    public sealed class PartyDefinition : ScriptableObject
+    internal sealed class PartyDefinition : ScriptableObject
     {
         [SerializeField, Required, Tooltip("Monster in this party, listed in order.")]
         private List<PartyMemberEntry> members = new();

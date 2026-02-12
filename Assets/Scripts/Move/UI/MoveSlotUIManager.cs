@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using MonsterTamer.Pokemon;
+using MonsterTamer.Monster;
 using MonsterTamer.Shared.UI.Core;
 using UnityEngine;
 
@@ -15,7 +15,7 @@ namespace MonsterTamer.Move.UI
         /// Binds all of a Monster's moves to the corresponding summary UI slots.
         /// </summary>
         /// <param name="monster">The Monster whose moves will be displayed.</param>
-        internal void Bind(PokemonInstance monster)
+        internal void Bind(MonsterInstance monster)
         {
             if (monster?.Moves == null)
             {

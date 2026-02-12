@@ -1,5 +1,5 @@
-using MonsterTamer.Pokemon;
-using MonsterTamer.Pokemon.UI;
+using MonsterTamer.Monster;
+using MonsterTamer.Monster.UI;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
@@ -13,7 +13,7 @@ namespace MonsterTamer.Summary
     {
         [SerializeField, Required]
         [Tooltip("Displays the Monster's overview information")]
-        private PokemonOverviewUI monsterOverviewUI;
+        private MonsterOverviewPanel monsterOverviewUI;
 
         [SerializeField, Required]
         [Tooltip("Displays the trainer's memo (e.g., caught location, encounter date).")]
@@ -24,7 +24,7 @@ namespace MonsterTamer.Summary
         /// Clears the UI if the Monster or its core data is null.
         /// </summary>
         /// <param name="monster">The Monster instance to display.</param>
-        public void Bind(PokemonInstance monster)
+        public void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
             {
