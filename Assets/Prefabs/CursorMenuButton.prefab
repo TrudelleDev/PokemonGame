@@ -281,7 +281,7 @@ GameObject:
   - component: {fileID: 3037416187829754361}
   - component: {fileID: 7866873033905712290}
   m_Layer: 5
-  m_Name: HorizontalLayoutGroup
+  m_Name: Row
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

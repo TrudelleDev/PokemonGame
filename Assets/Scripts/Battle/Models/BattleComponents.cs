@@ -18,14 +18,7 @@ namespace MonsterTamer.Battle.Models
         [SerializeField, Required, Tooltip("Handles all battle-related audio effects and music.")]
         private BattleAudio audio;
 
-        /// <summary>
-        /// Controls all battle animations for player and opponent Monster.
-        /// </summary>
         internal readonly BattleAnimation Animation => animation;
-
-        /// <summary>
-        /// Handles all battle-related audio effects and music.
-        /// </summary>
         internal readonly BattleAudio Audio => audio;
     }
 }

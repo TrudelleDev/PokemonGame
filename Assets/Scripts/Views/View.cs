@@ -96,7 +96,7 @@ namespace MonsterTamer.Views
         {
             if (menuController != null)
             {
-                menuController.ResetController();
+                StartCoroutine(menuController.ResetController());
             }
         }
 

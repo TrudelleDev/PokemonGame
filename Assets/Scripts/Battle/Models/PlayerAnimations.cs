@@ -20,19 +20,8 @@ namespace MonsterTamer.Battle.Models
         [SerializeField, Required, Tooltip("Animator controlling the player's HUD display.")]
         private Animator hudAnimator;
 
-        /// <summary>
-        /// Animator controlling the player's trainer sprite.
-        /// </summary>
         internal readonly Animator MonsterAnimator => monsterAnimator;
-
-        /// <summary>
-        /// Animator controlling the player's Monster sprite.
-        /// </summary>
         internal readonly Animator TrainerSpriteAnimator => trainerAnimator;
-
-        /// <summary>
-        /// Animator controlling the player's HUD display.
-        /// </summary>
         internal readonly Animator HudAnimator => hudAnimator;
     }
 }

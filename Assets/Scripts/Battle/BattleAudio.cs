@@ -5,22 +5,19 @@ using UnityEngine;
 namespace MonsterTamer.Battle
 {
     /// <summary>
-    /// Handles playing audio cues during battle, such as move sounds.
+    /// Plays battle-related audio cues, such as move sounds.
     /// </summary>
-    internal class BattleAudio : MonoBehaviour
+    internal sealed class BattleAudio : MonoBehaviour
     {
         /// <summary>
-        /// Plays the sound associated with a specific move.
+        /// Plays the sound for the specified move, if any.
         /// </summary>
-        /// <param name="move">The move whose sound should be played.</param>
-        public void PlayMoveSound(MoveDefinition move)
+        internal void PlayMoveSound(MoveDefinition move)
         {
-            if (move?.Sound == null)
+            if (move != null && move.Sound != null)
             {
-                return; // No sound to play
+                AudioManager.Instance.PlaySFX(move.Sound);
             }
-
-            AudioManager.Instance.PlaySFX(move.Sound);
         }
     }
 }

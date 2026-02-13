@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using MonsterTamer.Audio;
 using MonsterTamer.Characters.Config;
 using MonsterTamer.Pause;
@@ -13,7 +14,8 @@ namespace MonsterTamer.Dialogue
 {
     /// <summary>
     /// Handles the display and sequencing of dialogue lines.
-    /// Supports typewriter effect, player input, and auto-pausing.
+    /// Supports typewriter effect, player input, auto-pausing, and paging.
+    /// Shows up to 2 lines at a time, even for long paragraphs.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class DialogueBox : MonoBehaviour
@@ -21,19 +23,16 @@ namespace MonsterTamer.Dialogue
         [Title("Visual")]
         [SerializeField, Required, Space] private TextMeshProUGUI dialogueText;
         [SerializeField, Required] private Image boxImage;
-        [SerializeField, Required] private DialogueBoxTheme defaultTheme;
         [SerializeField, Required] private GameObject content;
         [SerializeField, Required] private Image cursor;
 
         [Title("Settings")]
         [SerializeField, MinValue(0.01f)] private float characterDelay = 0.05f;
         [SerializeField] private bool autoClose = true;
+        [SerializeField, Required] private Audio.UIAudioSettings audioSetting;
 
-        [SerializeField, Required]
-        private Audio.UIAudioSettings audioSetting;
-
-        private string[] lines;
-        private int lineIndex;
+        private string[] pages;      // Dialogue pages (2 lines per page)
+        private int pageIndex;
         private Coroutine dialogueCoroutine;
         private bool instantMode;
         private bool waitForInput;
@@ -43,44 +42,42 @@ namespace MonsterTamer.Dialogue
 
         private void Awake()
         {
-            //ApplyTheme(defaultTheme);
             Clear();
             if (autoClose) content.SetActive(false);
-
             cursor.gameObject.SetActive(false);
         }
 
         /// <summary>
-        /// Shows normal dialogue lines with typewriter effect.
+        /// Shows dialogue from a single string.
+        /// Automatically splits lines by \n and pages 2 lines at a time.
         /// </summary>
-        public void ShowDialogue(string text, bool instant = false)
+        public void ShowDialogue(string text, bool instant = false, bool waitForInput = false)
         {
-            ShowDialogue(new[] { text }, instant);
-        }
-
-        public void ShowDialogue(string[] lines, bool instant = false, bool waitForInput = false)
-        {
-            if (lines == null || lines.Length == 0)
+            if (string.IsNullOrWhiteSpace(text))
             {
                 Log.Warning(nameof(DialogueBox), "Tried to show empty dialogue.");
                 return;
             }
 
+            // Split into pages (2 lines per page)
+            pages = GetPages(text, 2);
+            pageIndex = 0;
+            instantMode = instant;
+            this.waitForInput = waitForInput;
+
             content.SetActive(true);
             PauseManager.SetPaused(true);
-
-            this.lines = lines;
-            this.waitForInput = waitForInput;
-            lineIndex = 0;
-            instantMode = instant;
 
             Clear();
             RestartCoroutine(ref dialogueCoroutine, RunDialogueSequence());
         }
 
+        /// <summary>
+        /// Shows a dialogue prompt instantly (no typewriter effect).
+        /// </summary>
         public void ShowPrompt(string text)
         {
-            ShowDialogue(text, true);
+            ShowDialogue(text, instant: true);
         }
 
         public IEnumerator ShowDialogueAndWait(string text)
@@ -91,7 +88,7 @@ namespace MonsterTamer.Dialogue
 
         public IEnumerator ShowDialogueAndWaitForInput(string text)
         {
-            ShowDialogue(new[] { text }, instant: false, waitForInput: true);
+            ShowDialogue(text, instant: false, waitForInput: true);
             yield return WaitForTyping();
             yield return WaitForAdvance();
         }
@@ -109,14 +106,16 @@ namespace MonsterTamer.Dialogue
             yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
 
             if(audioSetting != null)
-                AudioManager.Instance?.PlaySFX(audioSetting.ConfirmSfx);
+            {
+                AudioManager.Instance.PlayUISFX(audioSetting.ConfirmSfx);
+            }
         }
 
         private IEnumerator RunDialogueSequence()
         {
-            while (lineIndex < lines.Length)
+            while (pageIndex < pages.Length)
             {
-                yield return TypeLineCoroutine(lines[lineIndex]);
+                yield return TypeLineCoroutine(pages[pageIndex]);
                 OnLineTypingComplete?.Invoke();
 
                 if (ShouldShowArrow)
@@ -125,25 +124,24 @@ namespace MonsterTamer.Dialogue
                 yield return WaitForAdvance();
 
                 cursor.gameObject.SetActive(false);
-                lineIndex++;
+                pageIndex++;
             }
 
-            yield return null; // Prevents immediate reopen
             FinishDialogue();
         }
 
-        private IEnumerator TypeLineCoroutine(string line)
+        private IEnumerator TypeLineCoroutine(string page)
         {
-            dialogueText.text = string.Empty;
+            dialogueText.text = "";
 
             if (instantMode)
             {
-                dialogueText.text = line;
+                dialogueText.text = page;
                 yield break;
             }
 
             WaitForSecondsRealtime delay = new(characterDelay);
-            foreach (char letter in line)
+            foreach (char letter in page)
             {
                 dialogueText.text += letter;
                 yield return delay;
@@ -151,9 +149,7 @@ namespace MonsterTamer.Dialogue
         }
 
         private bool ShouldShowArrow =>
-         waitForInput || (lines.Length > 1 && lineIndex < lines.Length - 1);
-
-        
+            waitForInput || (pages.Length > 1 && pageIndex < pages.Length - 1);
 
         public void Clear()
         {
@@ -177,19 +173,23 @@ namespace MonsterTamer.Dialogue
             routine = StartCoroutine(sequence);
         }
 
-        public void ApplyTheme(DialogueBoxTheme theme)
+        /// <summary>
+        /// Splits a string into pages with a maximum number of lines per page.
+        /// </summary>
+        private static string[] GetPages(string text, int linesPerPage)
         {
-            if (theme == null)
+            string[] allLines = text.Split(new[] { "\r\n", "\n", "\r" }, StringSplitOptions.None);
+
+            List<string> pages = new List<string>();
+
+            for (int i = 0; i < allLines.Length; i += linesPerPage)
             {
-                Log.Warning(nameof(DialogueBox), "Tried to apply a null theme.");
-                return;
+                int count = Mathf.Min(linesPerPage, allLines.Length - i);
+                string page = string.Join("\n", allLines, i, count);
+                pages.Add(page);
             }
 
-            boxImage.sprite = theme.BoxSprite;
-            dialogueText.font = theme.Font;
-
-            RectTransform rect = boxImage.GetComponent<RectTransform>();
-            theme.RectPadding.ApplyTo(rect);
+            return pages.ToArray();
         }
     }
 }

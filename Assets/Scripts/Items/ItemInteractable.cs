@@ -10,6 +10,7 @@ namespace MonsterTamer.Items
 {
     /// <summary>
     /// Interactable item pickup: grants an item stack to the interacting character.
+    /// Handles item addition, pickup sound, and 2-line dialogue display.
     /// </summary>
     internal class ItemInteractable : MonoBehaviour, IInteractable
     {
@@ -23,33 +24,35 @@ namespace MonsterTamer.Items
 
         /// <summary>
         /// Called when a character interacts with this item.
-        /// Adds the item to the character's inventory, plays the pickup sound,
-        /// shows item pickup dialogue, and destroys the game object.
+        /// Adds the item to the inventory, plays sound, and shows dialogue.
         /// </summary>
-        /// <param name="player">The character interacting with the item.</param>
         public void Interact(Character player)
         {
-            if (consumed)
-            {
-                return;
-            }
-
+            if (consumed) return;
             consumed = true;
 
             ItemDefinition definition = item.Definition;
 
+            // Build two lines of dialogue with real newline (\n)
             string itemFoundLine = item.Quantity > 1
-                ? $"{player.Definition.DisplayName} found {item.Quantity} × {definition.DisplayName}!"
-                : $"{player.Definition.DisplayName} found a {definition.DisplayName}!";
+                ? $"You found {item.Quantity} × {definition.DisplayName}!"
+                : $"You picked up a {definition.DisplayName}!";
 
-            string putInBagLine = $"{player.Definition.DisplayName} put the {definition.DisplayName}\nin the Inventory";
+            string putInBagLine = $"It's added to your inventory.";
 
+            string fullDialogue = $"{itemFoundLine}\n{putInBagLine}";
 
-            AudioManager.Instance.PlaySFX(receiveItemClip);
-            OverworldDialogueBox.Instance.Dialogue.ShowDialogue(new[] { itemFoundLine, putInBagLine });
+            // Play pickup sound
+            if (receiveItemClip != null)
+                AudioManager.Instance.PlaySFX(receiveItemClip);
 
+            // Show dialogue (DialogueBox will handle paging and typewriter)
+            OverworldDialogueBox.Instance.Dialogue.ShowDialogue(fullDialogue);
+
+            // Add item to player's inventory
             player.Inventory.Add(item);
 
+            // Destroy pickup object
             Destroy(gameObject);
         }
     }

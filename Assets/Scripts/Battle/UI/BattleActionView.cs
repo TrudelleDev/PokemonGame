@@ -26,24 +26,9 @@ namespace MonsterTamer.Battle.UI
         [SerializeField, Required, Tooltip("Button to attempt escaping the battle.")]
         private MenuButton escapeButton;
 
-        /// <summary>
-        /// Raised when the player selects the move selection option.
-        /// </summary>
         internal event Action MoveSelectionRequested;
-
-        /// <summary>
-        /// Raised when the player selects the inventory option.
-        /// </summary>
         internal event Action InventoryRequested;
-
-        /// <summary>
-        /// Raised when the player selects the party option.
-        /// </summary>
         internal event Action PartyRequested;
-
-        /// <summary>
-        /// Raised when the player selects the escape option.
-        /// </summary>
         internal event Action EscapeRequested;
 
         private void OnEnable()
@@ -52,6 +37,8 @@ namespace MonsterTamer.Battle.UI
             inventoryButton.Confirmed += OnInventoryRequested;
             partyButton.Confirmed += OnPartyRequested;
             escapeButton.Confirmed += OnEscapeRequested;
+
+            ResetMenuController();
         }
 
         private void OnDisable()
@@ -59,9 +46,7 @@ namespace MonsterTamer.Battle.UI
             moveSelectionButton.Confirmed -= OnMoveSelectionRequested;
             inventoryButton.Confirmed -= OnInventoryRequested;
             partyButton.Confirmed -= OnPartyRequested;
-            escapeButton.Confirmed -= OnEscapeRequested;
-
-            ResetMenuController();
+            escapeButton.Confirmed -= OnEscapeRequested;         
         }
 
         private void OnMoveSelectionRequested() => MoveSelectionRequested?.Invoke();

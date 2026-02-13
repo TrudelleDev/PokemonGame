@@ -76,7 +76,7 @@ namespace MonsterTamer.Move.Effects
             ApplyEffect(context);
             yield return WaitForHealthAnimation(context);
 
-            yield return context.Battle.DialogueBox.ShowDialogueAndWait(effectiveness.ToText());
+         //   yield return context.Battle.DialogueBox.ShowDialogueAndWait(effectiveness.ToText());
         }
     }
 }

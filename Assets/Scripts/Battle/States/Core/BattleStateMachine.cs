@@ -5,52 +5,23 @@
     /// </summary>
     internal sealed class BattleStateMachine
     {
-        /// <summary>
-        /// The currently active battle state.
-        /// </summary>
         internal IBattleState CurrentState { get; private set; }
-
-        /// <summary>
-        /// The active battle view associated with this state machine.
-        /// </summary>
         internal BattleView BattleView { get; }
 
-        /// <summary>
-        /// Initializes a new battle state machine bound to a specific battle view.
-        /// </summary>
-        /// <param name="battleView">
-        /// The battle view used to present and control the battle UI.
-        /// </param>
-        internal BattleStateMachine(BattleView battleView)
-        {
-            BattleView = battleView;
-        }
+        internal BattleStateMachine(BattleView battleView) => BattleView = battleView;
 
         /// <summary>
-        /// Transitions to a new state, invoking Exit on the current state
-        /// and Enter on the new one.
+        /// Transitions to the next state, ensuring the previous state is exited correctly.
         /// </summary>
-        /// <param name="newState">
-        /// The state to transition to.
-        /// </param>
-        internal void SetState(IBattleState newState)
+        internal void SetState(IBattleState nextState)
         {
-            if (newState == null || newState == CurrentState)
-            {
-                return;
-            }
+            if (nextState is null || nextState == CurrentState) return;
 
             CurrentState?.Exit();
-            CurrentState = newState;
-            CurrentState.Enter();
+            CurrentState = nextState;
+            CurrentState?.Enter();
         }
 
-        /// <summary>
-        /// Updates the current battle state.
-        /// </summary>
-        internal void Update()
-        {
-            CurrentState?.Update();
-        }
+        internal void Update() => CurrentState?.Update();
     }
 }

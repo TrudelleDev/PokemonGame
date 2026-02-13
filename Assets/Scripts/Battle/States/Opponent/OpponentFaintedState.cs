@@ -7,80 +7,37 @@ using MonsterTamer.Monster;
 namespace MonsterTamer.Battle.States.Opponent
 {
     /// <summary>
-    /// Handles the sequence that plays when the opponent's active Monster faints.
-    /// Plays faint animations, shows dialogue, and transitions to the next battle state.
+    /// Handles the visual sequence of an opponent fainting and hands off to the experience state.
     /// </summary>
     internal sealed class OpponentFaintedState : IBattleState
     {
         private readonly BattleStateMachine machine;
         private readonly MonsterInstance monster;
-
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new state to handle an opponent's fainted Monster.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling state transitions.
-        /// </param>
-        /// <param name="monster">
-        /// The opponent's Monster that just fainted.
-        /// </param>
         internal OpponentFaintedState(BattleStateMachine machine, MonsterInstance monster)
-        {
-            this.machine = machine;
-            this.monster = monster;
-        }
+            => (this.machine, this.monster) = (machine, monster);
 
-        /// <summary>
-        /// Enters the state and starts the faint sequence.
-        /// </summary>
-        public void Enter()
-        {
-            Battle.StartCoroutine(PlaySequence());
-        }
+        public void Enter() => Battle.StartCoroutine(PlaySequence());
 
-        /// <summary>
-        /// No per-frame logic required.
-        /// </summary>
         public void Update() { }
-
-        /// <summary>
-        /// No cleanup required on exit.
-        /// </summary>
         public void Exit() { }
 
-        /// <summary>
-        /// Plays the opponent faint sequence:
-        /// 1. Plays faint animation and HUD exit.
-        /// 2. Shows faint dialogue.
-        /// 3. Checks if the opponent has remaining Monster.
-        /// 4. Transitions to either swapping the next opponent Monster or ending the battle.
-        /// </summary>
         private IEnumerator PlaySequence()
         {
             var animation = Battle.Components.Animation;
-            var dialogue = Battle.DialogueBox;
-            var message = string.Format(BattleMessages.FaintedMessage, monster.Definition.DisplayName);
+            var faintMessage = BattleMessages.FaintedMessage(monster.Definition.DisplayName);
 
-            // Trigger visual faint effect
+            // 1. Visual Faint
             animation.PlayOpponentMonsterDeath();
-
-            // Sequence HUD exit and dialogue
             yield return animation.PlayOpponentHudExit();
-            yield return dialogue.ShowDialogueAndWaitForInput(message);
 
+            // 2. Announcement
+            yield return Battle.DialogueBox.ShowDialogueAndWaitForInput(faintMessage);
             yield return Battle.TurnPauseYield;
 
-            // Determine next state
-            if (Battle.Opponent != null && Battle.Opponent.Party.HasUsablePokemon())
-            {
-                machine.SetState(new OpponentSwapMonsterState(machine));
-            }
-            else
-            {
-                machine.SetState(new PlayerWildVictoryState(machine));
-            }
+            // 3. Hand off to Experience State
+            machine.SetState(new PlayerGainExperienceState(machine));
         }
     }
 }

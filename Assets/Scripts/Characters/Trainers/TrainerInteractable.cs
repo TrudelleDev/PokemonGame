@@ -1,10 +1,12 @@
 ﻿using MonsterTamer.Audio;
 using MonsterTamer.Battle;
+using MonsterTamer.Characters.Directions;
 using MonsterTamer.Characters.Interfaces;
 using MonsterTamer.Dialogue;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
+using UnityEngine.Playables;
 
 namespace MonsterTamer.Characters.Trainers
 {
@@ -14,24 +16,16 @@ namespace MonsterTamer.Characters.Trainers
     /// </summary>
     internal sealed class TrainerInteractable : MonoBehaviour, IInteractable
     {
-        [SerializeField, Required, Tooltip("Dialogue shown before the trainer battle.")]
-        private DialogueDefinition preBattleDialogue;
-
-        [SerializeField, Required, Tooltip("Dialogue shown after the trainer has been defeated.")]
-        private DialogueDefinition postBattleDialogue;
-
-        [SerializeField, Required]
-        private AudioClip battleBGMClip;
-
-
         private bool hasBattled;
         private Character player;
         private Character trainer;
+        private CharacterStateController trainerStateController;
         private CharacterStateController playerStateController;
 
         private void Awake()
         {
             trainer = GetComponent<Character>();
+            trainerStateController = GetComponent<CharacterStateController>();
         }
 
         /// <summary>
@@ -41,27 +35,27 @@ namespace MonsterTamer.Characters.Trainers
         /// <param name="player">The player character interacting with the trainer.</param>
         public void Interact(Character player)
         {
-            
-            if (hasBattled)
-            {
-                OverworldDialogueBox.Instance.Dialogue.ShowDialogue(postBattleDialogue.Lines);
-                return;
-            }
-
             this.player = player;
             playerStateController = player.GetComponent<CharacterStateController>();
+            trainerStateController.Reface(playerStateController.FacingDirection.Opposite());
+
+            if (hasBattled)
+            {
+                OverworldDialogueBox.Instance.Dialogue.ShowDialogue(trainer.Definition.PostEventDialogue);
+                return;
+            }
+       
             playerStateController.Lock(); // Lock the player for the interaction
 
             // Pre-battle dialogue
             OverworldDialogueBox.Instance.Dialogue.DialogueFinished += OnPreBattleDialogueFinished;
-            OverworldDialogueBox.Instance.Dialogue.ShowDialogue(preBattleDialogue.Lines);
+            OverworldDialogueBox.Instance.Dialogue.ShowDialogue(trainer.Definition.DefaultInteractionDialogue);
         }
 
         private void OnPreBattleDialogueFinished()
         {
             OverworldDialogueBox.Instance.Dialogue.DialogueFinished -= OnPreBattleDialogueFinished;
 
-            AudioManager.Instance.PlayBGM(battleBGMClip);
             BattleView battle = ViewManager.Instance.Show<BattleView>();
             battle.InitializeTrainerBattle(player, trainer);
             battle.OnBattleViewClose += OnBattleFinished;

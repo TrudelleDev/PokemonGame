@@ -15,14 +15,14 @@
         /// <summary>
         /// Dialogue messages generated when the item was used.
         /// </summary>
-        public string[] Messages { get; }
+        public string Messages { get; }
 
         /// <summary>
         /// Creates a new ItemUseResult.
         /// </summary>
         /// <param name="used">Whether the item was successfully used.</param>
         /// <param name="messages">Dialogue messages to show to the player.</param>
-        public ItemUseResult(bool used, string[] messages)
+        public ItemUseResult(bool used, string messages)
         {
             Used = used;
             Messages = messages;

@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using MonsterTamer.Items;
 using MonsterTamer.Items.UI;
@@ -44,7 +45,7 @@ namespace MonsterTamer.Inventory.UI
         private void OnEnable()
         {
             ReturnKeyPressed += OnReturnRequested;
-            ResetMenuController();
+           
         }
 
         private void OnDisable()
@@ -67,6 +68,7 @@ namespace MonsterTamer.Inventory.UI
             }
 
             AddCancelButton();
+            ResetMenuController();
         }
 
         private void AddItem(Item item)

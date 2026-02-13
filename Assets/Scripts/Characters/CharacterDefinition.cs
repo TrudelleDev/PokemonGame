@@ -6,36 +6,49 @@ using UnityEngine;
 namespace MonsterTamer.Characters
 {
     /// <summary>
-    /// Defines a Pokémon trainer's static data.
-    /// Used to configure trainer identity, battle appearance, party composition, and starting inventory.
+    /// Static definition of a trainer character.
+    /// 
+    /// Contains identity, optional battle configuration,
+    /// inventory, and dialogue data.
+    /// This data is immutable at runtime.
     /// </summary>
-    [CreateAssetMenu(menuName = "PokemonGame/Characters/Charcater Definition")]
+    [CreateAssetMenu(menuName = "MonsterTamer/Characters/Character Definition")]
     internal sealed class CharacterDefinition : ScriptableObject
     {
-        [SerializeField, Tooltip("Optional trainer's title (e.g., Bug Catcher, Ace Trainer).")]
-        private string title;
-
-        [SerializeField, Required, Tooltip("The name of this trainer as it appears in dialogues.")]
+        [BoxGroup("Identity")]
+        [SerializeField, Required, Tooltip("The display name shown in dialogue and battle UI.")]
         private string displayName;
 
-        [SerializeField, Required, Tooltip("Sprite shown for this trainer during battles.")]
+        [BoxGroup("Identity")]
+        [SerializeField, Required, Tooltip("Sprite used to represent this trainer during battle.")]
         private Sprite battleSprite;
 
-        [SerializeField, Required, Tooltip("The Pokémon party this trainer uses in battle.")]
+        [BoxGroup("Battle")]
+        [SerializeField, Tooltip("Party used by this trainer during battle. (Optional)")]
         private PartyDefinition partyDefinition;
 
-        [SerializeField, Required, Tooltip("The starting inventory assigned to this trainer.")]
+        [BoxGroup("Battle")]
+        [SerializeField, Tooltip("Starting inventory assigned for battle usage. (Optional)")]
         private InventoryDefinition inventoryDefinition;
 
-        [SerializeField, TextArea(2,10)]
-        private string endBattleDialogue;
+        [BoxGroup("Dialogues")]
+        [SerializeField, TextArea, Tooltip("Default dialogue shown when talking to this character normally.")]
+        private string defaultInteractionDialogue;
 
-        public string Title => title;
-        public string DisplayName => displayName;
-        public Sprite BattleSprite => battleSprite;
-        public PartyDefinition PartyDefinition => partyDefinition;
-        public InventoryDefinition InventoryDefinition => inventoryDefinition;
+        [BoxGroup("Dialogues")]
+        [SerializeField, TextArea, Tooltip("Dialogue shown after a story event (e.g., trainer has been defeated).")]
+        private string postEventDialogue;
 
-        public string EndBattleDialogue => endBattleDialogue;
+        [BoxGroup("Dialogues")]
+        [SerializeField, TextArea, Tooltip("Short dialogue shown immediately after a battle concludes.")]
+        private string postBattleClosingDialogue;
+
+        internal string DisplayName => displayName;
+        internal Sprite BattleSprite => battleSprite;
+        internal PartyDefinition PartyDefinition => partyDefinition;
+        internal InventoryDefinition InventoryDefinition => inventoryDefinition;
+        internal string DefaultInteractionDialogue => defaultInteractionDialogue;
+        internal string PostEventDialogue => postEventDialogue;
+        internal string PostBattleClosingDialogue => postBattleClosingDialogue;
     }
 }

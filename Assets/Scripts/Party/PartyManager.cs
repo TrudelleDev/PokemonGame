@@ -157,7 +157,7 @@ namespace MonsterTamer.Party
             SelectedMonster = members[index];
         }
 
-        public MonsterInstance GetFirstUsablePokemon()
+        public MonsterInstance GetFirstUsableMonster()
         {
             // The Party class is the "expert" on its own members
             return Members.FirstOrDefault(m => m.Health.CurrentHealth > 0);

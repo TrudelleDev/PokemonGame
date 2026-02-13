@@ -2,6 +2,7 @@
 using MonsterTamer.Battle.Models;
 using MonsterTamer.Battle.States.Core;
 using MonsterTamer.Battle.States.Player;
+using MonsterTamer.Move;
 using MonsterTamer.Move.Models;
 using MonsterTamer.Views;
 using UnityEngine;
@@ -9,89 +10,66 @@ using UnityEngine;
 namespace MonsterTamer.Battle.States.Opponent
 {
     /// <summary>
-    /// Handles the AI logic for the opponent's turn.
-    /// Selects a move, executes the move sequence, and manages state transitions
-    /// depending on fainted Pokémon or the end of the turn.
+    /// Executes the opponent's move and determines whether to pass the turn back to the player or end the round.
     /// </summary>
     internal sealed class OpponentTurnState : IBattleState
     {
         private readonly BattleStateMachine machine;
+        private readonly MoveInstance opponentMove;
+        private readonly MoveInstance playerMove;
+        private readonly bool isActingFirst;
+
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new state for the opponent's turn.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling the battle flow.
-        /// </param>
-        internal OpponentTurnState(BattleStateMachine machine)
-        {
-            this.machine = machine;
-        }
+        internal OpponentTurnState(BattleStateMachine machine, MoveInstance opponentMove, MoveInstance playerMove, bool isActingFirst)
+            => (this.machine, this.opponentMove, this.playerMove, this.isActingFirst) 
+               = (machine, opponentMove, playerMove, isActingFirst);
 
-        /// <summary>
-        /// Enters the state and starts the opponent move sequence.
-        /// </summary>
-        public void Enter()
-        {
-            Battle.StartCoroutine(PlaySequence());
-        }
-
-        /// <summary>
-        /// No per-frame logic is required for this state.
-        /// </summary>
+        public void Enter() => Battle.StartCoroutine(PlaySequence());
         public void Update() { }
-
-        /// <summary>
-        /// No cleanup required on exit.
-        /// </summary>
         public void Exit() { }
 
-        /// <summary>
-        /// Performs the opponent move sequence:
-        /// 1. Waits for UI transitions to finish.
-        /// 2. Selects a move (currently placeholder logic).
-        /// 3. Displays the move announcement.
-        /// 4. Executes the move animation, damage, and effects.
-        /// 5. Checks for fainted Pokémon and transitions to the appropriate state.
-        /// 6. Ends the turn by returning control to the player.
-        /// </summary>
         private IEnumerator PlaySequence()
         {
-            // 1. Wait for UI transitions
+            // Wait for UI transitions
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
 
             var user = Battle.OpponentActiveMonster;
             var target = Battle.PlayerActiveMonster;
+            var context = new MoveContext(Battle, user, target, opponentMove);
 
-            // 2. Placeholder AI: always uses first move
-            var move = user.Moves.Moves[0];
-            var context = new MoveContext(Battle, user, target, move);
+            // 1. Announce & Execute
+            var useMoveMessage = BattleMessages.UseMove(user.Definition.DisplayName, opponentMove.Definition.DisplayName);
+            yield return Battle.DialogueBox.ShowDialogueAndWait(useMoveMessage);
 
-            // 3. Announce move
-            string message = string.Format(BattleMessages.UseMove, user.Definition.DisplayName, move.Definition.DisplayName);
-            yield return Battle.DialogueBox.ShowDialogueAndWait(message);
-
-            // 4. Execute move effect (animations, damage, status)
-            yield return move.Definition.MoveEffect.PerformMoveSequence(context);
-
+            yield return opponentMove.Definition.MoveEffect.PerformMoveSequence(context);
             yield return Battle.TurnPauseYield;
 
-            // 5. Post-move checks
-            if (target.Health.CurrentHealth <= 0)
+            // 2. Post-move checks: Target (Player) faints
+            if (target.IsFainted)
             {
                 machine.SetState(new PlayerFaintedState(machine, target));
                 yield break;
             }
 
-            if (user.Health.CurrentHealth <= 0)
+            // 3. Post-move checks: User (Opponent) faints (e.g. recoil)
+            if (user.IsFainted)
             {
                 machine.SetState(new OpponentFaintedState(machine, user));
                 yield break;
             }
 
-            // 6. Return control to the player
-            machine.SetState(new PlayerActionMenuState(machine));
+            // 4. Round Logic
+            if (isActingFirst)
+            {
+                // Opponent was first, now player gets their turn
+                machine.SetState(new PlayerTurnState(machine, playerMove, opponentMove, false));
+            }
+            else
+            {
+                // Opponent was second, round is over
+                machine.SetState(new PlayerActionMenuState(machine));
+            }
         }
     }
 }

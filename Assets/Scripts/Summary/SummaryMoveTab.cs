@@ -22,7 +22,7 @@ namespace MonsterTamer.Summary
 
         private void OnDisable()
         {
-            controller.ResetController();
+            StartCoroutine(controller.ResetController());
         }
 
         /// <summary>

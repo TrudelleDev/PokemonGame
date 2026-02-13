@@ -12,44 +12,14 @@ namespace MonsterTamer.Battle.States.Player
     {
         private readonly BattleStateMachine machine;
         private BattleMoveSelectionView moveSelectionView;
-
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new move selection state.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling state transitions.
-        /// </param>
-        internal PlayerMoveSelectState(BattleStateMachine machine)
-        {
-            this.machine = machine;
-        }
+        internal PlayerMoveSelectState(BattleStateMachine machine) => this.machine = machine;
 
-        /// <summary>
-        /// Enters the state and displays the move selection UI.
-        /// </summary>
-        public void Enter()
-        {
-            OpenMoveSelection();
-        }
-
-        /// <summary>
-        /// No per-frame logic required for this state.
-        /// </summary>
+        public void Enter() => OpenMoveSelection();
         public void Update() { }
+        public void Exit() => CloseMoveSelection();
 
-        /// <summary>
-        /// Exits the state and cleans up the move selection UI.
-        /// </summary>
-        public void Exit()
-        {
-            CloseMoveSelection();
-        }
-
-        /// <summary>
-        /// Displays the move selection UI and subscribes to input events.
-        /// </summary>
         private void OpenMoveSelection()
         {
             moveSelectionView = ViewManager.Instance.Show<BattleMoveSelectionView>();
@@ -59,15 +29,9 @@ namespace MonsterTamer.Battle.States.Player
             moveSelectionView.ReturnKeyPressed += HandleCancel;
         }
 
-        /// <summary>
-        /// Unsubscribes from input events and closes the move selection UI.
-        /// </summary>
         private void CloseMoveSelection()
         {
-            if (moveSelectionView == null)
-            {
-                return;
-            }
+            if (moveSelectionView == null) return;
 
             moveSelectionView.OnMoveConfirmed -= HandleMoveConfirmed;
             moveSelectionView.ReturnKeyPressed -= HandleCancel;
@@ -76,14 +40,8 @@ namespace MonsterTamer.Battle.States.Player
             moveSelectionView = null;
         }
 
-        private void HandleCancel()
-        {
-            machine.SetState(new PlayerActionMenuState(machine));
-        }
+        private void HandleCancel() => machine.SetState(new PlayerActionMenuState(machine));
 
-        private void HandleMoveConfirmed(MoveInstance move)
-        {
-            machine.SetState(new PlayerTurnState(machine, move));
-        }
+        private void HandleMoveConfirmed(MoveInstance move) => machine.SetState(new BattleSpeedCheckState(machine, move));
     }
 }

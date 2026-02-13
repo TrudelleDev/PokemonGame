@@ -24,26 +24,24 @@ namespace MonsterTamer.Items.Definition
         /// <param name="target">Monster to heal.</param>
         /// <returns>
         /// Result indicating whether the item was consumed and
-        /// the message(s) to display.
+        /// the message to display.
         /// </returns>
         public override ItemUseResult Use(MonsterInstance target)
         {
             if (target == null)
             {
-                return new ItemUseResult(false, new[] { FailMessage });
+                return new ItemUseResult(false, FailMessage);
             }
 
             int restored = target.Health.Heal(healingAmount);
 
             if (restored > 0)
             {
-                return new ItemUseResult(true, new[]
-                {
-                     string.Format(RestoredTemplate, target.Definition.DisplayName, restored)
-                });
+                string message = string.Format(RestoredTemplate, target.Definition.DisplayName, restored);
+                return new ItemUseResult(true, message);
             }
 
-            return new ItemUseResult(false, new[] { NoEffectMessage });
+            return new ItemUseResult(false, NoEffectMessage);
         }
     }
 }

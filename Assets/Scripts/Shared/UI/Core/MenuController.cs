@@ -64,8 +64,9 @@ namespace MonsterTamer.Shared.UI.Core
         /// Resets the controller to its initial state.
         /// Rebuilds buttons and reapplies the initial selection.
         /// </summary>
-        internal void ResetController()
+        internal IEnumerator ResetController()
         {
+            yield return null;
             RebuildButtons();
             ApplySelectionState(0);
         }
@@ -131,6 +132,7 @@ namespace MonsterTamer.Shared.UI.Core
         {
             buttons.Clear();
             buttons.AddRange(GetComponentsInChildren<MenuButton>(true));
+            buttons.RemoveAll(b => b == null); // extra safety
         }
 
         private void PlaySelectSfx()

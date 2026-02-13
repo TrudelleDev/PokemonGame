@@ -8,64 +8,38 @@ using MonsterTamer.Views;
 namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
-    /// Handles the blackout sequence when the player has no usable monsters remaining.
+    /// Handles the blackout sequence: dialogue, party healing, and teleporting 
+    /// the player back to a checkpoint when all monsters have fainted.
     /// </summary>
     internal sealed class PlayerBlackoutState : IBattleState
     {
         private readonly BattleStateMachine machine;
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new player blackout state.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling state transitions.
-        /// </param>
-        internal PlayerBlackoutState(BattleStateMachine machine)
-        {
-            this.machine = machine;
-        }
+        internal PlayerBlackoutState(BattleStateMachine machine) => this.machine = machine;
 
-        /// <summary>
-        /// Enters the state and begins the blackout sequence.
-        /// </summary>
-        public void Enter()
-        {
-            Battle.StartCoroutine(PlayBlackoutSequence());
-        }
-
-        /// <summary>
-        /// No per-frame logic required for this state.
-        /// </summary>
+        public void Enter() => Battle.StartCoroutine(PlayBlackoutSequence());
         public void Update() { }
-
-        /// <summary>
-        /// No cleanup required when exiting this state.
-        /// </summary>
         public void Exit() { }
 
-        /// <summary>
-        /// Executes the blackout sequence, including dialogue,
-        /// party restoration, and player relocation.
-        /// </summary>
         private IEnumerator PlayBlackoutSequence()
         {
             var dialogue = Battle.DialogueBox;
 
+            // 1. Initial Message
             yield return dialogue.ShowDialogueAndWaitForInput(BattleMessages.BlackoutMessage);
 
-            // Party restoration
+            // 2. Party Restoration
             Battle.Player.Party.HealAll();
 
-            // Relocation logic
+            // 3. Relocation Logic
             MapEntryRegistry.SetNextEntry(MapEntryID.ForestEntrance);
             PlayerRelocator.Instance.RelocatePlayer();
 
+            // 4. Confirmation & Cleanup
             yield return dialogue.ShowDialogueAndWait(BattleMessages.CheckpointRelocationMessage);
-
             yield return Battle.TurnPauseYield;
 
-            // Cleanly terminate the battle view
             ViewManager.Instance.Close<BattleView>();
         }
     }

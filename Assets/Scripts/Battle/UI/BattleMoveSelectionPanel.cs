@@ -8,9 +8,7 @@ namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays the player's available moves as interactive buttons.
-    /// 
-    /// Handles binding moves to UI buttons, highlighting moves,
-    /// and confirming move selection.
+    /// Handles binding moves, highlighting, and confirming selection.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class BattleMoveSelectionPanel : MonoBehaviour
@@ -27,40 +25,37 @@ namespace MonsterTamer.Battle.UI
         [SerializeField, Required, Tooltip("Button representing the fourth move slot.")]
         private MenuButton fourthMoveButton;
 
-        // Internal arrays to store temporary event handlers for each button
+        private MenuButton[] buttons;
         private readonly Action[] clickHandlers = new Action[4];
         private readonly Action[] selectHandlers = new Action[4];
 
-        /// <summary>
-        /// Raised when a move is confirmed by the player.
-        /// </summary>
         internal event Action<MoveInstance> MoveConfirmed;
-
-        /// <summary>
-        /// Raised when a move is highlighted (hovered or selected via navigation).
-        /// </summary>
         internal event Action<MoveInstance> MoveHighlighted;
 
-        /// <summary>
-        /// Convenience property for accessing all four buttons as an array.
-        /// </summary>
-        private MenuButton[] Buttons => new[] { firstMoveButton, secondMoveButton, thirdMoveButton, fourthMoveButton };
+        private void Awake()
+        {
+            // Cache button references to avoid allocating array repeatedly
+            buttons = new[] { firstMoveButton, secondMoveButton, thirdMoveButton, fourthMoveButton };
+        }
 
         /// <summary>
-        /// Bind an array of moves to the buttons, enabling interaction and events.
+        /// Binds moves to the panel buttons, enabling interaction and events.
         /// </summary>
         /// <param name="moves">Array of 1–4 moves for the active Monster.</param>
         internal void BindMoves(MoveInstance[] moves)
         {
             UnbindMoves();
 
-            for (int i = 0; i < Buttons.Length; i++)
+            if (moves == null) return;
+
+            for (int i = 0; i < buttons.Length; i++)
             {
-                var button = Buttons[i];
+                var button = buttons[i];
 
                 if (i < moves.Length && moves[i] != null)
                 {
                     var move = moves[i];
+
                     button.SetLabel(move.Definition.DisplayName);
                     button.SetInteractable(true);
 
@@ -83,24 +78,24 @@ namespace MonsterTamer.Battle.UI
         /// </summary>
         public void UnbindMoves()
         {
-            if (Buttons == null) return;
+            if (buttons == null) return;
 
-            for (int i = 0; i < Buttons.Length; i++)
+            for (int i = 0; i < buttons.Length; i++)
             {
                 if (clickHandlers[i] != null)
                 {
-                    Buttons[i].Confirmed -= clickHandlers[i];
+                    buttons[i].Confirmed -= clickHandlers[i];
                     clickHandlers[i] = null;
                 }
 
                 if (selectHandlers[i] != null)
                 {
-                    Buttons[i].Selected -= selectHandlers[i];
+                    buttons[i].Selected -= selectHandlers[i];
                     selectHandlers[i] = null;
                 }
 
-                Buttons[i].SetLabel("-");
-                Buttons[i].SetInteractable(false);
+                buttons[i].SetLabel("-");
+                buttons[i].SetInteractable(false);
             }
         }
     }

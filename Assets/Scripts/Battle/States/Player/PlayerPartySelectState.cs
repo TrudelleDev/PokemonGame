@@ -11,7 +11,7 @@ using UnityEngine;
 namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
-    /// Handles party selection during battle, including forced and optional swaps.
+    /// Handles party selection. Transitions to SendOut if forced (fainted) or Swap if voluntary.
     /// </summary>
     internal sealed class PlayerPartySelectState : IBattleState
     {
@@ -24,25 +24,10 @@ namespace MonsterTamer.Battle.States.Player
 
         private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new party selection state.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling state transitions.
-        /// </param>
-        /// <param name="isForced">
-        /// Whether the player is required to select a new monster
-        /// (e.g. after fainting).
-        /// </param>
+        // Modern single-line constructor
         internal PlayerPartySelectState(BattleStateMachine machine, bool isForced = false)
-        {
-            this.machine = machine;
-            this.isForced = isForced;
-        }
+            => (this.machine, this.isForced) = (machine, isForced);
 
-        /// <summary>
-        /// Enters the state and displays the party menu.
-        /// </summary>
         public void Enter()
         {
             partyView = ViewManager.Instance.Show<PartyMenuView>();
@@ -51,74 +36,52 @@ namespace MonsterTamer.Battle.States.Player
 
             partyPresenter.Setup(PartySelectionMode.Battle);
 
-            if (!isForced)
-            {
-                partyPresenter.ReturnRequested += HandleCancel;
-            }
-
+            if (!isForced) partyPresenter.ReturnRequested += HandleCancel;
             optionsView.SwapRequested += HandleSwapRequested;
+
             partyView.RefreshSlots();
         }
 
-        /// <summary>
-        /// Exits the state and cleans up UI bindings.
-        /// </summary>
         public void Exit()
         {
             if (partyPresenter != null)
-            {
                 partyPresenter.ReturnRequested -= HandleCancel;
-            }
 
             if (optionsView != null)
-            {
                 optionsView.SwapRequested -= HandleSwapRequested;
-            }
 
             ViewManager.Instance.Close<PartyMenuOptionsView>();
             ViewManager.Instance.Close<PartyMenuView>();
         }
 
-        /// <summary>
-        /// No per-frame logic required for this state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// Validates the selected monster and transitions to the appropriate
-        /// battle state if the selection is valid.
-        /// </summary>
         private IEnumerator PlayTransitionSequence()
         {
             var dialogue = OverworldDialogueBox.Instance.Dialogue;
             var monster = Battle.Player.Party.SelectedMonster;
 
-            // Validation: selected monster must be usable
-            if (monster.Health.CurrentHealth <= 0)
+            // 1. Validation: Must have HP
+            if (monster.IsFainted)
             {
                 ViewManager.Instance.Close<PartyMenuOptionsView>();
+                var noEnergyMessage = BattleMessages.MonsterHasNoEnergy(monster.Definition.DisplayName);
 
-                string message = string.Format(
-                    BattleMessages.MonsterHasNoEnergy,
-                    monster.Definition.DisplayName);
-
-                yield return dialogue.ShowDialogueAndWaitForInput(message);
-
+                yield return dialogue.ShowDialogueAndWaitForInput(noEnergyMessage);
                 partyView.RefreshSlots();
                 yield break;
             }
 
-            // Validation: selected monster cannot already be in battle
+            // 2. Validation: Cannot swap to self
             if (monster == Battle.PlayerActiveMonster)
             {
                 ViewManager.Instance.Close<PartyMenuOptionsView>();
                 yield return dialogue.ShowDialogueAndWaitForInput(BattleMessages.MonsterAlreadyInBattle);
-
                 partyView.RefreshSlots();
                 yield break;
             }
 
-            // Successful selection
+            // 3. Success: Clean up and Transition
             Exit();
             yield return new WaitUntil(() => !ViewManager.Instance.IsTransitioning);
 
@@ -128,18 +91,13 @@ namespace MonsterTamer.Battle.States.Player
             }
             else
             {
-                machine.SetState(new PlayerSwapMonsterState(machine, monster));
+                // Voluntary swap consumes the turn; AI selects a move
+                var opponentMove = Battle.OpponentActiveMonster.GetRandomMove();
+                machine.SetState(new PlayerSwapMonsterState(machine, monster, opponentMove));
             }
         }
 
-        private void HandleSwapRequested()
-        {
-            Battle.StartCoroutine(PlayTransitionSequence());
-        }
-
-        private void HandleCancel()
-        {
-            machine.SetState(new PlayerActionMenuState(machine));
-        }
+        private void HandleSwapRequested() => Battle.StartCoroutine(PlayTransitionSequence());
+        private void HandleCancel() => machine.SetState(new PlayerActionMenuState(machine));
     }
 }

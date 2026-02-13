@@ -33,6 +33,7 @@ namespace MonsterTamer.Inventory.UI
         /// </summary>
         public event Action<bool> ItemUsed;
 
+
         private void OnEnable()
         {
             player.Inventory.Initialize();
@@ -41,6 +42,8 @@ namespace MonsterTamer.Inventory.UI
             controller.ItemSelected += ShowItemOptions;
             controller.ItemHighlighted += UpdateDetails;
             controller.ReturnRequested += HandleCloseInventory;
+
+            
 
             player.Inventory.ItemsChanged += HandleInventoryChanged;
         }
@@ -51,7 +54,7 @@ namespace MonsterTamer.Inventory.UI
             controller.ItemHighlighted -= UpdateDetails;
             controller.ReturnRequested -= HandleCloseInventory;
 
-            player.Inventory.ItemsChanged -= HandleInventoryChanged;
+            //player.Inventory.ItemsChanged -= HandleInventoryChanged;
         }
 
         private void UpdateDetails(IDisplayable displayable)

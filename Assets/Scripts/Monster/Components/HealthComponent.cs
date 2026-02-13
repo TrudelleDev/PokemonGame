@@ -73,10 +73,5 @@ namespace MonsterTamer.Monster.Components
 
             HealthChanged?.Invoke(oldHp, CurrentHealth);
         }
-
-        internal bool IsDead()
-        {
-            return CurrentHealth == 0;
-        }
     }
 }

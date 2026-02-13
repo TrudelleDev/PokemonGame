@@ -8,55 +8,40 @@ using UnityEngine.UI;
 namespace MonsterTamer.Battle.UI
 {
     /// <summary>
-    /// Displays the player's active Monster HUD, including name, level, HP text, health bar, experience bar, and back sprite.
-    /// Updates in real-time via subscribed events from the bound <see cref="MonsterInstance"/>.
+    /// Displays the player's active Monster HUD with name, level, HP, experience, and back sprite.
+    /// Automatically updates via events from the bound <see cref="MonsterInstance"/>.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class PlayerBattleHud : MonoBehaviour
     {
-        [SerializeField, Required]
-        [Tooltip("Text field showing the player's Monster name.")]
+        [SerializeField, Required, Tooltip("Text displaying the Monster's name.")]
         private TextMeshProUGUI nameText;
 
-        [SerializeField, Required]
-        [Tooltip("Text field showing the player's Monster level.")]
+        [SerializeField, Required, Tooltip("Text displaying the Monster's level.")]
         private TextMeshProUGUI levelText;
 
-        [SerializeField, Required]
-        [Tooltip("Text field showing the player's Monster current and maximum HP (e.g., 100/150).")]
+        [SerializeField, Required, Tooltip("Text displaying current/max HP.")]
         private TextMeshProUGUI healthText;
 
-        [SerializeField, Required]
-        [Tooltip("Health bar component displaying the player's Monster HP visually.")]
+        [SerializeField, Required, Tooltip("Visual health bar component.")]
         private HealthBar healthBar;
 
-        [SerializeField, Required]
-        [Tooltip("Experience bar component displaying the player's Monster current EXP progress.")]
+        [SerializeField, Required, Tooltip("Visual experience bar component.")]
         private ExperienceBar experienceBar;
 
-        [SerializeField, Required]
-        [Tooltip("Image showing the player's Pokémon back-facing battle sprite.")]
+        [SerializeField, Required, Tooltip("Back-facing battle sprite.")]
         private Image backSprite;
 
         private MonsterInstance activeMonster;
 
-        /// <summary>
-        /// Provides access to the HealthBar component for damage animations or updates.
-        /// </summary>
         internal HealthBar HealthBar => healthBar;
-
-        /// <summary>
-        /// Provides access to the ExperienceBar component for EXP gain animations.
-        /// </summary>
         internal ExperienceBar ExperienceBar => experienceBar;
 
         /// <summary>
-        /// Binds the HUD to a specific Monster instance and subscribes to events for live updates.
+        /// Binds the HUD to a Monster and subscribes to live updates.
         /// </summary>
-        /// <param name="monster">The active Monster instance.</param>
         internal void Bind(MonsterInstance monster)
         {
-            // Unsubscribe from any previously bound Monster
             UnsubscribeCurrentMonster();
 
             if (monster?.Definition == null)
@@ -67,23 +52,21 @@ namespace MonsterTamer.Battle.UI
 
             activeMonster = monster;
 
-            // Initialize HUD
             nameText.text = monster.Definition.DisplayName;
             levelText.text = $"L{monster.Experience.Level}";
-            UpdateHealthText();
             backSprite.sprite = monster.Definition.Sprites.BackSprite;
 
-            // Bind sub-components
             healthBar.Bind(monster);
             experienceBar.Bind(monster);
 
-            // Subscribe to live updates
-            activeMonster.Health.HealthChanged += HandleHealthChanged;
-            activeMonster.Experience.LevelChanged += HandleLevelChanged;
+            activeMonster.Health.HealthChanged += OnHealthChanged;
+            activeMonster.Experience.LevelChanged += OnLevelChanged;
+
+            UpdateHealthText();
         }
 
         /// <summary>
-        /// Clears the HUD and unsubscribes from all Monster events.
+        /// Clears the HUD and unsubscribes from Monster events.
         /// </summary>
         internal void Unbind()
         {
@@ -98,14 +81,11 @@ namespace MonsterTamer.Battle.UI
             experienceBar.Unbind();
         }
 
-        private void HandleHealthChanged(int oldHp, int newHp)
-        {
-            UpdateHealthText();
-        }
+        private void OnHealthChanged(int _, int __ ) => UpdateHealthText();
 
-        private void HandleLevelChanged(int newLevel)
+        private void OnLevelChanged(int newLevel)
         {
-            levelText.text = $"L{activeMonster.Experience.Level}";
+            levelText.text = $"L{newLevel}";
             UpdateHealthText();
         }
 
@@ -116,12 +96,11 @@ namespace MonsterTamer.Battle.UI
 
         private void UnsubscribeCurrentMonster()
         {
-            if (activeMonster != null)
-            {
-                activeMonster.Health.HealthChanged -= HandleHealthChanged;
-                activeMonster.Experience.LevelChanged -= HandleLevelChanged;
-                activeMonster = null;
-            }
+            if (activeMonster == null) return;
+
+            activeMonster.Health.HealthChanged -= OnHealthChanged;
+            activeMonster.Experience.LevelChanged -= OnLevelChanged;
+            activeMonster = null;
         }
     }
 }

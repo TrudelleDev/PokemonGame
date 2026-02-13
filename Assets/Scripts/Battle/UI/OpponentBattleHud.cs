@@ -9,37 +9,29 @@ namespace MonsterTamer.Battle.UI
 {
     /// <summary>
     /// Displays the opponent Monster's battle HUD, including name, level, HP, and front sprite.
-    /// Provides methods to bind and unbind Monster data.
+    /// Supports binding/unbinding Monster data safely.
     /// </summary>
     [DisallowMultipleComponent]
     public sealed class OpponentBattleHud : MonoBehaviour
     {
-        [SerializeField, Required]
-        [Tooltip("Text field showing the opponent Monster's display name.")]
+        [SerializeField, Required, Tooltip("Text field showing the opponent Monster's display name.")]
         private TextMeshProUGUI nameText;
 
-        [SerializeField, Required]
-        [Tooltip("Text field showing the opponent Monster's level.")]
+        [SerializeField, Required, Tooltip("Text field showing the opponent Monster's level.")]
         private TextMeshProUGUI levelText;
 
-        [SerializeField, Required]
-        [Tooltip("Health bar component displaying the opponent Monster's current HP.")]
+        [SerializeField, Required, Tooltip("Health bar component displaying the opponent Monster's current HP.")]
         private HealthBar healthBar;
 
-        [SerializeField, Required]
-        [Tooltip("Image component showing the opponent Monster's front-facing battle sprite.")]
+        [SerializeField, Required, Tooltip("Image showing the opponent Monster's front-facing battle sprite.")]
         private Image frontSprite;
 
-        /// <summary>
-        /// Provides external access to the health bar for updates.
-        /// </summary>
         internal HealthBar HealthBar => healthBar;
 
         /// <summary>
-        /// Binds the opponent HUD to the given Monster instance.
-        /// Updates name, level, health bar, and front sprite.
+        /// Binds the HUD to a Monster instance. Updates text, health bar, and front sprite.
         /// </summary>
-        /// <param name="monster">The opponent Monster to display.</param>
+        /// <param name="monster">The opponent Monster instance to display.</param>
         internal void Bind(MonsterInstance monster)
         {
             if (monster?.Definition == null)
@@ -55,7 +47,7 @@ namespace MonsterTamer.Battle.UI
         }
 
         /// <summary>
-        /// Clears all HUD elements and unbinds any Monster reference.
+        /// Clears the HUD and unbinds any Monster reference.
         /// </summary>
         internal void Unbind()
         {

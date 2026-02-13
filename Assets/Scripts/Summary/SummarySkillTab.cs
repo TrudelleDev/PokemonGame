@@ -15,7 +15,7 @@ namespace MonsterTamer.Summary
         private MonsterStatsPanel statsUI;
 
         [SerializeField, Required, Tooltip("Group containing experience UI elements.")]
-        private ExperienceUI experienceUI;
+        private ExperiencePanel experienceUI;
 
         /// <summary>
         /// Binds the specified Monster definition to the stat and experience UI groups.

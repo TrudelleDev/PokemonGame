@@ -18,6 +18,8 @@ namespace MonsterTamer.Monster
         internal MonsterDefinition Definition { get; }
         internal NatureInstance Nature { get; }
 
+        internal bool IsFainted => Health.CurrentHealth <= 0;
+
         internal MonsterInstance(int level, MonsterDefinition definition, NatureDefinition natureDefinition, MoveDefinition[] moveDefinitions)
         {
             Definition = definition;
@@ -28,6 +30,14 @@ namespace MonsterTamer.Monster
             Health = new HealthComponent(Stats.Core.HealthPoint); 
             Meta = new MetadataComponent();
             Moves = new MovesComponent(moveDefinitions);
+        }
+
+
+        internal MoveInstance GetRandomMove()
+        {
+            if (Moves.Moves.Length == 0) return null;
+
+            return Moves.Moves[UnityEngine.Random.Range(0, Moves.Moves.Length)];
         }
     }
 }

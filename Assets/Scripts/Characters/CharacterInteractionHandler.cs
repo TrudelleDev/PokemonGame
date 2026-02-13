@@ -55,6 +55,7 @@ namespace MonsterTamer.Characters
             {
                 interactable.Interact(character);
                 interacted = true;
+         
                 return false; // continue checking other interactables
             });
 

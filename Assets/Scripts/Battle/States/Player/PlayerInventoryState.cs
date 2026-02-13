@@ -6,29 +6,18 @@ using MonsterTamer.Views;
 namespace MonsterTamer.Battle.States.Player
 {
     /// <summary>
-    /// Handles opening the player's inventory during battle,
-    /// and transitions the battle state based on item usage or cancellation.
+    /// Handles the player inventory UI during battle, allowing item usage and transitioning
+    /// control to the opponent when an item is used.
     /// </summary>
     internal sealed class PlayerInventoryState : IBattleState
     {
         private readonly BattleStateMachine machine;
         private InventoryView inventoryView;
         private InventoryPresenter inventoryPresenter;
+        private BattleView Battle => machine.BattleView;
 
-        /// <summary>
-        /// Creates a new player inventory state.
-        /// </summary>
-        /// <param name="machine">
-        /// The battle state machine controlling state transitions.
-        /// </param>
-        internal PlayerInventoryState(BattleStateMachine machine)
-        {
-            this.machine = machine;
-        }
+        internal PlayerInventoryState(BattleStateMachine machine) => this.machine = machine;
 
-        /// <summary>
-        /// Enters the state, shows the inventory UI, and subscribes to events.
-        /// </summary>
         public void Enter()
         {
             inventoryView = ViewManager.Instance.Show<InventoryView>();
@@ -38,42 +27,35 @@ namespace MonsterTamer.Battle.States.Player
             inventoryPresenter.ItemUsed += HandleItemUsed;
         }
 
-        /// <summary>
-        /// No per-frame logic is required for this state.
-        /// </summary>
         public void Update() { }
 
-        /// <summary>
-        /// Exits the state and unsubscribes from all inventory events.
-        /// </summary>
         public void Exit()
         {
-            if (inventoryPresenter != null)
-            {
-                inventoryPresenter.ItemUsed -= HandleItemUsed;
-                inventoryPresenter = null;
-            }
-
             if (inventoryView != null)
-            {
                 inventoryView.ReturnRequested -= HandleCancel;
-                inventoryView = null;
-            }
+
+            if (inventoryPresenter != null)
+                inventoryPresenter.ItemUsed -= HandleItemUsed;
+
+            inventoryView = null;
+            inventoryPresenter = null;
         }
 
-        private void HandleCancel()
-        {
-            machine.SetState(new PlayerActionMenuState(machine));
-        }
+        private void HandleCancel() => machine.SetState(new PlayerActionMenuState(machine));
 
         private void HandleItemUsed(bool used)
         {
-            if (used)
-            {
-                // Ensure the inventory UI is closed before proceeding
-                ViewManager.Instance.ForceClose(typeof(InventoryView));
-                machine.SetState(new OpponentTurnState(machine));
-            }
+            if (!used) return;
+
+            // 1. Close UI
+            ViewManager.Instance.ForceClose(typeof(InventoryView));
+
+            // 2. AI selects a move because the player's turn is consumed by the item
+            var opponentMonster = Battle.OpponentActiveMonster;
+            var selectedMove = opponentMonster.GetRandomMove();
+
+            // 3. Transition to Opponent Turn
+            machine.SetState(new OpponentTurnState(machine, selectedMove, null, isActingFirst: false));
         }
     }
 }

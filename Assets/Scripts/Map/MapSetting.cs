@@ -1,6 +1,5 @@
 ﻿using MonsterTamer.Audio;
 using MonsterTamer.Battle;
-using MonsterTamer.Dialogue;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
 using UnityEngine;
@@ -19,10 +18,6 @@ namespace MonsterTamer.Map
         [LabelText("Background Music")]
         [Tooltip("Background music to play when this map is loaded.")]
         private AudioClip bgmClip;
-
-        [SerializeField, Required]
-        [Tooltip("Dialogue box style used on this map.")]
-        private DialogueBoxTheme dialogueSetting;
 
         private BattleView battleView;
 
@@ -51,11 +46,6 @@ namespace MonsterTamer.Map
             if (AudioManager.Instance != null && bgmClip != null)
             {
                 AudioManager.Instance.PlayBGM(bgmClip);
-            }
-
-            if (OverworldDialogueBox.Instance.Dialogue != null && dialogueSetting != null)
-            {
-               // OverworldDialogueBox.Instance.Dialogue.ApplyTheme(dialogueSetting);
             }
         }
     }
