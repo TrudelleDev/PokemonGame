@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selectSfx: {fileID: 8300000, guid: 2f3d1732886d3a2499fa00a428876c26, type: 3}
   confirmSfx: {fileID: 8300000, guid: 2f3d1732886d3a2499fa00a428876c26, type: 3}
-  returnSfx: {fileID: 8300000, guid: 2f3d1732886d3a2499fa00a428876c26, type: 3}
+  backSfx: {fileID: 8300000, guid: 2f3d1732886d3a2499fa00a428876c26, type: 3}

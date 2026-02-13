@@ -4,38 +4,23 @@ using UnityEngine;
 namespace MonsterTamer.Audio
 {
     /// <summary>
-    /// Defines sound effects used by the UI.
-    /// Centralizes UI selection, confirmation, and return audio
-    /// for consistent feedback and easy tuning.
+    /// Holds the sound effects used for UI interactions, 
+    /// including selection, confirmation, and back.
     /// </summary>
     [CreateAssetMenu(menuName = "MonsterTamer/Settings/UI Audio Settings")]
     internal sealed class UIAudioSettings : ScriptableObject
     {
-        [SerializeField, Required]
-        [Tooltip("Sound played when navigating or selecting a UI element.")]
+        [SerializeField, Required, Tooltip("Sound played when navigating or selecting a UI element.")]
         private AudioClip selectSfx;
 
-        [SerializeField, Required]
-        [Tooltip("Sound played when confirming an action in the UI.")]
+        [SerializeField, Required, Tooltip("Sound played when confirming an action in the UI.")]
         private AudioClip confirmSfx;
 
-        [SerializeField, Required]
-        [Tooltip("Sound played when cancelling or returning from a UI screen.")]
-        private AudioClip returnSfx;
+        [SerializeField, Required, Tooltip("Sound played when cancelling or going back in a UI screen.")]
+        private AudioClip backSfx;
 
-        /// <summary>
-        /// Sound effect used when selecting or highlighting a UI element.
-        /// </summary>
         internal AudioClip SelectSfx => selectSfx;
-
-        /// <summary>
-        /// Sound effect used when confirming a UI action.
-        /// </summary>
         internal AudioClip ConfirmSfx => confirmSfx;
-
-        /// <summary>
-        /// Sound effect used when cancelling or returning from a UI screen.
-        /// </summary>
-        internal AudioClip ReturnSfx => returnSfx;
+        internal AudioClip BackSfx => backSfx;
     }
 }
