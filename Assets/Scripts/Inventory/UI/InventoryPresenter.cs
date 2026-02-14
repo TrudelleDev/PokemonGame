@@ -1,5 +1,6 @@
 ﻿using System;
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Inventory.UI.InventoryOptions;
 using MonsterTamer.Items.Definition;
 using MonsterTamer.Shared.Interfaces;

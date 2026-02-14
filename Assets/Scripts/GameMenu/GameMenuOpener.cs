@@ -1,6 +1,6 @@
 using MonsterTamer.Audio;
-using MonsterTamer.Characters;
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Characters.Core;
+using MonsterTamer.Config;
 using MonsterTamer.GameMenu;
 using MonsterTamer.Pause;
 using MonsterTamer.Views;

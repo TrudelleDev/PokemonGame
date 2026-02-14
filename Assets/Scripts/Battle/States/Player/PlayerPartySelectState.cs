@@ -45,10 +45,14 @@ namespace MonsterTamer.Battle.States.Player
         public void Exit()
         {
             if (partyPresenter != null)
+            {
                 partyPresenter.ReturnRequested -= HandleCancel;
-
+            }
+         
             if (optionsView != null)
+            {
                 optionsView.SwapRequested -= HandleSwapRequested;
+            }          
 
             ViewManager.Instance.Close<PartyMenuOptionsView>();
             ViewManager.Instance.Close<PartyMenuView>();

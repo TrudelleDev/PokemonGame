@@ -1,5 +1,5 @@
 using MonsterTamer.Audio;
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Config;
 using MonsterTamer.Views;
 using UnityEngine;
 

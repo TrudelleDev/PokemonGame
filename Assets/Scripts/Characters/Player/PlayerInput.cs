@@ -1,42 +1,45 @@
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Characters.Directions;
+using MonsterTamer.Config;
 using UnityEngine;
 
 namespace MonsterTamer.Characters.Player
 {
     /// <summary>
-    /// Handles player input for character movement using WASD or Arrow Keys.
+    /// Reads player input for movement and interaction.
+    /// Supports WASD or arrow keys.
     /// </summary>
-    public sealed class PlayerInput : CharacterInput
+    internal sealed class PlayerInput : CharacterInput
     {
         protected override void ReadInput()
         {
-            // Check vertical input
+            CurrentDirection = GetMovementDirection();
+            InteractPressed = Input.GetKeyDown(KeyBinds.Interact);
+        }
+
+        private InputDirection GetMovementDirection()
+        {
             if (Input.GetKey(KeyBinds.Up))
             {
-                CurrentDirection = InputDirection.Up;
-            }
-            else if (Input.GetKey(KeyBinds.Down))
-            {
-                CurrentDirection = InputDirection.Down;
-            }
-            // Check horizontal input
-            else if (Input.GetKey(KeyBinds.Left))
-            {
-                CurrentDirection = InputDirection.Left;
-            }
-            else if (Input.GetKey(KeyBinds.Right))
-            {
-                CurrentDirection = InputDirection.Right;
-            }
-            // No key pressed go to idle
-            else
-            {
-                CurrentDirection = InputDirection.None;
+                return InputDirection.Up;
             }
 
-            // --- Interaction ---
-            InteractPressed = Input.GetKeyDown(KeyBinds.Interact);
+            if (Input.GetKey(KeyBinds.Down))
+            {
+                return InputDirection.Down;
+            }
+
+            if (Input.GetKey(KeyBinds.Left))
+            {
+                return InputDirection.Left;
+            }
+
+            if (Input.GetKey(KeyBinds.Right))
+            {
+                return InputDirection.Right;
+            }
+
+            return InputDirection.None;
         }
     }
 }

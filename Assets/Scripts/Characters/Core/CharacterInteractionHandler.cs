@@ -4,11 +4,11 @@ using MonsterTamer.Pause;
 using MonsterTamer.Raycasting;
 using UnityEngine;
 
-namespace MonsterTamer.Characters
+namespace MonsterTamer.Characters.Core
 {
     /// <summary>
-    /// Handles interactable checks in front of the character based on input.
-    /// Triggers objects like NPCs, signs, and items.
+    /// Handles character interactions with objects in front of them (NPCs, signs, items).
+    /// Checks input each tick and triggers interactables.
     /// </summary>
     internal sealed class CharacterInteractionHandler
     {
@@ -16,20 +16,13 @@ namespace MonsterTamer.Characters
         private readonly RaycastSettings raycastSettings;
         private readonly Transform transform;
 
-        /// <summary>
-        /// Initializes a new instance of <see cref="CharacterInteractionHandler"/>.
-        /// Sets up the character reference and raycast settings for interaction checks.
-        /// </summary>
-        /// <param name="character">The character that will perform interactions.</param>
-        /// <param name="raycastSettings">Configuration for raycasting to detect interactables.</param>
-        public CharacterInteractionHandler(Character character, RaycastSettings raycastSettings)
-        {
-            this.character = character;
-            this.raycastSettings = raycastSettings;
-            this.transform = character.transform;
-        }
+        internal CharacterInteractionHandler(Character character, RaycastSettings raycastSettings) =>
+             (this.character, this.raycastSettings, this.transform) = (character, raycastSettings, character.transform);
 
-        public void Tick()
+        /// <summary>
+        /// Called each frame to check for interaction input and trigger interactables.
+        /// </summary>
+        internal void Tick()
         {
             if (PauseManager.IsPaused || !character.StateController.Input.InteractPressed)
                 return;
@@ -43,10 +36,9 @@ namespace MonsterTamer.Characters
         }
 
         /// <summary>
-        /// Executes all interactables in the specified direction.
+        /// Attempts to trigger all interactables in the given direction.
         /// </summary>
-        /// <param name="direction">Direction to check.</param>
-        /// <returns>True if at least one interactable was triggered.</returns>
+        /// <param name="direction">Direction to check for interactables.</param>
         private bool TryInteract(Vector2 direction)
         {
             bool interacted = false;
@@ -55,7 +47,6 @@ namespace MonsterTamer.Characters
             {
                 interactable.Interact(character);
                 interacted = true;
-         
                 return false; // continue checking other interactables
             });
 

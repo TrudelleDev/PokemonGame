@@ -1,5 +1,6 @@
 ﻿using System;
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Monster;
 using MonsterTamer.Party.Enums;
 using Sirenix.OdinInspector;

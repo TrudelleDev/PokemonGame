@@ -1,15 +1,15 @@
-﻿namespace MonsterTamer.Characters.Interfaces
+﻿using MonsterTamer.Characters.Core;
+
+namespace MonsterTamer.Characters.Interfaces
 {
     /// <summary>
-    /// Represents an object that can be triggered by a <see cref="Character"/>.
-    /// Implementations define what happens when the trigger is activated.
+    /// Represents an object that can be triggered by a character.
     /// </summary>
     internal interface ITriggerable
     {
         /// <summary>
-        /// Activates this trigger for the given <see cref="Character"/>.
+        /// Activates the trigger for the given character.
         /// </summary>
-        /// <param name="character">The character interacting with or activating the trigger.</param>
-        void Trigger(Character character);
+        void Trigger(Character initiator);
     }
 }

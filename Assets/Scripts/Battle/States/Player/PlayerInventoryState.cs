@@ -32,10 +32,14 @@ namespace MonsterTamer.Battle.States.Player
         public void Exit()
         {
             if (inventoryView != null)
+            {
                 inventoryView.ReturnRequested -= HandleCancel;
-
+            }
+               
             if (inventoryPresenter != null)
+            {
                 inventoryPresenter.ItemUsed -= HandleItemUsed;
+            }            
 
             inventoryView = null;
             inventoryPresenter = null;

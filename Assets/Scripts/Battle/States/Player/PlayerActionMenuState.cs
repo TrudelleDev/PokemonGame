@@ -61,10 +61,14 @@ namespace MonsterTamer.Battle.States.Player
 
         private void HandleEscapeRequested()
         {
-            if (!Battle.Opponent)      
-                machine.SetState(new PlayerEscapeState(machine));     
-            else     
-                Battle.StartCoroutine(ShowEscapeFailDialogue());      
+            if (!Battle.Opponent)
+            {
+                machine.SetState(new PlayerEscapeState(machine));
+            }               
+            else
+            {
+                Battle.StartCoroutine(ShowEscapeFailDialogue());
+            }                
         }
 
         private IEnumerator ShowEscapeFailDialogue()

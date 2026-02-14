@@ -1,15 +1,15 @@
-﻿namespace MonsterTamer.Characters.Interfaces
+﻿using MonsterTamer.Characters.Core;
+
+namespace MonsterTamer.Characters.Interfaces
 {
     /// <summary>
-    /// Represents an object that can be interacted with by a <see cref="Character"/>.
-    /// Typical examples include NPCs, signs, or items in the overworld.
+    /// Defines an object that can be interacted with by a character.
     /// </summary>
     internal interface IInteractable
     {
         /// <summary>
-        /// Called when a <see cref="Character"/> interacts with this object.
+        /// Called when a character interacts with this object.
         /// </summary>
-        /// <param name="character">The character initiating the interaction.</param>
-        void Interact(Character character);
+        void Interact(Character initiator);
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using MonsterTamer.Audio;
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Config;
 using MonsterTamer.Pause;
 using MonsterTamer.Utilities;
 using Sirenix.OdinInspector;
@@ -105,7 +105,7 @@ namespace MonsterTamer.Dialogue
         {
             yield return new WaitUntil(() => Input.GetKeyDown(KeyBinds.Interact));
 
-            if(audioSetting != null)
+            if (audioSetting != null)
             {
                 AudioManager.Instance.PlayUISFX(audioSetting.ConfirmSfx);
             }

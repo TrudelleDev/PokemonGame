@@ -1,21 +1,24 @@
-﻿using UnityEngine;
+﻿using MonsterTamer.Characters.Core;
+using UnityEngine;
 
 namespace MonsterTamer.Characters.Player
 {
     /// <summary>
-    /// Registers and unregisters the player character with the <see cref="PlayerRegistry"/>.
-    /// Ensures the player character is globally accessible for gameplay systems.
+    /// Registers the player character in the PlayerRegistry.
     /// </summary>
-    public sealed class PlayerBootstrap : MonoBehaviour
+    internal sealed class PlayerBootstrap : MonoBehaviour
     {
+        private Character player;
+
         private void Awake()
         {
-            PlayerRegistry.Register(GetComponent<Character>());
+            player = GetComponent<Character>();
+            PlayerRegistry.Register(player);
         }
 
         private void OnDestroy()
         {
-            PlayerRegistry.Unregister(GetComponent<Character>());
+            PlayerRegistry.Unregister(player);
         }
     }
 }

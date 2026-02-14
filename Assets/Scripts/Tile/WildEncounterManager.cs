@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using MonsterTamer.Battle;
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Characters.Player;
 using MonsterTamer.Monster;
 using MonsterTamer.Monster.Models;

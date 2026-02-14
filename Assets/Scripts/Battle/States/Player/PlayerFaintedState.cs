@@ -37,9 +37,13 @@ namespace MonsterTamer.Battle.States.Player
 
             // 3. Branch Logic
             if (Battle.Player.Party.HasUsablePokemon())
-                machine.SetState(new PlayerPartySelectState(machine, isForced: true));      
-            else           
-                machine.SetState(new PlayerBlackoutState(machine));        
+            {
+                machine.SetState(new PlayerPartySelectState(machine, isForced: true));
+            }            
+            else
+            {
+                machine.SetState(new PlayerBlackoutState(machine));
+            }                   
         }
     }
 }

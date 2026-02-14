@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Dialogue;
 using MonsterTamer.Items.Definition;
 using MonsterTamer.Items.Models;

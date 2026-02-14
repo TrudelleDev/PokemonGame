@@ -1,24 +1,18 @@
-﻿using MonsterTamer.Characters.Interfaces;
+﻿using MonsterTamer.Characters.Core;
+using MonsterTamer.Characters.Interfaces;
 
 namespace MonsterTamer.Characters.States
 {
     /// <summary>
-    /// State for turning the character to a new facing without moving.
+    /// Turns the character to a new facing without moving.
     /// Plays a refacing animation, then returns to idle.
     /// </summary>
     internal sealed class CharacterRefacingState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
-        public CharacterRefacingState(CharacterStateController controller)
-        {
-            this.controller = controller;
-        }
+        internal CharacterRefacingState(CharacterStateController controller) => this.controller = controller;
 
-        /// <summary>
-        /// Enters the refacing state and plays the refacing animation.
-        /// If no animator is available, immediately transitions back to idle.
-        /// </summary>
         public void Enter()
         {
             if (controller.AnimatorController != null)
@@ -35,11 +29,7 @@ namespace MonsterTamer.Characters.States
 
         public void Exit() { }
 
-        /// <summary>
-        /// Called when the refacing animation completes.
-        /// Transitions the character back to idle.
-        /// </summary>
-        public void OnRefacingComplete()
+        internal void OnRefacingComplete()
         {
             controller.SetState(controller.IdleState);
         }

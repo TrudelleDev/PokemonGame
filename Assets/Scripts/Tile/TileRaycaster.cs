@@ -9,7 +9,7 @@ namespace MonsterTamer.Tile
     /// Provides directional raycasting functionality for obstacle detection.
     /// </summary>
     [DisallowMultipleComponent]
-    public class TileRaycaster : MonoBehaviour
+    internal class TileRaycaster : MonoBehaviour
     {
         [SerializeField, Required]
         [Tooltip("Configuration for raycasting: offset, distance, and collision mask.")]

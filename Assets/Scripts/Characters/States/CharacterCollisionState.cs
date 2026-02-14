@@ -1,63 +1,49 @@
 ﻿using MonsterTamer.Audio;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Characters.Directions;
 using MonsterTamer.Characters.Interfaces;
 
 namespace MonsterTamer.Characters.States
 {
     /// <summary>
-    /// State entered when the character attempts to move into a blocked tile.
-    /// Plays a collision animation, triggers optional SFX, and decides the next state.
+    /// Handles collision when movement is blocked.
     /// </summary>
     internal sealed class CharacterCollisionState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
-        public CharacterCollisionState(CharacterStateController controller)
-        {
-            this.controller = controller;
-        }
+        internal CharacterCollisionState(CharacterStateController controller) => this.controller = controller;
 
         public void Enter()
         {
             controller.AnimatorController.PlayCollisionStep();
-
-            if (controller.CollisionAudioClip != null)
-            {
-                AudioManager.Instance.PlaySFX(controller.CollisionAudioClip);
-            }
+            AudioManager.Instance.PlaySFX(controller.CollisionAudioClip);
         }
 
         public void Update() { }
-
         public void Exit() { }
 
         /// <summary>
-        /// Called by an animation event when the collision step finishes.
-        /// Decides the next state based on current input and tile availability.
+        /// Called when the collision animation completes.
         /// </summary>
         public void OnCollisionComplete()
         {
-            InputDirection currentDirection = controller.Input.CurrentDirection;
+            var input = controller.Input.CurrentDirection;
 
-            if (currentDirection == InputDirection.None)
+            if (input == InputDirection.None)
             {
                 controller.SetState(controller.IdleState);
                 return;
             }
 
-            // Update facing direction to match attempted input
-            FacingDirection desiredFacingDirection = currentDirection.ToFacingDirection();
-            controller.FacingDirection = desiredFacingDirection;
+            var facing = input.ToFacingDirection();
+            controller.FacingDirection = facing;
 
-            // Retry movement if possible, otherwise re-enter collision state
-            if (controller.TileMover.CanMoveInDirection(desiredFacingDirection))
-            {
-                controller.SetState(controller.WalkingState);
-            }
-            else
-            {
-                controller.SetState(controller.CollisionState);
-            }
+            bool canMove = controller.TileMover.CanMoveInDirection(facing);
+
+            controller.SetState(canMove
+                ? controller.WalkingState
+                : controller.CollisionState);
         }
     }
 }

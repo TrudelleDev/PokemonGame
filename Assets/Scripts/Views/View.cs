@@ -1,6 +1,6 @@
 ﻿using System;
 using MonsterTamer.Audio;
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Config;
 using MonsterTamer.Shared.UI.Core;
 using MonsterTamer.Transitions;
 using Sirenix.OdinInspector;
@@ -108,7 +108,7 @@ namespace MonsterTamer.Views
             if (isFrozen || ViewManager.Instance == null || ViewManager.Instance.IsTransitioning)
                 return;
 
-            if (Input.GetKeyDown(KeyBinds.Cancel))
+            if (Input.GetKeyDown(KeyBinds.Back))
             {
                 ReturnKeyPressed?.Invoke();
             }

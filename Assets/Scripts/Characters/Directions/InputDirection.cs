@@ -1,10 +1,9 @@
 ﻿namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
-    /// Represents raw directional input from the player or AI.
-    /// Includes a neutral state (<see cref="None"/>) when no input is pressed.
+    /// Represents directional input, including neutral (None).
     /// </summary>
-    public enum InputDirection
+    internal enum InputDirection
     {
         None,
         Up,

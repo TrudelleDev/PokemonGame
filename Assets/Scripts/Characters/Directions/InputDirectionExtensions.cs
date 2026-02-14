@@ -3,20 +3,15 @@
 namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
-    /// Provides utility methods for converting between <see cref="InputDirection"/> 
-    /// and related types. Useful for handling directional input and movement logic.
+    /// Converts InputDirection to vectors and facing directions.
     /// </summary>
-    public static class InputDirectionExtensions
+    internal static class InputDirectionExtensions
     {
         private const string InvalidMessage = "Invalid InputDirection value.";
 
         /// <summary>
-        /// Converts an <see cref="InputDirection"/> value to a corresponding <see cref="Vector2Int"/>.
-        /// Returns <see cref="Vector2Int.zero"/> if the value is <see cref="InputDirection.None"/>.
+        /// Converts to a Vector2Int. Returns zero for None.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="direction"/> is not a valid <see cref="InputDirection"/>.
-        /// </exception>
         public static Vector2Int ToVector2Int(this InputDirection direction)
         {
             return direction switch
@@ -31,11 +26,8 @@ namespace MonsterTamer.Characters.Directions
         }
 
         /// <summary>
-        /// Converts an <see cref="InputDirection"/> value to a corresponding <see cref="FacingDirection"/>.
+        /// Converts to a FacingDirection.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="input"/> is <see cref="InputDirection.None"/> or invalid.
-        /// </exception>
         public static FacingDirection ToFacingDirection(this InputDirection input)
         {
             return input switch

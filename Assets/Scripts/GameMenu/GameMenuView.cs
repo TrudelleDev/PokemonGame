@@ -1,5 +1,5 @@
 ﻿using System;
-using MonsterTamer.Characters.Config;
+using MonsterTamer.Config;
 using MonsterTamer.Shared.UI.Core;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;
@@ -71,8 +71,8 @@ namespace MonsterTamer.GameMenu
             {
                 return;
             }
-               
-            if (Input.GetKeyDown(KeyBinds.Menu) )
+
+            if (Input.GetKeyDown(KeyBinds.Menu))
             {
                 OnCloseRequested();
             }

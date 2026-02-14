@@ -5,6 +5,7 @@ using MonsterTamer.Battle.Models;
 using MonsterTamer.Battle.States.Core;
 using MonsterTamer.Battle.States.Intro;
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Dialogue;
 using MonsterTamer.Monster;
 using MonsterTamer.Views;

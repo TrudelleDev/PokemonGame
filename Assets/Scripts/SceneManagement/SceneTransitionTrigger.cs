@@ -6,6 +6,8 @@ using MonsterTamer.Transitions;
 using MonsterTamer.MapEntry;
 using MonsterTamer.Characters;
 using MonsterTamer.Characters.Directions;
+using MonsterTamer.Characters.Core;
+
 
 
 

@@ -1,5 +1,5 @@
 ﻿using MonsterTamer.Audio;
-using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using MonsterTamer.Characters.Interfaces;
 using MonsterTamer.Dialogue;
 using MonsterTamer.Items.Definition;

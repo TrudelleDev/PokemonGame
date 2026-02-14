@@ -1,4 +1,4 @@
-﻿using MonsterTamer.Characters.Config;
+﻿using MonsterTamer.Config;
 using MonsterTamer.Shared.UI.Core;
 using MonsterTamer.Views;
 using Sirenix.OdinInspector;

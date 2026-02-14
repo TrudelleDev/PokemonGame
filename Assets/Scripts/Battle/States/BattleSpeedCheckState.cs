@@ -29,9 +29,13 @@ namespace MonsterTamer.Battle.States
 
             // 3. Hand off to the faster monster's turn
             if (playerGoesFirst)
+            {
                 machine.SetState(new PlayerTurnState(machine, playerMove, opponentMove, isFirst: true));
+            }
             else
+            {
                 machine.SetState(new OpponentTurnState(machine, opponentMove, playerMove, isActingFirst: true));
+            }           
         }
 
         public void Update() { }

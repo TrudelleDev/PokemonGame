@@ -1,4 +1,5 @@
 using MonsterTamer.Characters;
+using MonsterTamer.Characters.Core;
 using Sirenix.OdinInspector;
 using UnityEngine;
 

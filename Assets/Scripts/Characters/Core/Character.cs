@@ -3,22 +3,18 @@ using MonsterTamer.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace MonsterTamer.Characters
+namespace MonsterTamer.Characters.Core
 {
     /// <summary>
     /// Represents a character in the game world.
-    /// Provides identity, grid snapping, and access to state control.
+    /// Handles identity, grid snapping, and access to state, inventory, and party.
     /// </summary>
-
     [DisallowMultipleComponent]
     [RequireComponent(typeof(CharacterStateController))]
     internal sealed class Character : MonoBehaviour
     {
-        // ID generation range
         private const int MinID = 10000;
         private const int MaxID = 99999;
-
-        // Grid snapping values
         private const float GridSnapX = 0.5f;
         private const float GridSnapY = 1f;
 
@@ -42,9 +38,8 @@ namespace MonsterTamer.Characters
         }
 
         /// <summary>
-        /// Instantly moves the character to a given position and snaps to the grid.
+        /// Instantly moves the character to a world position and snaps to the grid.
         /// </summary>
-        /// <param name="position">The target world position.</param>
         public void Teleport(Vector3 position)
         {
             transform.position = position;
@@ -53,18 +48,18 @@ namespace MonsterTamer.Characters
 
         private void GenerateId()
         {
-            if (string.IsNullOrEmpty(ID))
-            {
-                ID = new IDGenerator(MinID, MaxID).GetID();
-            }
+            if (!string.IsNullOrEmpty(ID)) return;
+            ID = new IDGenerator(MinID, MaxID).GetID();
         }
 
         private void SnapToGrid()
         {
-            Vector3 pos = transform.position;
-            float snappedX = Mathf.Round(pos.x / GridSnapX) * GridSnapX;
-            float snappedY = Mathf.Floor(pos.y / GridSnapY) * GridSnapY;
-            transform.position = new Vector3(snappedX, snappedY, 0f);
+            Vector3 snapedPosition = transform.position;
+            transform.position = new Vector3(
+                Mathf.Round(snapedPosition.x / GridSnapX) * GridSnapX,
+                Mathf.Floor(snapedPosition.y / GridSnapY) * GridSnapY,
+                0f
+            );
         }
     }
 }

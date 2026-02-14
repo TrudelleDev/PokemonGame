@@ -1,33 +1,21 @@
-﻿using MonsterTamer.Characters.Directions;
+﻿using MonsterTamer.Characters.Core;
+using MonsterTamer.Characters.Directions;
 using MonsterTamer.Characters.Interfaces;
 
 namespace MonsterTamer.Characters.States
 {
     /// <summary>
-    /// Idle state: the character stands still.
-    /// Evaluates input each frame and transitions to refacing, walking, or collision.
+    /// Idle state: character stands still.
+    /// Evaluates input and transitions to refacing, walking, or collision.
     /// </summary>
     internal sealed class CharacterIdleState : ICharacterState
     {
         private readonly CharacterStateController controller;
 
-        public CharacterIdleState(CharacterStateController controller)
-        {
-            this.controller = controller;
-        }
+        internal CharacterIdleState(CharacterStateController controller) => this.controller = controller;
 
-        /// <summary>
-        /// Enters the idle state and plays the idle animation for the current facing direction.
-        /// </summary>
-        public void Enter()
-        {
-            controller.AnimatorController.PlayIdle(controller.FacingDirection);
-        }
+        public void Enter() => controller.AnimatorController.PlayIdle(controller.FacingDirection);
 
-        /// <summary>
-        /// Called every frame while idle.
-        /// Evaluates input to decide whether to reface, walk, collide, or stay idle.
-        /// </summary>
         public void Update()
         {
             InputDirection input = controller.Input.CurrentDirection;
@@ -39,13 +27,13 @@ namespace MonsterTamer.Characters.States
 
             FacingDirection facing = input.ToFacingDirection();
 
-            // Trigger interactions before moving
-            if (controller.TriggerHandler != null && controller.TriggerHandler.TryTrigger(input.ToVector2Int()))
+            // Trigger interactions first
+            if (controller.TriggerHandler?.TryTrigger(input.ToVector2Int()) == true)
             {
                 return;
             }
 
-            // Reface if needed
+            // Reface if facing differs
             if (controller.FacingDirection != facing)
             {
                 controller.FacingDirection = facing;
@@ -53,20 +41,14 @@ namespace MonsterTamer.Characters.States
                 return;
             }
 
-            // Walk or collide depending on tile availability
-            if (controller.TileMover.CanMoveInDirection(facing))
-            {
-                controller.SetState(controller.WalkingState);
-            }
-            else
-            {
-                controller.SetState(controller.CollisionState);
-            }
+            // Move or collide
+            controller.SetState(
+                controller.TileMover.CanMoveInDirection(facing)
+                    ? controller.WalkingState
+                    : controller.CollisionState
+            );
         }
 
-        /// <summary>
-        /// No cleanup required for idle state.
-        /// </summary>
         public void Exit() { }
     }
 }

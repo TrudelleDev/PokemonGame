@@ -3,7 +3,7 @@ using MonsterTamer.Party;
 using Sirenix.OdinInspector;
 using UnityEngine;
 
-namespace MonsterTamer.Characters
+namespace MonsterTamer.Characters.Core
 {
     /// <summary>
     /// Static definition of a trainer character.

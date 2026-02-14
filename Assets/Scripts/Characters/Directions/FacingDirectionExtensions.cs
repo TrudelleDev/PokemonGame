@@ -3,18 +3,15 @@
 namespace MonsterTamer.Characters.Directions
 {
     /// <summary>
-    /// Provides helper methods for working with <see cref="FacingDirection"/>.
+    /// Converts FacingDirection to vectors, input, and opposites.
     /// </summary>
-    public static class FacingDirectionExtensions
+    internal static class FacingDirectionExtensions
     {
         private const string InvalidMessage = "Invalid FacingDirection value.";
 
         /// <summary>
-        /// Converts a <see cref="FacingDirection"/> into a 2D integer unit vector.
+        /// Converts to a Vector2Int.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="direction"/> is not a valid <see cref="FacingDirection"/>.
-        /// </exception>
         public static Vector2Int ToVector2Int(this FacingDirection direction)
         {
             return direction switch
@@ -28,11 +25,8 @@ namespace MonsterTamer.Characters.Directions
         }
 
         /// <summary>
-        /// Converts an <see cref="FacingDirection"/> value to a corresponding <see cref="InputDirection"/>.
+        /// Converts to an InputDirection.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="facing"/> is <see cref="FacingDirection.None"/> or invalid.
-        /// </exception>
         public static InputDirection ToInputDirection(this FacingDirection facing)
         {
             return facing switch
@@ -46,11 +40,8 @@ namespace MonsterTamer.Characters.Directions
         }
 
         /// <summary>
-        /// Gets the opposite of a given <see cref="FacingDirection"/>.
+        /// Gets the opposite direction.
         /// </summary>
-        /// <exception cref="System.ArgumentOutOfRangeException">
-        /// Thrown if <paramref name="direction"/> is not a valid <see cref="FacingDirection"/>.
-        /// </exception>
         public static FacingDirection Opposite(this FacingDirection direction)
         {
             return direction switch

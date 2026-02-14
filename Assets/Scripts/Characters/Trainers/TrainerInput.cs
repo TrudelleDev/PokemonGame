@@ -1,17 +1,22 @@
-﻿using MonsterTamer.Characters.Directions;
+﻿using MonsterTamer.Characters.Core;
+using MonsterTamer.Characters.Directions;
+using UnityEngine;
 
 namespace MonsterTamer.Characters.Trainers
 {
     /// <summary>
     /// Provides externally forced movement input for trainers (vision, scripts, cutscenes).
     /// </summary>
-    public sealed class TrainerInput : CharacterInput
+    [DisallowMultipleComponent]
+    internal sealed class TrainerInput : CharacterInput
     {
-        public InputDirection ForcedDirection { get; set; } = InputDirection.None;
+        /// <summary>
+        /// Direction forced by scripts or AI. Defaults to none.
+        /// </summary>
+        internal InputDirection ForcedDirection { get; set; } = InputDirection.None;
 
         protected override void ReadInput()
         {
-            // The trainer only moves if we've assigned a ForcedDirection
             CurrentDirection = ForcedDirection;
         }
     }
